@@ -16,6 +16,7 @@ public class Client {
 			try {
 				lobby = new RemoteSpace("tcp://127.0.0.1:9001/chat?keep");
 				lobby.put("enter",0);
+
 				
 			} catch (UnknownHostException e) {
 				e.printStackTrace();
