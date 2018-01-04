@@ -38,5 +38,8 @@ public class Server {
 			e.printStackTrace();
 		}
 		
+		
+		// Create new game
+		// Create a thread to communicate with clients in-game.
     }
 }

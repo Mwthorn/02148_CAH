@@ -11,16 +11,38 @@ import org.jspace.SpaceRepository;
 
 public class Client {
     public static void main(String[] args) {
-        RemoteSpace lobby;
-        
-			try {
-				lobby = new RemoteSpace("tcp://127.0.0.1:9001/chat?keep");
-				lobby.put("enter",0);
-				
-			} catch (UnknownHostException e) {
-				e.printStackTrace();
-			} catch (IOException e) {
-				e.printStackTrace();
-			}
+    	RemoteSpace space;
+    	
+    	/* Login */
+    	// Create login GUI and request name of user and IP to server.
+    	
+    	/* Connect to server using GUI info */
+		try {
+			space = new RemoteSpace("tcp://127.0.0.1:9001/lobby?keep");
+			
+		} catch (UnknownHostException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		
+		/* Lobby */
+		// Create lobby GUI
+		
+		// Tons of different lobby features
+
+		// Do lobby action
+		
+		
+		
+		
+		/* Enter game state */
+		cardsAgainstHumanity();
     }
+
+	private static void cardsAgainstHumanity() {
+		// Create game GUI
+		// Tons of different game features, move it to another function
+		
+	}
 }
