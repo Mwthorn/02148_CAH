@@ -11,7 +11,7 @@ import org.jspace.SpaceRepository;
 
 public class Client {
     public static void main(String[] args) {
-<<<<<<< HEAD
+
     	RemoteSpace space;
     	
     	/* Login */
@@ -39,7 +39,7 @@ public class Client {
 		
 		/* Enter game state */
 		cardsAgainstHumanity();
-=======
+
         RemoteSpace lobby;
         
 			try {
@@ -52,7 +52,7 @@ public class Client {
 			} catch (IOException e) {
 				e.printStackTrace();
 			}
->>>>>>> cc10537ea47fa8683d3a80ce97e49e84a1572b25
+
     }
 
 	private static void cardsAgainstHumanity() {
