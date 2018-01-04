@@ -13,7 +13,6 @@ public class App {
 		inbox.put("Hello Worlds!");
 		Object[] tuple = inbox.get(new FormalField(String.class));
 		System.out.println(tuple[0]);
-		// Jonas er ikke dum :(
+		// Jonas er ikke dum, men Alex er :(
 	}
-
 }
