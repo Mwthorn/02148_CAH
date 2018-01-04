@@ -90,12 +90,7 @@ public class BlackCard {
     public String getSentence() {
         String result = "";
         for(int i = 0; i < this.blanks; i++) {
-            if (i == 0) {
-                result = this.sentences[i];
-            }
-            else {
-                result = "______" + this.sentences[i];
-            }
+            result = result + this.sentences[i];
         }
         return result;
     }
