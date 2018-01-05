@@ -4,10 +4,12 @@ public class Player {
 
     private String name;
     private int points;
+    private int id;
 
-    public Player(String name) {
+    public Player(String name, int id) {
         this.name = name;
         this.points = 0;
+        this.id = id;
     }
 
     public int getPoints() {
@@ -16,6 +18,10 @@ public class Player {
 
     public String getName() {
         return this.name;
+    }
+
+    public int getId() {
+        return this.id;
     }
 
     public void setPoints(int i) {

@@ -13,13 +13,14 @@ public class Game implements Runnable {
 
     private String gameName;
     private String password;
-    private WhiteCard[] whiteCards;
-    private BlackCard[] blackCards;
+    private ArrayList<WhiteCard> whiteCards;
+    private ArrayList<BlackCard> blackCards;
     private ArrayList<Player> players;
     private String status;
 
     SpaceRepository repository = new SpaceRepository();
     SequentialSpace game = new SequentialSpace();
+    SequentialSpace serverLobby;
 
     // TODO: Add chat?
     // TODO: Add rounds/max round?
@@ -27,20 +28,17 @@ public class Game implements Runnable {
     // TODO: Add vote count?
 
     public Game(String gameName,
-                WhiteCard[] whiteCards,
-                BlackCard[] blackCards,
+                ArrayList<WhiteCard> whiteCards,
+                ArrayList<BlackCard> blackCards,
                 SpaceRepository repository,
-                int gameSlot) {
+                int gameSlot,
+                SequentialSpace serverLobby) {
         this.gameName = gameName;
         this.whiteCards = whiteCards;
         this.blackCards = blackCards;
         this.password = null;
-        this.repository = repository;
-        this.repository.addGate("tcp://127.0.0.1:9001/?keep");
-        this.repository.add("game"+1, game);
-    }
+        this.serverLobby = serverLobby;
 
-    public Game(SpaceRepository repository, int gameSlot) {
         this.repository = repository;
         this.repository.addGate("tcp://127.0.0.1:9001/?keep");
         this.repository.add("game"+1, game);
@@ -48,21 +46,6 @@ public class Game implements Runnable {
 
     public void run() {
 
-    }
-
-    public Game(String gameName,
-                WhiteCard[] whiteCards,
-                BlackCard[] blackCards,
-                String password,
-                SpaceRepository repository,
-                int gameSlot) {
-        this.gameName = gameName;
-        this.whiteCards = whiteCards;
-        this.blackCards = blackCards;
-        this.password = password;
-        this.repository = repository;
-        this.repository.addGate("tcp://127.0.0.1:9001/?keep");
-        this.repository.add("game"+1, game);
     }
 
     public String getGameName() {
