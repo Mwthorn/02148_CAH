@@ -25,9 +25,11 @@ public class Server {
 		repository.add("lobby", lobby);
 		//repository.add("game", game);
 		
+		
+		/* Listening for messages on the tuple space */
 		while(true){
 			try {
-				Object[] tuple = lobby.get(new ActualField("enter"), new FormalField(String.class),
+				Object[] tuple = lobby.get(new FormalField(String.class), new FormalField(String.class),
 						new FormalField(Integer.class));
 				if (tuple[0] == "enter"){
 					
@@ -36,8 +38,8 @@ public class Server {
 					int  n = rand.nextInt(99999) + 10000;
 					id[numberOfUsers] = n;
 					name[numberOfUsers] = (String) tuple[1];
-					System.out.println("User "+name[numberOfUsers]+", the user was assigned th ID: "+id[numberOfUsers]+", there is now "
-							+numberOfUsers+"online.");
+					System.out.println("User "+name[numberOfUsers]+", the user was assigned th ID: "+id[numberOfUsers]+", there is now "+numberOfUsers+"online.");
+				} else if (true){
 					
 				}
 			} catch (InterruptedException e) {
@@ -48,5 +50,13 @@ public class Server {
 		
 		// Create new game
 		// Create a thread to communicate with clients in-game.
+		
+		//createNewGame();
     }
+    
+	public static void createNewGame(SpaceRepository repository) {
+		
+		
+	}
+	
 }
