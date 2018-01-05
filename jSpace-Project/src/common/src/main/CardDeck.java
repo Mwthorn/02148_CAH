@@ -9,30 +9,28 @@ import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.List;
 
-public class CardDataBase {
+public class CardDeck{
 
 	static BufferedReader reader = null;
 	static FileInputStream inputStream = null;
+	static List<String> cardList;
+	
+	public CardDeck() {
 
-	public static void main(String[] args){
-
-		getWhiteText();
-
-		getBlackText();
-
+		cardList = new ArrayList<String>();
+		
 	}
 
-	public static List<String> getWhiteText(){
+	public static List<String> getWhiteDeck(){
 
-		List<String> whiteList = new ArrayList<String>();
 		String quip = null;
-		
+
 		try {
 			inputStream = new FileInputStream("TextWC.txt");
 			reader = new BufferedReader( new InputStreamReader(inputStream));
 
 			while( (quip = reader.readLine()) != null ){
-				whiteList.add(quip);
+				cardList.add(quip);
 				quip = "";
 			}
 
@@ -42,16 +40,15 @@ public class CardDataBase {
 		}
 
 		close();
-		System.out.println(whiteList);
-		return whiteList;
+		System.out.println(cardList);
+		return cardList;
 	}
 
 
-	public static List<String> getBlackText(){
+	public static List<String> getBlackDeck(){
 
 		String numbers, text = null;
 		int numOfLines, numOfBlanks = 0;
-		List<String> blackList = new ArrayList<String>();
 
 		try {
 			inputStream = new FileInputStream("TextBC.txt");
@@ -72,7 +69,7 @@ public class CardDataBase {
 						numOfBlanks--;
 					}
 				} 
-				blackList.add(text);
+				cardList.add(text);
 			}
 		} catch (IOException e) {
 			e.printStackTrace();
@@ -80,8 +77,8 @@ public class CardDataBase {
 		}
 
 		close();
-		System.out.println(blackList);
-		return blackList;
+		System.out.println(cardList);
+		return cardList;
 	}	
 
 	public static void close(){
