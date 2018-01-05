@@ -1,34 +1,39 @@
 package common.src.main;
 
 import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileInputStream;
 import java.io.FileReader;
 import java.io.IOException;
+import java.io.InputStreamReader;
 
 public class CardDateBase {
 
 	// DECLARATIONS
-	static BufferedReader br = null;
-
+	static BufferedReader reader = null;
+	static FileInputStream fis = null;
 
 	public static void main(String[] args){
-		
+
 		getWhiteText();
-		
-		getBlackText();
-	
+
+		//	getBlackText();
+
+		close();
 	}
-	
+
 	public static String getWhiteText(){
 
 		String quip = null;
 
 		try {
-			br = new BufferedReader(new FileReader("TextWC.txt"));
+			reader = new BufferedReader(new FileReader("TextWC.txt"));
 
-			while(br.readLine() != null){
-				quip = (String) br.readLine();
+			while( reader.readLine() != null ){
 
+				quip = reader.readLine();
 				System.out.println(quip);
+
 			}
 
 		} catch (IOException e) {
@@ -41,24 +46,24 @@ public class CardDateBase {
 
 	public static String getBlackText(){
 
-		String numberOf = null;
-		int numberOfLines = 0;
-		int numberOfBlanks = 0;
+		String numOf = null;
+		int numOfLines = 0;
+		int numOfBlanks = 0;
 		String[] q = new String[3];
 
 		try {
 
-			br = new BufferedReader(new FileReader("TextBC.txt"));
+			reader = new BufferedReader(new InputStreamReader(new FileInputStream("TextBC.txt")));
+			// fis = new FileInputStream(new File("TextBC.txt"));
 
-			while(br.readLine() != null){
+			while( (numOf = reader.readLine()) != null){
 
-				numberOf = br.readLine();
-				numberOfLines = Integer.parseInt(numberOf.split(" ")[0]);
-				numberOfBlanks = Integer.parseInt(numberOf.split(" ")[1]);
+				numOfLines = Integer.parseInt(numOf.split(" ")[0]);
+				numOfBlanks = Integer.parseInt(numOf.split(" ")[1]);
 
-				for(int i = 0; i < numberOfLines; i++ ) {
+				for(int i = 0; i < numOfLines; i++ ) {
 
-					q[i] = br.readLine();
+					q[i] = numOf;
 
 					System.out.println(q);
 				}
@@ -71,5 +76,17 @@ public class CardDateBase {
 		}
 		return "1";
 	}	
+
+	public static void close(){
+
+		try {
+			reader.close();
+			//fis.close();
+		} catch (IOException e) {
+			System.out.println("Failed to close bis/fis.");
+			e.printStackTrace();
+		}
+		
+	}
 
 }
