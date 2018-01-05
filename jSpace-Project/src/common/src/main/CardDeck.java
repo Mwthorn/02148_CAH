@@ -7,22 +7,15 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class CardDeck{
-
-	public  void main(String[] args){
-	getWhiteDeck();
-	getBlackDeck();
-	}
-	
 	
 	 BufferedReader reader = null;
 	 FileInputStream inputStream = null;
-	 List<String> cardList;
+	 List<String> cardList  = new ArrayList<String>();
 	
 	public CardDeck() {
-		cardList = new ArrayList<String>();	
 	}
 
-	public  List<String> getWhiteDeck(){
+	public List<String> getWhiteDeck(){
 		String quip = null;
 		
 		try {
@@ -36,11 +29,11 @@ public class CardDeck{
 
 		} catch (IOException e) {
 			e.printStackTrace();
-			System.out.println("Failed to read white cards successfully.");
+			// System.out.println("Failed to read white cards successfully.");
 		}
 
 		close();
-		System.out.println(cardList);
+		// System.out.println(cardList);
 		return cardList;
 	}
 
@@ -69,10 +62,10 @@ public class CardDeck{
 			}
 		} catch (IOException e) {
 			e.printStackTrace();
-			System.out.println("Failed to read black cards.");
+			// System.out.println("Failed to read black cards.");
 		}
 		close();
-		System.out.println(cardList);
+		// System.out.println(cardList);
 		return cardList;
 	}	
 
@@ -81,7 +74,7 @@ public class CardDeck{
 			reader.close();
 			inputStream.close();
 		} catch (IOException e) {
-			System.out.println("Failed to close bis/fis.");
+			// System.out.println("Failed to close bis/fis.");
 			e.printStackTrace();
 		}
 	}
