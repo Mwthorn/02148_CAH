@@ -6,83 +6,94 @@ import java.io.FileInputStream;
 import java.io.FileReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.util.ArrayList;
+import java.util.List;
 
 public class CardDataBase {
 
-	// DECLARATIONS
 	static BufferedReader reader = null;
+	static FileInputStream inputStream = null;
 
 	public static void main(String[] args){
 
-		// getWhiteText();
+		getWhiteText();
 
 		getBlackText();
 
-		close();
 	}
 
-	public static String getWhiteText(){
+	public static List<String> getWhiteText(){
 
+		List<String> whiteList = new ArrayList<String>();
 		String quip = null;
-
+		
 		try {
-			reader = new BufferedReader( new InputStreamReader(new FileInputStream("TextWC.txt")));
+			inputStream = new FileInputStream("TextWC.txt");
+			reader = new BufferedReader( new InputStreamReader(inputStream));
 
 			while( (quip = reader.readLine()) != null ){
-
-				System.out.println(quip);
-
+				whiteList.add(quip);
+				quip = "";
 			}
 
 		} catch (IOException e) {
 			e.printStackTrace();
 			System.out.println("Failed to read white cards successfully.");
 		}
-		return "0";
+
+		close();
+		System.out.println(whiteList);
+		return whiteList;
 	}
 
 
-	public static String getBlackText(){
+	public static List<String> getBlackText(){
 
-		String numbers = null;
-		int numOfLines = 0;
-		int numOfBlanks = 0;
-		String[] q = new String[3];
+		String numbers, text = null;
+		int numOfLines, numOfBlanks = 0;
+		List<String> blackList = new ArrayList<String>();
 
 		try {
-
-			reader = new BufferedReader( new InputStreamReader(new FileInputStream("TextBC.txt")));
+			inputStream = new FileInputStream("TextBC.txt");
+			reader = new BufferedReader( new InputStreamReader(inputStream));
 
 			while( (numbers = reader.readLine()) != null){
 
+				text = "";
 				numOfLines = Integer.parseInt(numbers.split(" ")[0]);
 				numOfBlanks = Integer.parseInt(numbers.split(" ")[1]);
 
 				for(int i = 0; i < numOfLines; i++ ) {
 
-					numbers = reader.readLine();
-					q[i] = numbers;
-
-					System.out.println(q[i]);
-				}
+					if (numOfBlanks == 0) {
+						text = text + reader.readLine();
+					} else {
+						text = text + reader.readLine() + " ________";
+						numOfBlanks--;
+					}
+				} 
+				blackList.add(text);
 			}
 		} catch (IOException e) {
 			e.printStackTrace();
 			System.out.println("Failed to read black cards.");
 		}
-		return "1";
+
+		close();
+		System.out.println(blackList);
+		return blackList;
 	}	
 
 	public static void close(){
 
 		try {
 			reader.close();
-			//fis.close();
+			inputStream.close();
 		} catch (IOException e) {
 			System.out.println("Failed to close bis/fis.");
 			e.printStackTrace();
 		}
-		
+
 	}
 
 }
