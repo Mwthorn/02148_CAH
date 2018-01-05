@@ -11,13 +11,12 @@ public class CardDateBase {
 
 	// DECLARATIONS
 	static BufferedReader reader = null;
-	static FileInputStream fis = null;
 
 	public static void main(String[] args){
 
-		getWhiteText();
+		// getWhiteText();
 
-		//	getBlackText();
+		getBlackText();
 
 		close();
 	}
@@ -27,11 +26,10 @@ public class CardDateBase {
 		String quip = null;
 
 		try {
-			reader = new BufferedReader(new FileReader("TextWC.txt"));
+			reader = new BufferedReader( new InputStreamReader(new FileInputStream("TextWC.txt")));
 
-			while( reader.readLine() != null ){
+			while( (quip = reader.readLine()) != null ){
 
-				quip = reader.readLine();
 				System.out.println(quip);
 
 			}
@@ -46,30 +44,28 @@ public class CardDateBase {
 
 	public static String getBlackText(){
 
-		String numOf = null;
+		String numbers = null;
 		int numOfLines = 0;
 		int numOfBlanks = 0;
 		String[] q = new String[3];
 
 		try {
 
-			reader = new BufferedReader(new InputStreamReader(new FileInputStream("TextBC.txt")));
-			// fis = new FileInputStream(new File("TextBC.txt"));
+			reader = new BufferedReader( new InputStreamReader(new FileInputStream("TextBC.txt")));
 
-			while( (numOf = reader.readLine()) != null){
+			while( (numbers = reader.readLine()) != null){
 
-				numOfLines = Integer.parseInt(numOf.split(" ")[0]);
-				numOfBlanks = Integer.parseInt(numOf.split(" ")[1]);
+				numOfLines = Integer.parseInt(numbers.split(" ")[0]);
+				numOfBlanks = Integer.parseInt(numbers.split(" ")[1]);
 
 				for(int i = 0; i < numOfLines; i++ ) {
 
-					q[i] = numOf;
+					numbers = reader.readLine();
+					q[i] = numbers;
 
-					System.out.println(q);
+					System.out.println(q[i]);
 				}
-
 			}
-
 		} catch (IOException e) {
 			e.printStackTrace();
 			System.out.println("Failed to read black cards.");
