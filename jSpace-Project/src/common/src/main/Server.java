@@ -11,23 +11,31 @@ public class Server {
     public static void main(String[] argv) {
     	
     	// initialisation();
+    	
+    	// Data to setup games
     	int maxGames = 5;
+    	boolean[] gamesAvailable = new boolean[maxGames];
+    	
+    	// Some user data, maybe make it into a class?
     	int maxUsers = 20;
     	int numberOfUsers = 0;
     	int[] id = new int[maxUsers];
     	String[] name = new String[maxUsers];
     	
-    	SequentialSpace lobby = new SequentialSpace();     // Authentication/Lobby tuple
-		//SequentialSpace game = new SequentialSpace();      // Game tuple
-		        	
-		SpaceRepository repository = new SpaceRepository();
+    	// The place all tuple spaces end up in the server.
+    	SpaceRepository repository = new SpaceRepository();
+    	
+    	// Setup for the lobby tuple space
+    	SequentialSpace lobby = new SequentialSpace();
 		repository.addGate("tcp://127.0.0.1:9001/?keep");
 		repository.add("lobby", lobby);
-		//repository.add("game", game);
 		
-		while(true){
+		
+		/* Listening for messages on the tuple space */
+		int stop = 0; // Placeholder so the while loop runs forever.
+		while(stop != 0){
 			try {
-				Object[] tuple = lobby.get(new ActualField("enter"), new FormalField(String.class),
+				Object[] tuple = lobby.get(new FormalField(String.class), new FormalField(String.class),
 						new FormalField(Integer.class));
 				if (tuple[0] == "enter"){
 					
@@ -36,8 +44,8 @@ public class Server {
 					int  n = rand.nextInt(99999) + 10000;
 					id[numberOfUsers] = n;
 					name[numberOfUsers] = (String) tuple[1];
-					System.out.println("User "+name[numberOfUsers]+", the user was assigned th ID: "+id[numberOfUsers]+", there is now "
-							+numberOfUsers+"online.");
+					System.out.println("User "+name[numberOfUsers]+", the user was assigned th ID: "+id[numberOfUsers]+", there is now "+numberOfUsers+"online.");
+				} else if (true){
 					
 				}
 			} catch (InterruptedException e) {
@@ -48,5 +56,20 @@ public class Server {
 		
 		// Create new game
 		// Create a thread to communicate with clients in-game.
+		
+		for (int i = 0; i < maxGames; i++) {
+			if (gamesAvailable[i] = true){
+				new Thread(new Game(repository, i)).start();
+				gamesAvailable[i] = false;
+				break;
+			}
+		}
+		
     }
+    
+	public static void createNewGame(SpaceRepository repository) {
+		
+		
+	}
+	
 }
