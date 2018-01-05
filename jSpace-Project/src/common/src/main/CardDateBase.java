@@ -8,45 +8,78 @@ public class CardDateBase {
 
 	// DECLARATIONS
 	static BufferedReader br = null;
+
+
+	public static void main(String[] args){
+		
+		getWhiteText();
+	
+	}
 	
 	
-	public static String[] whiteCardText(){
-		
-		String line = null;
-		
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	public static String[] getWhiteText(){
+
+		String quip = null;
+
 		int i = 0;
-		
+
 		try {
-			br = new BufferedReader(new FileReader("WhiteCardText.txt"));
-			
+			br = new BufferedReader(new FileReader("TextWC.txt"));
+
 			while(br.readLine() != null){
-				line = (String) br.readLine();
-				
-				System.out.println(line);
+				quip = (String) br.readLine();
+
+				System.out.println(quip);
 
 			}
-			
+
 		} catch (IOException e) {
 			e.printStackTrace();
 			System.out.println("Failed to read white cards successfully.");
 		}
 	}
-	
-	
-	public static String blackCardText(){
-		
-		String line = null;
-		String[] blackStrings = new String[4];
-		
+
+
+	public static String[] getBlackText(){
+
+		String numberOf = null;
+		int numberOfLines = 0;
+		int numberOfBlanks = 0;
+		String[] q = new String[3];
+
 		try {
-			br = new BufferedReader(new FileReader("BlackCardText.txt"));
-			line = (String) br.readLine();
-			
+
+			br = new BufferedReader(new FileReader("TextBC.txt"));
+
+			while(br.readLine() != null){
+
+				numberOf = br.readLine();
+				numberOfLines = Integer.parseInt(numberOf.split(" ")[0]);
+				numberOfBlanks = Integer.parseInt(numberOf.split(" ")[1]);
+
+				for(int i = 0; i < numberOfLines; i++ ) {
+
+					q[i] = br.readLine();
+
+					System.out.println(q);
+				}
+
+			}
+
 		} catch (IOException e) {
 			e.printStackTrace();
-			System.out.println("Failed toread white cards.");
+			System.out.println("Failed to read black cards.");
 		}
-		return line;
 	}	
-	
+
 }
