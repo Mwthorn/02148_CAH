@@ -13,25 +13,14 @@ public class CardDateBase {
 	public static void main(String[] args){
 		
 		getWhiteText();
+		
+		getBlackText();
 	
 	}
 	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	public static String[] getWhiteText(){
+	public static String getWhiteText(){
 
 		String quip = null;
-
-		int i = 0;
 
 		try {
 			br = new BufferedReader(new FileReader("TextWC.txt"));
@@ -40,17 +29,17 @@ public class CardDateBase {
 				quip = (String) br.readLine();
 
 				System.out.println(quip);
-
 			}
 
 		} catch (IOException e) {
 			e.printStackTrace();
 			System.out.println("Failed to read white cards successfully.");
 		}
+		return "0";
 	}
 
 
-	public static String[] getBlackText(){
+	public static String getBlackText(){
 
 		String numberOf = null;
 		int numberOfLines = 0;
@@ -80,6 +69,7 @@ public class CardDateBase {
 			e.printStackTrace();
 			System.out.println("Failed to read black cards.");
 		}
+		return "1";
 	}	
 
 }
