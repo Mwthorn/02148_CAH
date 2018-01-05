@@ -20,7 +20,8 @@ public class Client {
     	/* Connect to server using GUI info */
 		try {
 			lobby = new RemoteSpace("tcp://127.0.0.1:9001/lobby?keep");
-			lobby.put("enter","Alex",0);
+			//lobby.put("test");
+			lobby.put("lobby","enter","Alex",0);
 			
 		} catch (UnknownHostException e) {
 			e.printStackTrace();
