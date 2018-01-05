@@ -1,9 +1,6 @@
 package common.src.main;
-
 import java.io.BufferedReader;
-import java.io.File;
 import java.io.FileInputStream;
-import java.io.FileReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
@@ -11,23 +8,26 @@ import java.util.List;
 
 public class CardDeck{
 
-	static BufferedReader reader = null;
-	static FileInputStream inputStream = null;
-	static List<String> cardList;
+	public  void main(String[] args){
+	getWhiteDeck();
+	getBlackDeck();
+	}
+	
+	
+	 BufferedReader reader = null;
+	 FileInputStream inputStream = null;
+	 List<String> cardList;
 	
 	public CardDeck() {
-
-		cardList = new ArrayList<String>();
-		
+		cardList = new ArrayList<String>();	
 	}
 
-	public static List<String> getWhiteDeck(){
-
+	public  List<String> getWhiteDeck(){
 		String quip = null;
-
+		
 		try {
 			inputStream = new FileInputStream("TextWC.txt");
-			reader = new BufferedReader( new InputStreamReader(inputStream));
+			reader = new BufferedReader(new InputStreamReader(inputStream));
 
 			while( (quip = reader.readLine()) != null ){
 				cardList.add(quip);
@@ -45,8 +45,7 @@ public class CardDeck{
 	}
 
 
-	public static List<String> getBlackDeck(){
-
+	public  List<String> getBlackDeck(){
 		String numbers, text = null;
 		int numOfLines, numOfBlanks = 0;
 
@@ -55,34 +54,29 @@ public class CardDeck{
 			reader = new BufferedReader( new InputStreamReader(inputStream));
 
 			while( (numbers = reader.readLine()) != null){
-
 				text = "";
 				numOfLines = Integer.parseInt(numbers.split(" ")[0]);
 				numOfBlanks = Integer.parseInt(numbers.split(" ")[1]);
 
 				for(int i = 0; i < numOfLines; i++ ) {
-
 					if (numOfBlanks == 0) {
 						text = text + reader.readLine();
 					} else {
 						text = text + reader.readLine() + " ________";
 						numOfBlanks--;
 					}
-				} 
-				cardList.add(text);
+				} cardList.add(text);
 			}
 		} catch (IOException e) {
 			e.printStackTrace();
 			System.out.println("Failed to read black cards.");
 		}
-
 		close();
 		System.out.println(cardList);
 		return cardList;
 	}	
 
-	public static void close(){
-
+	public void close(){
 		try {
 			reader.close();
 			inputStream.close();
@@ -90,7 +84,5 @@ public class CardDeck{
 			System.out.println("Failed to close bis/fis.");
 			e.printStackTrace();
 		}
-
 	}
-
 }
