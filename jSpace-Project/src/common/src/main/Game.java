@@ -7,6 +7,7 @@ import common.src.main.cards.BlackCard;
 import common.src.main.cards.WhiteCard;
 
 import java.util.ArrayList;
+import java.util.Objects;
 
 public class Game implements Runnable {
 
@@ -16,23 +17,52 @@ public class Game implements Runnable {
     private BlackCard[] blackCards;
     private ArrayList<Player> players;
     private String status;
+
+    SpaceRepository repository = new SpaceRepository();
+    SequentialSpace game = new SequentialSpace();
+
     // TODO: Add chat?
-    // TODO: Add rounds?
+    // TODO: Add rounds/max round?
     // TODO: Add host?
     // TODO: Add vote count?
 
-    public Game(String gameName, WhiteCard[] whiteCards, BlackCard[] blackCards) {
+    public Game(String gameName,
+                WhiteCard[] whiteCards,
+                BlackCard[] blackCards,
+                SpaceRepository repository,
+                int gameSlot) {
         this.gameName = gameName;
         this.whiteCards = whiteCards;
         this.blackCards = blackCards;
         this.password = null;
+        this.repository = repository;
+        this.repository.addGate("tcp://127.0.0.1:9001/?keep");
+        this.repository.add("game"+1, game);
     }
 
-    public Game(String gameName, WhiteCard[] whiteCards, BlackCard[] blackCards, String password) {
+    public Game(SpaceRepository repository, int gameSlot) {
+        this.repository = repository;
+        this.repository.addGate("tcp://127.0.0.1:9001/?keep");
+        this.repository.add("game"+1, game);
+    }
+
+    public void run() {
+
+    }
+
+    public Game(String gameName,
+                WhiteCard[] whiteCards,
+                BlackCard[] blackCards,
+                String password,
+                SpaceRepository repository,
+                int gameSlot) {
         this.gameName = gameName;
         this.whiteCards = whiteCards;
         this.blackCards = blackCards;
         this.password = password;
+        this.repository = repository;
+        this.repository.addGate("tcp://127.0.0.1:9001/?keep");
+        this.repository.add("game"+1, game);
     }
 
     public String getGameName() {
@@ -49,6 +79,15 @@ public class Game implements Runnable {
 
     public ArrayList<Player> getPlayers() {
         return this.players;
+    }
+
+    public Player FindPlayer(String name) {
+        for (Player player : players) {
+            if (Objects.equals(player.getName(), name)) {
+                return player;
+            }
+        }
+        return null;
     }
 
     public String getStatus() {
@@ -70,19 +109,5 @@ public class Game implements Runnable {
     public void setPassword(String password) {
         this.password = password;
     }
-
-	SpaceRepository repository = new SpaceRepository();
-	SequentialSpace game = new SequentialSpace();
-
-    public Game(SpaceRepository repository, int gameSlot) {
-    	this.repository = repository;
-    	this.repository.addGate("tcp://127.0.0.1:9001/?keep");
-		this.repository.add("game"+1, game);
-	}
-    
-	public void run() {
-		
-		
-	}
 
 }
