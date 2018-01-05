@@ -11,23 +11,29 @@ public class Server {
     public static void main(String[] argv) {
     	
     	// initialisation();
+    	
+    	// Data to setup games
     	int maxGames = 5;
+    	boolean[] gamesAvailable = new boolean[maxGames];
+    	
+    	// Some user data, maybe make it into a class?
     	int maxUsers = 20;
     	int numberOfUsers = 0;
     	int[] id = new int[maxUsers];
     	String[] name = new String[maxUsers];
     	
-    	SequentialSpace lobby = new SequentialSpace();     // Authentication/Lobby tuple
-		//SequentialSpace game = new SequentialSpace();      // Game tuple
-		        	
-		SpaceRepository repository = new SpaceRepository();
+    	// The place all tuple spaces end up in the server.
+    	SpaceRepository repository = new SpaceRepository();
+    	
+    	// Setup for the lobby tuple space
+    	SequentialSpace lobby = new SequentialSpace();
 		repository.addGate("tcp://127.0.0.1:9001/?keep");
 		repository.add("lobby", lobby);
-		//repository.add("game", game);
 		
 		
 		/* Listening for messages on the tuple space */
-		while(true){
+		int stop = 0; // Placeholder so the while loop runs forever.
+		while(stop != 0){
 			try {
 				Object[] tuple = lobby.get(new FormalField(String.class), new FormalField(String.class),
 						new FormalField(Integer.class));
@@ -51,7 +57,14 @@ public class Server {
 		// Create new game
 		// Create a thread to communicate with clients in-game.
 		
-		//createNewGame();
+		for (int i = 0; i < maxGames; i++) {
+			if (gamesAvailable[i] = true){
+				new Thread(new Game(repository, i)).start();
+				gamesAvailable[i] = false;
+				break;
+			}
+		}
+		
     }
     
 	public static void createNewGame(SpaceRepository repository) {

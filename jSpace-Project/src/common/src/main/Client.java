@@ -13,9 +13,9 @@ public class Client {
     public static void main(String[] args) {
 
     	RemoteSpace lobby;
-    	
     	/* Login */
     	// Create login GUI and request name of user and IP to server.
+    	
     	
     	/* Connect to server using GUI info */
 		try {
