@@ -11,6 +11,7 @@ public class Server {
     public static void main(String[] argv) {
     	
     	// initialisation();
+    	int maxGames = 5;
     	int maxUsers = 20;
     	int numberOfUsers = 0;
     	int[] id = new int[maxUsers];
@@ -24,18 +25,24 @@ public class Server {
 		repository.add("lobby", lobby);
 		//repository.add("game", game);
 		
-		try {
-			Object[] tuple = lobby.get(new ActualField("enter"), new FormalField(String.class),
-					new FormalField(Integer.class));
-			
-			// Creating a random user ID
-			Random rand = new Random();
-			int  n = rand.nextInt(99999) + 10000;
-			id[numberOfUsers] = n;
-			name[numberOfUsers] = (String) tuple[1];
-			
-		} catch (InterruptedException e) {
-			e.printStackTrace();
+		while(true){
+			try {
+				Object[] tuple = lobby.get(new ActualField("enter"), new FormalField(String.class),
+						new FormalField(Integer.class));
+				if (tuple[0] == "enter"){
+					
+					// Creating a random user ID
+					Random rand = new Random();
+					int  n = rand.nextInt(99999) + 10000;
+					id[numberOfUsers] = n;
+					name[numberOfUsers] = (String) tuple[1];
+					System.out.println("User "+name[numberOfUsers]+", the user was assigned th ID: "+id[numberOfUsers]+", there is now "
+							+numberOfUsers+"online.");
+					
+				}
+			} catch (InterruptedException e) {
+				e.printStackTrace();
+			}
 		}
 		
 		

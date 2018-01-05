@@ -12,14 +12,16 @@ import org.jspace.SpaceRepository;
 public class Client {
     public static void main(String[] args) {
 
-    	RemoteSpace space;
+    	RemoteSpace lobby;
     	
     	/* Login */
     	// Create login GUI and request name of user and IP to server.
     	
     	/* Connect to server using GUI info */
 		try {
-			space = new RemoteSpace("tcp://127.0.0.1:9001/lobby?keep");
+			lobby = new RemoteSpace("tcp://127.0.0.1:9001/lobby?keep");
+			lobby.put("enter","Alex",0);
+			System.out.println("Client Alex trying to enter.");
 			
 		} catch (UnknownHostException e) {
 			e.printStackTrace();
@@ -36,8 +38,7 @@ public class Client {
 		
 		
 		
-		
-		/* Enter game state */
+		/*Enter game state
 		cardsAgainstHumanity();
 
         RemoteSpace lobby;
@@ -52,7 +53,7 @@ public class Client {
 			} catch (IOException e) {
 				e.printStackTrace();
 			}
-
+		*/
     }
 
 	private static void cardsAgainstHumanity() {
