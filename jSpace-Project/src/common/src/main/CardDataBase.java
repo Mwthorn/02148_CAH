@@ -7,7 +7,7 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 
-public class CardDateBase {
+public class CardDataBase {
 
 	// DECLARATIONS
 	static BufferedReader reader = null;
