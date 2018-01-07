@@ -4,6 +4,7 @@ import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Component;
 import java.awt.Dimension;
+import java.awt.FlowLayout;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -28,38 +29,38 @@ public class Lobby extends JFrame implements ActionListener{
 	
 	public Lobby(){
 		getContentPane().setLayout(new BorderLayout()); //Default layout
-		
+		getContentPane().setBackground(Color.WHITE);
 		
 		//Create buttons
-		Dimension btnsize1 = new Dimension(150,75);
+		Dimension btnsize1 = new Dimension(200,50);
 		Dimension btnsize2 = new Dimension(150,55);
 		
 		b1 = new JButton("Create Game");
+		b1.setPreferredSize(btnsize1);
 		b1.addActionListener(this);
-		b1.setMaximumSize(btnsize1);
 		b1.setAlignmentX(Component.CENTER_ALIGNMENT);
 		
 		b2 = new JButton("Sign Out");
 		b2.addActionListener(this);
-		b2.setMaximumSize(btnsize2);
+		b2.setPreferredSize(btnsize2);
 		b2.setAlignmentX(Component.CENTER_ALIGNMENT);
 		
 		//Create label
-		l1 = new JLabel("Cards Against Humanity");
+		l1 = new JLabel("Cards Against Humanity ");
+	    l1.setPreferredSize(new Dimension(480, 50));
 		l1.setFont(new Font("Cards Against Humanity",Font.ITALIC,40));
 		l1.setForeground(Color.BLACK);
 		l1.setAlignmentX(Component.CENTER_ALIGNMENT);
 		
-		l1.setBorder(border);
-	    l1.setPreferredSize(new Dimension(150, 100));
+
 		
 		
-		l2 = new JLabel("If you can't handle\n ______________,\nyou'd better stay\naway from\n____________.");
+		l2 = new JLabel("<html>If you can't handle<br> ______________,<br>you'd better stay<br>away from<br>____________.<html>");
 		l2.setAlignmentX(Component.CENTER_ALIGNMENT);
 		//l2.setFont(new Font("Cards Against Humanity",10,40));
-		l2.setForeground(Color.WHITE);
 		l2.setBackground(Color.BLACK);
-		
+		l2.setForeground(Color.WHITE);
+        		
 		/*
 		l3 = new JLabel("Cards Against Humanity");
 		l3.setAlignmentX(Component.CENTER_ALIGNMENT);
@@ -76,39 +77,36 @@ public class Lobby extends JFrame implements ActionListener{
 		JPanel p1 = new JPanel();
 		JPanel p2 = new JPanel();
 		
-		p1.setMaximumSize(p1.getPreferredSize());
+		p1.setLayout(new BoxLayout(p1, BoxLayout.LINE_AXIS));
+		//p1.setMaximumSize(p1.getPreferredSize()); 
+        //p1.setMinimumSize(p1.getPreferredSize());
 		p1.setBackground(Color.WHITE);
-		p1.add(Box.createRigidArea(new Dimension(50,490)));
-		p1.add(b1);
+		p1.add(b2);
+        p1.add(Box.createHorizontalGlue());
+        p1.add(b1);
+        
+		getContentPane().add(p1, BorderLayout.SOUTH);
 		
-		p2.add(Box.createRigidArea(new Dimension(50,510)));
-		p2.setMaximumSize(p2.getPreferredSize());
-		p2.setBackground(Color.WHITE);
-		p2.add(b2);
-		
-		getContentPane().add(p1, BorderLayout.EAST);
-		getContentPane().add(p2, BorderLayout.WEST);
 		
 		//Creates panel for label
 		JPanel p3 = new JPanel();
-		//JPanel p4 = new JPanel();
+		JPanel p4 = new JPanel();
 		
-		p3.setBackground(Color.BLACK);
+		p3.setLayout(new BoxLayout(p3, BoxLayout.PAGE_AXIS));
+		p3.setBackground(Color.WHITE);
 		p3.add(l1);
-		p3.setPreferredSize(new Dimension(0, 100));
-        p3.setMaximumSize(p3.getPreferredSize()); 
-        p3.setMinimumSize(p3.getPreferredSize());
 		
 		
-		/*
-		p4.add(Box.createRigidArea(new Dimension(50,300)));
-		p4.add(l1);
-		p4.setBackground(Color.WHITE);
-		p4.setSize(200, 200);
-		*/
+		p4.setLayout(new BoxLayout(p4, BoxLayout.LINE_AXIS));
+		//p4.setBackground(Color.BLACK);
+		p4.add(l2);
+		
+		//p4.add(Box.createHorizontalGlue());
+		//p4.setSize(200, 200);
+		
 		
 		getContentPane().add(p3, BorderLayout.NORTH);
-		//getContentPane().add(p4, BorderLayout.EAST);
+		getContentPane().add(p4, BorderLayout.EAST);
 		
 		
 	}
@@ -127,7 +125,7 @@ public class Lobby extends JFrame implements ActionListener{
 	
 	public static void main(String[] args) {
 		Lobby lobby = new Lobby();
-			
+		
 		lobby.setSize(900, 600);
 		lobby.setLocationRelativeTo(null);
 		lobby.setDefaultCloseOperation(EXIT_ON_CLOSE);
