@@ -11,33 +11,26 @@ import org.jspace.RemoteSpace;
 public class Client {
 	private static RemoteSpace lobby;
 	private static int userID;
+	private static int gameID;
 
     public static void main(String[] args) {
     	/* Login */
     	// Create login GUI and request name of user and IP to server.
     	
-    	
+    	System.out.println("hej");
     	/* Connect to server using GUI info */
 		
 			try {
-
-				try {
-					loginUser("Alex", "127.0.0.1");
-				} catch (InterruptedException e) {
-					e.printStackTrace();
-				}
-				/*
-				lobby = new RemoteSpace("tcp://127.0.0.1:9001/lobby?keep");
-
-				//lobby.put("test");
-				lobby.put("lobby","enter","Alex",0);
-				*/
+				loginUser("Alex", "127.0.0.1");
 				
+				System.out.println("Trying to create game");
 				createNewGame();
 
 			} catch (UnknownHostException e) {
 				e.printStackTrace();
 			} catch (IOException e) {
+				e.printStackTrace();
+			} catch (InterruptedException e) {
 				e.printStackTrace();
 			}
 			
@@ -54,34 +47,21 @@ public class Client {
 		
 		
 		/*Enter game state
-		cardsAgainstHumanity();
-
-        RemoteSpace lobby;
-        
-			try {
-				lobby = new RemoteSpace("tcp://127.0.0.1:9001/chat?keep");
-				lobby.put("enter",0);
-
-				
-			} catch (UnknownHostException e) {
-				e.printStackTrace();
-			} catch (IOException e) {
-				e.printStackTrace();
-			}
-		*/
+		 * cardsAgainstHumanity();
+		 */
     }
 
 	private static void createNewGame() {
-		lobby.put("createGame","no nobs plx", 0);
+		lobby.put("lobby", "createGame", "no nobs plx", userID);
 		
 		try {
-			Object[] info = lobby.get(new ActualField("gameSetup"),new FormalField(boolean.class), new FormalField(Game.class));
+			System.out.println("Trying to recieve info");
+			Object[] info = lobby.get(new ActualField("gameCreated"),new FormalField(Integer.class), new ActualField(Integer.class));
+			gameID = (int) info[2];
+			System.out.println("Game succesful?");
 			
-			if ((boolean) (info[1] = true)){
-				//Create game
-			} else {
-				// game name already taken, print error message to user and try with another name.
-			}
+			// Stuff to join game???
+			
 			
 		} catch (InterruptedException e) {
 			e.printStackTrace();
@@ -89,13 +69,15 @@ public class Client {
 	}
 
 	public static void loginUser(String name, String IP) throws IOException, InterruptedException {
+		System.out.println("hejmeddig");
 		lobby = new RemoteSpace("tcp://" + IP + ":9001/lobby?keep");
-
+		System.out.println("hejmeddig2");
 		//lobby.put("test");
 		lobby.put("lobby","enter",name,0);
-
+		System.out.println("Hejmeddig3");
 		Object[] tuple = lobby.get(new ActualField("UserID"),new ActualField(name), new FormalField(Integer.class));
-		System.out.println("Client was assigned ID: " + tuple[2]);
+		userID = (int) tuple[2];
+		System.out.println("Client was assigned ID: " + userID);
 	}
 
 	private static void cardsAgainstHumanity() {
@@ -107,7 +89,7 @@ public class Client {
 	public static GamePreview[] getGameList() throws InterruptedException {
 		lobby.put("lobby", "refreshGameList", "", userID);
 
-		Object[] tuple = lobby.get(new ActualField("GameListSize"),new ActualField(userID), new FormalField(Integer.class));
+		Object[] tuple = lobby.get(new ActualField("GameListSize"), new ActualField(userID), new FormalField(Integer.class));
 		Object[] gT;
 		int n = (int) tuple[1];
 		GamePreview[] games = new GamePreview[n];
