@@ -15,4 +15,28 @@ public class GamePreview {
         this.currentPlayerSize = currentPlayerSize;
         this.maxPlayerSize = maxPlayerSize;
     }
+
+    public String getGameName() {
+        return this.gameName;
+    }
+
+    public String getGameStatus() {
+        return this.gameStatus;
+    }
+
+    public boolean isPasswordProtected() {
+        return this.hasPassword;
+    }
+
+    public boolean hasPassword() {
+        return this.hasPassword;
+    }
+
+    public int getCurrentPlayerSize() {
+        return this.currentPlayerSize;
+    }
+
+    public int getMaxPlayerSize() {
+        return this.maxPlayerSize;
+    }
 }

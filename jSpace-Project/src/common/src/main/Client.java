@@ -93,7 +93,7 @@ public class Client {
 		
 	}
 
-	public static GamePreview[] refreshGameList(RemoteSpace lobby) throws InterruptedException {
+	public static GamePreview[] getGameList() throws InterruptedException {
 		lobby.put("lobby", "refreshGameList", "", userID);
 
 		Object[] tuple = lobby.get(new ActualField("GameListSize"),new ActualField(userID), new FormalField(Integer.class));
@@ -112,5 +112,9 @@ public class Client {
 			games[i] = new GamePreview((String) gT[1], (String) gT[2], (Boolean) gT[3], (int) gT[4], (int) gT[5]);
 		}
 		return games;
+	}
+
+	public static void joinGame(int ID) throws InterruptedException {
+		
 	}
 }
