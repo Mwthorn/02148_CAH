@@ -6,13 +6,13 @@ import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.List;
 
-public class CardDeck{
+public class CardDataBase{
 	
 	 BufferedReader reader = null;
 	 FileInputStream inputStream = null;
-	 List<String> newDeck  = new ArrayList<String>();
+	 List<String> CardDatabase  = new ArrayList<String>();
 	
-	public CardDeck() {
+	public CardDataBase() {
 	}
 
 	public List<String> getWhiteDeck(){
@@ -23,7 +23,7 @@ public class CardDeck{
 			reader = new BufferedReader(new InputStreamReader(inputStream));
 
 			while( (quip = reader.readLine()) != null ){
-				newDeck.add(quip);
+				CardDatabase.add(quip);
 				quip = "";
 			}
 
@@ -34,7 +34,7 @@ public class CardDeck{
 
 		close();
 		// System.out.println(cardList);
-		return newDeck;
+		return CardDatabase;
 	}
 
 
@@ -59,7 +59,7 @@ public class CardDeck{
 						text = text + reader.readLine() + " ________";
 						numOfBlanks--;
 					}
-				} newDeck.add(text);
+				} CardDatabase.add(text);
 			}
 		} catch (IOException e) {
 			e.printStackTrace();
@@ -67,7 +67,7 @@ public class CardDeck{
 		}
 		close();
 		// System.out.println(cardList);
-		return newDeck;
+		return CardDatabase;
 	}	
 
 	public void close(){
