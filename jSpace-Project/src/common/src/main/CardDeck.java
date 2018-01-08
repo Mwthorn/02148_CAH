@@ -10,7 +10,7 @@ public class CardDeck{
 	
 	 BufferedReader reader = null;
 	 FileInputStream inputStream = null;
-	 List<String> deck  = new ArrayList<String>();
+	 List<String> newDeck  = new ArrayList<String>();
 	
 	public CardDeck() {
 	}
@@ -23,7 +23,7 @@ public class CardDeck{
 			reader = new BufferedReader(new InputStreamReader(inputStream));
 
 			while( (quip = reader.readLine()) != null ){
-				deck.add(quip);
+				newDeck.add(quip);
 				quip = "";
 			}
 
@@ -34,7 +34,7 @@ public class CardDeck{
 
 		close();
 		// System.out.println(cardList);
-		return deck;
+		return newDeck;
 	}
 
 
@@ -59,7 +59,7 @@ public class CardDeck{
 						text = text + reader.readLine() + " ________";
 						numOfBlanks--;
 					}
-				} deck.add(text);
+				} newDeck.add(text);
 			}
 		} catch (IOException e) {
 			e.printStackTrace();
@@ -67,7 +67,7 @@ public class CardDeck{
 		}
 		close();
 		// System.out.println(cardList);
-		return deck;
+		return newDeck;
 	}	
 
 	public void close(){
