@@ -53,7 +53,7 @@ public class Server {
 
 					playerBase.addPlayer(p);
 
-					System.out.println("User "+ p.getName() +", the user was assigned th ID: "+ p.getId() +", there are now "+ playerBase.getSize() + " online.");
+					System.out.println("User "+ p.getName() +", the user was assigned the ID: "+ p.getId() +", there are now "+ playerBase.getSize() + " online.");
 				    lobby.put("UserID", p.getName(), p.getId());
                 }
                 else if (tuple[1].equals("createGame")){
