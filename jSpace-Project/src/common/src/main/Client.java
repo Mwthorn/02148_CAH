@@ -30,10 +30,7 @@ public class Client {
 				createNewGame();
 				
 				String name = "Alex";
-				/*
-				lobby.put("lobby","enter",name,0);
-				Object[] tuple = lobby.get(new ActualField("UserID"),new ActualField(name), new FormalField(Integer.class));
-				System.out.println("Client was assigned ID: " + tuple[2]);*/
+
 			} catch (UnknownHostException e) {
 				e.printStackTrace();
 			} catch (IOException e) {
@@ -87,6 +84,16 @@ public class Client {
 		}
 	}
 
+	public static void loginUser(String name, String IP) throws IOException, InterruptedException {
+		lobby = new RemoteSpace("tcp://" + IP + ":9001/lobby?keep");
+
+		//lobby.put("test");
+		lobby.put("lobby","enter",name,0);
+
+		Object[] tuple = lobby.get(new ActualField("UserID"),new ActualField(name), new FormalField(Integer.class));
+		System.out.println("Client was assigned ID: " + tuple[2]);
+	}
+
 	private static void cardsAgainstHumanity() {
 		// Create game GUI
 		// Tons of different game features, move it to another function?
@@ -108,8 +115,9 @@ public class Client {
 					new FormalField(String.class),
 					new FormalField(Boolean.class),
 					new FormalField(Integer.class),
+					new FormalField(Integer.class),
 					new FormalField(Integer.class));
-			games[i] = new GamePreview((String) gT[1], (String) gT[2], (Boolean) gT[3], (int) gT[4], (int) gT[5]);
+			games[i] = new GamePreview((String) gT[1], (String) gT[2], (Boolean) gT[3], (int) gT[4], (int) gT[5], (int) gT[6]);
 		}
 		return games;
 	}

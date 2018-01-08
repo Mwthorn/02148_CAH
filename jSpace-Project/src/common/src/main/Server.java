@@ -61,7 +61,7 @@ public class Server {
 					String playerID = (String) tuple[3];
 					lobby.put("GameListSize", playerID, games.size());
 					for (Game game : games) {
-						lobby.put("GameList", playerID, game.getGameName(), game.getStatus(), game.hasPassword(), game.getPlayers().size(), game.getMaxPlayers());
+						lobby.put("GameList", playerID, game.getGameName(), game.getStatus(), game.hasPassword(), game.getPlayers().size(), game.getMaxPlayers(), game.getID());
 					}
 				}
 
@@ -83,7 +83,7 @@ public class Server {
             repository,
             gameSlot,
             lobby,
-            maxPlayers);
+            maxPlayers, gameId);
     	new Thread(game).start();
     	gameBase.addGame(game);
     	lobby.put("gameSetup", true, game);	
