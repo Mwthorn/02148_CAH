@@ -12,6 +12,8 @@ public class Client {
 	private static RemoteSpace lobby, game;
 	private static int userID;
 	private static int gameID;
+	private static String serverIP;
+	private static String name;
 
     public static void main(String[] args) {
     	/* Login */
@@ -21,7 +23,7 @@ public class Client {
     	/* Connect to server using GUI info */
 		
 			try {
-				loginUser("Alex", "127.0.0.1");
+				loginUser();
 				
 				System.out.println("Trying to create game");
 				createNewGame();
@@ -56,13 +58,13 @@ public class Client {
 		
 		try {
 			System.out.println("Trying to recieve info");
-			Object[] info = lobby.get(new ActualField("gameCreated"), new ActualField(userID), new FormalField(Integer.class), new FormalField(String.class));
+			Object[] info = lobby.get(new ActualField("gameCreated"), new ActualField(userID), new FormalField(Integer.class));
 			int gameSlot = (int) info[2];
-			String hostIP = (String) info[3];
 			
 			// Connects the host to the tuple space.
-			game = new RemoteSpace("tcp://" + hostIP + ":9001/game" + gameSlot + "?keep");
+			game = new RemoteSpace("tcp://" + serverIP + ":9001/game" + gameSlot + "?keep");
 			
+			game.put("testing");
 			
 		} catch (InterruptedException e) {
 			e.printStackTrace();
@@ -73,8 +75,13 @@ public class Client {
 		}
 	}
 
-	public static void loginUser(String name, String IP) throws IOException, InterruptedException {
-		lobby = new RemoteSpace("tcp://" + IP + ":9001/lobby?keep");
+	public static void loginUser() throws IOException, InterruptedException {
+		// TODO: The two lines below assigning IP and name should be retrieved
+		// when first signing in to the lobby.
+		serverIP = "127.0.0.1";
+		name = "Alex";
+		
+		lobby = new RemoteSpace("tcp://" + serverIP + ":9001/lobby?keep");
 
 		//lobby.put("test");
 		lobby.put("lobby","enter",name,0);

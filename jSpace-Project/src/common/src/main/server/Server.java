@@ -42,7 +42,7 @@ public class Server {
         /* Listening for messages on the tuple space */
         while(true) {
 			try {
-				// Lobby - Type of Action - String - Integer
+				// Lobby - Type  of Action - String - Integer
 				Object[] tuple = lobby.get(new ActualField("lobby"),new FormalField(String.class), new FormalField(String.class), new FormalField(Integer.class));
                 System.out.println("Got response: " + tuple[1]);
 				if (tuple[1].equals("enter")) {
@@ -67,6 +67,10 @@ public class Server {
 						lobby.put("GameList", playerID, new GamePreview(game));
 					}
 				} else if (tuple[1].equals("joinGame")) {
+					System.out.println("Joining game...");
+					
+					
+					
 					
 				} else if (tuple[1].equals("signOut")) {
 
@@ -97,7 +101,7 @@ public class Server {
     	new Thread(game).start();
     	gameBase.addGame(game);
     	
-    	lobby.put("gameCreated",gameId, hostID, gameSlot);
+    	lobby.put("gameCreated",hostID, gameSlot);
     	System.out.println("New game created by: "+player.getName()+". The name of the game is '"+game.getGameName()
     	+"', and there is currrently "+game.getMaxPlayers()+" in the game.");
     }

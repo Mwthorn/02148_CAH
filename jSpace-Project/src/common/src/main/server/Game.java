@@ -2,6 +2,8 @@ package common.src.main.server;
 
 import common.src.main.server.utilities.BlackCard;
 import common.src.main.server.utilities.WhiteCard;
+
+import org.jspace.ActualField;
 import org.jspace.SequentialSpace;
 import org.jspace.SpaceRepository;
 
@@ -55,6 +57,20 @@ public class Game implements Runnable {
 
     public void run() {
 
+    	try {
+			game.get(new ActualField("testing"));
+			
+	    	System.out.println("IT'S ALIVE, IT'S ALLLIIIIIVEEEEEEEEE");
+		} catch (InterruptedException e) {
+			e.printStackTrace();
+		}
+    	
+    	
+    	
+    	
+    	
+    	
+    	
     }
 
     public String getGameName() {
