@@ -21,6 +21,7 @@ public class CardDataBase{
 
 	public List<WhiteCard> getWhiteDeck(){
 		String quip = null;
+		WhiteCard newWC;
 		
 		try {
 			inputStream = new FileInputStream("TextWC.txt");
@@ -28,7 +29,7 @@ public class CardDataBase{
 
 			while( (quip = reader.readLine()) != null ){
 				
-				WhiteCard newWC = new WhiteCard(quip);
+				newWC = new WhiteCard(quip);
 				whiteDB.add(newWC);
 				quip = "";
 			}
