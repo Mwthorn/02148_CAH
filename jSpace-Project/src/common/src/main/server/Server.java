@@ -68,7 +68,14 @@ public class Server {
 					}
 				} else if (tuple[1].equals("joinGame")) {
 					System.out.println("Joining game...");
+					Player jPlayer = playerBase.getPlayerwithID(Integer.parseInt((String) tuple[2]));
+					int joinerID = jPlayer.getId();
 					
+					Game jGame = gameBase.getGamewithID((int) tuple[3]);
+					int gameSlot = jGame.getGameSlot();
+					jGame.addPlayerToGame(jPlayer);
+					
+					lobby.put("joinedGame", joinerID, gameSlot);
 					
 					
 					
@@ -103,7 +110,7 @@ public class Server {
     	
     	lobby.put("gameCreated",hostID, gameSlot);
     	System.out.println("New game created by: "+player.getName()+". The name of the game is '"+game.getGameName()
-    	+"', and there is currrently "+game.getMaxPlayers()+" in the game.");
+    	+"'.");
     }
 	
 }

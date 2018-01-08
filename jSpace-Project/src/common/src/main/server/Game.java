@@ -21,6 +21,7 @@ public class Game implements Runnable {
     private String status;
     private int id;
     private int hostID;
+    private int gameSlot;
 
     SpaceRepository repository = new SpaceRepository();
     SequentialSpace game = new SequentialSpace();
@@ -49,18 +50,20 @@ public class Game implements Runnable {
         this.id = id;
         this.hostID = player.getId();
         this.players.add(player);
-        this.maxPlayers++;
+        this.gameSlot = gameSlot;
 
         this.repository = repository;
-        this.repository.add("game"+gameSlot, game);
+        this.repository.add("game"+this.gameSlot, game);
     }
 
     public void run() {
 
     	try {
-			game.get(new ActualField("testing"));
+    		for (int i = 0; i < 2; i++) {
+				game.get(new ActualField("testing"));
+				System.out.println("IT'S ALIVE, IT'S ALLLIIIIIVEEEEEEEEE");
+			}
 			
-	    	System.out.println("IT'S ALIVE, IT'S ALLLIIIIIVEEEEEEEEE");
 		} catch (InterruptedException e) {
 			e.printStackTrace();
 		}
@@ -125,5 +128,9 @@ public class Game implements Runnable {
     public void setPassword(String password) {
         this.password = password;
     }
+
+	public int getGameSlot() {
+		return this.gameSlot;
+	}
 
 }
