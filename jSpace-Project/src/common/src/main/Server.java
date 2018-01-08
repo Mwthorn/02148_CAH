@@ -16,7 +16,7 @@ public class Server {
     private static ArrayList<BlackCard> blackCards;
     private static ArrayList<Game> Games;
     private static SequentialSpace lobby;
-    private static CardDeck cardDeck;
+    private static CardDataBase cardDataBase;
     private static PlayerBase playerBase;
 
 	public static void main(String[] argv) {
@@ -26,7 +26,7 @@ public class Server {
     	// Data to setup games
     	int maxGames = 5;
     	boolean[] gamesAvailable = new boolean[maxGames];
-        cardDeck = new CardDeck();
+		cardDataBase = new CardDataBase();
         playerBase = new PlayerBase();
 
     	// The place all tuple spaces end up in the server.
