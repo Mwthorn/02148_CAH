@@ -40,8 +40,7 @@ public class Game implements Runnable {
         this.serverLobby = serverLobby;
 
         this.repository = repository;
-        this.repository.addGate("tcp://127.0.0.1:9001/?keep");
-        this.repository.add("game"+1, game);
+        this.repository.add("game"+gameSlot, game);
     }
 
     public void run() {

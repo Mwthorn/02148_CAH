@@ -57,8 +57,7 @@ public class Server {
 				    lobby.put("UserID", p.getName(), p.getId());
                 }
                 else if (tuple[1] == "createGame"){
-
-                    createNewGame(repository);
+                    createNewGame(repository, (String)tuple[1]);
 
 				}
 
@@ -84,24 +83,22 @@ public class Server {
 		
     }
     
-	public static void createNewGame(SpaceRepository repository) throws InterruptedException {
-        Object[] tupleGameInfo = lobby.get(new ActualField("GameInfo"), new FormalField(String.class),
-                new FormalField(Integer.class));
-        int id = (int) tupleGameInfo[1];
-        // TODO: Check if GameName is taken
-
-        String gameName = (String) tupleGameInfo[0];
-        int gameSlot = 0;
-
-        Game game = new Game(gameName,
+	public static void createNewGame(SpaceRepository repository, String gameName) throws InterruptedException {
+        int gameSlot = g.getGameSlot();
+        int gameId = g.getGameId();
+        // TODO: Check if GameName is taken.
+        if (g.checkName() == false){
+        	Game game = new Game(gameName,
                 whiteCards,
                 blackCards,
                 repository,
                 gameSlot,
                 lobby);
-        new Thread(game).start();
-
-
+        	new Thread(game).start();
+        	lobby.put("gameSetup", true, game);
+        } else {
+        	lobby.put("gameSetup", false, null);
+        }
     }
 	
 }
