@@ -13,8 +13,8 @@ public class CardDataBase{
 	
 	 BufferedReader reader = null;
 	 FileInputStream inputStream = null;
-	 List<WhiteCard> whiteDB  = new ArrayList<WhiteCard>();
-	 List<BlackCard> blackDB  = new ArrayList<BlackCard>();
+	 List<WhiteCard> wDataBase  = new ArrayList<WhiteCard>();
+	 List<BlackCard> bDataBase  = new ArrayList<BlackCard>();
 	 
 	public CardDataBase() {
 	}
@@ -30,7 +30,7 @@ public class CardDataBase{
 			while( (quip = reader.readLine()) != null ){
 				
 				newWC = new WhiteCard(quip);
-				whiteDB.add(newWC);
+				wDataBase.add(newWC);
 				quip = "";
 			}
 
@@ -41,7 +41,7 @@ public class CardDataBase{
 
 		close();
 		// System.out.println(cardList);
-		return whiteDB;
+		return wDataBase;
 	}
 
 
@@ -69,7 +69,7 @@ public class CardDataBase{
 					}
 				} 
 				newBC = new BlackCard(numOfBlanks, sentence);
-				blackDB.add(newBC);
+				bDataBase.add(newBC);
 			}
 		} catch (IOException e) {
 			e.printStackTrace();
@@ -77,7 +77,7 @@ public class CardDataBase{
 		}
 		close();
 		// System.out.println(cardList);
-		return blackDB;
+		return bDataBase;
 	}	
 
 	public void close(){
