@@ -20,15 +20,20 @@ public class Client {
     	/* Connect to server using GUI info */
 		
 			try {
+
+				try {
+					loginUser("Alex", "127.0.0.1");
+				} catch (InterruptedException e) {
+					e.printStackTrace();
+				}
+				/*
 				lobby = new RemoteSpace("tcp://127.0.0.1:9001/lobby?keep");
-				
+
 				//lobby.put("test");
 				lobby.put("lobby","enter","Alex",0);
-				
+				*/
 				
 				createNewGame();
-				
-				String name = "Alex";
 
 			} catch (UnknownHostException e) {
 				e.printStackTrace();
