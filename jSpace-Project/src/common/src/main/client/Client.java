@@ -158,7 +158,7 @@ public class Client {
 		Object[] tuple = lobby.get(new ActualField("lobby"),new FormalField(String.class), new FormalField(String.class), new FormalField(Integer.class));
 		System.out.println("Got response: " + tuple[1]);
 		if (tuple[1].equals("players")) {
-			
+
 		}
 		else if (tuple[1].equals("voteUpdate")){
 
