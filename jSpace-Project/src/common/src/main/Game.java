@@ -18,6 +18,7 @@ public class Game implements Runnable {
     private ArrayList<Player> players;
     private int maxPlayers;
     private String status;
+    private int id;
 
     SpaceRepository repository = new SpaceRepository();
     SequentialSpace game = new SequentialSpace();
@@ -34,13 +35,15 @@ public class Game implements Runnable {
                 SpaceRepository repository,
                 int gameSlot,
                 SequentialSpace serverLobby,
-                int maxPlayers) {
+                int maxPlayers,
+                int id) {
         this.gameName = gameName;
         this.whiteCards = whiteCards;
         this.blackCards = blackCards;
         this.password = null;
         this.serverLobby = serverLobby;
         this.maxPlayers = maxPlayers;
+        this.id = id;
 
         this.repository = repository;
         this.repository.add("game"+gameSlot, game);
@@ -81,6 +84,10 @@ public class Game implements Runnable {
 
     public String getStatus() {
         return this.status;
+    }
+
+    public int getID() {
+        return this.id;
     }
 
     public void addPointsTo(Player player, int i) {
