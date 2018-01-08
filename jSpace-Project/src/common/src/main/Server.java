@@ -86,9 +86,7 @@ public class Server {
             maxPlayers);
     	new Thread(game).start();
     	gameBase.addGame(game);
-    	lobby.put("gameSetup", true, game);
-    	
-    	
+    	lobby.put("gameSetup", true, game);	
     }
 	
 }
