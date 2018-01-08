@@ -77,19 +77,18 @@ public class Server {
         int gameId = gameBase.getGameId();
         int maxPlayers = 0;
         
-        if (gameBase.checkName() == false){
-        	Game game = new Game(gameName,
-                whiteCards,
-                blackCards,
-                repository,
-                gameSlot,
-                lobby,
-                maxPlayers);
-        	new Thread(game).start();
-        	lobby.put("gameSetup", true, game);
-        } else {
-        	lobby.put("gameSetup", false, null);
-        }
+        Game game = new Game(gameName,
+            whiteCards,
+            blackCards,
+            repository,
+            gameSlot,
+            lobby,
+            maxPlayers);
+    	new Thread(game).start();
+    	gameBase.addGame(game);
+    	lobby.put("gameSetup", true, game);
+    	
+    	
     }
 	
 }

@@ -1,6 +1,9 @@
 package common.src.main;
 
+import java.util.ArrayList;
+
 public class GameBase {
+	private ArrayList<Game> games = new ArrayList<>();
 	
 	public GameBase(){
 		
@@ -12,13 +15,12 @@ public class GameBase {
 	}
 
 	public int getGameId() {
-		// return a randomly assigned game ID.
+		// Generate random ID
 		return 0;
 	}
 
-	public boolean checkName() {
-		// Check if the game title name is available.
-		return true;
+	public void addGame(Game game) {
+		games.add(game);
 	}
 
 }
