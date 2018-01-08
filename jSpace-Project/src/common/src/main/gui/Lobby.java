@@ -58,9 +58,8 @@ public class Lobby extends JFrame implements ActionListener{
 		// Implementing pictures for white cards and black cards
 		i1 = new ImageIcon("BC1.png");
 		i2 = new ImageIcon("WC.jpg");
-		//l2 = new JLabel(i1);
+		l2 = new JLabel(i1);
 		l3 = new JLabel(i2);
-		l2.setIcon(new ImageIcon(new javax.swing.ImageIcon(getClass().getResource("BC1.png")).getImage().getScaledInstance(200, 50, Image.SCALE_SMOOTH)));
 		
 		
 		

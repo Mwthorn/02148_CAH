@@ -30,6 +30,8 @@ public class Client {
 				System.out.println("Trying to create game");
 				createNewGame();
 
+				joinGame();
+
 			} catch (UnknownHostException e) {
 				e.printStackTrace();
 			} catch (IOException e) {
@@ -116,6 +118,24 @@ public class Client {
 		return games;
 	}
 
+	public static void joinGame() throws InterruptedException {
+		String stringID = Integer.toString(userID);
+		lobby.put("lobby", "joinGame", stringID, gameID);
+
+		Object[] info = lobby.get(new ActualField("joinedGame"), new ActualField(userID), new FormalField(Integer.class));
+		int gameSlot = (int) info[2];
+
+		try {
+			game = new RemoteSpace("tcp://" + serverIP + ":9001/game" + gameSlot + "?keep");
+		} catch (UnknownHostException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+
+		game.put("testing");
+	}
+
 	public static ArrayList<Player> getPlayers() throws InterruptedException {
 
 		game.put("GetPlayers", userID);
@@ -134,7 +154,7 @@ public class Client {
 	}
 
 	public static void joinGame(int ID) throws InterruptedException {
-		
+
 	}
 
 	// TODO: make a toggleReady instead?
