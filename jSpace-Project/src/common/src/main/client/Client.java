@@ -153,10 +153,6 @@ public class Client {
 		return ps;
 	}
 
-	public static void joinGame(int ID) throws InterruptedException {
-
-	}
-
 	// TODO: make a toggleReady instead?
 	public static void sendReady() {
 
