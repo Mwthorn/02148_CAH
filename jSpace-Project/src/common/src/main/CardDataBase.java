@@ -10,7 +10,7 @@ public class CardDataBase{
 	
 	 BufferedReader reader = null;
 	 FileInputStream inputStream = null;
-	 List<String> CardDatabase  = new ArrayList<String>();
+	 List<String> database  = new ArrayList<String>();
 	
 	public CardDataBase() {
 	}
@@ -23,7 +23,7 @@ public class CardDataBase{
 			reader = new BufferedReader(new InputStreamReader(inputStream));
 
 			while( (quip = reader.readLine()) != null ){
-				CardDatabase.add(quip);
+				database.add(quip);
 				quip = "";
 			}
 
@@ -34,7 +34,7 @@ public class CardDataBase{
 
 		close();
 		// System.out.println(cardList);
-		return CardDatabase;
+		return database;
 	}
 
 
@@ -59,7 +59,7 @@ public class CardDataBase{
 						text = text + reader.readLine() + " ________";
 						numOfBlanks--;
 					}
-				} CardDatabase.add(text);
+				} database.add(text);
 			}
 		} catch (IOException e) {
 			e.printStackTrace();
@@ -67,7 +67,7 @@ public class CardDataBase{
 		}
 		close();
 		// System.out.println(cardList);
-		return CardDatabase;
+		return database;
 	}	
 
 	public void close(){
