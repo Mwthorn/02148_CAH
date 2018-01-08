@@ -2,6 +2,7 @@ package common.src.main.server;
 
 import java.util.ArrayList;
 
+import common.src.main.client.GamePreview;
 import common.src.main.server.database.CardDataBase;
 import common.src.main.server.database.GameBase;
 import common.src.main.server.database.PlayerBase;
@@ -62,8 +63,8 @@ public class Server {
 				else if (tuple[1].equals("refreshGameList")) {
 					int playerID = (int) tuple[3];
 					lobby.put("GameListSize", playerID, games.size());
-					for (Game game : games) {
-						lobby.put("GameList", playerID, game.getGameName(), game.getStatus(), game.hasPassword(), game.getPlayers().size(), game.getMaxPlayers(), game.getID());
+					for (Game game : gameBase.getGames()) {
+						lobby.put("GameList", playerID, new GamePreview(game));
 					}
 				} else if (tuple[1].equals("joinGame")) {
 					

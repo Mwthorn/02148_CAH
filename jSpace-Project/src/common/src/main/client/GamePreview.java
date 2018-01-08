@@ -1,5 +1,7 @@
 package common.src.main.client;
 
+import common.src.main.server.Game;
+
 public class GamePreview {
 
     private String gameName;
@@ -8,11 +10,6 @@ public class GamePreview {
     private int currentPlayerSize;
     private int maxPlayerSize;
     private int id;
-
-    public GamePreview(){
-    	
-    }
-    		
     
     public GamePreview(String gameName, String gameStatus, boolean hasPassword, int currentPlayerSize, int maxPlayerSize, int id) {
         this.gameName = gameName;
@@ -21,6 +18,14 @@ public class GamePreview {
         this.currentPlayerSize = currentPlayerSize;
         this.maxPlayerSize = maxPlayerSize;
         this.id = id;
+    }
+
+    public GamePreview(Game game) {
+        this.gameName = game.getGameName();
+        this.gameStatus = game.getStatus();
+        this.hasPassword = (game.getPassword() != null);
+        this.currentPlayerSize = game.getPlayers().size();
+        this.maxPlayerSize = game.getMaxPlayers();
     }
 
     public String getGameName() {

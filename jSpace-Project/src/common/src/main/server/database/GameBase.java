@@ -16,6 +16,10 @@ public class GameBase {
 		return 0;
 	}
 
+	public ArrayList<Game> getGames() {
+		return this.games;
+	}
+
 	public int getGameId() {
 		// Generate random ID
 		return 0;

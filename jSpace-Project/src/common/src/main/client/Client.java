@@ -101,13 +101,8 @@ public class Client {
 		for (int i = 0; i < n; i++) {
 			gT = lobby.get(new ActualField("GameListSize"),
 					new ActualField(userID),
-					new FormalField(String.class),
-					new FormalField(String.class),
-					new FormalField(Boolean.class),
-					new FormalField(Integer.class),
-					new FormalField(Integer.class),
-					new FormalField(Integer.class));
-			games[i] = new GamePreview((String) gT[1], (String) gT[2], (Boolean) gT[3], (int) gT[4], (int) gT[5], (int) gT[6]);
+					new FormalField(Game.class));
+			games[i] = (GamePreview) gT[2];
 		}
 		return games;
 	}
