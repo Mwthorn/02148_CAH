@@ -25,8 +25,6 @@ public class Server {
     	// initialisation();
     	
     	// Data to setup games
-    	int maxGames = 5;
-    	boolean[] gamesAvailable = new boolean[maxGames];
 		cardDataBase = new CardDataBase();
         playerBase = new PlayerBase();
 
@@ -39,17 +37,15 @@ public class Server {
 		repository.add("lobby", lobby);
 
         /* Listening for messages on the tuple space */
-		int stop = 0; // Placeholder so the while loop runs forever.
-
-        while(stop == 0) {
+        while(true) {
 			try {
 				Object[] tuple = lobby.get(new ActualField("lobby"),new FormalField(String.class), new FormalField(String.class),
 						new FormalField(Integer.class));
                 System.out.println("Got response: " + tuple[1]);
 				if (tuple[1].equals("enter")) {
 					System.out.println("Registering user...");
+					
 					// Creating a random user ID
-
 					Player p = new Player((String) tuple[2],playerBase.getUniqueId());
 
 					playerBase.addPlayer(p);
@@ -74,28 +70,13 @@ public class Server {
 				e.printStackTrace();
 			}
 		}
-		
-		
-		// Create new game
-		// Create a thread to communicate with clients in-game.
-
-        /*
-		for (int i = 0; i < maxGames; i++) {
-			if (gamesAvailable[i] = true){
-				new Thread(new Game(repository, i)).start();
-				gamesAvailable[i] = false;
-				break;
-			}
-		}
-		*/
-		
     }
     
 	public static void createNewGame(SpaceRepository repository, String gameName) throws InterruptedException {
         int gameSlot = gameBase.getGameSlot();
         int gameId = gameBase.getGameId();
         int maxPlayers = 0;
-        // TODO: Check if GameName is taken.
+        
         if (gameBase.checkName() == false){
         	Game game = new Game(gameName,
                 whiteCards,
