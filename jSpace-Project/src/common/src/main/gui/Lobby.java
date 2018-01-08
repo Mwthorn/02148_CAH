@@ -6,12 +6,14 @@ import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.Font;
+import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 import javax.swing.BorderFactory;
 import javax.swing.Box;
 import javax.swing.BoxLayout;
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -23,8 +25,8 @@ import javax.swing.JPanel;
 public class Lobby extends JFrame implements ActionListener{
 	
 	private JButton b1, b2;
-	private JLabel l1,l2,l3,l4;
-	
+	private JLabel l1,l2,l3;
+	private ImageIcon i1,i2;
 	
 	
 	public Lobby(){
@@ -52,26 +54,15 @@ public class Lobby extends JFrame implements ActionListener{
 		l1.setForeground(Color.BLACK);
 		l1.setAlignmentX(Component.CENTER_ALIGNMENT);
 		
-
+		
+		// Implementing pictures for white cards and black cards
+		i1 = new ImageIcon("BC1.png");
+		i2 = new ImageIcon("WC.jpg");
+		//l2 = new JLabel(i1);
+		l3 = new JLabel(i2);
+		l2.setIcon(new ImageIcon(new javax.swing.ImageIcon(getClass().getResource("BC1.png")).getImage().getScaledInstance(200, 50, Image.SCALE_SMOOTH)));
 		
 		
-		l2 = new JLabel("<html>If you can't handle<br> ______________,<br>you'd better stay<br>away from<br>____________.<html>");
-		l2.setAlignmentX(Component.CENTER_ALIGNMENT);
-		//l2.setFont(new Font("Cards Against Humanity",10,40));
-		l2.setBackground(Color.BLACK);
-		l2.setForeground(Color.WHITE);
-        		
-		/*
-		l3 = new JLabel("Cards Against Humanity");
-		l3.setAlignmentX(Component.CENTER_ALIGNMENT);
-		l3.setFont(new Font("Cards Against Humanity",10,40));
-		l3.setForeground(Color.BLACK);
-		
-		l4 = new JLabel("Cards Against Humanity");
-		l4.setAlignmentX(Component.CENTER_ALIGNMENT);
-		l4.setFont(new Font("Cards Against Humanity",10,40));
-		l4.setForeground(Color.BLACK);
-		*/
 		
 		//Creates panel for buttons
 		JPanel p1 = new JPanel();
@@ -87,7 +78,6 @@ public class Lobby extends JFrame implements ActionListener{
         
 		getContentPane().add(p1, BorderLayout.SOUTH);
 		
-		
 		//Creates panel for label
 		JPanel p3 = new JPanel();
 		JPanel p4 = new JPanel();
@@ -98,11 +88,11 @@ public class Lobby extends JFrame implements ActionListener{
 		
 		
 		p4.setLayout(new BoxLayout(p4, BoxLayout.LINE_AXIS));
-		//p4.setBackground(Color.BLACK);
+		p4.setBackground(Color.WHITE);
 		p4.add(l2);
 		
 		//p4.add(Box.createHorizontalGlue());
-		//p4.setSize(200, 200);
+		p4.setSize(300, 100);
 		
 		
 		getContentPane().add(p3, BorderLayout.NORTH);
