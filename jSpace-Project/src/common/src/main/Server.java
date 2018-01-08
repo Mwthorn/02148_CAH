@@ -14,7 +14,7 @@ public class Server {
 
     private static ArrayList<WhiteCard> whiteCards;
     private static ArrayList<BlackCard> blackCards;
-    private static ArrayList<Game> Games;
+    private static ArrayList<Game> games;
     private static SequentialSpace lobby;
     private static CardDataBase cardDataBase;
     private static PlayerBase playerBase;
@@ -53,12 +53,19 @@ public class Server {
 
 					playerBase.addPlayer(p);
 
-					System.out.println("User "+ p.getName() +", the user was assigned th ID: "+ p.getId() +", there are now "+ playerBase.getSize() + "online.");
+					System.out.println("User "+ p.getName() +", the user was assigned th ID: "+ p.getId() +", there are now "+ playerBase.getSize() + " online.");
 				    lobby.put("UserID", p.getName(), p.getId());
                 }
                 else if (tuple[1] == "createGame"){
                     createNewGame(repository, (String)tuple[1]);
 
+				}
+				else if (tuple[1].equals("refreshGameList")) {
+					String playerID = (String) tuple[3];
+					lobby.put("GameListSize", playerID, games.size());
+					for (Game game : games) {
+						lobby.put("GameList", playerID, game.getGameName(), game.getStatus(), game.hasPassword(), game.getPlayers().size(), game.getMaxPlayers());
+					}
 				}
 
 
@@ -86,6 +93,7 @@ public class Server {
 	public static void createNewGame(SpaceRepository repository, String gameName) throws InterruptedException {
         int gameSlot = g.getGameSlot();
         int gameId = g.getGameId();
+        int maxPlayers;
         // TODO: Check if GameName is taken.
         if (g.checkName() == false){
         	Game game = new Game(gameName,
@@ -93,7 +101,8 @@ public class Server {
                 blackCards,
                 repository,
                 gameSlot,
-                lobby);
+                lobby,
+                maxPlayers);
         	new Thread(game).start();
         	lobby.put("gameSetup", true, game);
         } else {
