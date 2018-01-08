@@ -68,7 +68,7 @@ public class Server {
 				} else if (tuple[1].equals("joinGame")) {
 					
 				} else if (tuple[1].equals("signOut")) {
-					
+
 				}
 
 
@@ -84,7 +84,6 @@ public class Server {
         int maxPlayers = 0;
         Player player = playerBase.getPlayerwithID(hostID);
         
-        System.out.println("stuff game");
         Game game = new Game(gameName,
             whiteCards,
             blackCards,
@@ -97,7 +96,7 @@ public class Server {
     	new Thread(game).start();
     	gameBase.addGame(game);
     	
-    	lobby.put("gameCreated",gameId, hostID);
+    	lobby.put("gameCreated",gameId, hostID, gameSlot);
     	System.out.println("New game created by: "+player.getName()+". The name of the game is '"+game.getGameName()
     	+"', and there is currrently "+game.getMaxPlayers()+" in the game.");
     }

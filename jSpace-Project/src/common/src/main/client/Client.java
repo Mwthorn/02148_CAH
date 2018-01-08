@@ -9,7 +9,7 @@ import org.jspace.FormalField;
 import org.jspace.RemoteSpace;
 
 public class Client {
-	private static RemoteSpace lobby;
+	private static RemoteSpace lobby, game;
 	private static int userID;
 	private static int gameID;
 
@@ -56,14 +56,19 @@ public class Client {
 		
 		try {
 			System.out.println("Trying to recieve info");
-			Object[] info = lobby.get(new ActualField("gameCreated"),new FormalField(Integer.class), new ActualField(userID));
-			gameID = (int) info[2];
-			System.out.println("Game succesfully created");
+			Object[] info = lobby.get(new ActualField("gameCreated"), new ActualField(userID), new FormalField(Integer.class), new FormalField(String.class));
+			int gameSlot = (int) info[2];
+			String hostIP = (String) info[3];
 			
-			// Stuff to join game???
+			// Connects the host to the tuple space.
+			game = new RemoteSpace("tcp://" + hostIP + ":9001/game" + gameSlot + "?keep");
 			
 			
 		} catch (InterruptedException e) {
+			e.printStackTrace();
+		} catch (UnknownHostException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
 			e.printStackTrace();
 		}
 	}
