@@ -6,24 +6,31 @@ import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.List;
 
+import common.src.main.cards.BlackCard;
+import common.src.main.cards.WhiteCard;
+
 public class CardDataBase{
 	
 	 BufferedReader reader = null;
 	 FileInputStream inputStream = null;
-	 List<String> CardDatabase  = new ArrayList<String>();
-	
+	 List<WhiteCard> whiteDB  = new ArrayList<WhiteCard>();
+	 List<BlackCard> blackDB  = new ArrayList<BlackCard>();
+	 
 	public CardDataBase() {
 	}
 
-	public List<String> getWhiteDeck(){
+	public List<WhiteCard> getWhiteDeck(){
 		String quip = null;
+		WhiteCard newWC;
 		
 		try {
 			inputStream = new FileInputStream("TextWC.txt");
 			reader = new BufferedReader(new InputStreamReader(inputStream));
 
 			while( (quip = reader.readLine()) != null ){
-				CardDatabase.add(quip);
+				
+				newWC = new WhiteCard(quip);
+				whiteDB.add(newWC);
 				quip = "";
 			}
 
@@ -34,13 +41,14 @@ public class CardDataBase{
 
 		close();
 		// System.out.println(cardList);
-		return CardDatabase;
+		return whiteDB;
 	}
 
 
-	public  List<String> getBlackDeck(){
-		String numbers, text = null;
+	public  List<BlackCard> getBlackDeck(){
+		String numbers, sentence = null;
 		int numOfLines, numOfBlanks = 0;
+		BlackCard newBC;
 
 		try {
 			inputStream = new FileInputStream("TextBC.txt");
@@ -50,16 +58,18 @@ public class CardDataBase{
 				
 				numOfLines = Integer.parseInt(numbers.split(" ")[0]);
 				numOfBlanks = Integer.parseInt(numbers.split(" ")[1]);
-				text = "";
+				sentence = "";
 				
 				for(int i = 0; i < numOfLines; i++ ) {
 					if (numOfBlanks == 0) {
-						text = text + reader.readLine();
+						sentence = sentence + reader.readLine();
 					} else {
-						text = text + reader.readLine() + " ________";
+						sentence = sentence + reader.readLine() + " ________";
 						numOfBlanks--;
 					}
-				} CardDatabase.add(text);
+				} 
+				newBC = new BlackCard(numOfBlanks, sentence);
+				blackDB.add(newBC);
 			}
 		} catch (IOException e) {
 			e.printStackTrace();
@@ -67,7 +77,7 @@ public class CardDataBase{
 		}
 		close();
 		// System.out.println(cardList);
-		return CardDatabase;
+		return blackDB;
 	}	
 
 	public void close(){

@@ -2,9 +2,24 @@ package common.src.main.cards;
 
 public class BlackCard {
 
-    private String[] sentences;
+    private String sentence;
     private int blanks;
 
+    public BlackCard(int b, String s) {
+        this.sentence = s;
+        this.blanks = b; 
+    }
+    
+    public String getSentence() {
+        return this.sentence;
+    }
+
+    public int getBlanks() {
+        return this.blanks;
+    }
+}
+  
+   /* 
     public BlackCard(int n, String[] s) {
         this.sentences = new String[n+1];
         this.blanks = n;
@@ -87,19 +102,3 @@ public class BlackCard {
     }
     */
 
-    public String getSentence() {
-        String result = "";
-        for(int i = 0; i < this.blanks; i++) {
-            result = result + this.sentences[i];
-        }
-        return result;
-    }
-
-    public int getBlanks() {
-        return this.blanks;
-    }
-
-
-
-
-}
