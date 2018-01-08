@@ -5,6 +5,7 @@ import java.awt.Color;
 import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.Font;
+import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.BufferedReader;
@@ -22,216 +23,228 @@ import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
-import javax.swing.JTextArea;
+import javax.swing.JTextField;
 
 
-public class Login extends JFrame {
+public class Login extends JFrame implements ActionListener {
 
-	//Initialiserer buttons, labels og textareas
-	private JButton b1, b2, b3, b7, b5, b6;
-	private JLabel l1, l2, l3;
-	private JTextArea text1 = new JTextArea(3,60);
-	private JTextArea text2 = new JTextArea(3,60);
-	private ImageIcon i1;
+	//Initialize Buttons, Labels, Images and Textfields.
+	private JButton BQuit, BSignIn, BIP;
+	private JLabel LTitle, LText, LFigure1, LName, LIP, LFigure2;
+	private JTextField txtfld1, txtfld2;
 	
 	public Login(){
+
+		//Der benyttes BorderLayout
+		getContentPane().setLayout(new BorderLayout());
+
+		// Dimensions of buttons
+		Dimension btnsize4 = new Dimension(110,40);
+		Dimension btnsize2 = new Dimension(120,60);
+
+		// Make Buttons
+		BQuit = new JButton("Quit");
+		BQuit.setMaximumSize(btnsize2);
+		BQuit.addActionListener(this);
+		BQuit.setAlignmentX(Component.CENTER_ALIGNMENT);
+		BQuit.setFont(new Font("calibri",1,21));
+		BQuit.setBorderPainted(false);
+		BQuit.setFocusPainted(false);
+		BQuit.setEnabled(true);
+		BQuit.setForeground(Color.WHITE);
+		BQuit.setBackground(Color.black);
+
+		BSignIn = new JButton("Sign In");
+		BSignIn.setMaximumSize(btnsize4);
+		BSignIn.addActionListener(this);
+		BSignIn.setAlignmentX(Component.CENTER_ALIGNMENT);
+		BSignIn.setFont(new Font("calibri",1,21));
+		BSignIn.setBorderPainted(false);
+		BSignIn.setFocusPainted(false);
+		BSignIn.setEnabled(true);
+		BSignIn.setForeground(Color.WHITE);
+		BSignIn.setBackground(Color.black);	
 		
-		//Specifikke farver til de forskellige dele af GUI
-				Color c1 = new Color(57,109,29);
-				Color c2 = new Color(255,215,0);
-				Color c3 = new Color(153,0,0);
+		//Makes Title
+		LTitle = new JLabel("Cards Against Humanity");
+		LTitle.setAlignmentX(Component.CENTER_ALIGNMENT);
+		LTitle.setFont(new Font("AR JULIAN",Font.PLAIN,70));
+		LTitle.setForeground(Color.BLACK);
 
-				//Der benyttes BorderLayout
-				getContentPane().setLayout(new BorderLayout());
+		//Makes lower title
+		LText = new JLabel("Welcome to Cards Against Humanity");
+		LText.setAlignmentX(Component.CENTER_ALIGNMENT);
+		LText.setFont(new Font("calibri",Font.PLAIN,30));
+		LText.setForeground(Color.black);
+		
+		//Labels
+		Dimension lsize = new Dimension(99, 50);
 
-				//Dimensionerne af de forskellige knapper og tekstfelter
-				Dimension btnsize = new Dimension(150,150);
-				Dimension btnsize1 = new Dimension(200,200);
-				Dimension btnsize2 = new Dimension(140,70);
-				Dimension txtsize = new Dimension(500,165);
+		LName = new JLabel("Name:");
+		LName.setMaximumSize(lsize);
+		LName.setFont(new Font("calibri",Font.PLAIN,25));
+		LName.setAlignmentX(Component.CENTER_ALIGNMENT);
 
-				//"Start New Game" button
-				//SÊtter en specifik size
-				//∆ndrer mange design aspekter
-				b1 = new JButton("Start New Game");
-				b1.setMaximumSize(btnsize1);
-				b1.setAlignmentX(Component.CENTER_ALIGNMENT);
-				b1.setFont(new Font("Start New Game",1,21));
-				b1.setBorderPainted(false);
-				b1.setFocusPainted(false);
-				b1.setEnabled(true);
-				b1.setForeground(c2);
-				b1.setBackground(c3);
+		LIP = new JLabel("Server IP:");
+		LIP.setMaximumSize(lsize);
+		LIP.setFont(new Font("calibri",Font.PLAIN,25));
+		LIP.setAlignmentX(Component.CENTER_ALIGNMENT);
+		
+		LFigure1 = new JLabel();
+		LFigure2 = new JLabel();
+		
+		LFigure1.setIcon(new ImageIcon(new ImageIcon("BCLogin.png").getImage().getScaledInstance(243, 376, Image.SCALE_DEFAULT)));
+		LFigure2.setIcon(new ImageIcon(new ImageIcon("WCLogin.png").getImage().getScaledInstance(245, 376, Image.SCALE_DEFAULT)));
+		
+		LFigure1.setAlignmentX(Component.CENTER_ALIGNMENT);
+		LFigure2.setAlignmentX(Component.CENTER_ALIGNMENT);
 
-				//Laver "Hit" Button
-				b2 = new JButton("");
-				b2.setMaximumSize(btnsize);
-				b2.setAlignmentX(Component.CENTER_ALIGNMENT);
-				b2.setFont(new Font("Hit",1,21));
-				b2.setBorderPainted(false);
-				b2.setFocusPainted(false);
-				b2.setEnabled(false);
-				b2.setForeground(c1);
-				b2.setBackground(c1);
+		
+		JPanel PC = new JPanel();
+		
+		// Makes middle JPanel
+		JPanel PCenter = new JPanel();
+		//PCenter.setLayout(new BoxLayout(PCenter, BoxLayout.PAGE_AXIS));
+		PCenter.setBorder(BorderFactory.createMatteBorder(4, 4, 4, 4, Color.black));			
+		PCenter.setLayout(new BorderLayout()); //Default layout
+		PCenter.setBackground(Color.BLACK);
 
-				//Laver "Stand" Button
-				b3 = new JButton("");
-				b3.setMaximumSize(btnsize);
-				b3.setAlignmentX(Component.CENTER_ALIGNMENT);
-				b3.setFont(new Font("Stand",1,21));
-				b3.setBorderPainted(false);
-				b3.setFocusPainted(false);
-				b3.setEnabled(false);
-				b3.setForeground(c2);
-				b3.setBackground(c1);
+		
+		//Button inside
+		JPanel PCRight = new JPanel();
+		//PCRight.setLayout(new BoxLayout(PCRight, BoxLayout.PAGE_AXIS));
+		PCRight.add(Box.createRigidArea(new Dimension(10, 150)));
+		PCRight.add(BSignIn);
+		
+		//Placering af button
+		PCRight.setLayout(new BoxLayout(PCRight, BoxLayout.PAGE_AXIS));
+		PCRight.add(Box.createRigidArea(new Dimension(150, 40)));
+		PCenter.add(PCRight, BorderLayout.EAST);
 
-				//Laver "Show Result" button
-				b7 = new JButton("");
-				b7.setMaximumSize(btnsize);
-				b7.setAlignmentX(Component.CENTER_ALIGNMENT);
-				b7.setFont(new Font("Show Result",1,21));
-				b7.setBorderPainted(false);
-				b7.setFocusPainted(false);
-				b7.setEnabled(false);
-				b7.setForeground(c2);
-				b7.setBackground(c1);
+		//Textfield laves
+		Dimension txtfldsize = new Dimension(400, 30);
 
-				//Laver "Quit" Button
-				b5 = new JButton("Quit");
-				b5.setMaximumSize(btnsize2);
-				b5.setAlignmentX(Component.CENTER_ALIGNMENT);
-				b5.setFont(new Font("Quit",1,21));
-				b5.setBorderPainted(false);
-				b5.setFocusPainted(false);
-				b5.setEnabled(true);
-				b5.setForeground(Color.WHITE);
-				b5.setBackground(Color.black);
+		txtfld1 = new JTextField(50);
+		txtfld1.setMaximumSize(txtfldsize);
+		txtfld1.setFont(new Font("calibri",Font.PLAIN,20));
+		txtfld1.setAlignmentX(Component.CENTER_ALIGNMENT);
 
-				//Laver "Rules" Button
-				b6 = new JButton("Rules");
-				b6.setMaximumSize(btnsize1);
-				b6.setAlignmentX(Component.CENTER_ALIGNMENT);
-				b6.setFont(new Font("Rules",1,21));
-				b6.setBorderPainted(false);
-				b6.setFocusPainted(false);
-				b6.setEnabled(true);
-				b6.setForeground(c2);
-				b6.setBackground(c3);
+		txtfld2 = new JTextField(50);
+		txtfld2.setMaximumSize(txtfldsize);
+		txtfld2.setFont(new Font("calibri",Font.PLAIN,20));
+		txtfld2.setAlignmentX(Component.CENTER_ALIGNMENT);
 
-				//Laver det store Blackjack label
-				l1 = new JLabel("Cards Against Humanity");
-				l1.setAlignmentX(Component.CENTER_ALIGNMENT);
-				l1.setFont(new Font("AR JULIAN",Font.PLAIN,50));
-				l1.setForeground(Color.BLACK);
+		JPanel PCCenter = new JPanel();
+		PCCenter.setLayout(new BoxLayout(PCCenter, BoxLayout.PAGE_AXIS));
+		PCCenter.add(Box.createRigidArea(new Dimension(10, 20)));
+		PCCenter.add(txtfld1, BorderLayout.CENTER);
+		PCCenter.add(Box.createRigidArea(new Dimension(10, 40)));
+		PCCenter.add(txtfld2, BorderLayout.CENTER);
 
-				//Laver Dealer label
-				l2 = new JLabel("Welcome to Cards Against Humanity");
-				l2.setAlignmentX(Component.CENTER_ALIGNMENT);
-				l2.setFont(new Font("calibri",Font.PLAIN,30));
-				l2.setForeground(Color.black);
+		PCenter.add(PCCenter, BorderLayout.CENTER);
 
-				//Laver Player label
-				//l3 = new JLabel("Player");
-				//l3.setAlignmentX(Component.CENTER_ALIGNMENT);
-				//l3.setFont(new Font("Player",5,30));
-				//l3.setForeground(c3);
+		JPanel PCLeft = new JPanel();
+		PCLeft.setLayout(new BoxLayout(PCLeft, BoxLayout.PAGE_AXIS));
+		PCLeft.add(Box.createRigidArea(new Dimension(150, 10)));
+		PCLeft.add(LName);
+		PCLeft.add(Box.createRigidArea(new Dimension(150, 20)));
+		PCLeft.add(LIP);
 
-				//Laver det f¯rste tekstfelt til Dealeren
-				//G¯r sÂ man ikke kan Êndre i tekstfeltet, samt st¯rrelse
-				text1 = new JTextArea("Welcome to Cards Against Humanity!");
-				text1.setMaximumSize(txtsize);
-				text1.setLineWrap(true);
-				text1.setEditable(false);
-				text1.setAlignmentX(Component.CENTER_ALIGNMENT);
-				text1.setFont(new Font("Player",1,21));
-				text1.setBackground(c1);
-				text1.setForeground(c2);
-
-				//Laver tesktfelt nummer 2
-				text2 = new JTextArea("This is new text you haven't seen before!");
-				text2.setMaximumSize(txtsize);
-				text2.setLineWrap(true);
-				text2.setEditable(false);
-				text2.setAlignmentX(Component.CENTER_ALIGNMENT);
-				text2.setFont(new Font("Player",1,21));
-				text2.setBackground(Color.white);
-				text2.setForeground(Color.black);
-
-				//Laver det f¯rste JPanel, som skal vÊre i venstre side
-				JPanel p1 = new JPanel();
-				p1.setLayout(new BoxLayout(p1, BoxLayout.PAGE_AXIS));
-				p1.setBackground(Color.white);
-
-				//Laver det andret JPanel, som skal vÊre i h¯jre side
-				JPanel p2 = new JPanel();
-				p2.setLayout(new BoxLayout(p2, BoxLayout.PAGE_AXIS));
-				p2.setBackground(Color.white);
+		PCRight.setBackground(Color.WHITE);
+		PCCenter.setBackground(Color.WHITE);
+		PCLeft.setBackground(Color.WHITE);
+		
+		PCenter.add(PCLeft, BorderLayout.WEST);
+		PCenter.setSize(585, 1000);
+	
+		
+		
+		//Left JPanel
+		JPanel PL = new JPanel();
+		PL.setLayout(new BoxLayout(PL, BoxLayout.PAGE_AXIS));
+		PL.setBackground(Color.white);
+		
+		//Right JPanel
+		JPanel PR = new JPanel();
+		PR.setLayout(new BoxLayout(PR, BoxLayout.PAGE_AXIS));
+		PR.setBackground(Color.white);
+		
+		//Left JPanel
+		JPanel PLeft = new JPanel();
+		PLeft.setLayout(new BoxLayout(PLeft, BoxLayout.PAGE_AXIS));
+		PLeft.setBackground(Color.white);
 				
-				
+		PLeft.add(Box.createRigidArea(new Dimension(365,200)));
+		PLeft.add(LFigure1);
+		PLeft.add(Box.createRigidArea(new Dimension(365,100)));
 
-				i1 = new ImageIcon("BCLogin.PNG");
-				l3 = new JLabel(i1);
-				
-				//Left JPanel med Start New Game, Rules og Quit button
-				//Laver ogsÂ mellemrum mellem knapperne
-				p1.add(Box.createRigidArea(new Dimension(100,100)));
-				p1.add(l3);
-				p1.add(Box.createRigidArea(new Dimension(100,100)));
+		//Right JPanel
+		JPanel PRight = new JPanel();
+		PRight.setLayout(new BoxLayout(PRight, BoxLayout.PAGE_AXIS));
+		PRight.setBackground(Color.white);
+		
+		PRight.add(Box.createRigidArea(new Dimension(365,250)));
+		PRight.add(LFigure2);
+		PRight.add(Box.createRigidArea(new Dimension(365,200)));
+		PRight.add(BQuit);
+		PRight.add(Box.createRigidArea(new Dimension(365,50)));
 
-				//Right JPanel med Hit, Stand og Show Result
-				p2.add(Box.createRigidArea(new Dimension(400,600)));
-				p2.add(b5);
-				p2.add(Box.createRigidArea(new Dimension(400,50)));
+		//Siger hvor de forskellige Paneler skal vÊre
+		getContentPane().add(PLeft, BorderLayout.WEST);
+		getContentPane().add(PRight, BorderLayout.EAST);
+		
+		PC.add(PL, BorderLayout.WEST);
+		PC.add(PR, BorderLayout.EAST);
+		
+		PL.add(Box.createRigidArea(new Dimension(100,50)));
+		PR.add(Box.createRigidArea(new Dimension(100,50)));
 
-				//Siger hvor de forskellige Paneler skal vÊre
-				getContentPane().add(p1, BorderLayout.WEST);
-				getContentPane().add(p2, BorderLayout.EAST);
+		
+		PC.setBackground(Color.WHITE);
+		PC.add(PCenter);
+		
+		//Laver Center JPanel med de forskellige labels og tekstfelter
+		JPanel PMiddle = new JPanel();
+		PMiddle.setLayout(new BoxLayout(PMiddle, BoxLayout.PAGE_AXIS));
+		PMiddle.setSize(585, 1000);
+		PMiddle.add(LTitle);
+		PMiddle.add(Box.createRigidArea(new Dimension(585, 100)));
+		PMiddle.add(LText);
+		PMiddle.add(Box.createRigidArea(new Dimension(585, 100)));
+		PMiddle.add(PC);
+		PMiddle.add(Box.createRigidArea(new Dimension(585, 100)));				
+				
+		//Add PMiddle and set center
+		getContentPane().add(PMiddle, BorderLayout.CENTER);
 
-				
-				
-				JPanel p3 = new JPanel();
-				p3.setLayout(new BoxLayout(p3, BoxLayout.PAGE_AXIS));
-				p3.setBorder(BorderFactory.createMatteBorder(4, 4, 4, 4, Color.black));
-				p3.setBackground(Color.BLACK);
-
-				
-				
-				p3.add(text2);
-				
-				//Laver Center JPanel med de forskellige labels og tekstfelter
-				JPanel p7 = new JPanel();
-				p7.setLayout(new BoxLayout(p7, BoxLayout.PAGE_AXIS));
-				p7.add(l1);
-				p7.add(Box.createRigidArea(new Dimension(320, 80)));
-				p7.add(l2);
-				p7.add(Box.createRigidArea(new Dimension(320, 80)));
-				p7.add(p3);
-				
-				
-				//SÊtter det til center
-				getContentPane().add(p7, BorderLayout.CENTER);
-
-				p7.setBackground(Color.WHITE);
-				getContentPane().add(p7);
+		PMiddle.setBackground(Color.WHITE);
+		getContentPane().add(PMiddle);
 		
 		
 	}
 	
-	
-	
+	public void actionPerformed(ActionEvent e){
+
+		/////////////////////////////////////////////////////////////////
+		// Quit button closes game
+		if(e.getSource() == BQuit){
+			
+			System.exit(0);
+			
+		}
+	}
 	
 	public static void main(String[] args) {
 	
 		Login game = new Login();
 
 		game.setTitle("Cards Against Humanity");
-		game.setSize(1300,710);
+		game.setSize(1900,1000);
 		game.setResizable(true);
 		game.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		game.setVisible(true);
-		game.setLocationRelativeTo(null);
+		game.setLocationRelativeTo(null);		
 		
 	}
-	
 }
 
