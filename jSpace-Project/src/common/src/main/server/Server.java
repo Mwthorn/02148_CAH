@@ -65,6 +65,10 @@ public class Server {
 					for (Game game : games) {
 						lobby.put("GameList", playerID, game.getGameName(), game.getStatus(), game.hasPassword(), game.getPlayers().size(), game.getMaxPlayers(), game.getID());
 					}
+				} else if (tuple[1].equals("joinGame")) {
+					
+				} else if (tuple[1].equals("signOut")) {
+					
 				}
 
 
