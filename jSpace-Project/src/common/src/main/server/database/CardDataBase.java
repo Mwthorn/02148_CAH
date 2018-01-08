@@ -33,12 +33,10 @@ public class CardDataBase{
 				wDataBase.add(newWC);
 				quip = "";
 			}
-
 		} catch (IOException e) {
 			e.printStackTrace();
 			// System.out.println("Failed to read white cards successfully.");
 		}
-
 		close();
 		// System.out.println(cardList);
 		return wDataBase;
@@ -85,7 +83,7 @@ public class CardDataBase{
 			reader.close();
 			inputStream.close();
 		} catch (IOException e) {
-			// System.out.println("Failed to close bis/fis.");
+			// System.out.println("Failed to close reader/inputStream.");
 			e.printStackTrace();
 		}
 	}

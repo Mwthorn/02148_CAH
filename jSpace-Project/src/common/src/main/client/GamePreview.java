@@ -9,6 +9,11 @@ public class GamePreview {
     private int maxPlayerSize;
     private int id;
 
+    public GamePreview(){
+    	
+    }
+    		
+    
     public GamePreview(String gameName, String gameStatus, boolean hasPassword, int currentPlayerSize, int maxPlayerSize, int id) {
         this.gameName = gameName;
         this.gameStatus = gameStatus;
