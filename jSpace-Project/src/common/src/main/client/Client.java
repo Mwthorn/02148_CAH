@@ -56,9 +56,9 @@ public class Client {
 		
 		try {
 			System.out.println("Trying to recieve info");
-			Object[] info = lobby.get(new ActualField("gameCreated"),new FormalField(Integer.class), new ActualField(Integer.class));
+			Object[] info = lobby.get(new ActualField("gameCreated"),new FormalField(Integer.class), new ActualField(userID));
 			gameID = (int) info[2];
-			System.out.println("Game succesful?");
+			System.out.println("Game succesfully created");
 			
 			// Stuff to join game???
 			
@@ -69,12 +69,11 @@ public class Client {
 	}
 
 	public static void loginUser(String name, String IP) throws IOException, InterruptedException {
-		System.out.println("hejmeddig");
 		lobby = new RemoteSpace("tcp://" + IP + ":9001/lobby?keep");
-		System.out.println("hejmeddig2");
+
 		//lobby.put("test");
 		lobby.put("lobby","enter",name,0);
-		System.out.println("Hejmeddig3");
+
 		Object[] tuple = lobby.get(new ActualField("UserID"),new ActualField(name), new FormalField(Integer.class));
 		userID = (int) tuple[2];
 		System.out.println("Client was assigned ID: " + userID);

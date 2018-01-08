@@ -30,6 +30,7 @@ public class Server {
     	// Data to setup games
 		cardDataBase = new CardDataBase();
         playerBase = new PlayerBase();
+        gameBase = new GameBase();
     	
     	
     	// Setup for the lobby tuple space
@@ -77,6 +78,7 @@ public class Server {
         int gameSlot = gameBase.getGameSlot();
         int gameId = gameBase.getGameId();
         int maxPlayers = 0;
+        Player player = playerBase.getPlayerwithID(hostID);
         
         System.out.println("stuff game");
         Game game = new Game(gameName,
@@ -87,13 +89,13 @@ public class Server {
             lobby,
             maxPlayers, 
             gameId, 
-            playerBase.getPlayerwithID(hostID));
+            player);
     	new Thread(game).start();
     	gameBase.addGame(game);
     	
     	lobby.put("gameCreated",gameId, hostID);
-    	System.out.println("New game created by: "+playerBase.getPlayerwithID(hostID).getName()+". The name of the game is "+game.getGameName()
-    	+", and there is currrently "+game.getMaxPlayers()+" in the game.");
+    	System.out.println("New game created by: "+player.getName()+". The name of the game is '"+game.getGameName()
+    	+"', and there is currrently "+game.getMaxPlayers()+" in the game.");
     }
 	
 }

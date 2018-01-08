@@ -12,9 +12,9 @@ public class Game implements Runnable {
 
     private String gameName;
     private String password;
-    private ArrayList<WhiteCard> whiteCards;
-    private ArrayList<BlackCard> blackCards;
-    private ArrayList<Player> players;
+    private ArrayList<WhiteCard> whiteCards = new ArrayList<>();
+    private ArrayList<BlackCard> blackCards = new ArrayList<>();
+    private ArrayList<Player> players = new ArrayList<>();
     private int maxPlayers;
     private String status;
     private int id;
@@ -47,6 +47,7 @@ public class Game implements Runnable {
         this.id = id;
         this.hostID = player.getId();
         this.players.add(player);
+        this.maxPlayers++;
 
         this.repository = repository;
         this.repository.add("game"+gameSlot, game);
