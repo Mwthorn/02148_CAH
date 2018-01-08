@@ -1,4 +1,4 @@
-package common.src.main;
+package common.src.main.client;
 
 public class GamePreview {
 

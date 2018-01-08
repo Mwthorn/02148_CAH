@@ -1,10 +1,12 @@
-package common.src.main;
+package common.src.main.server;
 
 import java.util.ArrayList;
-import java.util.Random;
 
-import common.src.main.cards.BlackCard;
-import common.src.main.cards.WhiteCard;
+import common.src.main.server.database.CardDataBase;
+import common.src.main.server.database.GameBase;
+import common.src.main.server.database.PlayerBase;
+import common.src.main.server.utilities.BlackCard;
+import common.src.main.server.utilities.WhiteCard;
 import org.jspace.ActualField;
 import org.jspace.FormalField;
 import org.jspace.SequentialSpace;

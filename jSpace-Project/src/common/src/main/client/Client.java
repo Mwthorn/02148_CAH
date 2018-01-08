@@ -1,10 +1,9 @@
-package common.src.main;
+package common.src.main.client;
 
 import java.io.IOException;
-import java.io.InterruptedIOException;
 import java.net.UnknownHostException;
-import java.rmi.Remote;
 
+import common.src.main.server.Game;
 import org.jspace.ActualField;
 import org.jspace.FormalField;
 import org.jspace.RemoteSpace;

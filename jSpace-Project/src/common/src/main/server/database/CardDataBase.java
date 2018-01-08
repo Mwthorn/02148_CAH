@@ -1,13 +1,13 @@
-package common.src.main;
+package common.src.main.server.database;
+import common.src.main.server.utilities.BlackCard;
+import common.src.main.server.utilities.WhiteCard;
+
 import java.io.BufferedReader;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.List;
-
-import common.src.main.cards.BlackCard;
-import common.src.main.cards.WhiteCard;
 
 public class CardDataBase{
 	

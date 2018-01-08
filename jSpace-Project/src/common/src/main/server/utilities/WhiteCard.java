@@ -1,4 +1,4 @@
-package common.src.main.cards;
+package common.src.main.server.utilities;
 
 public class WhiteCard {
 

@@ -1,4 +1,6 @@
-package common.src.main;
+package common.src.main.server.database;
+
+import common.src.main.server.Game;
 
 import java.util.ArrayList;
 

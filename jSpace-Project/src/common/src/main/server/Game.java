@@ -1,10 +1,9 @@
-package common.src.main;
+package common.src.main.server;
 
+import common.src.main.server.utilities.BlackCard;
+import common.src.main.server.utilities.WhiteCard;
 import org.jspace.SequentialSpace;
 import org.jspace.SpaceRepository;
-
-import common.src.main.cards.BlackCard;
-import common.src.main.cards.WhiteCard;
 
 import java.util.ArrayList;
 import java.util.Objects;
