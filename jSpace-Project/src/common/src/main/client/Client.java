@@ -2,8 +2,10 @@ package common.src.main.client;
 
 import java.io.IOException;
 import java.net.UnknownHostException;
+import java.util.ArrayList;
 
 import common.src.main.server.Game;
+import common.src.main.server.Player;
 import org.jspace.ActualField;
 import org.jspace.FormalField;
 import org.jspace.RemoteSpace;
@@ -106,7 +108,7 @@ public class Client {
 		GamePreview[] games = new GamePreview[n];
 		System.out.println("Got " + n + " games from server!");
 		for (int i = 0; i < n; i++) {
-			gT = lobby.get(new ActualField("GameListSize"),
+			gT = lobby.get(new ActualField("GameList"),
 					new ActualField(userID),
 					new FormalField(Game.class));
 			games[i] = (GamePreview) gT[2];
@@ -114,7 +116,55 @@ public class Client {
 		return games;
 	}
 
+	public static ArrayList<Player> getPlayers() throws InterruptedException {
+
+		game.put("GetPlayers", userID);
+		Object[] tuple = lobby.get(new ActualField("PlayerListSize"), new ActualField(userID), new FormalField(Integer.class));
+		Object[] qT;
+		int n = (int) tuple[1];
+		ArrayList<Player> ps = new ArrayList<>();
+		for (int i = 0; i < n; i++) {
+			qT = game.get(new ActualField("PlayerList"),
+					new ActualField(userID),
+					new FormalField(Player.class));
+			ps.add((Player) qT[2]);
+		}
+
+		return ps;
+	}
+
 	public static void joinGame(int ID) throws InterruptedException {
 		
+	}
+
+	// TODO: make a toggleReady instead?
+	public static void sendReady() {
+
+	}
+
+	// TODO: make a toggleReady instead?
+	public static void notReady() {
+
+	}
+
+	public static void leaveGame() {
+
+	}
+
+	public static void refreshPlayerList() throws InterruptedException {
+		// TODO:
+		// Get status
+		// Get players (check if they are ready)
+		Object[] tuple = lobby.get(new ActualField("lobby"),new FormalField(String.class), new FormalField(String.class), new FormalField(Integer.class));
+		System.out.println("Got response: " + tuple[1]);
+		if (tuple[1].equals("players")) {
+			
+		}
+		else if (tuple[1].equals("voteUpdate")){
+
+		}
+		else if (tuple[1].equals("refreshGameList")) {
+
+		}
 	}
 }
