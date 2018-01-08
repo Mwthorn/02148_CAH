@@ -18,6 +18,7 @@ public class Server {
     private static SequentialSpace lobby;
     private static CardDataBase cardDataBase;
     private static PlayerBase playerBase;
+    private static GameBase gameBase;
 
 	public static void main(String[] argv) {
     	
@@ -91,11 +92,11 @@ public class Server {
     }
     
 	public static void createNewGame(SpaceRepository repository, String gameName) throws InterruptedException {
-        int gameSlot = g.getGameSlot();
-        int gameId = g.getGameId();
-        int maxPlayers;
+        int gameSlot = gameBase.getGameSlot();
+        int gameId = gameBase.getGameId();
+        int maxPlayers = 0;
         // TODO: Check if GameName is taken.
-        if (g.checkName() == false){
+        if (gameBase.checkName() == false){
         	Game game = new Game(gameName,
                 whiteCards,
                 blackCards,
