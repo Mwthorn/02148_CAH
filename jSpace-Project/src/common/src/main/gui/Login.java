@@ -101,18 +101,19 @@ public class Login extends JFrame implements ActionListener {
 
 		
 		JPanel PC = new JPanel();
+		PC.setLayout(new BorderLayout());
+		PC.setSize(600, 400);
 		
 		// Makes middle JPanel
 		JPanel PCenter = new JPanel();
-		//PCenter.setLayout(new BoxLayout(PCenter, BoxLayout.PAGE_AXIS));
 		PCenter.setBorder(BorderFactory.createMatteBorder(4, 4, 4, 4, Color.black));			
 		PCenter.setLayout(new BorderLayout()); //Default layout
+		PCenter.setSize(700,400);
 		PCenter.setBackground(Color.BLACK);
 
 		
 		//Button inside
 		JPanel PCRight = new JPanel();
-		//PCRight.setLayout(new BoxLayout(PCRight, BoxLayout.PAGE_AXIS));
 		PCRight.add(Box.createRigidArea(new Dimension(10, 150)));
 		PCRight.add(BSignIn);
 		
@@ -137,6 +138,8 @@ public class Login extends JFrame implements ActionListener {
 		JPanel PCCenter = new JPanel();
 		PCCenter.setLayout(new BoxLayout(PCCenter, BoxLayout.PAGE_AXIS));
 		PCCenter.add(Box.createRigidArea(new Dimension(10, 20)));
+		PCCenter.add(LText);
+		PCCenter.add(Box.createRigidArea(new Dimension(10, 20)));
 		PCCenter.add(txtfld1, BorderLayout.CENTER);
 		PCCenter.add(Box.createRigidArea(new Dimension(10, 40)));
 		PCCenter.add(txtfld2, BorderLayout.CENTER);
@@ -145,7 +148,7 @@ public class Login extends JFrame implements ActionListener {
 
 		JPanel PCLeft = new JPanel();
 		PCLeft.setLayout(new BoxLayout(PCLeft, BoxLayout.PAGE_AXIS));
-		PCLeft.add(Box.createRigidArea(new Dimension(150, 10)));
+		PCLeft.add(Box.createRigidArea(new Dimension(150, 60)));
 		PCLeft.add(LName);
 		PCLeft.add(Box.createRigidArea(new Dimension(150, 20)));
 		PCLeft.add(LIP);
@@ -155,7 +158,7 @@ public class Login extends JFrame implements ActionListener {
 		PCLeft.setBackground(Color.WHITE);
 		
 		PCenter.add(PCLeft, BorderLayout.WEST);
-		PCenter.setSize(585, 1000);
+		PCenter.setSize(400, 1000);
 	
 		
 		
@@ -206,13 +209,13 @@ public class Login extends JFrame implements ActionListener {
 		//Laver Center JPanel med de forskellige labels og tekstfelter
 		JPanel PMiddle = new JPanel();
 		PMiddle.setLayout(new BoxLayout(PMiddle, BoxLayout.PAGE_AXIS));
-		PMiddle.setSize(585, 1000);
+		PMiddle.setSize(400, 1000);
 		PMiddle.add(LTitle);
-		PMiddle.add(Box.createRigidArea(new Dimension(585, 100)));
-		PMiddle.add(LText);
-		PMiddle.add(Box.createRigidArea(new Dimension(585, 100)));
+		PMiddle.add(Box.createRigidArea(new Dimension(400, 100)));
+		
+		PMiddle.add(Box.createRigidArea(new Dimension(400, 100)));
 		PMiddle.add(PC);
-		PMiddle.add(Box.createRigidArea(new Dimension(585, 100)));				
+		PMiddle.add(Box.createRigidArea(new Dimension(400, 100)));				
 				
 		//Add PMiddle and set center
 		getContentPane().add(PMiddle, BorderLayout.CENTER);
