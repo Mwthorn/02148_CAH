@@ -49,9 +49,7 @@ public class Server {
 					System.out.println("Registering user...");
 					// Creating a random user ID
 
-					int n = playerBase.getUniqueId();
-
-					Player p = new Player((String) tuple[2],n);
+					Player p = new Player((String) tuple[2],playerBase.getUniqueId());
 
 					playerBase.addPlayer(p);
 
