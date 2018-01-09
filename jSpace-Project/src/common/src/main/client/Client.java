@@ -4,7 +4,6 @@ import java.io.IOException;
 import java.net.UnknownHostException;
 import java.util.ArrayList;
 
-import common.src.main.philosopher1;
 import common.src.main.server.Game;
 import common.src.main.server.Player;
 import org.jspace.ActualField;
