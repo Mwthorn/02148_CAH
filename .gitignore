@@ -5,7 +5,6 @@ jSpace-Project/.idea/misc.xml
 jSpace-Project/.idea/workspace.xml
 jSpace-Project/jSpace-Project.iml
 .metadata/
-bin/com/
 *.class
 jSpace-Project/.idea/uiDesigner.xml
 *.xml___jb_tmp___
@@ -14,3 +13,4 @@ jSpace-Project/.idea/vcs.xml
 jSpace-Project/.idea/vcs.xml
 *.xml
 *.xml
+jSpace-Project/bin/.DS_Store

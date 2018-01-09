@@ -98,19 +98,19 @@ public class Client {
 		
 	}
 
-	public static GamePreview[] getGameList() throws InterruptedException {
+	public static ArrayList<GamePreview> getGameList() throws InterruptedException {
 		lobby.put("lobby", "refreshGameList", "", userID);
 
 		Object[] tuple = lobby.get(new ActualField("GameListSize"), new ActualField(userID), new FormalField(Integer.class));
 		Object[] gT;
 		int n = (int) tuple[1];
-		GamePreview[] games = new GamePreview[n];
+		ArrayList<GamePreview> games = new ArrayList<>();
 		System.out.println("Got " + n + " games from server!");
 		for (int i = 0; i < n; i++) {
 			gT = lobby.get(new ActualField("GameList"),
 					new ActualField(userID),
 					new FormalField(Game.class));
-			games[i] = (GamePreview) gT[2];
+			games.add((GamePreview) gT[2]);
 		}
 		return games;
 	}
