@@ -1,6 +1,7 @@
 package common.src.main.gui;
 
 import java.awt.BorderLayout;
+import java.awt.Button;
 import java.awt.Color;
 import java.awt.Component;
 import java.awt.Dimension;
@@ -28,8 +29,8 @@ public class CreateGame extends JFrame implements ActionListener {
 
 	//Initialize Buttons, Labels, Images and Textfields.
 	private JButton BQuit, BSignIn;
-	private JLabel LTitle, LText, LFigure1, LName, LIP, LFigure2;
-	private JTextField txtfld1, txtfld2;
+	private JLabel LTitle, LText, LFigure1, LName, LIP, LFigure2, LRounds, LTime, LPass, LPassword;
+	private JTextField txtfld1, txtfld2, txtfld3, txtfld4, txtfld5;
 	
 	public CreateGame(){
 
@@ -85,14 +86,34 @@ public class CreateGame extends JFrame implements ActionListener {
 		// Name Label
 		LName = new JLabel("Name:");
 		LName.setMaximumSize(lsize);
-		LName.setFont(new Font("calibri",Font.PLAIN,25));
+		LName.setFont(new Font("calibri",Font.PLAIN,15));
 		LName.setAlignmentX(Component.CENTER_ALIGNMENT);
 
-		// IP Label
-		LIP = new JLabel("Server IP:");
-		LIP.setMaximumSize(lsize);
-		LIP.setFont(new Font("calibri",Font.PLAIN,25));
-		LIP.setAlignmentX(Component.CENTER_ALIGNMENT);
+		// Name Label
+		LRounds = new JLabel("Rounds to win:");
+		LRounds.setMaximumSize(lsize);
+		LRounds.setFont(new Font("calibri",Font.PLAIN,15));
+		LRounds.setAlignmentX(Component.CENTER_ALIGNMENT);
+		
+		// Name Label
+		LTime = new JLabel("Time to answer:");
+		LTime.setMaximumSize(lsize);
+		LTime.setFont(new Font("calibri",Font.PLAIN,15));
+		LTime.setAlignmentX(Component.CENTER_ALIGNMENT);
+
+		// Name Label
+		LPass = new JLabel("Password Protected:");
+		LPass.setMaximumSize(lsize);
+		LPass.setFont(new Font("calibri",Font.PLAIN,15));
+		LPass.setAlignmentX(Component.CENTER_ALIGNMENT);
+		
+		// Name Label
+		LPassword = new JLabel("Password:");
+		LPassword.setMaximumSize(lsize);
+		LPassword.setFont(new Font("calibri",Font.PLAIN,15));
+		LPassword.setAlignmentX(Component.CENTER_ALIGNMENT);
+		
+		
 		
 		// The two cards in the sides
 		LFigure1 = new JLabel();
@@ -114,14 +135,73 @@ public class CreateGame extends JFrame implements ActionListener {
 		txtfld2.setFont(new Font("calibri",Font.PLAIN,20));
 		txtfld2.setAlignmentX(Component.CENTER_ALIGNMENT);
 		
-		
-		
+		// Name textfield
+		txtfld3 = new JTextField(50);
+		txtfld3.setMaximumSize(txtfldsize);
+		txtfld3.setFont(new Font("calibri",Font.PLAIN,20));
+		txtfld3.setAlignmentX(Component.CENTER_ALIGNMENT);
+
+		// Name textfield
+		txtfld4 = new JTextField(50);
+		txtfld4.setMaximumSize(txtfldsize);
+		txtfld4.setFont(new Font("calibri",Font.PLAIN,20));
+		txtfld4.setAlignmentX(Component.CENTER_ALIGNMENT);
+
+		// Name textfield
+		txtfld5 = new JTextField(50);
+		txtfld5.setMaximumSize(txtfldsize);
+		txtfld5.setFont(new Font("calibri",Font.PLAIN,20));
+		txtfld5.setAlignmentX(Component.CENTER_ALIGNMENT);
 		
 		//Left JPanel
 		JPanel PCenter = new JPanel();
-		PCenter.setLayout(new GridLayout(0, 2));
+		PCenter.setLayout(new BorderLayout());
+		PCenter.setBorder(BorderFactory.createMatteBorder(4, 4, 4, 4, Color.black));		
 		
-		PCenter.add(BQuit);
+		JPanel PL = new JPanel();
+		PL.setLayout(new BoxLayout(PL, BoxLayout.PAGE_AXIS));
+		PL.setBackground(Color.white);
+		
+		PL.add(Box.createRigidArea(new Dimension(250,50)));
+		PL.add(LName);
+		PL.add(Box.createRigidArea(new Dimension(250,50)));
+		PL.add(LRounds);
+		PL.add(Box.createRigidArea(new Dimension(250,50)));
+		PL.add(LTime);
+		PL.add(Box.createRigidArea(new Dimension(250,50)));
+		PL.add(LPass);
+		PL.add(Box.createRigidArea(new Dimension(250,50)));
+		PL.add(LPassword);
+		
+		JPanel PR = new JPanel();
+		PR.setLayout(new BoxLayout(PR, BoxLayout.PAGE_AXIS));
+		PR.setBackground(Color.white);
+
+		PR.add(Box.createRigidArea(new Dimension(250,50)));
+		PR.add(txtfld1);
+		PR.add(Box.createRigidArea(new Dimension(250,50)));
+		PR.add(txtfld2);
+		PR.add(Box.createRigidArea(new Dimension(250,50)));
+		PR.add(txtfld3);
+		PR.add(Box.createRigidArea(new Dimension(250,50)));
+		PR.add(txtfld4);
+		PR.add(Box.createRigidArea(new Dimension(250,50)));
+		PR.add(txtfld5);
+		
+		
+		PCenter.add(PL, BorderLayout.WEST);
+		PCenter.add(PR, BorderLayout.EAST);
+
+		
+		
+		PCenter.add(LName);
+		PCenter.add(txtfld1);
+		PCenter.add(LTime);
+		PCenter.add(txtfld2);
+		PCenter.add(LPass);
+		PCenter.add(txtfld3);
+		PCenter.add(LPassword);
+		PCenter.add(txtfld4);
 		
 		
 		//Left JPanel
