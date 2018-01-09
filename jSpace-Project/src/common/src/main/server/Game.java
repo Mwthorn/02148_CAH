@@ -1,5 +1,6 @@
 package common.src.main.server;
 
+import common.src.main.server.database.PlayerBase;
 import common.src.main.server.utilities.BlackCard;
 import common.src.main.server.utilities.WhiteCard;
 
@@ -17,7 +18,7 @@ public class Game implements Runnable {
     private String password;
     private ArrayList<WhiteCard> whiteCards = new ArrayList<>();
     private ArrayList<BlackCard> blackCards = new ArrayList<>();
-    private ArrayList<Player> players = new ArrayList<>();
+    private PlayerBase players = new PlayerBase();
     private int maxPlayers;
     private String status;
     private int id;
@@ -32,6 +33,7 @@ public class Game implements Runnable {
     // TODO: Add rounds/max round?
     // TODO: Add host?
     // TODO: Add vote count?
+    // TODO: Add a check if a player already in the game tries to join again.
 
     public Game(String gameName,
                 ArrayList<WhiteCard> whiteCards,
@@ -50,7 +52,7 @@ public class Game implements Runnable {
         this.maxPlayers = maxPlayers;
         this.id = id;
         this.hostID = player.getId();
-        this.players.add(player);
+        this.players.addPlayer(player);
         this.gameSlot = gameSlot;
 
         this.repository = repository;
@@ -70,13 +72,14 @@ public class Game implements Runnable {
 		}
     	
     	/* Game lobby */
-    	// Lobby - Type  of Action - String - Integer
+    	// ???????Lobby - Type  of Action - String - Integer
 		Object[] tuple;
 		try {
-			tuple = game.get(new ActualField("game"),new FormalField(String.class), new FormalField(String.class), new FormalField(Integer.class));
+			tuple = game.get(new ActualField("game"),new FormalField(String.class), new FormalField(Integer.class));
 			System.out.println("Game Lobby: Got response: " + tuple[1]);
 			if (tuple[1].equals("ready")) {
 				// TODO: Ready button: A toggle option to be ready/not be ready.
+				readyUpdate((int) tuple[2]);
 	        } else if (tuple[1].equals("start")){
 	        	// TODO: Start game: A button for the host, possibly to entirely replace his ready button.
 	        } else if (tuple[1].equals("leave")){
@@ -92,7 +95,18 @@ public class Game implements Runnable {
     	// TODO: Chat?
     }
 
-    public String getGameName() {
+    private void readyUpdate(int playerID) {
+    	Player actor = players.getPlayerwithID(playerID);
+    	int playerNumber = players.getPlayerNumber(actor);
+    	actor.changeReady();
+    	for (int i = 0; i < players.getSize(); i++) {
+    		playerID = players.getPlayerID(i);
+			game.put("updateLocal", "ready", i, playerNumber, playerID);
+		}
+		
+	}
+
+	public String getGameName() {
         return this.gameName;
     }
 
@@ -109,16 +123,11 @@ public class Game implements Runnable {
     }
 
     public ArrayList<Player> getPlayers() {
-        return this.players;
+        return this.players.getPlayers();
     }
 
     public Player FindPlayer(String name) {
-        for (Player player : players) {
-            if (Objects.equals(player.getName(), name)) {
-                return player;
-            }
-        }
-        return null;
+        return players.getName(name);
     }
 
     public String getStatus() {
@@ -134,7 +143,7 @@ public class Game implements Runnable {
     }
 
     public void addPlayerToGame(Player player) {
-        players.add(player);
+        players.addPlayer(player);
     }
 
     public void setStatus(String status) {

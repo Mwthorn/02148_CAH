@@ -1,14 +1,22 @@
 package common.src.main.client;
 
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.io.IOException;
 import java.net.UnknownHostException;
 import java.util.ArrayList;
 
+import javax.swing.JButton;
+import javax.swing.JFrame;
+
+import common.src.main.gui.Login;
 import common.src.main.server.Game;
 import common.src.main.server.Player;
 import org.jspace.ActualField;
 import org.jspace.FormalField;
 import org.jspace.RemoteSpace;
+import org.jspace.SequentialSpace;
+import org.jspace.Space;
 
 public class Client {
 	private static RemoteSpace lobby, game;
@@ -27,10 +35,15 @@ public class Client {
 			try {
 				loginUser("127.0.0.1", "Alex");
 				
+				
 				System.out.println("Trying to create game");
 				createNewGame();
-
+	
 				joinGame();
+				
+				// 3 threads
+				gameLobby();
+				
 
 			} catch (UnknownHostException e) {
 				e.printStackTrace();
@@ -39,22 +52,6 @@ public class Client {
 			} catch (InterruptedException e) {
 				e.printStackTrace();
 			}
-			
-
-		
-		
-		/* Lobby */
-		// Create lobby GUI
-		
-		// Tons of different lobby features
-
-		// Do lobby action
-		
-		
-		
-		/*Enter game state
-		 * cardsAgainstHumanity();
-		 */
     }
 
 	private static void createNewGame() {
@@ -181,6 +178,56 @@ public class Client {
 		}
 		else if (tuple[1].equals("refreshGameList")) {
 
+		}
+	}
+	
+	private static void gameLobby() {
+		// Setup of a local tuple space.
+		Space local = new SequentialSpace();
+		
+		// Setup listener.
+		new Thread(new Listener(local, game)).start();
+		
+		// TODO: Implement a system similar to the listening in server main, but from the local tuple space.
+		
+		Object[] tuple;
+		while (true){
+			try {
+				tuple = local.get(new ActualField("local"),new FormalField(String.class), new FormalField(String.class), new FormalField(Integer.class));
+				System.out.println("Local Lobby: Got response: " + tuple[1]);
+		        if (tuple[1].equals("ready")) {
+					// TODO: Ready button: A toggle option to be ready/not be ready.
+		        	// Update personal GUI
+		        } else if (tuple[1].equals("start")){
+		        	// TODO: Start game: A button for the host, possibly to entirely replace his ready button.
+		        	// Starts the game, many stuff happens.
+		        } else if (tuple[1].equals("update")){
+		        	// TODO: Update from the server, update relevant GUI.
+		        	// Possible updates: User joins, user leaves, user checks ready, user unchecks ready.
+		        } else if (tuple[1].equals("leave")){
+		        	break;
+		        }
+			} catch (InterruptedException e) {
+				e.printStackTrace();
+			}
+		}
+		
+		// TODO: Leave game: Return the player to the main lobby, adjust tuple spaces.
+    	// Update GUI, change from game tuple space to lobby tuple space, adjust other players GUI by sending message to server.
+		
+		
+		
+		
+		
+	}
+	
+	private static void talker (int buttonPressed){
+		if (buttonPressed == 0){ //ready button clicked
+			game.put("game", "ready", userID);
+		} else if (buttonPressed == 1){ // start button clicked
+			game.put("game", "start", userID);
+		} else if (buttonPressed == 2){ // leave game buttton clicked
+			game.put("game", "leave", userID);
 		}
 	}
 }

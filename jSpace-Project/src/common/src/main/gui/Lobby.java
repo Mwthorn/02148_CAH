@@ -33,9 +33,6 @@ import org.jspace.Tuple;
 import common.src.main.client.Client;
 import common.src.main.client.GamePreview;
 
-/**
- * Created by Mwthorn on 04-01-2018.
- */
 public class Lobby extends JFrame implements ActionListener{
 
 	private static final String String = null;
@@ -81,12 +78,7 @@ public class Lobby extends JFrame implements ActionListener{
 		b2.setBackground(Color.BLACK);
 		b2.setAlignmentX(Component.CENTER_ALIGNMENT);
 
-		b2.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent ev) {
-				new Login();
 
-			}
-		});
 
 		// Join game button
 		b3 = new JButton("Join Game");
@@ -102,6 +94,7 @@ public class Lobby extends JFrame implements ActionListener{
 		l1.setForeground(Color.BLACK);
 		l1.setAlignmentX(Component.CENTER_ALIGNMENT);
 
+
 		// Implementing pictures for white cards and black cards as JLabel
 		l2 = new JLabel();
 		l3 = new JLabel();
@@ -110,8 +103,8 @@ public class Lobby extends JFrame implements ActionListener{
 		l3.setIcon(new ImageIcon(new ImageIcon("WCLobby.png").getImage().getScaledInstance(221, 328, Image.SCALE_DEFAULT)));
 
 		// Create List
-		//list = new JList(/*Client.getGameList().toArray()*/);
 
+		//list = new JList(/*Client.getGameList().toArray()*/);
 		//list.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 
 
@@ -161,7 +154,7 @@ public class Lobby extends JFrame implements ActionListener{
 
 
 		// Panel for list of games available
-/*
+		/*
 		JPanel p5 = new JPanel();
 
 		p5.setLayout(new BoxLayout(p5, BoxLayout.LINE_AXIS));
@@ -169,7 +162,7 @@ public class Lobby extends JFrame implements ActionListener{
 		p5.add(l5);
 
 		getContentPane().add(p5, BorderLayout.CENTER);
-	*/
+		 */
 	}
 
 	public void actionPerformed(ActionEvent e){

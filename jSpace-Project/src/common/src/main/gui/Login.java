@@ -8,6 +8,8 @@ import java.awt.Font;
 import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.IOException;
+import java.net.SocketException;
 
 import javax.swing.BorderFactory;
 import javax.swing.Box;
@@ -19,11 +21,12 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
+import common.src.main.client.Client;
 
 public class Login extends JFrame implements ActionListener {
 
 	//Initialize Buttons, Labels, Images and Textfields.
-	private JButton BQuit, BSignIn, BIP;
+	private JButton BQuit, BSignIn;
 	private JLabel LTitle, LText, LFigure1, LName, LIP, LFigure2;
 	private JTextField txtfld1, txtfld2;
 	
@@ -42,7 +45,7 @@ public class Login extends JFrame implements ActionListener {
 		//Labels
 		Dimension lsize = new Dimension(99, 50);
 		
-		// Make Buttons
+		// Make Quit Button
 		BQuit = new JButton("Quit");
 		BQuit.setMaximumSize(btnsize2);
 		BQuit.addActionListener(this);
@@ -54,6 +57,7 @@ public class Login extends JFrame implements ActionListener {
 		BQuit.setForeground(Color.WHITE);
 		BQuit.setBackground(Color.black);
 
+		// Make Sign In button
 		BSignIn = new JButton("Sign In");
 		BSignIn.setMaximumSize(btnsize4);
 		BSignIn.addActionListener(this);
@@ -77,37 +81,40 @@ public class Login extends JFrame implements ActionListener {
 		LText.setFont(new Font("calibri",Font.PLAIN,30));
 		LText.setForeground(Color.black);
 		
+		// Name Label
 		LName = new JLabel("Name:");
 		LName.setMaximumSize(lsize);
 		LName.setFont(new Font("calibri",Font.PLAIN,25));
 		LName.setAlignmentX(Component.CENTER_ALIGNMENT);
 
+		// IP Label
 		LIP = new JLabel("Server IP:");
 		LIP.setMaximumSize(lsize);
 		LIP.setFont(new Font("calibri",Font.PLAIN,25));
 		LIP.setAlignmentX(Component.CENTER_ALIGNMENT);
 		
+		// The two cards in the sides
 		LFigure1 = new JLabel();
 		LFigure2 = new JLabel();
-		
 		LFigure1.setIcon(new ImageIcon(new ImageIcon("BCLogin.png").getImage().getScaledInstance(243, 376, Image.SCALE_DEFAULT)));
 		LFigure2.setIcon(new ImageIcon(new ImageIcon("WCLogin.png").getImage().getScaledInstance(245, 376, Image.SCALE_DEFAULT)));
-		
 		LFigure1.setAlignmentX(Component.CENTER_ALIGNMENT);
 		LFigure2.setAlignmentX(Component.CENTER_ALIGNMENT);
 
+		// Name textfield
 		txtfld1 = new JTextField(50);
 		txtfld1.setMaximumSize(txtfldsize);
 		txtfld1.setFont(new Font("calibri",Font.PLAIN,20));
 		txtfld1.setAlignmentX(Component.CENTER_ALIGNMENT);
 
+		// Name textfield
 		txtfld2 = new JTextField(50);
 		txtfld2.setMaximumSize(txtfldsize);
 		txtfld2.setFont(new Font("calibri",Font.PLAIN,20));
 		txtfld2.setAlignmentX(Component.CENTER_ALIGNMENT);
 		
 
-		
+		// Create the 
 		JPanel PC = new JPanel();
 		PC.setLayout(new BorderLayout());
 		PC.setSize(600, 400);
@@ -233,16 +240,30 @@ public class Login extends JFrame implements ActionListener {
 			this.name = txtfld1.getText();
 			this.IP = txtfld2.getText();
 			
+			System.out.println(name);
+			System.out.println(IP);
+			
+			try {
+				
+				Client.loginUser(IP, name);
+			
+			} catch (SocketException e1) {
+				txtfld2.setText("Incorrect IP");
+			} catch (IOException e1) {
+				e1.printStackTrace();
+			} catch (InterruptedException e1) {				
+				e1.printStackTrace();
+			}
 		}
 	}
 	
-	public String getName() {
-		return name;
-	}
-	
-	public String getIP() {
-		return IP;
-	}
+//	public String getName() {
+//		return name;
+//	}
+//	
+//	public String getIP() {
+//		return IP;
+//	}
 	
 	
 	public static void main(String[] args) {
@@ -254,8 +275,7 @@ public class Login extends JFrame implements ActionListener {
 		game.setResizable(true);
 		game.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		game.setVisible(true);
-		game.setLocationRelativeTo(null);		
-		
+		game.setLocationRelativeTo(null);
 	}
 }
 
