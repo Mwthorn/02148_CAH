@@ -186,7 +186,7 @@ public class Client {
 		Space local = new SequentialSpace();
 		
 		// Setup listener.
-		new Thread(new Listener(local, game)).start();
+		new Thread(new Listener(local, game, userID)).start();
 		
 		// TODO: Implement a system similar to the listening in server main, but from the local tuple space.
 		
