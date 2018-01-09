@@ -264,16 +264,16 @@ public class Login extends JFrame implements ActionListener {
 
 
 
-	public static void getLoginPanel(){
+	public void getLoginPanel(){
 
-		Login game = new Login();
+		JFrame login = new Login();
 
-		game.setTitle("Cards Against Humanity");
-		game.setSize(1900,1000);
-		game.setResizable(true);
-		game.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		game.setVisible(true);
-		game.setLocationRelativeTo(null);
+		login.setTitle("Cards Against Humanity");
+		login.setSize(1900,1000);
+		login.setResizable(true);
+		login.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		login.setVisible(true);
+		login.setLocationRelativeTo(null);
 	}
 }
 
