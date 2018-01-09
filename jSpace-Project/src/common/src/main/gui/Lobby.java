@@ -9,7 +9,13 @@ import java.awt.Font;
 import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 
+import javax.imageio.ImageIO;
 import javax.swing.BorderFactory;
 import javax.swing.Box;
 import javax.swing.BoxLayout;
@@ -17,19 +23,40 @@ import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JList;
 import javax.swing.JPanel;
+import javax.swing.JTextField;
+import javax.swing.ListSelectionModel;
 
-/**
- * Created by Mwthorn on 04-01-2018.
- */
+import org.jspace.Tuple;
+
+import common.src.main.client.Client;
+import common.src.main.client.GamePreview;
+
 public class Lobby extends JFrame implements ActionListener{
 	
-	private JButton b1, b2;
-	private JLabel l1,l2,l3;
-	private ImageIcon i1,i2;
+	private static final String String = null;
+	private JButton b1, b2, b3, b4;
+	private JLabel l1,l2,l3,l4,l5;
+	private JTextField WP;
+	private static JList list;
+	static List<GamePreview> gpList;
 	
+	/*
+	public static List<GamePreview> putList() throws InterruptedException{
+		GamePreview[] gameList = new Client().getGameList();
+		gpList = new ArrayList<GamePreview>();
+		
+		
+		for(int i=0; i < gameList.length; i++){
+			gpList.add(gameList[i]);
+		}
+		System.out.println(gpList);
+		return gpList;
+	}
+	*/
 	
-	public Lobby(){
+	public Lobby() throws InterruptedException{
 		getContentPane().setLayout(new BorderLayout()); //Default layout
 		getContentPane().setBackground(Color.WHITE);
 		
@@ -37,15 +64,26 @@ public class Lobby extends JFrame implements ActionListener{
 		Dimension btnsize1 = new Dimension(200,50);
 		Dimension btnsize2 = new Dimension(150,55);
 		
+		// Create game button
 		b1 = new JButton("Create Game");
 		b1.setPreferredSize(btnsize1);
+		b1.setBackground(Color.BLACK);
 		b1.addActionListener(this);
 		b1.setAlignmentX(Component.CENTER_ALIGNMENT);
 		
+		// Sign out button
 		b2 = new JButton("Sign Out");
-		b2.addActionListener(this);
 		b2.setPreferredSize(btnsize2);
+		b2.setBackground(Color.BLACK);
+		b2.addActionListener(this);
 		b2.setAlignmentX(Component.CENTER_ALIGNMENT);
+		
+		// Join game button
+		b3 = new JButton("Sign Out");
+		b3.setPreferredSize(btnsize2);
+		b3.setBackground(Color.BLACK);
+		b3.addActionListener(this);
+		b3.setAlignmentX(Component.CENTER_ALIGNMENT);
 		
 		//Create label
 		l1 = new JLabel("Cards Against Humanity ");
@@ -54,52 +92,73 @@ public class Lobby extends JFrame implements ActionListener{
 		l1.setForeground(Color.BLACK);
 		l1.setAlignmentX(Component.CENTER_ALIGNMENT);
 		
+		// Implementing pictures for white cards and black cards as JLabel
+		l2 = new JLabel();
+		l3 = new JLabel();
 		
-		// Implementing pictures for white cards and black cards
-		i1 = new ImageIcon("BC1.png");
-		i2 = new ImageIcon("WC.jpg");
-		l2 = new JLabel(i1);
-		l3 = new JLabel(i2);
+		l2.setIcon(new ImageIcon(new ImageIcon("BCLobby.png").getImage().getScaledInstance(187, 288, Image.SCALE_DEFAULT)));
+		l3.setIcon(new ImageIcon(new ImageIcon("WCLobby.png").getImage().getScaledInstance(221, 328, Image.SCALE_DEFAULT)));
+
+		// Create List
+		//putList();
+		//list = new JList(gpList.toArray());
 		
+		//list.setVisibleRowCount();
+		//list.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 		
 		
 		//Creates panel for buttons
 		JPanel p1 = new JPanel();
-		JPanel p2 = new JPanel();
 		
 		p1.setLayout(new BoxLayout(p1, BoxLayout.LINE_AXIS));
-		//p1.setMaximumSize(p1.getPreferredSize()); 
-        //p1.setMinimumSize(p1.getPreferredSize());
 		p1.setBackground(Color.WHITE);
 		p1.add(b2);
+        p1.add(Box.createHorizontalGlue());
+        p1.add(b3);
         p1.add(Box.createHorizontalGlue());
         p1.add(b1);
         
 		getContentPane().add(p1, BorderLayout.SOUTH);
 		
-		//Creates panel for label
+		//Creates panel for labels
+		JPanel p2 = new JPanel();
 		JPanel p3 = new JPanel();
 		JPanel p4 = new JPanel();
 		
-		p3.setLayout(new BoxLayout(p3, BoxLayout.PAGE_AXIS));
+		// Panel for Title label
+		p2.setLayout(new BoxLayout(p2, BoxLayout.PAGE_AXIS));
+		p2.setBackground(Color.WHITE);
+		p2.add(l1);
+		
+		// Panel for Black Card image
+		p3.setLayout(new BoxLayout(p3, BoxLayout.LINE_AXIS));
+		p3.add(Box.createRigidArea(new Dimension(0, 0)));
 		p3.setBackground(Color.WHITE);
-		p3.add(l1);
+		p3.add(l2);
 		
-		
+		// Panel for White Card image
 		p4.setLayout(new BoxLayout(p4, BoxLayout.LINE_AXIS));
+		p3.add(Box.createRigidArea(new Dimension(50, 0)));
 		p4.setBackground(Color.WHITE);
-		p4.add(l2);
+		p4.add(l3);
 		
-		//p4.add(Box.createHorizontalGlue());
-		p4.setSize(300, 100);
+		getContentPane().add(p2, BorderLayout.NORTH);
+		getContentPane().add(p3, BorderLayout.EAST);
+		getContentPane().add(p4, BorderLayout.WEST);
 		
 		
-		getContentPane().add(p3, BorderLayout.NORTH);
-		getContentPane().add(p4, BorderLayout.EAST);
+		// Panel for list of games available
+		JPanel p5 = new JPanel();
 		
+		p5.setLayout(new BoxLayout(p5, BoxLayout.LINE_AXIS));
+		
+		//p5.setBackground(Color.WHITE);
+
+		
+		getContentPane().add(p5, BorderLayout.CENTER);
 		
 	}
-	
+	/*
 	public void actionPerformed(ActionEvent e){
 		
 		if(e.getSource()==b1){
@@ -109,18 +168,53 @@ public class Lobby extends JFrame implements ActionListener{
 		if(e.getSource()==b2){
 			
 		}
+		if(e.getSource()==b3 && Client.hasPassword == true){
+			JPanel p77 = new JPanel();
+			JFrame ePassword = new JFrame("Enter Password");
+			ePassword.pack();
+			ePassword.setVisible(true);
+			ePassword.setResizable(false);
+			ePassword.setLocationRelativeTo(null);
+			
+			l5 = new JLabel("Enter Password");
+			WP = new JTextField(10);
+			b4 = new JButton("Enter");
+			b4.addActionListener(this);
+			add(ePassword);
+			add(WP);
+			add(b4);
+			
+			if(e.getSource()==b4 && WP == password){
+				ReadyUpLobby;
+				ePassword.dispose();
+			}
+			else{
+				l5 = new JLabel("Wrong Password");
+				add(l5);
+			}
+			
+		}
 		
 	}
-	
-	public static void main(String[] args) {
+	*/
+	public static void main(String[] args) throws InterruptedException {
+		
 		Lobby lobby = new Lobby();
 		
-		lobby.setSize(900, 600);
+		lobby.setSize(1080, 720);
 		lobby.setLocationRelativeTo(null);
 		lobby.setDefaultCloseOperation(EXIT_ON_CLOSE);
 		lobby.setTitle("Cards Against Humanity");
 		lobby.setResizable(true);
 		lobby.setVisible(true);
+		
+		//putList();
+		
+	}
+	
+	@Override
+	public void actionPerformed(ActionEvent e) {
+		// TODO Auto-generated method stub
 		
 	}
 

@@ -7,19 +7,18 @@ import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
-import java.util.List;
 
 public class CardDataBase{
 	
 	 BufferedReader reader = null;
 	 FileInputStream inputStream = null;
-	 List<WhiteCard> wDataBase  = new ArrayList<WhiteCard>();
-	 List<BlackCard> bDataBase  = new ArrayList<BlackCard>();
+	 ArrayList<WhiteCard> wDataBase  = new ArrayList<WhiteCard>();
+	 ArrayList<BlackCard> bDataBase  = new ArrayList<BlackCard>();
 	 
 	public CardDataBase() {
 	}
 
-	public List<WhiteCard> getWhiteDeck(){
+	public ArrayList<WhiteCard> getWhiteDeck(){
 		String quip = null;
 		WhiteCard newWC;
 		
@@ -43,7 +42,7 @@ public class CardDataBase{
 	}
 
 
-	public  List<BlackCard> getBlackDeck(){
+	public ArrayList<BlackCard> getBlackDeck(){
 		String numbers, sentence = null;
 		int numOfLines, numOfBlanks = 0;
 		BlackCard newBC;

@@ -28,7 +28,7 @@ public class Client {
     	/* Connect to server using GUI info */
 		
 			try {
-				loginUser();
+				loginUser("127.0.0.1", "Alex");
 				
 				
 				System.out.println("Trying to create game");
@@ -90,11 +90,11 @@ public class Client {
 		}
 	}
 
-	public static void loginUser() throws IOException, InterruptedException {
+	public static void loginUser(String serverIP, String name) throws IOException, InterruptedException {
 		// TODO: The two lines below assigning IP and name should be retrieved
 		// when first signing in to the lobby.
-		serverIP = "127.0.0.1";
-		name = "Alex";
+		// serverIP = "127.0.0.1";
+		// name = "Alex";
 		
 		lobby = new RemoteSpace("tcp://" + serverIP + ":9001/lobby?keep");
 
