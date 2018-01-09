@@ -29,7 +29,7 @@ public class CreateGame extends JFrame implements ActionListener {
 		Dimension txtfldsize = new Dimension(400, 30);
 		
 		//Labels
-		Dimension lsize = new Dimension(99, 50);
+		Dimension lsize = new Dimension(100,50);
 		
 		// Make Quit Button
 		BQuit = new JButton("Quit");
@@ -70,31 +70,31 @@ public class CreateGame extends JFrame implements ActionListener {
 		// Name Label
 		LName = new JLabel("Name:");
 		LName.setMaximumSize(lsize);
-		LName.setFont(new Font("calibri",Font.PLAIN,15));
+		LName.setFont(new Font("calibri",Font.PLAIN,40));
 		LName.setAlignmentX(Component.CENTER_ALIGNMENT);
 
 		// Name Label
 		LRounds = new JLabel("Rounds to win:");
 		LRounds.setMaximumSize(lsize);
-		LRounds.setFont(new Font("calibri",Font.PLAIN,15));
+		LRounds.setFont(new Font("calibri",Font.PLAIN,40));
 		LRounds.setAlignmentX(Component.CENTER_ALIGNMENT);
 		
 		// Name Label
 		LTime = new JLabel("Time to answer:");
 		LTime.setMaximumSize(lsize);
-		LTime.setFont(new Font("calibri",Font.PLAIN,15));
+		LTime.setFont(new Font("calibri",Font.PLAIN,40));
 		LTime.setAlignmentX(Component.CENTER_ALIGNMENT);
 
 		// Name Label
 		LPass = new JLabel("Password Protected:");
 		LPass.setMaximumSize(lsize);
-		LPass.setFont(new Font("calibri",Font.PLAIN,15));
+		LPass.setFont(new Font("calibri",Font.PLAIN,40));
 		LPass.setAlignmentX(Component.CENTER_ALIGNMENT);
 		
 		// Name Label
 		LPassword = new JLabel("Password:");
 		LPassword.setMaximumSize(lsize);
-		LPassword.setFont(new Font("calibri",Font.PLAIN,15));
+		LPassword.setFont(new Font("calibri",Font.PLAIN,40));
 		LPassword.setAlignmentX(Component.CENTER_ALIGNMENT);
 		
 		
@@ -146,46 +146,35 @@ public class CreateGame extends JFrame implements ActionListener {
 		PL.setLayout(new BoxLayout(PL, BoxLayout.PAGE_AXIS));
 		PL.setBackground(Color.white);
 		
-		PL.add(Box.createRigidArea(new Dimension(250,50)));
+		PL.add(Box.createRigidArea(new Dimension(100,50)));
 		PL.add(LName);
-		PL.add(Box.createRigidArea(new Dimension(250,50)));
+		PL.add(Box.createRigidArea(new Dimension(100,50)));
 		PL.add(LRounds);
-		PL.add(Box.createRigidArea(new Dimension(250,50)));
+		PL.add(Box.createRigidArea(new Dimension(100,50)));
 		PL.add(LTime);
-		PL.add(Box.createRigidArea(new Dimension(250,50)));
+		PL.add(Box.createRigidArea(new Dimension(100,50)));
 		PL.add(LPass);
-		PL.add(Box.createRigidArea(new Dimension(250,50)));
+		PL.add(Box.createRigidArea(new Dimension(100,50)));
 		PL.add(LPassword);
 		
 		JPanel PR = new JPanel();
 		PR.setLayout(new BoxLayout(PR, BoxLayout.PAGE_AXIS));
 		PR.setBackground(Color.white);
 
-		PR.add(Box.createRigidArea(new Dimension(250,50)));
+		PR.add(Box.createRigidArea(new Dimension(150,50)));
 		PR.add(txtfld1);
-		PR.add(Box.createRigidArea(new Dimension(250,50)));
+		PR.add(Box.createRigidArea(new Dimension(150,50)));
 		PR.add(txtfld2);
-		PR.add(Box.createRigidArea(new Dimension(250,50)));
+		PR.add(Box.createRigidArea(new Dimension(150,50)));
 		PR.add(txtfld3);
-		PR.add(Box.createRigidArea(new Dimension(250,50)));
+		PR.add(Box.createRigidArea(new Dimension(150,50)));
 		PR.add(txtfld4);
-		PR.add(Box.createRigidArea(new Dimension(250,50)));
+		PR.add(Box.createRigidArea(new Dimension(150,50)));
 		PR.add(txtfld5);
 		
 		
-		PCenter.add(PL, BorderLayout.WEST);
+		PCenter.add(PL, BorderLayout.CENTER);
 		PCenter.add(PR, BorderLayout.EAST);
-
-		
-		
-		PCenter.add(LName);
-		PCenter.add(txtfld1);
-		PCenter.add(LTime);
-		PCenter.add(txtfld2);
-		PCenter.add(LPass);
-		PCenter.add(txtfld3);
-		PCenter.add(LPassword);
-		PCenter.add(txtfld4);
 		
 		
 		//Left JPanel

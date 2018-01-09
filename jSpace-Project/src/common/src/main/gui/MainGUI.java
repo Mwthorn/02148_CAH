@@ -30,7 +30,7 @@ public class MainGUI extends JFrame {
 		this.setSize(1900,1000);
 		this.setResizable(true);
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		//		this.setVisible(true);
+		this.setVisible(true);
 		this.setLocationRelativeTo(null);
 		this.setVisible(true);
 
@@ -47,7 +47,7 @@ public class MainGUI extends JFrame {
 		} else if(gLob2game){
 			runGameGUI();
 		} else {
-			// Something went terribly wrong! Muhahaha. 
+			// Something went terribly wrong! ha. 
 		}
 	}
 
@@ -72,21 +72,16 @@ public class MainGUI extends JFrame {
 	public void runLogin(){
 
 		newLogin = new Login();
-		this.setContentPane(newLogin);
-		revalidate();
-		repaint();
+
 	}
 
 	public void runLobby(){
 
-		//previous.setVisible(false);
 		newLogin.setVisible(false);
+		//newLogin.setVisible(false);
 		try {
 			newLobby = new Lobby();
-			this.setContentPane(newLobby);
-			revalidate();
-			repaint();
-
+			
 		} catch (InterruptedException e) {
 			e.printStackTrace();
 		}
