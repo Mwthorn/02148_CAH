@@ -32,6 +32,7 @@ public class Game implements Runnable {
     // TODO: Add rounds/max round?
     // TODO: Add host?
     // TODO: Add vote count?
+    // TODO: Add a check if a player already in the game tries to join again.
 
     public Game(String gameName,
                 ArrayList<WhiteCard> whiteCards,
@@ -70,7 +71,7 @@ public class Game implements Runnable {
 		}
     	
     	/* Game lobby */
-    	// Lobby - Type  of Action - String - Integer
+    	// ???????Lobby - Type  of Action - String - Integer
 		Object[] tuple;
 		try {
 			tuple = game.get(new ActualField("game"),new FormalField(String.class), new FormalField(String.class), new FormalField(Integer.class));
