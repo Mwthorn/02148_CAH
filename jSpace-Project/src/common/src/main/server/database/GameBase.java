@@ -1,7 +1,6 @@
 package common.src.main.server.database;
 
 import common.src.main.server.Game;
-import common.src.main.server.Player;
 
 import java.util.ArrayList;
 

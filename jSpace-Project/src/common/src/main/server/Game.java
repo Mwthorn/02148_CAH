@@ -3,14 +3,12 @@ package common.src.main.server;
 import common.src.main.server.database.PlayerBase;
 import common.src.main.server.utilities.BlackCard;
 import common.src.main.server.utilities.WhiteCard;
-
 import org.jspace.ActualField;
 import org.jspace.FormalField;
 import org.jspace.SequentialSpace;
 import org.jspace.SpaceRepository;
 
 import java.util.ArrayList;
-import java.util.Objects;
 
 public class Game implements Runnable {
 
