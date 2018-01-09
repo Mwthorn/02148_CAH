@@ -10,10 +10,6 @@ public class GamePreview {
     private int currentPlayerSize;
     private int maxPlayerSize;
     private int id;
-<<<<<<< HEAD
-    		
-=======
->>>>>>> fe9e8c28ca49f0c2cac5429e3f064a108302777d
     
     public GamePreview(String gameName, String gameStatus, boolean hasPassword, int currentPlayerSize, int maxPlayerSize, int id) {
         this.gameName = gameName;

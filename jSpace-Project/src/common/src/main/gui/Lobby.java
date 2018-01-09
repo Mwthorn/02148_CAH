@@ -33,9 +33,6 @@ import org.jspace.Tuple;
 import common.src.main.client.Client;
 import common.src.main.client.GamePreview;
 
-/**
- * Created by Mwthorn on 04-01-2018.
- */
 public class Lobby extends JFrame implements ActionListener{
 	
 	private static final String String = null;
@@ -95,8 +92,6 @@ public class Lobby extends JFrame implements ActionListener{
 		l1.setForeground(Color.BLACK);
 		l1.setAlignmentX(Component.CENTER_ALIGNMENT);
 		
-		
-<<<<<<< HEAD
 		// Implementing pictures for white cards and black cards as JLabel
 		l2 = new JLabel();
 		l3 = new JLabel();
@@ -107,13 +102,6 @@ public class Lobby extends JFrame implements ActionListener{
 		// Create List
 		//putList();
 		//list = new JList(gpList.toArray());
-=======
-		// Implementing pictures for white cards and black cards
-		i1 = new ImageIcon("BC1.png");
-		i2 = new ImageIcon("WC.jpg");
-		l2 = new JLabel(i1);
-		l3 = new JLabel(i2);
->>>>>>> fe9e8c28ca49f0c2cac5429e3f064a108302777d
 		
 		//list.setVisibleRowCount();
 		//list.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
@@ -221,6 +209,12 @@ public class Lobby extends JFrame implements ActionListener{
 		lobby.setVisible(true);
 		
 		//putList();
+		
+	}
+	
+	@Override
+	public void actionPerformed(ActionEvent e) {
+		// TODO Auto-generated method stub
 		
 	}
 

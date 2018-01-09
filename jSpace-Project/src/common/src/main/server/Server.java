@@ -13,8 +13,6 @@ import org.jspace.FormalField;
 import org.jspace.SequentialSpace;
 import org.jspace.SpaceRepository;
 
-import javax.smartcardio.Card;
-
 public class Server {
 
     private static ArrayList<WhiteCard> whiteCards;
