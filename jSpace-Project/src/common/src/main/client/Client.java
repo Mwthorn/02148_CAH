@@ -1,22 +1,12 @@
 package common.src.main.client;
 
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
+import common.src.main.server.Game;
+import common.src.main.server.Player;
+import org.jspace.*;
+
 import java.io.IOException;
 import java.net.UnknownHostException;
 import java.util.ArrayList;
-
-import javax.swing.JButton;
-import javax.swing.JFrame;
-
-import common.src.main.gui.Login;
-import common.src.main.server.Game;
-import common.src.main.server.Player;
-import org.jspace.ActualField;
-import org.jspace.FormalField;
-import org.jspace.RemoteSpace;
-import org.jspace.SequentialSpace;
-import org.jspace.Space;
 
 public class Client {
 	private static RemoteSpace lobby, game;
