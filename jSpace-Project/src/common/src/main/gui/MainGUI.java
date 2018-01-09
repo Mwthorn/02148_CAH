@@ -5,49 +5,80 @@ import java.awt.EventQueue;
 import javax.swing.JFrame;
 import javax.swing.SwingUtilities;
 
-public class MainGUI {
+public class MainGUI extends JFrame {
 
-	public static Login newLogin = new Login();
+	// DECLARATIONS
+	Login newLogin;
+	Lobby newLobby;
+	GameGUI newGameGUI;
+	CreateGame newCreateGame;
+	ReadyUpLobby newReadyUpLobby;
 
-	
-	public static void runLogin(){
+	// CONSTRUCTOR
+	public MainGUI(){
 
-		newLogin.setTitle("Cards Against Humanity");
-		newLogin.setSize(1900,1000);
-		newLogin.setResizable(true);
-		newLogin.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		newLogin.setVisible(true);
-		newLogin.setLocationRelativeTo(null);
-	
+		this.add(newLogin);
+		this.add(newLobby);
+		this.add(newGameGUI);
+		this.add(newCreateGame)
+		this.add(newReadyUpLobby);
+
+		this.setTitle("Cards Against Humanity");
+		this.setSize(1900,1000);
+		this.setResizable(true);
+		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		this.setVisible(true);
+		this.setLocationRelativeTo(null);
 	}
-	
+
+
+	// METHODS
+
+	public void runLogin(){
+		newLogin = new Login();
+	}
+
 	public void runLobby(){
-		
+		newLogin.setVisible(false);
 		try {
-			Lobby newLobby = new Lobby();
+			newLobby = new Lobby();
 		} catch (InterruptedException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		
-		newLogin.setVisible(false);
-		
-		
 	}
-	
-	public static void main(String[] args) {
 
+	public void runCreateGame(){
+		//?.setVisible(false);
+		newCreateGame = new CreateGame();
+	}
+
+	public void runReadyUpLobby(){
+		//?.setVisible(false);
+		this.add(newReadyUpLobby);
+	}
+
+	public void runGameGUI(){
+		//?.setVisible(false);
+		newGameGUI = new GameGUI();
+	}
+
+	
+	// MAIN
+	static void main(String[] args) {
+
+		/*
 		SwingUtilities.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					
+
 					runLogin();
-					
+
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
 			}
-		});
-		
+		}); */
+
 	}
 }
