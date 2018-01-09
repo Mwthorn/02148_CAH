@@ -1,7 +1,5 @@
 package common.src.main.server;
 
-import java.util.ArrayList;
-
 import common.src.main.client.GamePreview;
 import common.src.main.server.database.CardDataBase;
 import common.src.main.server.database.GameBase;
@@ -12,6 +10,8 @@ import org.jspace.ActualField;
 import org.jspace.FormalField;
 import org.jspace.SequentialSpace;
 import org.jspace.SpaceRepository;
+
+import java.util.ArrayList;
 
 public class Server {
 

@@ -5,49 +5,137 @@ import java.awt.EventQueue;
 import javax.swing.JFrame;
 import javax.swing.SwingUtilities;
 
-public class MainGUI {
+public class MainGUI extends JFrame {
 
-	public static Login newLogin = new Login();
+	// DECLARATIONS
+	Login newLogin;
+	Lobby newLobby;
+	GameGUI newGameGUI;
+	CreateGame newCreateGame;
+	ReadyUpLobby newReadyUpLobby;
+	private boolean lob2Log;
+	private boolean log2Lob;
+	private boolean game2Lob;
+	private boolean gLob2Lob;
+	private boolean cg2Lob;
+	private boolean lob2cg;
+	private boolean lob2gLob;
+	private boolean cg2gLob;
+	private boolean gLob2game;
 
-	
-	public static void runLogin(){
+	// CONSTRUCTOR
+	public MainGUI(){
 
-		newLogin.setTitle("Cards Against Humanity");
-		newLogin.setSize(1900,1000);
-		newLogin.setResizable(true);
-		newLogin.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		newLogin.setVisible(true);
-		newLogin.setLocationRelativeTo(null);
-	
-	}
-	
-	public void runLobby(){
+		this.setTitle("Cards Against Humanity");
+		this.setSize(1900,1000);
+		this.setResizable(true);
+		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		//		this.setVisible(true);
+		this.setLocationRelativeTo(null);
+		this.setVisible(true);
+
+		runLogin(); // når programmet køres, skal den starte med Login.
 		
+		if(lob2Log){
+			runLogin();
+		} else if(log2Lob || game2Lob || gLob2Lob || cg2Lob){
+			runLobby();
+		} else if(lob2cg){
+			runCreateGame();
+		} else if(lob2gLob || cg2gLob){
+			runReadyUpLobby();
+		} else if(gLob2game){
+			runGameGUI();
+		} else {
+			// Something went terribly wrong! Muhahaha. 
+		}
+	}
+
+
+	// METHODS
+	
+	public void changeGUI(){
+		
+		
+		lob2Log;
+		log2Lob;
+		game2Lob;
+		gLob2Lob;
+		cg2Lob;
+		lob2cg;
+		lob2gLob;
+		cg2gLob;
+		gLob2game;
+	}
+
+	public void runLogin(){
+
+		newLogin = new Login();
+		this.setContentPane(newLogin);
+		revalidate();
+		repaint();
+	}
+
+	public void runLobby(){
+
+		//previous.setVisible(false);
+		newLogin.setVisible(false);
 		try {
-			Lobby newLobby = new Lobby();
+			newLobby = new Lobby();
+			this.setContentPane(newLobby);
+			revalidate();
+			repaint();
+
 		} catch (InterruptedException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		
-		newLogin.setVisible(false);
-		
-		
 	}
-	
-	public static void main(String[] args) {
 
+	public void runCreateGame(){
+
+		//previous.setVisible(false);
+		newCreateGame = new CreateGame();
+
+		this.setContentPane(newGameGUI);
+		revalidate();
+		repaint();
+	}
+
+	public void runReadyUpLobby(){
+
+		//previous.setVisible(false);
+		this.add(newReadyUpLobby);
+
+		this.setContentPane(newCreateGame);
+		revalidate();
+		repaint();
+	}
+
+	public void runGameGUI(){
+
+		//previous.setVisible(false);
+		newGameGUI = new GameGUI();
+
+		this.setContentPane(newReadyUpLobby);		
+		revalidate();
+		repaint();
+	}
+
+
+	// MAIN
+	static void main(String[] args) {
+
+		/*
 		SwingUtilities.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					
+
 					runLogin();
-					
+
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
 			}
-		});
-		
+		}); */
 	}
 }

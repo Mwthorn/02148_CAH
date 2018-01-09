@@ -3,6 +3,7 @@ package common.src.main.server.database;
 import common.src.main.server.Player;
 
 import java.util.ArrayList;
+import java.util.Objects;
 import java.util.Random;
 
 public class PlayerBase {
@@ -44,5 +45,33 @@ public class PlayerBase {
     public int getSize() {
         return players.size();
     }
+    
+    public int getPlayerNumber(Player player) {
+    	return players.indexOf(player);
+    }
+    
+    public ArrayList<Player> getPlayers(){
+    	return players;
+    }
+    
+    public Player getName(String name){
+    	for (Player player : players) {
+            if (Objects.equals(player.getName(), name)) {
+                return player;
+            }
+        }
+        return null;
+    }
 
+	public int getPlayerID(int i) {
+		return players.get(i).getId();
+	}
+
+	public String getPlayerName(int i) {
+		return players.get(i).getName();
+	}
+
+	public void removePlayer(Player actor) {
+		players.remove(actor);
+	}
 }

@@ -1,16 +1,12 @@
 package common.src.main.client;
 
+import common.src.main.server.Game;
+import common.src.main.server.Player;
+import org.jspace.*;
+
 import java.io.IOException;
 import java.net.UnknownHostException;
 import java.util.ArrayList;
-
-import common.src.main.server.Game;
-import common.src.main.server.Player;
-import org.jspace.ActualField;
-import org.jspace.FormalField;
-import org.jspace.RemoteSpace;
-import org.jspace.SequentialSpace;
-import org.jspace.Space;
 
 public class Client {
 	private static RemoteSpace lobby, game;
@@ -32,7 +28,7 @@ public class Client {
 				
 				System.out.println("Trying to create game");
 				createNewGame();
-
+	
 				joinGame();
 				
 				// 3 threads
@@ -46,25 +42,6 @@ public class Client {
 			} catch (InterruptedException e) {
 				e.printStackTrace();
 			}
-			
-
-		
-		
-		/* Lobby */
-		// Create lobby GUI
-			
-			
-		
-		
-		// Tons of different lobby features
-
-		// Do lobby action
-		
-		
-		
-		/*Enter game state
-		 * cardsAgainstHumanity();
-		 */
     }
 
 	private static void createNewGame() {
@@ -111,19 +88,19 @@ public class Client {
 		
 	}
 
-	public static GamePreview[] getGameList() throws InterruptedException {
+	public static ArrayList<GamePreview> getGameList() throws InterruptedException {
 		lobby.put("lobby", "refreshGameList", "", userID);
 
 		Object[] tuple = lobby.get(new ActualField("GameListSize"), new ActualField(userID), new FormalField(Integer.class));
 		Object[] gT;
 		int n = (int) tuple[1];
-		GamePreview[] games = new GamePreview[n];
+		ArrayList<GamePreview> games = new ArrayList<>();
 		System.out.println("Got " + n + " games from server!");
 		for (int i = 0; i < n; i++) {
 			gT = lobby.get(new ActualField("GameList"),
 					new ActualField(userID),
 					new FormalField(Game.class));
-			games[i] = (GamePreview) gT[2];
+			games.add((GamePreview) gT[2]);
 		}
 		return games;
 	}
@@ -198,9 +175,8 @@ public class Client {
 		// Setup of a local tuple space.
 		Space local = new SequentialSpace();
 		
-		// Initialise two threads.
-		new Thread(new Listener(local, game)).start();
-		new Thread(new Talker(game, userID)).start();
+		// Setup listener.
+		new Thread(new Listener(local, game, userID)).start();
 		
 		// TODO: Implement a system similar to the listening in server main, but from the local tuple space.
 		
@@ -211,7 +187,7 @@ public class Client {
 				System.out.println("Local Lobby: Got response: " + tuple[1]);
 		        if (tuple[1].equals("ready")) {
 					// TODO: Ready button: A toggle option to be ready/not be ready.
-		        	// Update personal GUI and send response to server for other players to do the same.
+		        	// Update personal GUI
 		        } else if (tuple[1].equals("start")){
 		        	// TODO: Start game: A button for the host, possibly to entirely replace his ready button.
 		        	// Starts the game, many stuff happens.
@@ -233,5 +209,15 @@ public class Client {
 		
 		
 		
+	}
+	
+	private static void talker (int buttonPressed){
+		if (buttonPressed == 0){ //ready button clicked
+			game.put("game", "ready", userID);
+		} else if (buttonPressed == 1){ // start button clicked
+			game.put("game", "start", userID);
+		} else if (buttonPressed == 2){ // leave game buttton clicked
+			game.put("game", "leave", userID);
+		}
 	}
 }
