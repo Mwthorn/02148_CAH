@@ -52,15 +52,19 @@ public class ReadyUpLobby extends JFrame implements ActionListener{
 		getContentPane().setBackground(Color.WHITE);
 
 		//Create buttons
-		Dimension btnsize1 = new Dimension(200,50);
+		Dimension btnsize1 = new Dimension(200,100);
 		Dimension btnsize2 = new Dimension(150,55);
 
 		// Create game button
 		b1 = new JButton("Ready");
 		b1.setPreferredSize(btnsize1);
-		b1.setBackground(Color.BLACK);
 		b1.addActionListener(this);
 		b1.setAlignmentX(Component.CENTER_ALIGNMENT);
+		b1.setBorderPainted(true);
+		b1.setFocusPainted(true);
+		b1.setEnabled(true);
+		b1.setForeground(Color.WHITE);
+		b1.setBackground(Color.BLACK);
 
 		// Sign out button
 		b2 = new JButton("Leave Game");
@@ -86,7 +90,7 @@ public class ReadyUpLobby extends JFrame implements ActionListener{
 
 
 		//Creates panel for buttons
-		JPanel p1 = new JPanel();
+		/*JPanel p1 = new JPanel();
 
 		p1.setLayout(new BoxLayout(p1, BoxLayout.LINE_AXIS));
 		p1.setBackground(Color.WHITE);
@@ -95,28 +99,34 @@ public class ReadyUpLobby extends JFrame implements ActionListener{
 		p1.add(b1);
 
 		getContentPane().add(p1, BorderLayout.SOUTH);
-
+	
+	*/
 		//Creates panel for labels
 		JPanel p2 = new JPanel();
+		
 		JPanel p3 = new JPanel();
+		p3.setLayout(new BoxLayout(p3, BoxLayout.PAGE_AXIS));
+		p3.setBackground(Color.WHITE);
+		
 		JPanel p4 = new JPanel();
-
+		p4.setLayout(new BoxLayout(p4, BoxLayout.PAGE_AXIS));
+		p4.setBackground(Color.WHITE);
+		
 		// Panel for Title label
 		p2.setLayout(new BoxLayout(p2, BoxLayout.PAGE_AXIS));
-		p2.add(Box.createRigidArea(new Dimension(0,0)));
 		p2.setBackground(Color.WHITE);
 		p2.add(l1);
 
-		p3.setLayout(new BoxLayout(p3, BoxLayout.LINE_AXIS));
-		p3.add(Box.createRigidArea(new Dimension(50, 0)));
-		p3.setBackground(Color.WHITE);
+		p3.add(Box.createRigidArea(new Dimension(100,130)));
 		p3.add(l2);
+		p3.add(Box.createRigidArea(new Dimension(100,100)));
 
 		// Panel for White Card image
-		p4.setLayout(new BoxLayout(p4, BoxLayout.LINE_AXIS));
-		p4.add(Box.createRigidArea(new Dimension(0, 0)));
-		p4.setBackground(Color.WHITE);
+		p4.add(Box.createRigidArea(new Dimension(365,130)));
 		p4.add(l3);
+		p4.add(Box.createRigidArea(new Dimension(365,100)));
+		p4.add(b1);
+		p4.add(Box.createRigidArea(new Dimension(365,50)));
 
 		getContentPane().add(p2, BorderLayout.NORTH);
 		getContentPane().add(p3, BorderLayout.WEST);
