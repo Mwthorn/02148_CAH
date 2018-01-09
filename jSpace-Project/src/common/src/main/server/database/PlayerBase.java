@@ -66,4 +66,12 @@ public class PlayerBase {
 	public int getPlayerID(int i) {
 		return players.get(i).getId();
 	}
+
+	public String getPlayerName(int i) {
+		return players.get(i).getName();
+	}
+
+	public void removePlayer(Player actor) {
+		players.remove(actor);
+	}
 }

@@ -80,10 +80,12 @@ public class Game implements Runnable {
 			if (tuple[1].equals("ready")) {
 				// TODO: Ready button: A toggle option to be ready/not be ready.
 				readyUpdate((int) tuple[2]);
-	        } else if (tuple[1].equals("start")){
-	        	// TODO: Start game: A button for the host, possibly to entirely replace his ready button.
 	        } else if (tuple[1].equals("leave")){
 	        	// TODO: Leave game: Return the player to the main lobby, adjust tuple spaces.
+	        	playerLeavesGame((int) tuple[2]);
+	        }else if (tuple[1].equals("start")){
+	        	// TODO: Start game: A button for the host, possibly to entirely replace his ready button.
+	        	startGame();
 	        }
 		} catch (InterruptedException e) {
 			e.printStackTrace();
@@ -95,15 +97,42 @@ public class Game implements Runnable {
     	// TODO: Chat?
     }
 
-    private void readyUpdate(int playerID) {
+	private void startGame() {
+		// TODO: This is where all the in-game stuff happens.
+		// TODO: At first, initialise the game for all players, then add actual game stuff
+		
+	}
+
+	private void readyUpdate(int playerID) {
     	Player actor = players.getPlayerwithID(playerID);
-    	int playerNumber = players.getPlayerNumber(actor);
+    	int actorNumber = players.getPlayerNumber(actor);
     	actor.changeReady();
     	for (int i = 0; i < players.getSize(); i++) {
-    		playerID = players.getPlayerID(i);
-			game.put("updateLocal", "ready", i, playerNumber, playerID);
+    		int recieverID = players.getPlayerID(i);
+			game.put("updateLobby", "ready", recieverID, i, actorNumber, null);
 		}
-		
+	}
+	
+    private void playerLeavesGame(int playerID) {
+    	Player actor = players.getPlayerwithID(playerID);
+    	players.removePlayer(actor);
+    	// TODO: send message to force the acting player to disconnect.
+    	for (int i = 0; i < players.getSize(); i++) {
+    		int recieverID = players.getPlayerID(i);
+    		String playerName = players.getPlayerName(i);
+			game.put("updateLobby", "update", recieverID, i, null, playerName);
+		}
+	}
+    
+    private void playerJoinsGame(int playerID) {
+    	Player actor = players.getPlayerwithID(playerID);
+    	players.addPlayer(actor);
+    	// TODO: send message to initialise the acting player to the game.
+    	for (int i = 0; i < players.getSize(); i++) {
+    		int recieverID = players.getPlayerID(i);
+    		String playerName = players.getPlayerName(i);
+			game.put("updateLobby", "update", recieverID, i, null, playerName);
+		}
 	}
 
 	public String getGameName() {
