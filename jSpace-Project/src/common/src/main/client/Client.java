@@ -1,6 +1,7 @@
 package common.src.main.client;
 
 import common.src.main.server.Game;
+import common.src.main.server.GameSlot;
 import common.src.main.server.Player;
 import org.jspace.*;
 
@@ -183,7 +184,7 @@ public class Client {
 		Object[] tuple;
 		while (true){
 			try {
-				tuple = local.get(new ActualField("local"),new FormalField(String.class), new FormalField(String.class), new FormalField(Integer.class));
+				tuple = local.get(new ActualField("local"),new FormalField(String.class), new FormalField(GameSlot.class));
 				System.out.println("Local Lobby: Got response: " + tuple[1]);
 		        if (tuple[1].equals("ready")) {
 					// TODO: Ready button: A toggle option to be ready/not be ready.
