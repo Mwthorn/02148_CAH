@@ -2,6 +2,7 @@ package common.src.main.server;
 
 import java.util.ArrayList;
 
+import common.src.main.client.GamePreview;
 import common.src.main.server.database.CardDataBase;
 import common.src.main.server.database.GameBase;
 import common.src.main.server.database.PlayerBase;
@@ -21,6 +22,7 @@ public class Server {
     private static CardDataBase cardDataBase;
     private static PlayerBase playerBase;
     private static GameBase gameBase;
+    private static SpaceRepository repository = new SpaceRepository();
 
 	public static void main(String[] argv) {
     	
@@ -29,9 +31,8 @@ public class Server {
     	// Data to setup games
 		cardDataBase = new CardDataBase();
         playerBase = new PlayerBase();
-
-    	// The place all tuple spaces end up in the server.
-    	SpaceRepository repository = new SpaceRepository();
+        gameBase = new GameBase();
+    	
     	
     	// Setup for the lobby tuple space
     	lobby = new SequentialSpace();
@@ -41,9 +42,9 @@ public class Server {
         /* Listening for messages on the tuple space */
         while(true) {
 			try {
-				Object[] tuple = lobby.get(new ActualField("lobby"),new FormalField(String.class), new FormalField(String.class),
-						new FormalField(Integer.class));
-                System.out.println("Got response: " + tuple[1]);
+				// Lobby - Type  of Action - String - Integer
+				Object[] tuple = lobby.get(new ActualField("lobby"),new FormalField(String.class), new FormalField(String.class), new FormalField(Integer.class));
+                System.out.println("Main Lobby: Got response: " + tuple[1]);
 				if (tuple[1].equals("enter")) {
 					System.out.println("Registering user...");
 					
@@ -52,19 +53,34 @@ public class Server {
 
 					playerBase.addPlayer(p);
 
-					System.out.println("User "+ p.getName() +", the user was assigned th ID: "+ p.getId() +", there are now "+ playerBase.getSize() + " online.");
+					System.out.println("User "+ p.getName() +", the user was assigned the ID: "+ p.getId() +", there are now "+ playerBase.getSize() + " online.");
 				    lobby.put("UserID", p.getName(), p.getId());
                 }
-                else if (tuple[1] == "createGame"){
-                    createNewGame(repository, (String)tuple[1]);
-
+                else if (tuple[1].equals("createGame")){
+                	System.out.println("Creating new game...");
+                    createNewGame((String) tuple[2], (int) tuple[3]);
 				}
 				else if (tuple[1].equals("refreshGameList")) {
-					String playerID = (String) tuple[3];
+					int playerID = (int) tuple[3];
 					lobby.put("GameListSize", playerID, games.size());
-					for (Game game : games) {
-						lobby.put("GameList", playerID, game.getGameName(), game.getStatus(), game.hasPassword(), game.getPlayers().size(), game.getMaxPlayers(), game.getID());
+					for (Game game : gameBase.getGames()) {
+						lobby.put("GameList", playerID, new GamePreview(game));
 					}
+				} else if (tuple[1].equals("joinGame")) {
+					System.out.println("Joining game...");
+					Player jPlayer = playerBase.getPlayerwithID(Integer.parseInt((String) tuple[2]));
+					int joinerID = jPlayer.getId();
+					
+					Game jGame = gameBase.getGamewithID((int) tuple[3]);
+					int gameSlot = jGame.getGameSlot();
+					jGame.addPlayerToGame(jPlayer);
+					
+					lobby.put("joinedGame", joinerID, gameSlot);
+					
+					
+					
+				} else if (tuple[1].equals("signOut")) {
+
 				}
 
 
@@ -74,10 +90,11 @@ public class Server {
 		}
     }
     
-	public static void createNewGame(SpaceRepository repository, String gameName) throws InterruptedException {
+	public static void createNewGame(String gameName, int hostID) throws InterruptedException {
         int gameSlot = gameBase.getGameSlot();
         int gameId = gameBase.getGameId();
         int maxPlayers = 0;
+        Player player = playerBase.getPlayerwithID(hostID);
         
         Game game = new Game(gameName,
             whiteCards,
@@ -85,10 +102,15 @@ public class Server {
             repository,
             gameSlot,
             lobby,
-            maxPlayers, gameId);
+            maxPlayers, 
+            gameId, 
+            player);
     	new Thread(game).start();
     	gameBase.addGame(game);
-    	lobby.put("gameSetup", true, game);	
+    	
+    	lobby.put("gameCreated",hostID, gameSlot);
+    	System.out.println("New game created by: "+player.getName()+". The name of the game is '"+game.getGameName()
+    	+"'.");
     }
 	
 }

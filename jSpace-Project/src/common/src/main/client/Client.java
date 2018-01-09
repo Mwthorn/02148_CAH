@@ -2,42 +2,41 @@ package common.src.main.client;
 
 import java.io.IOException;
 import java.net.UnknownHostException;
+import java.util.ArrayList;
 
 import common.src.main.server.Game;
+import common.src.main.server.Player;
 import org.jspace.ActualField;
 import org.jspace.FormalField;
 import org.jspace.RemoteSpace;
 
 public class Client {
-	private static RemoteSpace lobby;
+	private static RemoteSpace lobby, game;
 	private static int userID;
+	private static int gameID;
+	private static String serverIP;
+	private static String name;
 
     public static void main(String[] args) {
     	/* Login */
     	// Create login GUI and request name of user and IP to server.
     	
-    	
+    	System.out.println("hej");
     	/* Connect to server using GUI info */
 		
 			try {
-
-				try {
-					loginUser("Alex", "127.0.0.1");
-				} catch (InterruptedException e) {
-					e.printStackTrace();
-				}
-				/*
-				lobby = new RemoteSpace("tcp://127.0.0.1:9001/lobby?keep");
-
-				//lobby.put("test");
-				lobby.put("lobby","enter","Alex",0);
-				*/
+				loginUser();
 				
+				System.out.println("Trying to create game");
 				createNewGame();
+
+				joinGame();
 
 			} catch (UnknownHostException e) {
 				e.printStackTrace();
 			} catch (IOException e) {
+				e.printStackTrace();
+			} catch (InterruptedException e) {
 				e.printStackTrace();
 			}
 			
@@ -54,48 +53,46 @@ public class Client {
 		
 		
 		/*Enter game state
-		cardsAgainstHumanity();
-
-        RemoteSpace lobby;
-        
-			try {
-				lobby = new RemoteSpace("tcp://127.0.0.1:9001/chat?keep");
-				lobby.put("enter",0);
-
-				
-			} catch (UnknownHostException e) {
-				e.printStackTrace();
-			} catch (IOException e) {
-				e.printStackTrace();
-			}
-		*/
+		 * cardsAgainstHumanity();
+		 */
     }
 
 	private static void createNewGame() {
-		lobby.put("createGame","no nobs plx", 0);
+		lobby.put("lobby", "createGame", "no nobs plx", userID);
 		
 		try {
-			Object[] info = lobby.get(new ActualField("gameSetup"),new FormalField(boolean.class), new FormalField(Game.class));
+			System.out.println("Trying to recieve info");
+			Object[] info = lobby.get(new ActualField("gameCreated"), new ActualField(userID), new FormalField(Integer.class));
+			int gameSlot = (int) info[2];
 			
-			if ((boolean) (info[1] = true)){
-				//Create game
-			} else {
-				// game name already taken, print error message to user and try with another name.
-			}
+			// Connects the host to the tuple space.
+			game = new RemoteSpace("tcp://" + serverIP + ":9001/game" + gameSlot + "?keep");
+			
+			game.put("testing");
 			
 		} catch (InterruptedException e) {
+			e.printStackTrace();
+		} catch (UnknownHostException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
 			e.printStackTrace();
 		}
 	}
 
-	public static void loginUser(String name, String IP) throws IOException, InterruptedException {
-		lobby = new RemoteSpace("tcp://" + IP + ":9001/lobby?keep");
+	public static void loginUser() throws IOException, InterruptedException {
+		// TODO: The two lines below assigning IP and name should be retrieved
+		// when first signing in to the lobby.
+		serverIP = "127.0.0.1";
+		name = "Alex";
+		
+		lobby = new RemoteSpace("tcp://" + serverIP + ":9001/lobby?keep");
 
 		//lobby.put("test");
 		lobby.put("lobby","enter",name,0);
 
 		Object[] tuple = lobby.get(new ActualField("UserID"),new ActualField(name), new FormalField(Integer.class));
-		System.out.println("Client was assigned ID: " + tuple[2]);
+		userID = (int) tuple[2];
+		System.out.println("Client was assigned ID: " + userID);
 	}
 
 	private static void cardsAgainstHumanity() {
@@ -107,26 +104,83 @@ public class Client {
 	public static GamePreview[] getGameList() throws InterruptedException {
 		lobby.put("lobby", "refreshGameList", "", userID);
 
-		Object[] tuple = lobby.get(new ActualField("GameListSize"),new ActualField(userID), new FormalField(Integer.class));
+		Object[] tuple = lobby.get(new ActualField("GameListSize"), new ActualField(userID), new FormalField(Integer.class));
 		Object[] gT;
 		int n = (int) tuple[1];
 		GamePreview[] games = new GamePreview[n];
 		System.out.println("Got " + n + " games from server!");
 		for (int i = 0; i < n; i++) {
-			gT = lobby.get(new ActualField("GameListSize"),
+			gT = lobby.get(new ActualField("GameList"),
 					new ActualField(userID),
-					new FormalField(String.class),
-					new FormalField(String.class),
-					new FormalField(Boolean.class),
-					new FormalField(Integer.class),
-					new FormalField(Integer.class),
-					new FormalField(Integer.class));
-			games[i] = new GamePreview((String) gT[1], (String) gT[2], (Boolean) gT[3], (int) gT[4], (int) gT[5], (int) gT[6]);
+					new FormalField(Game.class));
+			games[i] = (GamePreview) gT[2];
 		}
 		return games;
 	}
 
-	public static void joinGame(int ID) throws InterruptedException {
-		
+	public static void joinGame() throws InterruptedException {
+		String stringID = Integer.toString(userID);
+		lobby.put("lobby", "joinGame", stringID, gameID);
+
+		Object[] info = lobby.get(new ActualField("joinedGame"), new ActualField(userID), new FormalField(Integer.class));
+		int gameSlot = (int) info[2];
+
+		try {
+			game = new RemoteSpace("tcp://" + serverIP + ":9001/game" + gameSlot + "?keep");
+		} catch (UnknownHostException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+
+		game.put("testing");
+	}
+
+	public static ArrayList<Player> getPlayers() throws InterruptedException {
+
+		game.put("GetPlayers", userID);
+		Object[] tuple = lobby.get(new ActualField("PlayerListSize"), new ActualField(userID), new FormalField(Integer.class));
+		Object[] qT;
+		int n = (int) tuple[1];
+		ArrayList<Player> ps = new ArrayList<>();
+		for (int i = 0; i < n; i++) {
+			qT = game.get(new ActualField("PlayerList"),
+					new ActualField(userID),
+					new FormalField(Player.class));
+			ps.add((Player) qT[2]);
+		}
+
+		return ps;
+	}
+
+	// TODO: make a toggleReady instead?
+	public static void sendReady() {
+
+	}
+
+	// TODO: make a toggleReady instead?
+	public static void notReady() {
+
+	}
+
+	public static void leaveGame() {
+
+	}
+
+	public static void refreshPlayerList() throws InterruptedException {
+		// TODO:
+		// Get status
+		// Get players (check if they are ready)
+		Object[] tuple = lobby.get(new ActualField("lobby"),new FormalField(String.class), new FormalField(String.class), new FormalField(Integer.class));
+		System.out.println("Got response: " + tuple[1]);
+		if (tuple[1].equals("players")) {
+
+		}
+		else if (tuple[1].equals("voteUpdate")){
+
+		}
+		else if (tuple[1].equals("refreshGameList")) {
+
+		}
 	}
 }

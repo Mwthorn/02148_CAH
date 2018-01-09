@@ -1,6 +1,7 @@
 package common.src.main.server.database;
 
 import common.src.main.server.Game;
+import common.src.main.server.Player;
 
 import java.util.ArrayList;
 
@@ -16,10 +17,23 @@ public class GameBase {
 		return 0;
 	}
 
+	public ArrayList<Game> getGames() {
+		return this.games;
+	}
+
 	public int getGameId() {
 		// Generate random ID
 		return 0;
 	}
+	
+    public Game getGamewithID(int id) {
+        for (Game game : games) {
+            if (game.getID() == id) {
+                return game;
+            }
+        }
+        return null;
+    }
 
 	public void addGame(Game game) {
 		games.add(game);

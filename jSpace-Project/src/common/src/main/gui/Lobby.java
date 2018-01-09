@@ -96,6 +96,7 @@ public class Lobby extends JFrame implements ActionListener{
 		l1.setAlignmentX(Component.CENTER_ALIGNMENT);
 		
 		
+<<<<<<< HEAD
 		// Implementing pictures for white cards and black cards as JLabel
 		l2 = new JLabel();
 		l3 = new JLabel();
@@ -106,6 +107,13 @@ public class Lobby extends JFrame implements ActionListener{
 		// Create List
 		//putList();
 		//list = new JList(gpList.toArray());
+=======
+		// Implementing pictures for white cards and black cards
+		i1 = new ImageIcon("BC1.png");
+		i2 = new ImageIcon("WC.jpg");
+		l2 = new JLabel(i1);
+		l3 = new JLabel(i2);
+>>>>>>> fe9e8c28ca49f0c2cac5429e3f064a108302777d
 		
 		//list.setVisibleRowCount();
 		//list.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
