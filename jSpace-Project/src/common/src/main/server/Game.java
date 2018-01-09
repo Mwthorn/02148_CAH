@@ -4,6 +4,7 @@ import common.src.main.server.utilities.BlackCard;
 import common.src.main.server.utilities.WhiteCard;
 
 import org.jspace.ActualField;
+import org.jspace.FormalField;
 import org.jspace.SequentialSpace;
 import org.jspace.SpaceRepository;
 
@@ -68,16 +69,27 @@ public class Game implements Runnable {
 			e.printStackTrace();
 		}
     	
+    	/* Game lobby */
+    	// Lobby - Type  of Action - String - Integer
+		Object[] tuple;
+		try {
+			tuple = game.get(new ActualField("game"),new FormalField(String.class), new FormalField(String.class), new FormalField(Integer.class));
+			System.out.println("Game Lobby: Got response: " + tuple[1]);
+			if (tuple[1].equals("ready")) {
+				// TODO: Ready button: A toggle option to be ready/not be ready.
+	        } else if (tuple[1].equals("start")){
+	        	// TODO: Start game: A button for the host, possibly to entirely replace his ready button.
+	        } else if (tuple[1].equals("leave")){
+	        	// TODO: Leave game: Return the player to the main lobby, adjust tuple spaces.
+	        }
+		} catch (InterruptedException e) {
+			e.printStackTrace();
+		}
+        
     	
-    	// TODO: respond to tuples like the server main class does.
-    	// TODO: Leave game, ready button, start game.
-    	// TODO: Respond ot the messages and new players joining in real time.
-    	// TODO: Chat? hej
-    	
-    	
-    	
-    	
-    	
+		
+    	// TODO: Respond to the messages and new players joining in real time.
+    	// TODO: Chat?
     }
 
     public String getGameName() {

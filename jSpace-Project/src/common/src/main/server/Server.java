@@ -44,7 +44,7 @@ public class Server {
 			try {
 				// Lobby - Type  of Action - String - Integer
 				Object[] tuple = lobby.get(new ActualField("lobby"),new FormalField(String.class), new FormalField(String.class), new FormalField(Integer.class));
-                System.out.println("Got response: " + tuple[1]);
+                System.out.println("Main Lobby: Got response: " + tuple[1]);
 				if (tuple[1].equals("enter")) {
 					System.out.println("Registering user...");
 					
