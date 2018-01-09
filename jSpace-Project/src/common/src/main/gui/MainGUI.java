@@ -97,7 +97,7 @@ public class MainGUI extends JFrame {
 		//previous.setVisible(false);
 		newCreateGame = new CreateGame();
 
-		this.setContentPane(newGameGUI);
+		this.setContentPane(newCreateGame);
 		revalidate();
 		repaint();
 	}
