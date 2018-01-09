@@ -253,9 +253,10 @@ public class Login extends JFrame implements ActionListener {
 		}
 	}
 	
-	public getLoginPanel(){
+	public void getLoginPanel(){
 	
-		return panel;
+		Login game = new Login();
+		game.setVisible(true);;
 	}
 	
 //	public String getName() {
@@ -271,6 +272,7 @@ public class Login extends JFrame implements ActionListener {
 	
 	public static void main(String[] args) {
 	
+		// Skal ikke bruges
 		Login game = new Login();
 
 		game.setTitle("Cards Against Humanity");
