@@ -53,15 +53,6 @@ public class PlayerBase {
     public ArrayList<Player> getPlayers(){
     	return players;
     }
-    
-    public Player getName(String name){
-    	for (Player player : players) {
-            if (Objects.equals(player.getName(), name)) {
-                return player;
-            }
-        }
-        return null;
-    }
 
 	public int getPlayerID(int i) {
 		return players.get(i).getId();

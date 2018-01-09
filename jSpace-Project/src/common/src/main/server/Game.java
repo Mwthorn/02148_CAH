@@ -10,6 +10,7 @@ import org.jspace.SequentialSpace;
 import org.jspace.SpaceRepository;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.Objects;
 
 public class Game implements Runnable {
@@ -18,7 +19,7 @@ public class Game implements Runnable {
     private String password;
     private ArrayList<WhiteCard> whiteCards = new ArrayList<>();
     private ArrayList<BlackCard> blackCards = new ArrayList<>();
-    private PlayerBase players = new PlayerBase();
+    private ArrayList<Player> players = new ArrayList<>();
     private int maxPlayers;
     private String status;
     private int id;
@@ -52,7 +53,7 @@ public class Game implements Runnable {
         this.maxPlayers = maxPlayers;
         this.id = id;
         this.hostID = player.getId();
-        this.players.addPlayer(player);
+        this.players.add(player);
         this.gameSlot = gameSlot;
 
         this.repository = repository;
@@ -104,35 +105,15 @@ public class Game implements Runnable {
 	}
 
 	private void readyUpdate(int playerID) {
-    	Player actor = players.getPlayerwithID(playerID);
-    	int actorNumber = players.getPlayerNumber(actor);
-    	actor.changeReady();
-    	for (int i = 0; i < players.getSize(); i++) {
-    		int recieverID = players.getPlayerID(i);
-			game.put("updateLobby", "ready", recieverID, i, actorNumber, null);
-		}
+
 	}
 	
     private void playerLeavesGame(int playerID) {
-    	Player actor = players.getPlayerwithID(playerID);
-    	players.removePlayer(actor);
-    	// TODO: send message to force the acting player to disconnect.
-    	for (int i = 0; i < players.getSize(); i++) {
-    		int recieverID = players.getPlayerID(i);
-    		String playerName = players.getPlayerName(i);
-			game.put("updateLobby", "update", recieverID, i, null, playerName);
-		}
+
 	}
     
     private void playerJoinsGame(int playerID) {
-    	Player actor = players.getPlayerwithID(playerID);
-    	players.addPlayer(actor);
-    	// TODO: send message to initialise the acting player to the game.
-    	for (int i = 0; i < players.getSize(); i++) {
-    		int recieverID = players.getPlayerID(i);
-    		String playerName = players.getPlayerName(i);
-			game.put("updateLobby", "update", recieverID, i, null, playerName);
-		}
+
 	}
 
 	public String getGameName() {
@@ -152,11 +133,16 @@ public class Game implements Runnable {
     }
 
     public ArrayList<Player> getPlayers() {
-        return this.players.getPlayers();
+        return this.players;
     }
 
     public Player FindPlayer(String name) {
-        return players.getName(name);
+    	for (Player player : players) {
+            if (Objects.equals(player.getName(), name)) {
+                return player;
+            }
+        }
+        return null;
     }
 
     public String getStatus() {
@@ -172,7 +158,7 @@ public class Game implements Runnable {
     }
 
     public void addPlayerToGame(Player player) {
-        players.addPlayer(player);
+        players.add(player);
     }
 
     public void setStatus(String status) {
