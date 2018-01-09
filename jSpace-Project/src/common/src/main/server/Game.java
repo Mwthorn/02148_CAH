@@ -72,7 +72,7 @@ public class Game implements Runnable {
     	// TODO: respond to tuples like the server main class does.
     	// TODO: Leave game, ready button, start game.
     	// TODO: Respond ot the messages and new players joining in real time.
-    	// TODO: Chat?
+    	// TODO: Chat? hej
     	
     	
     	
