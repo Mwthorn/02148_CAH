@@ -247,13 +247,9 @@ public class Login extends JFrame implements ActionListener {
 				
 				Client.loginUser(IP, name);
 			
-			} catch (SocketException e1) {
+			} catch (Exception e1) {
 				txtfld2.setText("Incorrect IP");
-			} catch (IOException e1) {
-				e1.printStackTrace();
-			} catch (InterruptedException e1) {				
-				e1.printStackTrace();
-			}
+			} 
 		}
 	}
 	
