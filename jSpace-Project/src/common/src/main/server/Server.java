@@ -32,6 +32,8 @@ public class Server {
     	
     	// Data to setup games
 		cardDataBase = new CardDataBase();
+		whiteCards = cardDataBase.getWhiteDeck();
+		blackCards = cardDataBase.getBlackDeck();
         playerBase = new PlayerBase();
         gameBase = new GameBase();
     	
