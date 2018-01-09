@@ -4,7 +4,6 @@ import java.io.IOException;
 import java.net.UnknownHostException;
 import java.util.ArrayList;
 
-import common.src.main.philosopher1;
 import common.src.main.server.Game;
 import common.src.main.server.Player;
 import org.jspace.ActualField;
@@ -206,25 +205,29 @@ public class Client {
 		// TODO: Implement a system similar to the listening in server main, but from the local tuple space.
 		
 		Object[] tuple;
-		try {
-			tuple = local.get(new ActualField("local"),new FormalField(String.class), new FormalField(String.class), new FormalField(Integer.class));
-			System.out.println("Local Lobby: Got response: " + tuple[1]);
-	        if (tuple[1].equals("ready")) {
-				// TODO: Ready button: A toggle option to be ready/not be ready.
-	        	// Update personal GUI and send response to server for other players to do the same.
-	        } else if (tuple[1].equals("start")){
-	        	// TODO: Start game: A button for the host, possibly to entirely replace his ready button.
-	        	// Starts the game, many stuff happens.
-	        } else if (tuple[1].equals("leave")){
-	        	// TODO: Leave game: Return the player to the main lobby, adjust tuple spaces.
-	        	// Update GUI, change from game tuple space to lobby tuple space, adjust other players GUI by sending message to server.
-	        } else if (tuple[1].equals("update")){
-	        	// TODO: Update from the server, update relevant GUI.
-	        	// Possible updates: User joins, user leaves, user checks ready, user unchecks ready.
-	        }
-		} catch (InterruptedException e) {
-			e.printStackTrace();
+		while (true){
+			try {
+				tuple = local.get(new ActualField("local"),new FormalField(String.class), new FormalField(String.class), new FormalField(Integer.class));
+				System.out.println("Local Lobby: Got response: " + tuple[1]);
+		        if (tuple[1].equals("ready")) {
+					// TODO: Ready button: A toggle option to be ready/not be ready.
+		        	// Update personal GUI and send response to server for other players to do the same.
+		        } else if (tuple[1].equals("start")){
+		        	// TODO: Start game: A button for the host, possibly to entirely replace his ready button.
+		        	// Starts the game, many stuff happens.
+		        } else if (tuple[1].equals("update")){
+		        	// TODO: Update from the server, update relevant GUI.
+		        	// Possible updates: User joins, user leaves, user checks ready, user unchecks ready.
+		        } else if (tuple[1].equals("leave")){
+		        	break;
+		        }
+			} catch (InterruptedException e) {
+				e.printStackTrace();
+			}
 		}
+		
+		// TODO: Leave game: Return the player to the main lobby, adjust tuple spaces.
+    	// Update GUI, change from game tuple space to lobby tuple space, adjust other players GUI by sending message to server.
 		
 		
 		
