@@ -257,6 +257,11 @@ public class Login extends JFrame implements ActionListener {
 		}
 	}
 	
+	public getLoginPanel(){
+	
+		return panel;
+	}
+	
 //	public String getName() {
 //		return name;
 //	}
@@ -264,6 +269,8 @@ public class Login extends JFrame implements ActionListener {
 //	public String getIP() {
 //		return IP;
 //	}
+	
+	
 	
 	
 	public static void main(String[] args) {

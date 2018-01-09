@@ -56,7 +56,7 @@ public class MainGUI extends JFrame {
 	
 	public void changeGUI(){
 		
-		
+		/*
 		lob2Log;
 		log2Lob;
 		game2Lob;
@@ -66,6 +66,7 @@ public class MainGUI extends JFrame {
 		lob2gLob;
 		cg2gLob;
 		gLob2game;
+		*/
 	}
 
 	public void runLogin(){
