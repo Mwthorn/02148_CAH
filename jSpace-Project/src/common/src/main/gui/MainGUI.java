@@ -17,18 +17,19 @@ public class MainGUI extends JFrame {
 	// CONSTRUCTOR
 	public MainGUI(){
 
-		this.add(newLogin);
-		this.add(newLobby);
-		this.add(newGameGUI);
-		this.add(newCreateGame)
-		this.add(newReadyUpLobby);
-
 		this.setTitle("Cards Against Humanity");
 		this.setSize(1900,1000);
 		this.setResizable(true);
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		this.setVisible(true);
+//		this.setVisible(true);
 		this.setLocationRelativeTo(null);
+		
+		this.getContentPane().add(newLogin);
+		this.getContentPane().add(newLobby);
+		this.getContentPane().add(newGameGUI);
+		this.getContentPane().add(newCreateGame);
+		this.getContentPane().add(newReadyUpLobby);
+
 	}
 
 
@@ -43,7 +44,6 @@ public class MainGUI extends JFrame {
 		try {
 			newLobby = new Lobby();
 		} catch (InterruptedException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}
@@ -79,6 +79,5 @@ public class MainGUI extends JFrame {
 				}
 			}
 		}); */
-
 	}
 }
