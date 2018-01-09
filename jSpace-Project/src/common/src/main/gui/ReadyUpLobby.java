@@ -1,9 +1,14 @@
 package common.src.main.gui;
 
 import javax.swing.*;
+
+import common.src.main.client.Client;
+import common.src.main.client.GamePreview;
+
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
 
 public class ReadyUpLobby extends JFrame implements ActionListener{
 
@@ -14,16 +19,18 @@ public class ReadyUpLobby extends JFrame implements ActionListener{
 
 
 	/*
-	public static List<GamePreview> putList() throws InterruptedException{
-		GamePreview[] gameList = new Client().getGameList();
-		gpList = new ArrayList<GamePreview>();
-
-
-		for(int i=0; i < gameList.length; i++){
-			gpList.add(gameList[i]);
+	public static ArrayList<GamePreview> putList() throws InterruptedException{
+		for (GamePreview gp : Client.getGameList()) {
+			gp.getCurrentPlayerSize();
+			gp.getGameName();
+			gp.getGameStatus();
+			gp.getId();
+			gp.getMaxPlayerSize();
+			gp.hasPassword();
+			gp.isPasswordProtected();
 		}
-		System.out.println(gpList);
-		return gpList;
+
+		return Client.getGameList();
 	}
 	 */
 
@@ -48,10 +55,14 @@ public class ReadyUpLobby extends JFrame implements ActionListener{
 
 		// Sign out button
 		b2 = new JButton("Leave Game");
-		b2.setPreferredSize(btnsize2);
-		b2.setBackground(Color.BLACK);
+		b2.setPreferredSize(btnsize1);
 		b2.addActionListener(this);
 		b2.setAlignmentX(Component.CENTER_ALIGNMENT);
+		b2.setBorderPainted(true);
+		b2.setFocusPainted(true);
+		b2.setEnabled(true);
+		b2.setForeground(Color.WHITE);
+		b2.setBackground(Color.BLACK);
 
 
 		// Creates label "Cards Against Humanity"
@@ -67,8 +78,24 @@ public class ReadyUpLobby extends JFrame implements ActionListener{
 
 		l2.setIcon(new ImageIcon(new ImageIcon("BCRLobby.png").getImage().getScaledInstance(190, 295, Image.SCALE_DEFAULT)));
 		l3.setIcon(new ImageIcon(new ImageIcon("WCRLobby.png").getImage().getScaledInstance(195, 300, Image.SCALE_DEFAULT)));
-
-
+		
+		
+		
+		b3 = new JButton("ready?");
+		b2.addActionListener(this);
+		b2.setAlignmentX(Component.CENTER_ALIGNMENT);
+		b2.setBorderPainted(true);
+		b2.setFocusPainted(true);
+		b2.setEnabled(true);
+		b2.setForeground(Color.WHITE);
+		b2.setBackground(Color.BLACK);
+		
+		l4 = new JLabel("LOLGGEZ");
+		l5 = new JLabel("Not ready");
+		
+		
+		
+		
 		//Creates panel for buttons
 		/*JPanel p1 = new JPanel();
 
@@ -97,9 +124,11 @@ public class ReadyUpLobby extends JFrame implements ActionListener{
 		p2.setBackground(Color.WHITE);
 		p2.add(l1);
 
-		p3.add(Box.createRigidArea(new Dimension(100,130)));
+		p3.add(Box.createRigidArea(new Dimension(0,130)));
 		p3.add(l2);
-		p3.add(Box.createRigidArea(new Dimension(100,100)));
+		p3.add(Box.createRigidArea(new Dimension(0,100)));
+		p3.add(b2);
+		p3.add(Box.createRigidArea(new Dimension(0,50)));
 
 		// Panel for White Card image
 		p4.add(Box.createRigidArea(new Dimension(365,130)));
@@ -111,15 +140,33 @@ public class ReadyUpLobby extends JFrame implements ActionListener{
 		getContentPane().add(p2, BorderLayout.NORTH);
 		getContentPane().add(p3, BorderLayout.WEST);
 		getContentPane().add(p4, BorderLayout.EAST);
-
-
+		
+		JPanel p5 = new JPanel();
+		p5.setLayout(new BoxLayout(p5, BoxLayout.LINE_AXIS));
+		p5.setBackground(Color.WHITE);
+		p5.add(l4);
+		p5.add(Box.createRigidArea(new Dimension(100,0)));
+		p5.add(b3);
+		p5.add(Box.createRigidArea(new Dimension(100,0)));
+		p5.add(l5);
+		getContentPane().add(p5, BorderLayout.CENTER);
 
 	}
-
-	public void actionPerformed(ActionEvent e){
-
-
-
+	
+	public void actionPerformed(ActionEvent e) {
+		if(e.getSource()==b2){
+			try {
+				new Lobby();
+			} catch (InterruptedException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
+			
+		}
+		if(e.getSource()==b3){
+			l5.setText("Am ready");
+		}
+		
 	}
 
 
