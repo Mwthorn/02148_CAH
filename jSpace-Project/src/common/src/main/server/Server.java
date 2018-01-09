@@ -13,6 +13,8 @@ import org.jspace.FormalField;
 import org.jspace.SequentialSpace;
 import org.jspace.SpaceRepository;
 
+import javax.smartcardio.Card;
+
 public class Server {
 
     private static ArrayList<WhiteCard> whiteCards;
@@ -68,14 +70,13 @@ public class Server {
 					}
 				} else if (tuple[1].equals("joinGame")) {
 					System.out.println("Joining game...");
-					Player jPlayer = playerBase.getPlayerwithID(Integer.parseInt((String) tuple[2]));
-					int joinerID = jPlayer.getId();
-					
+					Player jPlayer = playerBase.getPlayerwithID((int) tuple[2]);
+
 					Game jGame = gameBase.getGamewithID((int) tuple[3]);
 					int gameSlot = jGame.getGameSlot();
 					jGame.addPlayerToGame(jPlayer);
 					
-					lobby.put("joinedGame", joinerID, gameSlot);
+					lobby.put("joinedGame", jPlayer.getId(), gameSlot);
 					
 					
 					
@@ -112,5 +113,9 @@ public class Server {
     	System.out.println("New game created by: "+player.getName()+". The name of the game is '"+game.getGameName()
     	+"'.");
     }
-	
+
+	public CardDataBase getCardDataBase() {
+		return this.cardDataBase;
+	}
+
 }
