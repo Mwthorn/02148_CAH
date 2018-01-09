@@ -34,7 +34,7 @@ public class MainGUI extends JFrame {
 		this.setLocationRelativeTo(null);
 		this.setVisible(true);
 
-		runLobby(); // når programmet køres, skal den starte med Login.
+		runLogin(); // når programmet køres, skal den starte med Login.
 		
 		if(lob2Log){
 			runLogin();
@@ -77,15 +77,11 @@ public class MainGUI extends JFrame {
 
 	public void runLobby(){
 
-		//previous.setVisible(false);
+		newLogin.setVisible(false);
 		//newLogin.setVisible(false);
 		try {
 			newLobby = new Lobby();
-			newLobby.setVisible(true);
-			this.setContentPane(newLobby);
-			revalidate();
-			repaint();
-
+			
 		} catch (InterruptedException e) {
 			e.printStackTrace();
 		}

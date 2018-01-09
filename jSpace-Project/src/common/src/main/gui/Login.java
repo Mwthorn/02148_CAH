@@ -264,7 +264,7 @@ public class Login extends JFrame implements ActionListener {
 
 
 
-	public static void main(String[] args) {
+	public static void getLoginPanel(){
 
 		Login game = new Login();
 
