@@ -9,6 +9,7 @@ import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.IOException;
+import java.net.SocketException;
 
 import javax.swing.BorderFactory;
 import javax.swing.Box;
@@ -246,15 +247,14 @@ public class Login extends JFrame implements ActionListener {
 				
 				Client.loginUser(IP, name);
 			
+			} catch (SocketException e1) {
+				txtfld2.setText("Incorrect IP");
 			} catch (IOException e1) {
-				// TODO Auto-generated catch block
 				e1.printStackTrace();
-			} catch (InterruptedException e1) {
-				// TODO Auto-generated catch block
+			} catch (InterruptedException e1) {				
 				e1.printStackTrace();
+			
 			}
-			
-			
 		}
 	}
 	
