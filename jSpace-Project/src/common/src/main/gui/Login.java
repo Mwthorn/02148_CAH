@@ -253,7 +253,6 @@ public class Login extends JFrame implements ActionListener {
 				e1.printStackTrace();
 			} catch (InterruptedException e1) {				
 				e1.printStackTrace();
-			
 			}
 		}
 	}
