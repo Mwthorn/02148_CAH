@@ -6,11 +6,13 @@ public class Player {
     private int points;
     private int id;
     private boolean ready;
+    private GameSlot gameSlot;
 
     public Player(String name, int id) {
         this.name = name;
         this.points = 0;
         this.id = id;
+        
         ready = false;
     }
 
@@ -51,6 +53,11 @@ public class Player {
     	} else {
     		this.ready = false;
     	}
+    	gameSlot.setReady(this.ready);
     }
+
+	public GameSlot getGameSlot() {
+		return this.gameSlot;
+	}
 
 }
