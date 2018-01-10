@@ -249,8 +249,7 @@ public class Login extends JFrame implements ActionListener {
 			
 			setVisible(false);
 			try {
-				Lobby newLobby = new Lobby();
-				newLobby.setVisible(true);
+				new Lobby().setVisible(true);
 			} catch (InterruptedException e2) {
 				// TODO Auto-generated catch block
 				e2.printStackTrace();
