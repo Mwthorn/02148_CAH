@@ -68,8 +68,8 @@ public class Server {
 						lobby.put("GameList", playerID, new GamePreview(game));
 					}
 				} else if (tuple[1].equals("joinGame")) {
-					System.out.println("Joining game...");
-					Player jPlayer = playerBase.getPlayerwithID((int) tuple[2]);
+					int playerID = new Integer((String) tuple[2]);
+					Player jPlayer = playerBase.getPlayerwithID(playerID);
 
 					Game jGame = gameBase.getGamewithID((int) tuple[3]);
 					int gameSlot = jGame.getGameSlot();
@@ -91,9 +91,9 @@ public class Server {
     }
     
 	public static void createNewGame(String gameName, int hostID) throws InterruptedException {
-        int gameSlot = gameBase.getGameSlot();
-        int gameId = gameBase.getGameId();
-        int maxPlayers = 0;
+        int gameSlot = 0;
+        int gameId = gameBase.getUniqueID();
+        int maxPlayers = 5;
         Player player = playerBase.getPlayerwithID(hostID);
         
         Game game = new Game(gameName,

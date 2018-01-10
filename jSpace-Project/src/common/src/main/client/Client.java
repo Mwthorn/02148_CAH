@@ -32,8 +32,7 @@ public class Client {
 				Thread.sleep(1000);
 
 				ArrayList<GamePreview> gp = getGameList();
-				System.out.println(gp.get(1).getId());
-				joinGame(gp.get(1).getId());
+				joinGame(gp.get(0).getId());
 				
 				// 3 threads
 				//gameLobby();
@@ -96,15 +95,15 @@ public class Client {
 		for (int i = 0; i < n; i++) {
 			gT = lobby.get(new ActualField("GameList"),
 					new ActualField(userID),
-					new FormalField(Game.class));
+					new FormalField(GamePreview.class));
 			games.add((GamePreview) gT[2]);
 		}
 		return games;
 	}
 
 	public static void joinGame(int gameID) throws InterruptedException {
-		String stringID = Integer.toString(userID);
-		lobby.put("lobby", "joinGame", stringID, gameID);
+		System.out.println("Trying to join gameID: " + gameID);
+		lobby.put("lobby", "joinGame", Integer.toString(userID), gameID);
 		
 		Object[] info = lobby.get(new ActualField("joinedGame"), new ActualField(userID), new FormalField(Integer.class));
 		int gameSlot = (int) info[2];

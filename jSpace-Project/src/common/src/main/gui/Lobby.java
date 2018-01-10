@@ -46,8 +46,8 @@ public class Lobby extends JFrame implements ActionListener{
 		setVisible(true);
 		
 		//Create buttons
-		Dimension btnsize1 = new Dimension(200,50);
-		Dimension btnsize2 = new Dimension(150,55);
+		Dimension btnsize1 = new Dimension(200,80);
+		Dimension btnsize2 = new Dimension(150,80);
 
 		// Create game button
 		b1 = new JButton("Create Game");
@@ -97,6 +97,7 @@ public class Lobby extends JFrame implements ActionListener{
 
 		p1.setLayout(new BoxLayout(p1, BoxLayout.LINE_AXIS));
 		p1.setBackground(Color.WHITE);
+		p1.add(Box.createRigidArea(new Dimension(0,100)));
 		p1.add(b2);
 		p1.add(Box.createHorizontalGlue());
 		p1.add(b3);
