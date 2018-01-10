@@ -3,6 +3,7 @@ package common.src.main.client;
 import common.src.main.server.Game;
 import common.src.main.server.GameSlot;
 import common.src.main.server.Player;
+import common.src.main.server.utilities.WhiteCard;
 import org.jspace.*;
 
 import java.io.IOException;
@@ -14,6 +15,9 @@ public class Client {
 	private static int userID;
 	private static String serverIP;
 	private static String name;
+	private static int amountOfBlanks;
+	private static boolean turnToPick;
+	private static String[] whiteCards = new String[10];
 
 	private static final int testNumber = 1;
 
@@ -41,7 +45,6 @@ public class Client {
 					ArrayList<GamePreview> gp = getGameList();
 					joinGame(gp.get(0).getId());
 				}
-				gameLobby();
 				
 
 			} catch (IOException | InterruptedException e) {
@@ -96,7 +99,7 @@ public class Client {
 			game = new RemoteSpace("tcp://" + serverIP + ":9001/game" + gameSlot + "?keep");
 			
 			game.put("testing");
-			// gameLobby();
+			gameLobby();
 		} catch (InterruptedException | IOException e) {
 			e.printStackTrace();
 		}
@@ -116,7 +119,7 @@ public class Client {
 		}
 
 		game.put("testing");
-		// gameLobby();
+		gameLobby();
 	} // End of joinGame function
 	
 	public static ArrayList<GamePreview> getGameList() throws InterruptedException {
@@ -178,10 +181,44 @@ public class Client {
 				e.printStackTrace();
 			}
 		}
+		while(true) {
+			try {
+				// STRING - INT - STRING - INT
+				Object[] gTuple = game.get(new FormalField(String.class), new ActualField(userID), new FormalField(String.class), new FormalField(Integer.class));
+				System.out.println("Listener: Got response from server: " + gTuple[0]);
+				if (tuple[0].equals("white")) {
+					whiteCards[(int) tuple[3]] = (String) tuple[2];
+					// TODO: Update GUI whitecards
+				} else if (gTuple[0].equals("black")) {
+					amountOfBlanks = (int) gTuple[3];
+					// TODO: Set Black card to given string on GUI
+				}
+				// TODO: Player leaves/joins in mid-game
+			}
+			catch (InterruptedException e) {
+
+			}
+		}
 		
 		// TODO: Leave game: Return the player to the main lobby, adjust tuple spaces.
     	// Update GUI, change from game tuple space to lobby tuple space, adjust other players GUI by sending message to server.
 	} // End of gameLobby function
+
+	public boolean pickWhiteCard(int i) {
+		if (!turnToPick) {
+			return false;
+		}
+		game.put("pickwhite", userID, i);
+		return true;
+	}
+
+	public boolean isPlayerTurn() {
+		return turnToPick;
+	}
+
+	public static String[] getWhiteCards() {
+		return whiteCards;
+	}
 
 	public static void sendReady() {
 		game.put("game", "ready", userID);

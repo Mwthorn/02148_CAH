@@ -31,6 +31,7 @@ public class Listener implements Runnable{
 		        	// TODO: Start game: A button for the host, possibly to entirely replace his ready button.
 		        	// Starts the game, many stuff happens.
 		        	local.put("local", "start", null);
+					break;
 		        } else if (tuple[1].equals("update")){
 		        	// TODO: Update from the server, update relevant GUI.
 		        	// Possible updates: User joins, user leaves, user checks ready, user unchecks ready.

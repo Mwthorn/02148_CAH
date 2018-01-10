@@ -33,7 +33,7 @@ public class Lobby extends JFrame implements ActionListener{
 	}
 
 
-	public Lobby() throws InterruptedException{
+	public Lobby() throws InterruptedException {
 		getContentPane().setLayout(new BorderLayout()); //Default layout
 		getContentPane().setBackground(Color.WHITE);
 
