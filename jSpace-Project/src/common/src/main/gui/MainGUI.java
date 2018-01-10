@@ -294,7 +294,6 @@ public class MainGUI extends JFrame implements ActionListener {
 		
 		mainLobby.setLayout(new BorderLayout()); //Default layout
 		mainLobby.setBackground(Color.WHITE);
-		mainLobby.setVisible(false);
 
 		//Create buttons
 		Dimension btnsize1 = new Dimension(200,80);
@@ -432,11 +431,6 @@ public class MainGUI extends JFrame implements ActionListener {
 			this.name = txtfld1.getText();
 			this.IP = txtfld2.getText();
 
-			signIn = true;
-
-			System.out.println(name);
-			System.out.println(IP);
-
 			try {
 
 				Client.loginUser(IP, name);
@@ -445,11 +439,15 @@ public class MainGUI extends JFrame implements ActionListener {
 				txtfld2.setText("Incorrect IP");
 			} 
 			
+			System.out.println(name);
+			System.out.println(IP);
+				
 			mainLogin.setVisible(false);
 			mainLobby.setVisible(true);
-			
-			frame.getContentPane().add(mainLobby);
+					
+			frame.add(mainLobby);
 			frame.revalidate();
+			frame.repaint();
 			
 		} else if(e.getSource()==b1) {
 		
