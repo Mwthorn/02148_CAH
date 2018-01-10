@@ -340,3 +340,39 @@ public class Game implements Runnable {
 	}
 
 }
+
+
+
+/*
+ * Client Commands:
+ * put("ingame", "white", userID)
+ * put("ingame", "white", "white", userID)
+ * put("ingame", "white", "white", "white", UserID)
+ * get("ingame", "black", numberOfBlanks)
+ * 
+ * 
+ * Server Commands:
+ * put("ingame", "black", numberOfBlanks, recieverID) X numberOfClients
+ * get("ingame", "white", userID) X numberOfClients
+ * get("ingame", "white", "white", userID) X numberOfClients
+ * get("ingame", "white", "white", "white", UserID) X numberOfClients
+ * 
+ */
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
