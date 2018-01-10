@@ -178,7 +178,6 @@ public class Client {
 		} else if (buttonPressed == 3){ // Sign out buttton clicked
 			signOut();
 		}
-		
 	}
 	
 	private static void signOut() {
