@@ -15,13 +15,12 @@ public class Client {
 	private static String serverIP;
 	private static String name;
 
-	private static final int testNumber = 1;
+	private static final int testNumber = 0;
 
     public static void main(String[] args) {
     	/* Login */
     	// Create login GUI and request name of user and IP to server.
     	
-    	System.out.println("hej");
     	/* Connect to server using GUI info */
 		
 			try {
@@ -40,7 +39,7 @@ public class Client {
 				}
 				
 				// 3 threads
-				//gameLobby();
+				gameLobby();
 				
 
 			} catch (IOException | InterruptedException e) {
