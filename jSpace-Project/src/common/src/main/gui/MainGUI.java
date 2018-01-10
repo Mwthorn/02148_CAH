@@ -34,7 +34,17 @@ public class MainGUI{
 
 	// CONSTRUCTOR
 	public MainGUI(){
+<<<<<<< HEAD
 
+=======
+		this.setTitle("Cards Against Humanity");
+		this.setSize(1900,1000); // Use pack instead
+		this.setResizable(true);
+		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		this.setVisible(true);
+		this.setLocationRelativeTo(null);
+		this.setVisible(true);
+>>>>>>> b9e9750157072c4021cf97146f83e8573b8c563e
 		
 		// LOGIN		
 		if(start || lob2Log){

@@ -17,7 +17,6 @@ public class Server {
 
     private static ArrayList<WhiteCard> whiteCards;
     private static ArrayList<BlackCard> blackCards;
-    private static ArrayList<Game> games;
     private static SequentialSpace lobby;
     private static CardDataBase cardDataBase;
     private static PlayerBase playerBase;
@@ -33,7 +32,7 @@ public class Server {
 		whiteCards = cardDataBase.getWhiteDeck();
 		blackCards = cardDataBase.getBlackDeck();
         playerBase = new PlayerBase();
-        gameBase = new GameBase();
+		gameBase = new GameBase();
     	
     	
     	// Setup for the lobby tuple space
@@ -64,15 +63,15 @@ public class Server {
 				}
 				else if (tuple[1].equals("refreshGameList")) {
 					int playerID = (int) tuple[3];
-					lobby.put("GameListSize", playerID, games.size());
+					lobby.put("GameListSize", playerID, gameBase.getGames().size());
 					for (Game game : gameBase.getGames()) {
 						lobby.put("GameList", playerID, new GamePreview(game));
 					}
 				} else if (tuple[1].equals("joinGame")) {
 					System.out.println("Joining game...");
-					Player jPlayer = playerBase.getPlayerwithID((int) tuple[2]);
+					Player jPlayer = playerBase.getPlayerwithID((int) tuple[3]);
 
-					Game jGame = gameBase.getGamewithID((int) tuple[3]);
+					Game jGame = gameBase.getGamewithID((int) tuple[2]);
 					int gameSlot = jGame.getGameSlot();
 					jGame.addPlayerToGame(jPlayer);
 					jGame.playerJoinsGame(jPlayer);
