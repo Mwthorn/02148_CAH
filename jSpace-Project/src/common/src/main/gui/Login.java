@@ -261,11 +261,7 @@ public class Login extends JFrame implements ActionListener {
 				txtfld2.setText("Incorrect IP");
 			} 
 		}
-
-	
 	}
-
-	/*
 
 	public static void main(String[] args) {
 
@@ -279,7 +275,7 @@ public class Login extends JFrame implements ActionListener {
 		login.setLocationRelativeTo(null);
 
 	}
-*/
+
 
 
 

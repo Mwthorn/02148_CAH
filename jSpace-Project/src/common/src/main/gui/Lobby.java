@@ -60,9 +60,8 @@ public class Lobby extends JFrame implements ActionListener{
 		b2 = new JButton("Sign Out");
 		b2.setPreferredSize(btnsize2);
 		b2.setBackground(Color.BLACK);
+		b2.addActionListener(this);
 		b2.setAlignmentX(Component.CENTER_ALIGNMENT);
-
-
 
 		// Join game button
 		b3 = new JButton("Join Game");
@@ -70,7 +69,14 @@ public class Lobby extends JFrame implements ActionListener{
 		b3.setBackground(Color.BLACK);
 		b3.addActionListener(this);
 		b3.setAlignmentX(Component.CENTER_ALIGNMENT);
-
+		
+		// Refresh button
+		b4 = new JButton("Refresh");
+		b4.setPreferredSize(btnsize2);
+		b4.setBackground(Color.BLACK);
+		b4.addActionListener(this);
+		b4.setAlignmentX(Component.CENTER_ALIGNMENT);
+		
 		//Create label
 		l1 = new JLabel("Cards Against Humanity ");
 		l1.setPreferredSize(new Dimension(480, 50));
@@ -100,6 +106,8 @@ public class Lobby extends JFrame implements ActionListener{
 		p1.add(Box.createRigidArea(new Dimension(0,100)));
 		p1.add(b2);
 		p1.add(Box.createHorizontalGlue());
+		p1.add(b4);
+		p1.add(Box.createHorizontalGlue());
 		p1.add(b3);
 		p1.add(Box.createHorizontalGlue());
 		p1.add(b1);
@@ -111,8 +119,6 @@ public class Lobby extends JFrame implements ActionListener{
 		JPanel p3 = new JPanel();
 		p3.setLayout(new BoxLayout(p3, BoxLayout.PAGE_AXIS));
 		p3.setBackground(Color.WHITE);
-
-		JPanel p4 = new JPanel();
 
 		// Panel for Title label
 		p2.setLayout(new BoxLayout(p2, BoxLayout.PAGE_AXIS));
@@ -128,6 +134,7 @@ public class Lobby extends JFrame implements ActionListener{
 
 
 		// Panel for White Card image
+		JPanel p4 = new JPanel();
 		p4.setLayout(new BoxLayout(p4, BoxLayout.LINE_AXIS));
 		p4.add(Box.createRigidArea(new Dimension(50, 0)));
 		p4.setBackground(Color.WHITE);
@@ -153,7 +160,11 @@ public class Lobby extends JFrame implements ActionListener{
 	public void actionPerformed(ActionEvent e){
 
 		if(e.getSource()==b1){
-			new CreateGame();
+			
+		}
+		if(e.getSource()==b2){
+			dispose();
+			new Login();
 		}
 
 		/*
@@ -186,7 +197,7 @@ public class Lobby extends JFrame implements ActionListener{
 
 	}
 
-	/*
+	
 	public static void main(String[] args) throws InterruptedException {
 
 		Lobby lobby = new Lobby();
@@ -200,6 +211,6 @@ public class Lobby extends JFrame implements ActionListener{
 
 		System.out.println(Client.getGameList());
 
-	} */
+	} 
 
 }
