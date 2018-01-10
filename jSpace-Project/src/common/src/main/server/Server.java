@@ -69,9 +69,9 @@ public class Server {
 					}
 				} else if (tuple[1].equals("joinGame")) {
 					System.out.println("Joining game...");
-					Player jPlayer = playerBase.getPlayerwithID((int) tuple[3]);
+					Player jPlayer = playerBase.getPlayerwithID((int) tuple[2]);
 
-					Game jGame = gameBase.getGamewithID((int) tuple[2]);
+					Game jGame = gameBase.getGamewithID((int) tuple[3]);
 					int gameSlot = jGame.getGameSlot();
 					jGame.addPlayerToGame(jPlayer);
 					jGame.playerJoinsGame(jPlayer);
