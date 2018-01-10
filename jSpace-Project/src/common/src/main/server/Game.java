@@ -4,10 +4,7 @@ import common.src.main.server.database.PlayerBase;
 import common.src.main.server.utilities.BlackCard;
 import common.src.main.server.utilities.WhiteCard;
 
-import org.jspace.ActualField;
-import org.jspace.FormalField;
-import org.jspace.SequentialSpace;
-import org.jspace.SpaceRepository;
+import org.jspace.*;
 
 import java.util.*;
 
@@ -124,6 +121,7 @@ public class Game implements Runnable {
             player.setWhiteCards(cards);
         }
 
+
         Random rand = new Random();
         int n = rand.nextInt(players.size()) - 1;
         this.currentTurn = n;
@@ -152,30 +150,28 @@ public class Game implements Runnable {
         }
 
         // TODO: Listen on players to pick their white card
-        boolean state = true;
-        int timeout = 0;
-        while (state) {
-            try {
-                Thread.sleep(1000);
-                timeout++;
-                if (timeout < 30) {
-                    // TODO: Choose a random for choose that didn't pick a card
-                    state = false;
-                }
-                else {
-                    state = false;
-                    for (Player player : players) {
-                        if (!player.hasPickedCard()) {
-                            if (player.getId() != chosenID) {
-                                state = true;
-                            }
-                        }
-                    }
-                }
-            } catch (InterruptedException e) {
-                e.printStackTrace();
+
+
+        // Setup of a local tuple space.
+        Space local = new SequentialSpace();
+        GameListener gL = new GameListener(game, local);
+
+        Timeout timeout = new Timeout(local);
+        new Thread(timeout).start();
+        new Thread(gL).start();
+
+        try {
+            Object[] tuple = local.get(new ActualField("Game") ,new FormalField(String.class));
+            if (tuple[1] == "Timeout") {
+
             }
+            else if (tuple[1] == "AllPicked") {
+                local.put("Timeout", "Cancel");
+            }
+        } catch (InterruptedException e) {
+            e.printStackTrace();
         }
+
         // Get white cards
 
         ArrayList<WhiteCard> pickedCards = new ArrayList<>();
@@ -184,23 +180,7 @@ public class Game implements Runnable {
         }
 
         // TODO: Listen on chosen player to choose the winner card
-        state = true;
-        timeout = 0;
-        while (state) {
-            try {
-                Thread.sleep(1000);
-                timeout++;
-                if (timeout < 30) {
-                    // TODO: Choose a random winner if didn't pick a card
-                    state = false;
-                }
-                else {
-                    if ()
-                }
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
-        }
+
 
     }
 
