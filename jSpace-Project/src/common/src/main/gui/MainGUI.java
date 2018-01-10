@@ -474,7 +474,7 @@ public class MainGUI extends JFrame implements ActionListener {
 
 			System.out.println(name);
 			System.out.println(IP);
-
+			
 			mainLogin.setVisible(false);
 
 			mainLobby.setVisible(true);
