@@ -81,7 +81,6 @@ public class Game implements Runnable {
                 tuple = game.get(new ActualField("game"), new FormalField(String.class), new FormalField(Integer.class));
                 System.out.println("Game Lobby: Got response: " + tuple[1]);
                 if (tuple[1].equals("ready")) {
-                    // TODO: Ready button: A toggle option to be ready/not be ready.
                     readyUpdate((int) tuple[2]);
                     Boolean allReady = true;
                     for (Player player : players) {
@@ -93,10 +92,8 @@ public class Game implements Runnable {
                         startGame();
                     }
                 } else if (tuple[1].equals("leave")) {
-                    // TODO: Leave game: Return the player to the main lobby, adjust tuple spaces.
                     playerLeavesGame((int) tuple[2]);
                 } else if (tuple[1].equals("start")) {
-                    // TODO: Start game: A button for the host, possibly to entirely replace his ready button.
                     startGame();
                 }
             } catch (InterruptedException e) {
