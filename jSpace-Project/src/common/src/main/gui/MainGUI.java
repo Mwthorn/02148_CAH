@@ -1,10 +1,9 @@
 package common.src.main.gui;
 
 import java.awt.EventQueue;
-
 import javax.swing.JFrame;
-import javax.swing.SwingUtilities;
 
+@SuppressWarnings("serial")
 public class MainGUI extends JFrame {
 
 	// DECLARATIONS
@@ -13,15 +12,24 @@ public class MainGUI extends JFrame {
 	GameGUI newGameGUI;
 	CreateGame newCreateGame;
 	ReadyUpLobby newReadyUpLobby;
-	private boolean lob2Log;
-	private boolean log2Lob;
-	private boolean game2Lob;
-	private boolean gLob2Lob;
-	private boolean cg2Lob;
-	private boolean lob2cg;
-	private boolean lob2gLob;
-	private boolean cg2gLob;
-	private boolean gLob2game;
+	private boolean start = true;
+	private boolean lob2Log, game2Lob, gLob2Lob, cg2Lob, lob2cg, lob2gLob, cg2gLob, gLob2game; // slettes som der oprettes bool i GUI klasserne der kan kaldes
+
+
+	// MAIN
+	static void main(String[] args) {
+
+		EventQueue.invokeLater(new Runnable() {
+			public void run() {
+				try {
+					MainGUI frame = new MainGUI();
+					frame.setVisible(true);
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			}
+		});		
+	}
 
 	// CONSTRUCTOR
 	public MainGUI(){
@@ -34,104 +42,76 @@ public class MainGUI extends JFrame {
 		this.setLocationRelativeTo(null);
 		this.setVisible(true);
 
-		runLogin(); // når programmet køres, skal den starte med Login.
-		
-		if(lob2Log){
-			runLogin();
-		} else if(log2Lob || game2Lob || gLob2Lob || cg2Lob){
-			runLobby();
-		} else if(lob2cg){
-			runCreateGame();
-		} else if(lob2gLob || cg2gLob){
-			runReadyUpLobby();
-		} else if(gLob2game){
-			runGameGUI();
+		// LOGIN		
+		if(lob2Log || start){
+
+			if (lob2Log){
+				newLobby.setVisible(false);
+			}
+
+			start = false;
+			newLogin = new Login();
+			this.add(newLogin);
+			revalidate();
+			repaint();
+
+			
+		} // LOBBY
+		else if(newLogin.signIn || game2Lob || gLob2Lob || cg2Lob){
+
+			if (newLogin.signIn){
+				newLogin.setVisible(false);
+			} else if (game2Lob){
+				// newGameGUI.setVisible(false);
+			} else if (gLob2Lob){
+				newReadyUpLobby.setVisible(false);
+			} else if (cg2Lob){
+				newCreateGame.setVisible(false);
+			} else {
+				// nothing
+			}
+
+			try {
+				newLobby = new Lobby();
+				this.add(newLobby);
+				revalidate();
+				repaint();
+			} catch (InterruptedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+
+
+		} // CREATE GAME
+		else if(lob2cg){
+
+			newCreateGame = new CreateGame();
+			this.add(newCreateGame);
+			revalidate();
+			repaint();
+
+		} // GAME LOBBY
+		else if(lob2gLob || cg2gLob){
+
+			newReadyUpLobby = new ReadyUpLobby();
+			this.add(newReadyUpLobby);
+			revalidate();
+			repaint();
+
+		} // GAME GUI
+		else if(gLob2game){
+
+			newGameGUI = new GameGUI();
+			// viser fejl
+			// this.add(newGameGUI);
+			revalidate();
+			repaint();
+
 		} else {
 			// Something went terribly wrong! ha. 
 		}
 	}
 
 
-	// METHODS
-	
-	public void changeGUI(){
-		
-		/*
-		lob2Log;
-		log2Lob;
-		game2Lob;
-		gLob2Lob;
-		cg2Lob;
-		lob2cg;
-		lob2gLob;
-		cg2gLob;
-		gLob2game;
-		*/
-	}
 
-	public void runLogin(){
-
-		newLogin = new Login();
-
-	}
-
-	public void runLobby(){
-
-		newLogin.setVisible(false);
-		//newLogin.setVisible(false);
-		try {
-			newLobby = new Lobby();
-			
-		} catch (InterruptedException e) {
-			e.printStackTrace();
-		}
-	}
-
-	public void runCreateGame(){
-
-		//previous.setVisible(false);
-		newCreateGame = new CreateGame();
-
-		this.setContentPane(newCreateGame);
-		revalidate();
-		repaint();
-	}
-
-	public void runReadyUpLobby(){
-
-		//previous.setVisible(false);
-		this.add(newReadyUpLobby);
-
-		this.setContentPane(newReadyUpLobby);
-		revalidate();
-		repaint();
-	}
-
-	public void runGameGUI(){
-
-		//previous.setVisible(false);
-		newGameGUI = new GameGUI();
-
-		this.setContentPane(newReadyUpLobby);		
-		revalidate();
-		repaint();
-	}
-
-
-	// MAIN
-	static void main(String[] args) {
-
-		/*
-		SwingUtilities.invokeLater(new Runnable() {
-			public void run() {
-				try {
-
-					runLogin();
-
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		}); */
-	}
 }

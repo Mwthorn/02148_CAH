@@ -9,7 +9,6 @@ import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.IOException;
-import java.net.SocketException;
 
 import javax.swing.BorderFactory;
 import javax.swing.Box;
@@ -23,12 +22,14 @@ import javax.swing.JTextField;
 
 import common.src.main.client.Client;
 
+@SuppressWarnings("serial")
 public class Login extends JFrame implements ActionListener {
 
 	//Initialize Buttons, Labels, Images and Textfields.
 	private JButton BQuit, BSignIn;
 	private JLabel LTitle, LText, LFigure1, LName, LIP, LFigure2;
 	private JTextField txtfld1, txtfld2;
+	public boolean signIn = false;
 
 	public Login(){
 
@@ -205,7 +206,7 @@ public class Login extends JFrame implements ActionListener {
 		PC.setBackground(Color.WHITE);
 		PC.add(PCenter);
 
-		//Laver Center JPanel med de forskellige labels og tekstfelter
+		//Hovedpanel - Laver Center JPanel med de forskellige labels og tekstfelter
 		JPanel PMiddle = new JPanel();
 		PMiddle.setLayout(new BoxLayout(PMiddle, BoxLayout.PAGE_AXIS));
 		PMiddle.setSize(400, 1000);
@@ -225,8 +226,7 @@ public class Login extends JFrame implements ActionListener {
 
 	}
 
-	String name;
-	String IP;
+	String name, IP;
 
 	public void actionPerformed(ActionEvent e){
 
@@ -239,7 +239,9 @@ public class Login extends JFrame implements ActionListener {
 		} else if (e.getSource() == BSignIn){
 			this.name = txtfld1.getText();
 			this.IP = txtfld2.getText();
-
+			
+			signIn = true;
+			
 			System.out.println(name);
 			System.out.println(IP);
 
@@ -253,6 +255,20 @@ public class Login extends JFrame implements ActionListener {
 		}
 	}
 
+
+	static void main(String[] args) {
+
+		Login login = new Login();
+
+		login.setTitle("Cards Against Humanity");
+		login.setSize(1900,1000);
+		login.setResizable(true);
+		login.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		login.setVisible(true);
+		login.setLocationRelativeTo(null);
+		
+	}
+	
 	//	public String getName() {
 	//		return name;
 	//	}
@@ -261,19 +277,5 @@ public class Login extends JFrame implements ActionListener {
 	//		return IP;
 	//	}
 
-
-
-
-	public void getLoginPanel(){
-
-		JFrame login = new Login();
-
-		login.setTitle("Cards Against Humanity");
-		login.setSize(1900,1000);
-		login.setResizable(true);
-		login.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		login.setVisible(true);
-		login.setLocationRelativeTo(null);
-	}
 }
 

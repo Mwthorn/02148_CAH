@@ -177,6 +177,7 @@ public class Lobby extends JFrame implements ActionListener{
 
 	}
 
+	
 	public static void main(String[] args) throws InterruptedException {
 
 		Lobby lobby = new Lobby();
@@ -190,6 +191,6 @@ public class Lobby extends JFrame implements ActionListener{
 
 		System.out.println(Client.getGameList());
 
-	}
+	} 
 
 }
