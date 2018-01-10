@@ -3,6 +3,8 @@ package common.src.main.gui;
 import common.src.main.client.Client;
 
 import javax.swing.*;
+import javax.swing.border.Border;
+
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -15,6 +17,29 @@ public class CreateGame extends JFrame implements ActionListener {
 	private JButton BQuit, BSignIn, BCreateGame;
 	private JLabel LTitle, LText, LFigure1, LName, LIP, LFigure2, LRounds, LTime, LPass, LPassword;
 	private JTextField txtfld1, txtfld2, txtfld3, txtfld4, txtfld5;
+	
+	
+	// Rounded Buttons
+	// Source: https://stackoverflow.com/questions/423950/rounded-swing-jbutton-using-java
+	private static class RoundedBorder implements Border {
+	    private int radius;
+	    
+	    RoundedBorder(int radius) {
+	        this.radius = radius;
+	    }
+
+	    public Insets getBorderInsets(Component c) {
+	        return new Insets(this.radius+1, this.radius+1, this.radius+2, this.radius);
+	    }
+
+	    public boolean isBorderOpaque() {
+	        return true;
+	    }
+
+	    public void paintBorder(Component c, Graphics g, int x, int y, int width, int height) {
+	        g.drawRoundRect(x, y, width-1, height-1, radius, radius);
+	    }
+	}
 	
 	public CreateGame(){
 
@@ -35,41 +60,33 @@ public class CreateGame extends JFrame implements ActionListener {
 		int fontsize = 25;
 		
 		// Make Quit Button
-		BQuit = new JButton("Quit");
+		BQuit = new JButton("Back");
 		BQuit.setMaximumSize(btnsize2);
 		BQuit.addActionListener(this);
+		BQuit.setBorder(new RoundedBorder(30));
+		//BQuit.setBorder(BorderFactory.createMatteBorder(4, 4, 4, 4, Color.black));		
 		BQuit.setAlignmentX(Component.CENTER_ALIGNMENT);
 		BQuit.setFont(new Font("calibri",1,21));
-		BQuit.setBorderPainted(false);
+		BQuit.setBorderPainted(true);
 		BQuit.setFocusPainted(false);
 		BQuit.setEnabled(true);
-		BQuit.setForeground(Color.WHITE);
-		BQuit.setBackground(Color.black);
-
-		// Make Sign In button
-		BSignIn = new JButton("Sign In");
-		BSignIn.setMaximumSize(btnsize4);
-		BSignIn.addActionListener(this);
-		BSignIn.setAlignmentX(Component.CENTER_ALIGNMENT);
-		BSignIn.setFont(new Font("calibri",1,21));
-		BSignIn.setBorderPainted(false);
-		BSignIn.setFocusPainted(false);
-		BSignIn.setEnabled(true);
-		BSignIn.setForeground(Color.WHITE);
-		BSignIn.setBackground(Color.black);	
+		BQuit.setForeground(Color.BLACK);
+		BQuit.setBackground(Color.WHITE);
 
 		// Make Sign In button
 		BCreateGame = new JButton("Create Game");
-		BCreateGame.setMinimumSize(new Dimension(200,100));
-		BCreateGame.setMaximumSize(new Dimension(200,100));
+		BCreateGame.setMinimumSize(new Dimension(250,100));
+		BCreateGame.setMaximumSize(new Dimension(250,100));
+		BCreateGame.setBorder(new RoundedBorder(30));
+		//BCreateGame.setBorder(BorderFactory.createMatteBorder(4, 4, 4, 4, Color.black));		
 		BCreateGame.addActionListener(this);
 		BCreateGame.setAlignmentX(Component.CENTER_ALIGNMENT);
 		BCreateGame.setFont(new Font("calibri",1,30));
-		BCreateGame.setBorderPainted(false);
+		BCreateGame.setBorderPainted(true);
 		BCreateGame.setFocusPainted(false);
 		BCreateGame.setEnabled(true);
-		BCreateGame.setForeground(Color.WHITE);
-		BCreateGame.setBackground(Color.black);
+		BCreateGame.setForeground(Color.BLACK);
+		BCreateGame.setBackground(Color.WHITE);
 		
 		
 		//Makes Title
@@ -117,8 +134,8 @@ public class CreateGame extends JFrame implements ActionListener {
 		// The two cards in the sides
 		LFigure1 = new JLabel();
 		LFigure2 = new JLabel();
-		LFigure1.setIcon(new ImageIcon(new ImageIcon("BCLogin.png").getImage().getScaledInstance(243, 376, Image.SCALE_DEFAULT)));
-		LFigure2.setIcon(new ImageIcon(new ImageIcon("WCLogin.png").getImage().getScaledInstance(245, 376, Image.SCALE_DEFAULT)));
+		LFigure1.setIcon(new ImageIcon(new ImageIcon("BCCreate.png").getImage().getScaledInstance(248, 376, Image.SCALE_DEFAULT)));
+		LFigure2.setIcon(new ImageIcon(new ImageIcon("WCCreate.png").getImage().getScaledInstance(245, 376, Image.SCALE_DEFAULT)));
 		LFigure1.setAlignmentX(Component.CENTER_ALIGNMENT);
 		LFigure2.setAlignmentX(Component.CENTER_ALIGNMENT);
 
@@ -230,7 +247,7 @@ public class CreateGame extends JFrame implements ActionListener {
 		
 		PRight.add(Box.createRigidArea(new Dimension(365,250)));
 		PRight.add(LFigure2);
-		PRight.add(Box.createRigidArea(new Dimension(365,200)));
+		PRight.add(Box.createRigidArea(new Dimension(365,150)));
 		PRight.add(BQuit);
 		PRight.add(Box.createRigidArea(new Dimension(365,50)));
 

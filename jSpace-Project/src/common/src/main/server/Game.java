@@ -64,15 +64,13 @@ public class Game implements Runnable {
     public void run() {
 
     	try {
-    		for (int i = 0; i < 2; i++) {
-				game.get(new ActualField("testing"));
-				System.out.println("IT'S ALIVE, IT'S ALLLIIIIIVEEEEEEEEE");
-			}
-			
-		} catch (InterruptedException e) {
-			e.printStackTrace();
+			game.get(new ActualField("testing"));
+		} catch (InterruptedException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
 		}
-    	
+		System.out.println("IT'S ALIVE, IT'S ALLLIIIIIVEEEEEEEEE");
+		
     	/* Game lobby */
     	while (true) {
             // ???????Lobby - Type  of Action - String - Integer
@@ -211,13 +209,6 @@ public class Game implements Runnable {
             game.put("updateLobby", "update", recieverID, new GameSlot(0, "", false));
         }
 	}
-    
-    public void playerJoinsGame(Player actor) {
-        for (Player player : players) {
-            int recieverID = player.getId();
-            game.put("updateLobby", "update", recieverID, actor.getGameSlot());
-        }
-	}
 
 	public String getGameName() {
         return this.gameName;
@@ -260,8 +251,13 @@ public class Game implements Runnable {
         player.addPoints(i);
     }
 
-    public void addPlayerToGame(Player player) {
-        players.add(player);
+    public void addPlayerToGame(Player actor) {
+        players.add(actor);
+        System.out.println("Hej");
+        for (Player player : players) {
+            int recieverID = player.getId();
+            game.put("updateLobby", "update", recieverID, actor.getGameSlot());
+        }
     }
 
     public void setStatus(String status) {

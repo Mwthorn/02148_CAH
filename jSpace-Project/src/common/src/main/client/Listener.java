@@ -21,6 +21,7 @@ public class Listener implements Runnable{
 	
 	public void run() {
 		// TODO: Puts thing up into the local tuple space when recieving commands from the server.
+		System.out.println("Listener");
 		while (true){
 			try {
 				// UpdateLobby - Type of Action - UserID, gameslot to be acted upon.
@@ -33,7 +34,7 @@ public class Listener implements Runnable{
 		        } else if (tuple[1].equals("update")){
 		        	// TODO: Update from the server, update relevant GUI.
 		        	// Possible updates: User joins, user leaves, user checks ready, user unchecks ready.
-		        	local.put("local", "update", tuple[3]);
+		        	local.put("local", "update", (GameSlot) tuple[3]);
 		        } else if (tuple[1].equals("leave")){
 		        	local.put("local","leave", null);
 		        	break;

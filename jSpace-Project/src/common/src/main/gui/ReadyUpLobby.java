@@ -136,6 +136,11 @@ public class ReadyUpLobby extends JFrame implements ActionListener{
 	}
 
 	public void actionPerformed(ActionEvent e) {
+		
+		if(e.getSource()==b1 && l2 != null){
+			l2.removeAll();
+		}
+		
 		if(e.getSource()==b2){
 			try {
 				new Lobby();
@@ -151,7 +156,6 @@ public class ReadyUpLobby extends JFrame implements ActionListener{
 		}
 
 	}
-
 
 
 	public static void main(String[] args) throws InterruptedException {
