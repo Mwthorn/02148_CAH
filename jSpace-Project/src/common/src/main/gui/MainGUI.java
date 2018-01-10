@@ -4,7 +4,7 @@ import java.awt.EventQueue;
 import javax.swing.JFrame;
 
 @SuppressWarnings("serial")
-public class MainGUI extends JFrame {
+public class MainGUI{
 
 	// DECLARATIONS
 	Login newLogin;
@@ -12,8 +12,8 @@ public class MainGUI extends JFrame {
 	GameGUI newGameGUI;
 	CreateGame newCreateGame;
 	ReadyUpLobby newReadyUpLobby;
-	private boolean start = true;
-	private boolean lob2Log, game2Lob, gLob2Lob, cg2Lob, lob2cg, lob2gLob, cg2gLob, gLob2game; // slettes som der oprettes bool i GUI klasserne der kan kaldes
+	boolean start = true;
+	private boolean lob2Log, game2Lob, gLob2Lob, cg2Lob, lob2cg, lob2gLob, cg2gLob, gLob2game = false; // slettes som der oprettes bool i GUI klasserne der kan kaldes
 
 
 	// MAIN
@@ -29,34 +29,23 @@ public class MainGUI extends JFrame {
 	public static void main(String[] args) {
 
 	MainGUI gui = new MainGUI();
-	gui.setVisible(true);
 	
 	}
 
 	// CONSTRUCTOR
 	public MainGUI(){
 
-		this.setTitle("Cards Against Humanity");
-		this.setSize(1900,1000); // Use pack instead
-		this.setResizable(true);
-		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		this.setVisible(true);
-		this.setLocationRelativeTo(null);
-		this.setVisible(true);
 		
 		// LOGIN		
-		if(lob2Log || start){
+		if(start || lob2Log){
 
 			if (lob2Log){
 				newLobby.setVisible(false);
 			}
 			
 			start = false;
-			newLogin = new Login();
-			this.add(newLogin);
-			revalidate();
-			repaint();
-
+			Login newLogin = new Login();
+			newLogin.setVisible(true);
 			
 		} // LOBBY
 		else if(newLogin.signIn || game2Lob || gLob2Lob || cg2Lob){
@@ -75,9 +64,7 @@ public class MainGUI extends JFrame {
 
 			try {
 				newLobby = new Lobby();
-				this.add(newLobby);
-				revalidate();
-				repaint();
+				newLobby.setVisible(true);
 			} catch (InterruptedException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
@@ -88,32 +75,22 @@ public class MainGUI extends JFrame {
 		else if(lob2cg){
 
 			newCreateGame = new CreateGame();
-			this.add(newCreateGame);
-			revalidate();
-			repaint();
+			newCreateGame.setVisible(true);
 
 		} // GAME LOBBY
 		else if(lob2gLob || cg2gLob){
 
 			newReadyUpLobby = new ReadyUpLobby();
-			this.add(newReadyUpLobby);
-			revalidate();
-			repaint();
+			newReadyUpLobby.setVisible(true);
 
 		} // GAME GUI
 		else if(gLob2game){
 
 			newGameGUI = new GameGUI();
-			// viser fejl
-			// this.add(newGameGUI);
-			revalidate();
-			repaint();
+			// newGameGUI.setVisible(true);
 
 		} else {
 			// Something went terribly wrong! ha. 
 		}
 	}
-
-
-
 }

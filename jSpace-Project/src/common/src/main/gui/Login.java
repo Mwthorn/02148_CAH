@@ -33,7 +33,7 @@ public class Login extends JFrame implements ActionListener {
 
 	public Login(){
 		
-		//Using BorderLayout
+		// Using BorderLayout
 		getContentPane().setLayout(new BorderLayout());
 		
 		// Window dimensions
