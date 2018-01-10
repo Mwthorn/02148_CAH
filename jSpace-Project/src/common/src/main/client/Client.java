@@ -14,6 +14,7 @@ public class Client {
 	private static int userID;
 	private static String serverIP;
 	private static String name;
+	private static int amountOfBlanks;
 
 	private static final int testNumber = 1;
 
@@ -41,7 +42,6 @@ public class Client {
 					ArrayList<GamePreview> gp = getGameList();
 					joinGame(gp.get(0).getId());
 				}
-				gameLobby();
 				
 
 			} catch (IOException | InterruptedException e) {
@@ -96,7 +96,7 @@ public class Client {
 			game = new RemoteSpace("tcp://" + serverIP + ":9001/game" + gameSlot + "?keep");
 			
 			game.put("testing");
-			// gameLobby();
+			gameLobby();
 		} catch (InterruptedException | IOException e) {
 			e.printStackTrace();
 		}
@@ -116,7 +116,7 @@ public class Client {
 		}
 
 		game.put("testing");
-		// gameLobby();
+		gameLobby();
 	} // End of joinGame function
 	
 	public static ArrayList<GamePreview> getGameList() throws InterruptedException {
