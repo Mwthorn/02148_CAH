@@ -63,6 +63,15 @@ public class ReadyUpLobby extends JFrame implements ActionListener{
 		b2.setEnabled(true);
 		b2.setForeground(Color.WHITE);
 		b2.setBackground(Color.BLACK);
+		
+		b3 = new JButton("ready?");
+		b3.addActionListener(this);
+		b3.setAlignmentX(Component.CENTER_ALIGNMENT);
+		b3.setBorderPainted(true);
+		b3.setFocusPainted(true);
+		b3.setEnabled(true);
+		b3.setForeground(Color.WHITE);
+		b3.setBackground(Color.BLACK);
 
 
 		// Creates label "Cards Against Humanity"
@@ -78,81 +87,54 @@ public class ReadyUpLobby extends JFrame implements ActionListener{
 
 		l2.setIcon(new ImageIcon(new ImageIcon("BCRLobby.png").getImage().getScaledInstance(190, 295, Image.SCALE_DEFAULT)));
 		l3.setIcon(new ImageIcon(new ImageIcon("WCRLobby.png").getImage().getScaledInstance(195, 300, Image.SCALE_DEFAULT)));
-		
-		
-		
-		b3 = new JButton("ready?");
-		b2.addActionListener(this);
-		b2.setAlignmentX(Component.CENTER_ALIGNMENT);
-		b2.setBorderPainted(true);
-		b2.setFocusPainted(true);
-		b2.setEnabled(true);
-		b2.setForeground(Color.WHITE);
-		b2.setBackground(Color.BLACK);
-		
-		l4 = new JLabel("LOLGGEZ");
-		l5 = new JLabel("Not ready");
-		
-		
-		
-		
+
+		// PANELS ARE BEING CREATED
 		//Creates panel for buttons
-		/*JPanel p1 = new JPanel();
+		JPanel p1 = new JPanel();
 
 		p1.setLayout(new BoxLayout(p1, BoxLayout.LINE_AXIS));
 		p1.setBackground(Color.WHITE);
+		p1.add(Box.createRigidArea(new Dimension(0,100)));
 		p1.add(b2);
+		p1.add(Box.createHorizontalGlue());
+		p1.add(b3);
 		p1.add(Box.createHorizontalGlue());
 		p1.add(b1);
 
 		getContentPane().add(p1, BorderLayout.SOUTH);
-	
-	*/
+
 		//Creates panel for labels
 		JPanel p2 = new JPanel();
-		
 		JPanel p3 = new JPanel();
 		p3.setLayout(new BoxLayout(p3, BoxLayout.PAGE_AXIS));
 		p3.setBackground(Color.WHITE);
-		
+
 		JPanel p4 = new JPanel();
-		p4.setLayout(new BoxLayout(p4, BoxLayout.PAGE_AXIS));
-		p4.setBackground(Color.WHITE);
-		
+
 		// Panel for Title label
 		p2.setLayout(new BoxLayout(p2, BoxLayout.PAGE_AXIS));
 		p2.setBackground(Color.WHITE);
 		p2.add(l1);
 
-		p3.add(Box.createRigidArea(new Dimension(0,130)));
+		// Panel for Black Card image
+		p3.setLayout(new BoxLayout(p3, BoxLayout.LINE_AXIS));
+		p3.setBackground(Color.WHITE);
+		p3.add(Box.createRigidArea(new Dimension(50, 0)));
 		p3.add(l2);
-		p3.add(Box.createRigidArea(new Dimension(0,100)));
-		p3.add(b2);
-		p3.add(Box.createRigidArea(new Dimension(0,50)));
+		p3.add(Box.createRigidArea(new Dimension(50, 0)));
+
 
 		// Panel for White Card image
-		p4.add(Box.createRigidArea(new Dimension(365,130)));
+		p4.setLayout(new BoxLayout(p4, BoxLayout.LINE_AXIS));
+		p4.add(Box.createRigidArea(new Dimension(50, 0)));
+		p4.setBackground(Color.WHITE);
 		p4.add(l3);
-		p4.add(Box.createRigidArea(new Dimension(365,100)));
-		p4.add(b1);
-		p4.add(Box.createRigidArea(new Dimension(365,50)));
 
 		getContentPane().add(p2, BorderLayout.NORTH);
-		getContentPane().add(p3, BorderLayout.WEST);
-		getContentPane().add(p4, BorderLayout.EAST);
-		
-		JPanel p5 = new JPanel();
-		p5.setLayout(new BoxLayout(p5, BoxLayout.LINE_AXIS));
-		p5.setBackground(Color.WHITE);
-		p5.add(l4);
-		p5.add(Box.createRigidArea(new Dimension(100,0)));
-		p5.add(b3);
-		p5.add(Box.createRigidArea(new Dimension(100,0)));
-		p5.add(l5);
-		getContentPane().add(p5, BorderLayout.CENTER);
-
+		getContentPane().add(p3, BorderLayout.EAST);
+		getContentPane().add(p4, BorderLayout.WEST);
 	}
-	
+
 	public void actionPerformed(ActionEvent e) {
 		if(e.getSource()==b2){
 			try {
@@ -161,12 +143,13 @@ public class ReadyUpLobby extends JFrame implements ActionListener{
 				// TODO Auto-generated catch block
 				e1.printStackTrace();
 			}
-			
+
 		}
 		if(e.getSource()==b3){
-			l5.setText("Am ready");
+			
+
 		}
-		
+
 	}
 
 
