@@ -15,6 +15,8 @@ public class Client {
 	private static String serverIP;
 	private static String name;
 
+	private static final int testNumber = 1;
+
     public static void main(String[] args) {
     	/* Login */
     	// Create login GUI and request name of user and IP to server.
@@ -24,15 +26,18 @@ public class Client {
 		
 			try {
 				loginUser("127.0.0.1", "Alex");
-				
-				
-				System.out.println("Trying to create game");
-				createNewGame();
 
-				Thread.sleep(1000);
-
-				ArrayList<GamePreview> gp = getGameList();
-				joinGame(gp.get(0).getId());
+				if (testNumber == 0) {
+					System.out.println("Trying to create game");
+					createNewGame();
+				}
+				else if (testNumber == 1) {
+					ArrayList<GamePreview> gp = getGameList();
+					joinGame(gp.get(0).getId());
+				}
+				else if (testNumber == 2) {
+					// TODO: Test MainGUI
+				}
 				
 				// 3 threads
 				//gameLobby();
@@ -135,20 +140,6 @@ public class Client {
 		return ps;
 	}
 
-	// TODO: make a toggleReady instead?
-	public static void sendReady() {
-
-	}
-
-	// TODO: make a toggleReady instead?
-	public static void notReady() {
-
-	}
-
-	public static void leaveGame() {
-
-	}
-
 	public static void refreshPlayerList() throws InterruptedException {
 		// TODO:
 		// Get status
@@ -199,6 +190,7 @@ public class Client {
 		while (true){
 			try {
 				tuple = local.get(new ActualField("local"),new FormalField(String.class), new FormalField(GameSlot.class));
+				GameSlot gameSlot = (GameSlot) tuple[2];
 				System.out.println("Local Lobby: Got response: " + tuple[1]);
 		        if (tuple[1].equals("start")){
 		        	// TODO: Start game: A button for the host, possibly to entirely replace his ready button.
@@ -206,6 +198,7 @@ public class Client {
 		        } else if (tuple[1].equals("update")){
 		        	// TODO: Update from the server, update relevant GUI.
 		        	// Occurs when a player joins/leaves/changes ready state, will fully update a specified game slot.
+					System.out.println("Game updated: " + gameSlot.getName());
 		        } else if (tuple[1].equals("leave")){
 		        	// Call the lobby function.
 		        	break;
@@ -218,7 +211,19 @@ public class Client {
 		// TODO: Leave game: Return the player to the main lobby, adjust tuple spaces.
     	// Update GUI, change from game tuple space to lobby tuple space, adjust other players GUI by sending message to server.
 	}
-	
+
+	public static void sendReady() {
+		game.put("game", "ready", userID);
+	}
+
+	public static void sendLeave() {
+		game.put("game", "leave", userID);
+	}
+
+	public static void sendStart() {
+		game.put("game", "start", userID);
+	}
+
 	private static void talker (int buttonPressed){
 		if (buttonPressed == 0){ //ready button clicked
 			game.put("game", "ready", userID);

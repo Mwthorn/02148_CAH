@@ -29,7 +29,6 @@ public class Login extends JFrame implements ActionListener {
 	private JButton BQuit, BSignIn;
 	private JLabel LTitle, LText, LFigure1, LName, LIP, LFigure2;
 	private JTextField txtfld1, txtfld2;
-	public boolean signIn = false;
 
 	public Login(){
 		
@@ -247,9 +246,16 @@ public class Login extends JFrame implements ActionListener {
 		} else if (e.getSource() == BSignIn){
 			this.name = txtfld1.getText();
 			this.IP = txtfld2.getText();
-
-			signIn = true;
-
+			
+			setVisible(false);
+			try {
+				new Lobby().setVisible(true);
+			} catch (InterruptedException e2) {
+				// TODO Auto-generated catch block
+				e2.printStackTrace();
+			}  
+			
+			
 			System.out.println(name);
 			System.out.println(IP);
 
@@ -260,9 +266,7 @@ public class Login extends JFrame implements ActionListener {
 			} catch (Exception e1) {
 				txtfld2.setText("Incorrect IP");
 			} 
-		}
-
-	
+		}	
 	}
 
 	/*

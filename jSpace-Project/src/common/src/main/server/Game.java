@@ -73,24 +73,35 @@ public class Game implements Runnable {
 		}
     	
     	/* Game lobby */
-    	// ???????Lobby - Type  of Action - String - Integer
-		Object[] tuple;
-		try {
-			tuple = game.get(new ActualField("game"),new FormalField(String.class), new FormalField(Integer.class));
-			System.out.println("Game Lobby: Got response: " + tuple[1]);
-			if (tuple[1].equals("ready")) {
-				// TODO: Ready button: A toggle option to be ready/not be ready.
-				readyUpdate((int) tuple[2]);
-	        } else if (tuple[1].equals("leave")){
-	        	// TODO: Leave game: Return the player to the main lobby, adjust tuple spaces.
-	        	playerLeavesGame((int) tuple[2]);
-	        }else if (tuple[1].equals("start")){
-	        	// TODO: Start game: A button for the host, possibly to entirely replace his ready button.
-	        	startGame();
-	        }
-		} catch (InterruptedException e) {
-			e.printStackTrace();
-		}
+    	while (true) {
+            // ???????Lobby - Type  of Action - String - Integer
+            Object[] tuple;
+            try {
+                tuple = game.get(new ActualField("game"), new FormalField(String.class), new FormalField(Integer.class));
+                System.out.println("Game Lobby: Got response: " + tuple[1]);
+                if (tuple[1].equals("ready")) {
+                    // TODO: Ready button: A toggle option to be ready/not be ready.
+                    readyUpdate((int) tuple[2]);
+                    Boolean allReady = true;
+                    for (Player player : players) {
+                        if (!player.getReady()) {
+                            allReady = false;
+                        }
+                    }
+                    if (allReady) {
+                        startGame();
+                    }
+                } else if (tuple[1].equals("leave")) {
+                    // TODO: Leave game: Return the player to the main lobby, adjust tuple spaces.
+                    playerLeavesGame((int) tuple[2]);
+                } else if (tuple[1].equals("start")) {
+                    // TODO: Start game: A button for the host, possibly to entirely replace his ready button.
+                    startGame();
+                }
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+        }
         
     	
 		
@@ -120,11 +131,11 @@ public class Game implements Runnable {
             return;
         }
 		actor.changeReady();
-		
-		for (int i = 0; i < players.size(); i++) {
-			int recieverID = players.get(i).getId();
-			game.put("updateLobby","update", recieverID, actor.getGameSlot());
-		}
+
+        for (Player player : players) {
+            int recieverID = player.getId();
+            game.put("updateLobby", "update", recieverID, actor.getGameSlot());
+        }
 	}
 	
     private void playerLeavesGame(int playerID) {
@@ -136,17 +147,17 @@ public class Game implements Runnable {
 		players.remove(actor);
 		
 		game.put("updateLobby","leave",actor.getId(), null);
-		for (int i = 0; i < players.size(); i++) {
-			int recieverID = players.get(i).getId();
-			game.put("updateLobby","update", recieverID, new GameSlot(0, "", false));
-		}
+        for (Player player : players) {
+            int recieverID = player.getId();
+            game.put("updateLobby", "update", recieverID, new GameSlot(0, "", false));
+        }
 	}
     
     public void playerJoinsGame(Player actor) {
-		for (int i = 0; i < players.size(); i++) {
-			int recieverID = players.get(i).getId();
-			game.put("updateLobby","update", recieverID, actor.getGameSlot());
-		}
+        for (Player player : players) {
+            int recieverID = player.getId();
+            game.put("updateLobby", "update", recieverID, actor.getGameSlot());
+        }
 	}
 
 	public String getGameName() {

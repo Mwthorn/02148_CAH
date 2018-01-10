@@ -37,14 +37,6 @@ public class Lobby extends JFrame implements ActionListener{
 		getContentPane().setLayout(new BorderLayout()); //Default layout
 		getContentPane().setBackground(Color.WHITE);
 
-		//Window dimensions
-		setSize(1080, 720);
-		setLocationRelativeTo(null);
-		setDefaultCloseOperation(EXIT_ON_CLOSE);
-		setTitle("Cards Against Humanity");
-		setResizable(true);
-		setVisible(true);
-		
 		//Create buttons
 		Dimension btnsize1 = new Dimension(200,80);
 		Dimension btnsize2 = new Dimension(150,80);
@@ -138,6 +130,15 @@ public class Lobby extends JFrame implements ActionListener{
 		getContentPane().add(p4, BorderLayout.WEST);
 
 
+		//Window dimensions
+		setSize(1080, 720);
+		setLocationRelativeTo(null);
+		setDefaultCloseOperation(EXIT_ON_CLOSE);
+		setTitle("Cards Against Humanity");
+		setResizable(true);
+		setVisible(true);
+		
+		
 		// Panel for list of games available
 		/*
 		JPanel p5 = new JPanel();
