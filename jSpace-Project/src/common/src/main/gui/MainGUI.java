@@ -40,20 +40,27 @@ public class MainGUI extends JFrame implements ActionListener {
 	private JLabel l1,l2,l3,l4,l5;
 	private JTextField WP;
 	private static JList list;
-	
-	
-	
+
+
+
 	/////////// MAIN ///////////
-	
+
 	public static void main(String[] args) {
 
 		MainGUI main = new MainGUI();
-		
+
+		main.setTitle("Cards Against Humanity");
+		main.setSize(1900,1000);
+		main.setResizable(true);
+		main.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		main.setVisible(true);
+		main.setLocationRelativeTo(null);
+
 	}
-	
+
 	////////// MAIN ////////////
-	
-	
+
+
 	public static ArrayList<GamePreview> putList() throws InterruptedException{
 		for (GamePreview gp : Client.getGameList()) {
 			gp.getCurrentPlayerSize();
@@ -67,35 +74,37 @@ public class MainGUI extends JFrame implements ActionListener {
 
 		return Client.getGameList();
 	}
-	
+
 	JPanel mainLogin = new JPanel();
 	JPanel mainLobby = new JPanel();
-	
-	JFrame frame = new JFrame();
-	
-	public MainGUI(){
-		
-		/////////////////////////////////////////////// START //////////////////////////////////////////////////////////////////
-		
-		frame.setTitle("Cards Against Humanity");
-		frame.setSize(1900,1000);
-		frame.setResizable(true);
-		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		frame.setVisible(true);
-		frame.setLocationRelativeTo(null);
 
-		/////////////////////////////////////////////// START //////////////////////////////////////////////////////////////////
-		
-		
-		
-		
+	public MainGUI(){
+
+		getContentPane().setLayout(new BorderLayout());
+		getContentPane().setSize(1900,1000);
+
+
+		runLogin();
+		//runLobby();
+
+	}
+
+
+	public void runLogin(){ 
+
 		/////////////////////////////////////////////// LOGIN //////////////////////////////////////////////////////////////////
-		
-		
-		JPanel mainLogin = new JPanel();
+
 		// Using BorderLayout
 		mainLogin.setLayout(new BorderLayout());
-			
+
+		// Window dimensions
+		setTitle("Cards Against Humanity");
+		setSize(1900,1000);
+		setResizable(true);
+		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		setVisible(true);
+		setLocationRelativeTo(null);
+
 		// Dimensions of buttons
 		Dimension btnsize4 = new Dimension(110,40);
 		Dimension btnsize2 = new Dimension(120,60);
@@ -278,26 +287,24 @@ public class MainGUI extends JFrame implements ActionListener {
 		mainLogin.add(PMiddle, BorderLayout.CENTER);
 
 		PMiddle.setBackground(Color.WHITE);
-		mainLogin.add(PMiddle);
-		
-		frame.getContentPane().add(mainLogin);
-		frame.revalidate();
-		
+		add(mainLogin);		
+
 		/////////////////////////////////////////////// LOGIN //////////////////////////////////////////////////////////////////
 
-		
-		
-		
+
+	}
+
+
+	public void runLobby() {
+
 		/////////////////////////////////////////////// LOBBY //////////////////////////////////////////////////////////////////
-		
-		JPanel mainLobby = new JPanel();
-		
+
 		mainLobby.setLayout(new BorderLayout()); //Default layout
 		mainLobby.setBackground(Color.WHITE);
 
 		//Create buttons
 		Dimension btnsize1 = new Dimension(200,80);
-		Dimension btnsize21 = new Dimension(150,80);
+		Dimension btnsize2 = new Dimension(150,80);
 
 		// Create game button
 		b1 = new JButton("Create Game");
@@ -308,25 +315,25 @@ public class MainGUI extends JFrame implements ActionListener {
 
 		// Sign out button
 		b2 = new JButton("Sign Out");
-		b2.setPreferredSize(btnsize21);
+		b2.setPreferredSize(btnsize2);
 		b2.setBackground(Color.BLACK);
 		b2.addActionListener(this);
 		b2.setAlignmentX(Component.CENTER_ALIGNMENT);
 
 		// Join game button
 		b3 = new JButton("Join Game");
-		b3.setPreferredSize(btnsize21);
+		b3.setPreferredSize(btnsize2);
 		b3.setBackground(Color.BLACK);
 		b3.addActionListener(this);
 		b3.setAlignmentX(Component.CENTER_ALIGNMENT);
-		
+
 		// Refresh button
 		b4 = new JButton("Refresh");
-		b4.setPreferredSize(btnsize21);
+		b4.setPreferredSize(btnsize2);
 		b4.setBackground(Color.BLACK);
 		b4.addActionListener(this);
 		b4.setAlignmentX(Component.CENTER_ALIGNMENT);
-		
+
 		//Create label
 		l1 = new JLabel("Cards Against Humanity ");
 		l1.setPreferredSize(new Dimension(480, 50));
@@ -344,7 +351,7 @@ public class MainGUI extends JFrame implements ActionListener {
 
 		// Create List
 
-		//list = new JList(/*Client.getGameList().toArray());
+		//list = new JList(/*Client.getGameList().toArray()*/);
 		//list.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 
 
@@ -394,15 +401,7 @@ public class MainGUI extends JFrame implements ActionListener {
 		mainLobby.add(p3, BorderLayout.EAST);
 		mainLobby.add(p4, BorderLayout.WEST);
 
-
-//		//Window dimensions
-//		setSize(1080, 720);
-//		setLocationRelativeTo(null);
-//		setDefaultCloseOperation(EXIT_ON_CLOSE);
-//		setTitle("Cards Against Humanity");
-//		setResizable(true);
-//		setVisible(true);
-		
+		mainLobby.setVisible(false);
 		// Panel for list of games available
 		/*
 		JPanel p5 = new JPanel();
@@ -411,11 +410,16 @@ public class MainGUI extends JFrame implements ActionListener {
 		p5.setBackground(Color.WHITE);
 		p5.add(l5);
 
+		mainLobby.add(p5, BorderLayout.CENTER);
 		 */
-		
-		
+
+
 		/////////////////////////////////////////////// LOBBY //////////////////////////////////////////////////////////////////
+
 	}
+
+
+
 
 	String name, IP;
 
@@ -431,71 +435,110 @@ public class MainGUI extends JFrame implements ActionListener {
 			this.name = txtfld1.getText();
 			this.IP = txtfld2.getText();
 
-			try {
+			//			try {
+			//
+			//				Client.loginUser(IP, name);
+			//
+			//			} catch (Exception e1) {
+			//				txtfld2.setText("Invalid IP");
+			//			} 
 
-				Client.loginUser(IP, name);
-
-			} catch (Exception e1) {
-				txtfld2.setText("Incorrect IP");
-			} 
-			
 			System.out.println(name);
 			System.out.println(IP);
-				
+			
+			remove(mainLogin);
 			mainLogin.setVisible(false);
 			mainLobby.setVisible(true);
-					
-			frame.add(mainLobby);
-			frame.revalidate();
-			frame.repaint();
-			
+			add(mainLobby);
+
+//			revalidate();
+//			repaint();
+
 		} else if(e.getSource()==b1) {
-		
+
 		} else if(e.getSource()==b2) {
 			dispose();
 			new Login();
 		}
 
-		/*
-		if(e.getSource()==b3 && Client.getGameList() != null){
-			JPanel p6 = new JPanel();
-			JFrame ePassword = new JFrame("Enter Password");
-			ePassword.pack();
-			ePassword.setVisible(true);
-			ePassword.setResizable(false);
-			ePassword.setLocationRelativeTo(null);
 
-			l5 = new JLabel("Enter Password");
-			WP = new JTextField(10);
-			b4 = new JButton("Enter");
-			b4.addActionListener(this);
-			p6.add(ePassword);
-			p6.add(WP);
-			p6.add(b4);
 
-			if(e.getSource()==b4 && WP == Client.getGameList()){
-				new ReadyUpLobby();
-				ePassword.dispose();
-			}
-			else{
-				l5 = new JLabel("Wrong Password");
-				add(l5);
-			}
-		}*/
-		
-		
+
 	}
 
-	
 
 
-//		public String getName() {
-//			return name;
-//		}
-//		
-//		public String getIP() {
-//			return IP;
-//		}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+	/*
+	if(e.getSource()==b3 && Client.getGameList() != null){
+		JPanel p6 = new JPanel();
+		JFrame ePassword = new JFrame("Enter Password");
+		ePassword.pack();
+		ePassword.setVisible(true);
+		ePassword.setResizable(false);
+		ePassword.setLocationRelativeTo(null);
+
+		l5 = new JLabel("Enter Password");
+		WP = new JTextField(10);
+		b4 = new JButton("Enter");
+		b4.addActionListener(this);
+		p6.add(ePassword);
+		p6.add(WP);
+		p6.add(b4);
+
+		if(e.getSource()==b4 && WP == Client.getGameList()){
+			new ReadyUpLobby();
+			ePassword.dispose();
+		}
+		else{
+			l5 = new JLabel("Wrong Password");
+			add(l5);
+		}
+	}*/
+
+
+	//		public String getName() {
+	//			return name;
+	//		}
+	//		
+	//		public String getIP() {
+	//			return IP;
+	//		}
 
 }
 
@@ -511,14 +554,14 @@ public class MainGUI extends JFrame{
 	public static void main(String[] args) {
 
 	MainGUI gui = new MainGUI();
-	
+
 	}
 
 	// CONSTRUCTOR
 	public MainGUI(){
 
 		new Login().setVisible(true);
-		
+
 	}
 }
-*/
+ */
