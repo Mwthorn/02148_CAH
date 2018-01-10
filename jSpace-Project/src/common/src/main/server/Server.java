@@ -68,14 +68,12 @@ public class Server {
 						lobby.put("GameList", playerID, new GamePreview(game));
 					}
 				} else if (tuple[1].equals("joinGame")) {
-					System.out.println("Joining game...");
 					int playerID = new Integer((String) tuple[2]);
 					Player jPlayer = playerBase.getPlayerwithID(playerID);
 
 					Game jGame = gameBase.getGamewithID((int) tuple[3]);
 					int gameSlot = jGame.getGameSlot();
 					jGame.addPlayerToGame(jPlayer);
-					jGame.playerJoinsGame(jPlayer);
 					lobby.put("joinedGame", jPlayer.getId(), gameSlot);
 					
 					
@@ -89,7 +87,7 @@ public class Server {
 				e.printStackTrace();
 			}
 		}
-    }
+    } // End of main();
     
 	public static void createNewGame(String gameName, int hostID) throws InterruptedException {
         int gameSlot = 0;
@@ -112,7 +110,7 @@ public class Server {
     	lobby.put("gameCreated",hostID, gameSlot);
     	System.out.println("New game created by: "+player.getName()+". The name of the game is '"+game.getGameName()
     	+"'.");
-    }
+    } // End of createNewGame();
 
 	public CardDataBase getCardDataBase() {
 		return cardDataBase;
