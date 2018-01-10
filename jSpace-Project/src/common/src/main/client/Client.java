@@ -28,11 +28,15 @@ public class Client {
 				
 				System.out.println("Trying to create game");
 				createNewGame();
-	
-				//joinGame();
+
+				Thread.sleep(1000);
+
+				ArrayList<GamePreview> gp = getGameList();
+				System.out.println(gp.get(1).getId());
+				joinGame(gp.get(1).getId());
 				
 				// 3 threads
-				gameLobby();
+				//gameLobby();
 				
 
 			} catch (IOException | InterruptedException e) {
@@ -53,25 +57,25 @@ public class Client {
 			
 			game.put("testing");
 			// gameLobby();
-			
 		} catch (InterruptedException | IOException e) {
 			e.printStackTrace();
 		}
 	}
 
-	public static void loginUser(String serverIP, String name) throws IOException, InterruptedException {
+	public static void loginUser(String IP, String name) throws IOException, InterruptedException {
 		// TODO: The two lines below assigning IP and name should be retrieved
 		// when first signing in to the lobby.
 		// serverIP = "127.0.0.1";
 		// name = "Alex";
 		
-		lobby = new RemoteSpace("tcp://" + serverIP + ":9001/lobby?keep");
+		lobby = new RemoteSpace("tcp://" + IP + ":9001/lobby?keep");
 
 		//lobby.put("test");
 		lobby.put("lobby","enter",name,0);
 
 		Object[] tuple = lobby.get(new ActualField("UserID"),new ActualField(name), new FormalField(Integer.class));
 		userID = (int) tuple[2];
+		serverIP = IP;
 		System.out.println("Client was assigned ID: " + userID);
 	}
 
@@ -86,7 +90,7 @@ public class Client {
 
 		Object[] tuple = lobby.get(new ActualField("GameListSize"), new ActualField(userID), new FormalField(Integer.class));
 		Object[] gT;
-		int n = (int) tuple[1];
+		int n = (int) tuple[2];
 		ArrayList<GamePreview> games = new ArrayList<>();
 		System.out.println("Got " + n + " games from server!");
 		for (int i = 0; i < n; i++) {
@@ -99,7 +103,7 @@ public class Client {
 	}
 
 	public static void joinGame(int gameID) throws InterruptedException {
-		lobby.put("lobby", "joingame", gameID, userID);
+		lobby.put("lobby", "joinGame", userID, gameID);
 
 		String stringID = Integer.toString(userID);
 		Object[] info = lobby.get(new ActualField("joinedGame"), new ActualField(userID), new FormalField(Integer.class));
