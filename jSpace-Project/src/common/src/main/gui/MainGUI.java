@@ -85,7 +85,7 @@ public class MainGUI extends JFrame implements ActionListener {
 
 
 		runLogin();
-		//runLobby();
+		runLobby();
 
 	}
 
@@ -446,7 +446,7 @@ public class MainGUI extends JFrame implements ActionListener {
 			System.out.println(name);
 			System.out.println(IP);
 			
-			remove(mainLogin);
+			//remove(mainLogin);
 			mainLogin.setVisible(false);
 			mainLobby.setVisible(true);
 			add(mainLobby);
