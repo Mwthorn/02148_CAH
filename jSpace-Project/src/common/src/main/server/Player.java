@@ -12,6 +12,7 @@ public class Player {
     private boolean ready;
     private GameSlot gameSlot;
     private ArrayList<WhiteCard> whiteCards;
+    private WhiteCard pickedCard;
 
     public Player(String name, int id) {
         this.name = name;
@@ -67,6 +68,20 @@ public class Player {
         this.points += i;
     }
 
+    public boolean hasPickedCard() {
+        return (pickedCard != null);
+    }
+
+    public void resetPickedCard() {
+        this.pickedCard = null;
+    }
+
+    public void chooseWhiteCard(int i) {
+        WhiteCard card = whiteCards.get(i);
+        this.pickedCard = card;
+        whiteCards.remove(i);
+    }
+
     public boolean getReady() {
         return this.ready;
     }
@@ -84,6 +99,7 @@ public class Player {
 		gameSlot.setSlot(availableSlot);
 	}
 
-
-
+    public WhiteCard getPickedCard() {
+        return this.pickedCard;
+    }
 }

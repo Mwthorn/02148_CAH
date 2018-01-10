@@ -132,20 +132,76 @@ public class Game implements Runnable {
 
     public void nextRound() {
         this.currentTurn++;
+        if (this.currentTurn == players.size()) {
+            this.currentTurn = 0;
+        }
 
         // Makes sure that all players have 10 white cards each
         fillWhiteCards();
+
+        // Pick the chosen player
+        int chosenID = players.get(this.currentTurn).getId();
 
         // Show black card to players
         BlackCard blackCard = takeBlackCard();
         for (Player player : players) {
             // STRING - INT - STRING - INT
             game.put("black", player.getId(), blackCard.getSentence(), blackCard.getBlanks());
+            player.resetPickedCard();
+            // TODO: Tell players its their turn
         }
 
         // TODO: Listen on players to pick their white card
-        GameListener gl = new GameListener(game);
-        new Thread(gl).start();
+        boolean state = true;
+        int timeout = 0;
+        while (state) {
+            try {
+                Thread.sleep(1000);
+                timeout++;
+                if (timeout < 30) {
+                    // TODO: Choose a random for choose that didn't pick a card
+                    state = false;
+                }
+                else {
+                    state = false;
+                    for (Player player : players) {
+                        if (!player.hasPickedCard()) {
+                            if (player.getId() != chosenID) {
+                                state = true;
+                            }
+                        }
+                    }
+                }
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+        }
+        // Get white cards
+
+        ArrayList<WhiteCard> pickedCards = new ArrayList<>();
+        for (Player player : players) {
+            pickedCards.add(player.getPickedCard());
+        }
+
+        // TODO: Listen on chosen player to choose the winner card
+        state = true;
+        timeout = 0;
+        while (state) {
+            try {
+                Thread.sleep(1000);
+                timeout++;
+                if (timeout < 30) {
+                    // TODO: Choose a random winner if didn't pick a card
+                    state = false;
+                }
+                else {
+                    if ()
+                }
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+        }
+
     }
 
     public void fillWhiteCards() {
