@@ -21,20 +21,19 @@ public class Listener implements Runnable{
 		// TODO: Puts thing up into the local tuple space when recieving commands from the server.
 		while (true){
 			try {
-				Object[] tuple = game.get(new ActualField("updateLobby"), new FormalField(String.class), new ActualField(userID), new FormalField(Integer.class), new FormalField(Integer.class));
+				// UpdateLobby - Type of Action - UserID, gameslot to be acted upon.
+				Object[] tuple = game.get(new ActualField("updateLobby"), new FormalField(String.class), new ActualField(userID), new FormalField(Integer.class));
 				System.out.println("Listener: Got response from server: " + tuple[1]);
-		        if (tuple[1].equals("ready")) {
-					// TODO: Ready button: A toggle option to be ready/not be ready.
-		        	// Update personal GUI and send response to server for other players to do the same.
-		        	local.put("local", "ready", tuple[3], tuple[4];
-		        } else if (tuple[1].equals("start")){
+		        if (tuple[1].equals("start")){
 		        	// TODO: Start game: A button for the host, possibly to entirely replace his ready button.
 		        	// Starts the game, many stuff happens.
-		        	local.put("local", "ready",)
+		        	local.put("local", "start", null);
 		        } else if (tuple[1].equals("update")){
 		        	// TODO: Update from the server, update relevant GUI.
 		        	// Possible updates: User joins, user leaves, user checks ready, user unchecks ready.
+		        	local.put("local", "update", tuple[3]);
 		        } else if (tuple[1].equals("leave")){
+		        	local.put("local","leave", null);
 		        	break;
 		        }
 			} catch (InterruptedException e) {

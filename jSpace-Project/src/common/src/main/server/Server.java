@@ -75,7 +75,7 @@ public class Server {
 					Game jGame = gameBase.getGamewithID((int) tuple[3]);
 					int gameSlot = jGame.getGameSlot();
 					jGame.addPlayerToGame(jPlayer);
-					
+					jGame.playerJoinsGame(jPlayer);
 					lobby.put("joinedGame", jPlayer.getId(), gameSlot);
 					
 					
@@ -115,7 +115,7 @@ public class Server {
     }
 
 	public CardDataBase getCardDataBase() {
-		return this.cardDataBase;
+		return cardDataBase;
 	}
 
 }

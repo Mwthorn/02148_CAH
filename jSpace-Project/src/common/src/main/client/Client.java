@@ -12,7 +12,6 @@ import java.util.ArrayList;
 public class Client {
 	private static RemoteSpace lobby, game;
 	private static int userID;
-	private static int gameID;
 	private static String serverIP;
 	private static String name;
 
@@ -30,20 +29,16 @@ public class Client {
 				System.out.println("Trying to create game");
 				createNewGame();
 	
-				joinGame();
+				//joinGame();
 				
 				// 3 threads
 				gameLobby();
 				
 
-			} catch (UnknownHostException e) {
-				e.printStackTrace();
-			} catch (IOException e) {
-				e.printStackTrace();
-			} catch (InterruptedException e) {
+			} catch (IOException | InterruptedException e) {
 				e.printStackTrace();
 			}
-    }
+	}
 
 	private static void createNewGame() {
 		lobby.put("lobby", "createGame", "no nobs plx", userID);
@@ -57,12 +52,9 @@ public class Client {
 			game = new RemoteSpace("tcp://" + serverIP + ":9001/game" + gameSlot + "?keep");
 			
 			game.put("testing");
+			// gameLobby();
 			
-		} catch (InterruptedException e) {
-			e.printStackTrace();
-		} catch (UnknownHostException e) {
-			e.printStackTrace();
-		} catch (IOException e) {
+		} catch (InterruptedException | IOException e) {
 			e.printStackTrace();
 		}
 	}
@@ -106,22 +98,21 @@ public class Client {
 		return games;
 	}
 
-	public static void joinGame() throws InterruptedException {
-		String stringID = Integer.toString(userID);
-		lobby.put("lobby", "joinGame", stringID, gameID);
+	public static void joinGame(int gameID) throws InterruptedException {
+		lobby.put("lobby", "joingame", gameID, userID);
 
+		String stringID = Integer.toString(userID);
 		Object[] info = lobby.get(new ActualField("joinedGame"), new ActualField(userID), new FormalField(Integer.class));
 		int gameSlot = (int) info[2];
 
 		try {
 			game = new RemoteSpace("tcp://" + serverIP + ":9001/game" + gameSlot + "?keep");
-		} catch (UnknownHostException e) {
-			e.printStackTrace();
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
 
 		game.put("testing");
+		// gameLobby();
 	}
 
 	public static ArrayList<Player> getPlayers() throws InterruptedException {
@@ -172,7 +163,15 @@ public class Client {
 		}
 	}
 	
+	private static void lobby(){
+		// Create lobby GUI.
+		
+		// Respond to stuff in the lobby here.
+	}
+	
 	private static void gameLobby() {
+		// Create game lobby GUI.
+		
 		// Setup of a local tuple space.
 		Space local = new SequentialSpace();
 		
@@ -186,16 +185,14 @@ public class Client {
 			try {
 				tuple = local.get(new ActualField("local"),new FormalField(String.class), new FormalField(GameSlot.class));
 				System.out.println("Local Lobby: Got response: " + tuple[1]);
-		        if (tuple[1].equals("ready")) {
-					// TODO: Ready button: A toggle option to be ready/not be ready.
-		        	// Update personal GUI
-		        } else if (tuple[1].equals("start")){
+		        if (tuple[1].equals("start")){
 		        	// TODO: Start game: A button for the host, possibly to entirely replace his ready button.
 		        	// Starts the game, many stuff happens.
 		        } else if (tuple[1].equals("update")){
 		        	// TODO: Update from the server, update relevant GUI.
-		        	// Possible updates: User joins, user leaves, user checks ready, user unchecks ready.
+		        	// Occurs when a player joins/leaves/changes ready state, will fully update a specified game slot.
 		        } else if (tuple[1].equals("leave")){
+		        	// Call the lobby function.
 		        	break;
 		        }
 			} catch (InterruptedException e) {

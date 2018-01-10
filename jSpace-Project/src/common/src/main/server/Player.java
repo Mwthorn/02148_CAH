@@ -12,8 +12,12 @@ public class Player {
         this.name = name;
         this.points = 0;
         this.id = id;
+        this.gameSlot = new GameSlot(0,name);
         
         ready = false;
+        
+        // TODO: Find a way to add the correct gameslot.
+        this.gameSlot = new GameSlot(0, name, true);
     }
 
     public Player(Player player) {
@@ -48,11 +52,7 @@ public class Player {
     }
 
     public void changeReady() {
-    	if (this.ready == false){
-    		this.ready = true;
-    	} else {
-    		this.ready = false;
-    	}
+    	this.ready = !this.ready;
     	gameSlot.setReady(this.ready);
     }
 
