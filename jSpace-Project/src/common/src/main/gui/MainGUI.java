@@ -17,31 +17,37 @@ public class MainGUI extends JFrame {
 
 
 	// MAIN
-	static void main(String[] args) {
+	
+//	public static void main(String[] args){
+//		EventQueue.invokeLater(new Runnable() {
+//			public void run() {
+//				new MainGUI().setVisible(true);
+//			}
+//		});
+//	}
+//	
+	public static void main(String[] args) {
 
-		EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				try {
-					MainGUI frame = new MainGUI();
-					frame.setVisible(true);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		});		
+	MainGUI gui = new MainGUI();
+	gui.setVisible(true);
+	
 	}
 
 	// CONSTRUCTOR
 	public MainGUI(){
 
 		this.setTitle("Cards Against Humanity");
-		this.setSize(1900,1000);
+		this.setSize(1900,1000); // Use pack instead
 		this.setResizable(true);
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		this.setVisible(true);
 		this.setLocationRelativeTo(null);
 		this.setVisible(true);
-
+		
+		newLogin = new Login();
+		this.add(newLogin);
+		// pack();
+		
 		// LOGIN		
 		if(lob2Log || start){
 

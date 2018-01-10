@@ -239,9 +239,9 @@ public class Login extends JFrame implements ActionListener {
 		} else if (e.getSource() == BSignIn){
 			this.name = txtfld1.getText();
 			this.IP = txtfld2.getText();
-			
+
 			signIn = true;
-			
+
 			System.out.println(name);
 			System.out.println(IP);
 
@@ -256,7 +256,7 @@ public class Login extends JFrame implements ActionListener {
 	}
 
 
-	static void main(String[] args) {
+	public static void main(String[] args) {
 
 		Login login = new Login();
 
@@ -266,9 +266,12 @@ public class Login extends JFrame implements ActionListener {
 		login.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		login.setVisible(true);
 		login.setLocationRelativeTo(null);
-		
+
 	}
-	
+
+
+
+
 	//	public String getName() {
 	//		return name;
 	//	}
