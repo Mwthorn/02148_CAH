@@ -44,23 +44,6 @@ public class Listener implements Runnable{
 				e.printStackTrace();
 			}
 		}
-		while(true) {
-			try {
-				// STRING - INT - STRING - INT
-				Object[] tuple = game.get(new FormalField(String.class), new ActualField(userID), new FormalField(String.class), new FormalField(Integer.class));
-				System.out.println("Listener: Got response from server: " + tuple[0]);
-				if (tuple[0].equals("white")) {
-					// TODO: Add white add to Client
-					local.put("game", "white", tuple[2], 0);
-				} else if (tuple[0].equals("black")) {
-					// TODO: Set Black card to given, and amount of blanks to give
-					local.put("game", "black", tuple[2], tuple[3]);
-				}
-			}
-			catch (InterruptedException e) {
-
-			}
-		}
 	} // End of run();
 
 }

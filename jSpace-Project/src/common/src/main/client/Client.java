@@ -3,6 +3,7 @@ package common.src.main.client;
 import common.src.main.server.Game;
 import common.src.main.server.GameSlot;
 import common.src.main.server.Player;
+import common.src.main.server.utilities.WhiteCard;
 import org.jspace.*;
 
 import java.io.IOException;
@@ -15,6 +16,8 @@ public class Client {
 	private static String serverIP;
 	private static String name;
 	private static int amountOfBlanks;
+	private static boolean turnToPick;
+	private static String[] whiteCards = new String[10];
 
 	private static final int testNumber = 1;
 
@@ -135,40 +138,6 @@ public class Client {
 		}
 		return games;
 	} // end of getGameList function
-
-	public static ArrayList<Player> getPlayers() throws InterruptedException {
-
-		game.put("GetPlayers", userID);
-		Object[] tuple = lobby.get(new ActualField("PlayerListSize"), new ActualField(userID), new FormalField(Integer.class));
-		Object[] qT;
-		int n = (int) tuple[1];
-		ArrayList<Player> ps = new ArrayList<>();
-		for (int i = 0; i < n; i++) {
-			qT = game.get(new ActualField("PlayerList"),
-					new ActualField(userID),
-					new FormalField(Player.class));
-			ps.add((Player) qT[2]);
-		}
-
-		return ps;
-	} // End of getPlayers function
-
-	public static void refreshPlayerList() throws InterruptedException {
-		// TODO:
-		// Get status
-		// Get players (check if they are ready)
-		Object[] tuple = lobby.get(new ActualField("lobby"),new FormalField(String.class), new FormalField(String.class), new FormalField(Integer.class));
-		System.out.println("Got response: " + tuple[1]);
-		if (tuple[1].equals("players")) {
-
-		}
-		else if (tuple[1].equals("voteUpdate")){
-
-		}
-		else if (tuple[1].equals("refreshGameList")) {
-
-		}
-	} // End of refreshPlayerList function
 	
 	private static void signOut() {
 		
@@ -212,10 +181,44 @@ public class Client {
 				e.printStackTrace();
 			}
 		}
+		while(true) {
+			try {
+				// STRING - INT - STRING - INT
+				Object[] gTuple = game.get(new FormalField(String.class), new ActualField(userID), new FormalField(String.class), new FormalField(Integer.class));
+				System.out.println("Listener: Got response from server: " + gTuple[0]);
+				if (tuple[0].equals("white")) {
+					whiteCards[(int) tuple[3]] = (String) tuple[2];
+					// TODO: Update GUI whitecards
+				} else if (gTuple[0].equals("black")) {
+					amountOfBlanks = (int) gTuple[3];
+					// TODO: Set Black card to given string on GUI
+				}
+				// TODO: Player leaves/joins in mid-game
+			}
+			catch (InterruptedException e) {
+
+			}
+		}
 		
 		// TODO: Leave game: Return the player to the main lobby, adjust tuple spaces.
     	// Update GUI, change from game tuple space to lobby tuple space, adjust other players GUI by sending message to server.
 	} // End of gameLobby function
+
+	public boolean pickWhiteCard(int i) {
+		if (!turnToPick) {
+			return false;
+		}
+		game.put("pickwhite", userID, i);
+		return true;
+	}
+
+	public boolean isPlayerTurn() {
+		return turnToPick;
+	}
+
+	public static String[] getWhiteCards() {
+		return whiteCards;
+	}
 
 	public static void sendReady() {
 		game.put("game", "ready", userID);
@@ -228,16 +231,6 @@ public class Client {
 	public static void sendStart() {
 		game.put("game", "start", userID);
 	}
-
-	private static void talker (int buttonPressed){
-		if (buttonPressed == 0){ //ready button clicked
-			game.put("game", "ready", userID);
-		} else if (buttonPressed == 1){ // start button clicked
-			game.put("game", "start", userID);
-		} else if (buttonPressed == 2){ // leave game buttton clicked
-			game.put("game", "leave", userID);
-		}
-	} // End of talker function
 	
 	/*********************************************************************************************/
 	/********************************* User/In-Game Interactions *********************************/

@@ -121,8 +121,8 @@ public class Game implements Runnable {
             for(int i = 0; i < 10; i++) {
                 WhiteCard card = takeWhiteCard();
                 cards.add(card);
-                // STRING - INT - STRING
-                game.put("white", player.getId(), card.getSentence());
+                // STRING - INT - STRING - INT
+                game.put("white", player.getId(), card.getSentence(), i);
             }
             player.setWhiteCards(cards);
         }
@@ -147,7 +147,8 @@ public class Game implements Runnable {
         }
 
         // TODO: Listen on players to pick their white card
-
+        GameListener gl = new GameListener(game);
+        new Thread(gl).start();
     }
 
     public void fillWhiteCards() {
@@ -156,8 +157,8 @@ public class Game implements Runnable {
             for (int i = n; i < 10; i++) {
                 WhiteCard card = takeWhiteCard();
                 player.addWhiteCard(card);
-                // STRING - INT - STRING
-                game.put("white", player.getId(), card.getSentence());
+                // STRING - INT - STRING - INT
+                game.put("white", player.getId(), card.getSentence(), i);
             }
         }
     }
