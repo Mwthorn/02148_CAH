@@ -15,7 +15,7 @@ public class Client {
 	private static String serverIP;
 	private static String name;
 
-	private static final int testNumber = 0;
+	private static final int testNumber = 1;
 
     public static void main(String[] args) {
     	/* Login */
@@ -24,21 +24,23 @@ public class Client {
     	/* Connect to server using GUI info */
 		
 			try {
-				loginUser("127.0.0.1", "Alex");
-
+				
+				// Initialize tests to game lobby.
 				if (testNumber == 0) {
 					System.out.println("Trying to create game");
+					loginUser("127.0.0.1", "Alex");
 					createNewGame();
 				}
 				else if (testNumber == 1) {
+					loginUser("127.0.0.1", "Mathias");
 					ArrayList<GamePreview> gp = getGameList();
 					joinGame(gp.get(0).getId());
 				}
 				else if (testNumber == 2) {
-					// TODO: Test MainGUI
+					loginUser("127.0.0.1", "Jonas");
+					ArrayList<GamePreview> gp = getGameList();
+					joinGame(gp.get(0).getId());
 				}
-				
-				// 3 threads
 				gameLobby();
 				
 
@@ -194,12 +196,14 @@ public class Client {
 		        if (tuple[1].equals("start")){
 		        	// TODO: Start game: A button for the host, possibly to entirely replace his ready button.
 		        	// Starts the game, many stuff happens.
+		        	System.out.println("Game started! GET READY TO RUMBLE!!!!");
 		        } else if (tuple[1].equals("update")){
 		        	// TODO: Update from the server, update relevant GUI.
 		        	// Occurs when a player joins/leaves/changes ready state, will fully update a specified game slot.
-					System.out.println("Game updated: " + gameSlot.getName());
+					System.out.println("Game updated: " + gameSlot.getName() + ", is he ready: "+gameSlot.isReady());
 		        } else if (tuple[1].equals("leave")){
 		        	// Call the lobby function.
+		        	System.out.println("You have left the game! nob.");
 		        	break;
 		        }
 			} catch (InterruptedException e) {

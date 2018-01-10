@@ -33,5 +33,4 @@ public class GameSlot {
     public boolean isReady() {
         return this.ready;
     }
-
 }
