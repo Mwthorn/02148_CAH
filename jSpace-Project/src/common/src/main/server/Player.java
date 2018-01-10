@@ -102,4 +102,8 @@ public class Player {
     public WhiteCard getPickedCard() {
         return this.pickedCard;
     }
+
+    public void setPickedCard() {
+
+    }
 }

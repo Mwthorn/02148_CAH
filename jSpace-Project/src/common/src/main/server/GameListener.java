@@ -16,8 +16,9 @@ public class GameListener implements Runnable {
     public void run() {
         Object[] tuple;
         while(true) {
-            try {tuple = game.get(new ActualField("gameListener"), new FormalField(String.class), new FormalField(Integer.class));
-                if (tuple[1].equals("chooseWhiteCards")) {
+            // game.put("gameListener", "pickWhite", userID, i);
+            try {tuple = game.get(new ActualField("gameListener"), new FormalField(String.class), new FormalField(Integer.class), new FormalField(Integer.class));
+                if (tuple[1].equals("pickWhite")) {
 
                 }
                 else if (tuple[1].equals("pickACard")) {

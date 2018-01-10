@@ -160,24 +160,29 @@ public class Game implements Runnable {
         new Thread(timeout).start();
         new Thread(gL).start();
 
+        WhiteCard[] pickedCards = new WhiteCard[players.size()];
+
         try {
             Object[] tuple = local.get(new ActualField("Game") ,new FormalField(String.class));
             if (tuple[1] == "Timeout") {
+                for (Player player : players) {
 
+                }
             }
-            else if (tuple[1] == "AllPicked") {
-                local.put("Timeout", "Cancel");
+            else if (tuple[1] == "PickedCard") {
+                Object[] tuple2 = local.get(new ActualField("Card") ,new FormalField(Integer.class), new FormalField(Integer.class));
+                int clientID = (int) tuple2[1];
+                int cardIndex = (int) tuple2[2];
+                Player player = FindPlayer(clientID);
+                pickedCards[players.indexOf(player)] = (player.getWhiteCards().get(cardIndex));
+                player.setPickedCard();
+                // local.put("Timeout", "Cancel");
             }
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
 
         // Get white cards
-
-        ArrayList<WhiteCard> pickedCards = new ArrayList<>();
-        for (Player player : players) {
-            pickedCards.add(player.getPickedCard());
-        }
 
         // TODO: Listen on chosen player to choose the winner card
 
@@ -269,6 +274,15 @@ public class Game implements Runnable {
     public Player FindPlayer(String name) {
     	for (Player player : players) {
             if (Objects.equals(player.getName(), name)) {
+                return player;
+            }
+        }
+        return null;
+    }
+
+    public Player FindPlayer(int ID) {
+        for (Player player : players) {
+            if (player.getId() == ID) {
                 return player;
             }
         }
