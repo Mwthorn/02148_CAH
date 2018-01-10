@@ -35,7 +35,6 @@ public class MainGUI extends JFrame {
 
 	// CONSTRUCTOR
 	public MainGUI(){
-
 		this.setTitle("Cards Against Humanity");
 		this.setSize(1900,1000); // Use pack instead
 		this.setResizable(true);

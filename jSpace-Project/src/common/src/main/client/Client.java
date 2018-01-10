@@ -99,7 +99,7 @@ public class Client {
 	}
 
 	public static void joinGame(int gameID) throws InterruptedException {
-		lobby.put("lobby", "joingame", gameID, userID);
+		lobby.put("lobby", "joinGame", userID, gameID);
 
 		String stringID = Integer.toString(userID);
 		Object[] info = lobby.get(new ActualField("joinedGame"), new ActualField(userID), new FormalField(Integer.class));
