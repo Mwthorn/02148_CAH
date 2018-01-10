@@ -24,6 +24,7 @@ public class Game implements Runnable {
     private int hostID;
     private int currentTurn;
     private int gameSlot;
+    private boolean[] slotOccupied;
 
     SpaceRepository repository = new SpaceRepository();
     SequentialSpace game = new SequentialSpace();
@@ -56,6 +57,7 @@ public class Game implements Runnable {
         this.hostID = player.getId();
         this.players.add(player);
         this.gameSlot = gameSlot;
+        this.slotOccupied = new boolean[maxPlayers];
 
         this.repository = repository;
         this.repository.add("game"+this.gameSlot, game);
@@ -252,8 +254,19 @@ public class Game implements Runnable {
     }
 
     public void addPlayerToGame(Player actor) {
+    	// Adds the player to the game.
         players.add(actor);
-        System.out.println("Hej");
+        
+        // Set the players game slot.
+        for (int i = 0; i < maxPlayers; i++) {
+			if (slotOccupied[i] == false){
+				actor.setGameSlot(i);
+				slotOccupied[i] = true;
+				break;
+			}
+		}
+        
+        // Sends an update to all other players currently in the game
         for (Player player : players) {
             int recieverID = player.getId();
             game.put("updateLobby", "update", recieverID, actor.getGameSlot());

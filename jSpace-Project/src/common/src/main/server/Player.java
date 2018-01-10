@@ -80,6 +80,10 @@ public class Player {
 		return this.gameSlot;
 	}
 
+	public void setGameSlot(int availableSlot) {
+		gameSlot.setSlot(availableSlot);
+	}
+
 
 
 }

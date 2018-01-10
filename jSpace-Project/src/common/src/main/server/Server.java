@@ -62,12 +62,14 @@ public class Server {
                     createNewGame((String) tuple[2], (int) tuple[3]);
 				}
 				else if (tuple[1].equals("refreshGameList")) {
+					System.out.println("Sending game list to client...");
 					int playerID = (int) tuple[3];
 					lobby.put("GameListSize", playerID, gameBase.getGames().size());
 					for (Game game : gameBase.getGames()) {
 						lobby.put("GameList", playerID, new GamePreview(game));
 					}
 				} else if (tuple[1].equals("joinGame")) {
+					System.out.println("Client attempting to join game...");
 					int playerID = new Integer((String) tuple[2]);
 					Player jPlayer = playerBase.getPlayerwithID(playerID);
 
@@ -75,9 +77,6 @@ public class Server {
 					int gameSlot = jGame.getGameSlot();
 					jGame.addPlayerToGame(jPlayer);
 					lobby.put("joinedGame", jPlayer.getId(), gameSlot);
-					
-					
-					
 				} else if (tuple[1].equals("signOut")) {
 
 				}
@@ -92,7 +91,7 @@ public class Server {
 	public static void createNewGame(String gameName, int hostID) throws InterruptedException {
         int gameSlot = 0;
         int gameId = gameBase.getUniqueID();
-        int maxPlayers = 5;
+        int maxPlayers = 8;
         Player player = playerBase.getPlayerwithID(hostID);
         
         Game game = new Game(gameName,
