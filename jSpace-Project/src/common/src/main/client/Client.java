@@ -135,40 +135,6 @@ public class Client {
 		}
 		return games;
 	} // end of getGameList function
-
-	public static ArrayList<Player> getPlayers() throws InterruptedException {
-
-		game.put("GetPlayers", userID);
-		Object[] tuple = lobby.get(new ActualField("PlayerListSize"), new ActualField(userID), new FormalField(Integer.class));
-		Object[] qT;
-		int n = (int) tuple[1];
-		ArrayList<Player> ps = new ArrayList<>();
-		for (int i = 0; i < n; i++) {
-			qT = game.get(new ActualField("PlayerList"),
-					new ActualField(userID),
-					new FormalField(Player.class));
-			ps.add((Player) qT[2]);
-		}
-
-		return ps;
-	} // End of getPlayers function
-
-	public static void refreshPlayerList() throws InterruptedException {
-		// TODO:
-		// Get status
-		// Get players (check if they are ready)
-		Object[] tuple = lobby.get(new ActualField("lobby"),new FormalField(String.class), new FormalField(String.class), new FormalField(Integer.class));
-		System.out.println("Got response: " + tuple[1]);
-		if (tuple[1].equals("players")) {
-
-		}
-		else if (tuple[1].equals("voteUpdate")){
-
-		}
-		else if (tuple[1].equals("refreshGameList")) {
-
-		}
-	} // End of refreshPlayerList function
 	
 	private static void signOut() {
 		
@@ -228,16 +194,6 @@ public class Client {
 	public static void sendStart() {
 		game.put("game", "start", userID);
 	}
-
-	private static void talker (int buttonPressed){
-		if (buttonPressed == 0){ //ready button clicked
-			game.put("game", "ready", userID);
-		} else if (buttonPressed == 1){ // start button clicked
-			game.put("game", "start", userID);
-		} else if (buttonPressed == 2){ // leave game buttton clicked
-			game.put("game", "leave", userID);
-		}
-	} // End of talker function
 	
 	/*********************************************************************************************/
 	/********************************* User/In-Game Interactions *********************************/
