@@ -113,10 +113,10 @@ public class Game implements Runnable {
 
             ArrayList<WhiteCard> cards = new ArrayList<>();
             for(int i = 0; i < 10; i++) {
-                WhiteCard card = takeWhiteCard();
+                WhiteCard card = drawWhiteCard();
                 cards.add(card);
-                // STRING - INT - STRING - INT
-                game.put("white", player.getId(), card.getSentence(), i);
+                // STRING - STRING - INT - STRING - INT
+                game.put("ingame", "white", player.getId(), card.getSentence(), i);
             }
             player.setWhiteCards(cards);
         }
@@ -141,10 +141,10 @@ public class Game implements Runnable {
         int chosenID = players.get(this.currentTurn).getId();
 
         // Show black card to players
-        BlackCard blackCard = takeBlackCard();
+        BlackCard blackCard = drawBlackCard();
         for (Player player : players) {
-            // STRING - INT - STRING - INT
-            game.put("black", player.getId(), blackCard.getSentence(), blackCard.getBlanks());
+            // STRING - STRING - INT - STRING - INT
+            game.put("ingame", "black", player.getId(), blackCard.getSentence(), blackCard.getBlanks());
             player.resetPickedCard();
             // TODO: Tell players its their turn
         }
@@ -193,21 +193,21 @@ public class Game implements Runnable {
         for (Player player : players) {
             int n = player.getWhiteCards().size();
             for (int i = n; i < 10; i++) {
-                WhiteCard card = takeWhiteCard();
+                WhiteCard card = drawWhiteCard();
                 player.addWhiteCard(card);
-                // STRING - INT - STRING - INT
-                game.put("white", player.getId(), card.getSentence(), i);
+                // STRING - STRING - INT - STRING - INT
+                game.put("ingame", "white", player.getId(), card.getSentence(), i);
             }
         }
     }
 
-    public WhiteCard takeWhiteCard() {
+    public WhiteCard drawWhiteCard() {
         WhiteCard card = whiteCards.get(0);
         whiteCards.remove(0);
         return card;
     }
 
-    public BlackCard takeBlackCard() {
+    public BlackCard drawBlackCard() {
         BlackCard card = blackCards.get(0);
         blackCards.remove(0);
         return card;
@@ -334,3 +334,39 @@ public class Game implements Runnable {
 	}
 
 }
+
+
+
+/*
+ * Client Commands:
+ * put("ingame", "white", userID)
+ * put("ingame", "white", "white", userID)
+ * put("ingame", "white", "white", "white", UserID)
+ * get("ingame", "black", numberOfBlanks)
+ *
+ *
+ * Server Commands:
+ * put("ingame", "black", numberOfBlanks, recieverID)
+ * get("ingame", "white", userID) X numberOfClients
+ * get("ingame", "white", "white", userID)
+ * get("ingame", "white", "white", "white", UserID)
+ *
+ */
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

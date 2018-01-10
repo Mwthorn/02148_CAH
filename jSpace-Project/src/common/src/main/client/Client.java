@@ -158,10 +158,9 @@ public class Client {
 		
 		// TODO: Implement a system similar to the listening in server main, but from the local tuple space.
 		
-		Object[] tuple;
 		while (true){
 			try {
-				tuple = local.get(new ActualField("local"),new FormalField(String.class), new FormalField(GameSlot.class));
+				Object[] tuple = local.get(new ActualField("local"),new FormalField(String.class), new FormalField(GameSlot.class));
 				GameSlot gameSlot = (GameSlot) tuple[2];
 				System.out.println("Local Lobby: Got response: " + tuple[1]);
 		        if (tuple[1].equals("start")){
@@ -181,44 +180,12 @@ public class Client {
 				e.printStackTrace();
 			}
 		}
-		while(true) {
-			try {
-				// STRING - INT - STRING - INT
-				Object[] gTuple = game.get(new FormalField(String.class), new ActualField(userID), new FormalField(String.class), new FormalField(Integer.class));
-				System.out.println("Listener: Got response from server: " + gTuple[0]);
-				if (tuple[0].equals("white")) {
-					whiteCards[(int) tuple[3]] = (String) tuple[2];
-					// TODO: Update GUI whitecards
-				} else if (gTuple[0].equals("black")) {
-					amountOfBlanks = (int) gTuple[3];
-					// TODO: Set Black card to given string on GUI
-				}
-				// TODO: Player leaves/joins in mid-game
-			}
-			catch (InterruptedException e) {
-
-			}
-		}
+		inGame();
+		
 		
 		// TODO: Leave game: Return the player to the main lobby, adjust tuple spaces.
     	// Update GUI, change from game tuple space to lobby tuple space, adjust other players GUI by sending message to server.
 	} // End of gameLobby function
-
-	public boolean pickWhiteCard(int i) {
-		if (!turnToPick) {
-			return false;
-		}
-		game.put("pickwhite", userID, i);
-		return true;
-	}
-
-	public boolean isPlayerTurn() {
-		return turnToPick;
-	}
-
-	public static String[] getWhiteCards() {
-		return whiteCards;
-	}
 
 	public static void sendReady() {
 		game.put("game", "ready", userID);
@@ -236,9 +203,43 @@ public class Client {
 	/********************************* User/In-Game Interactions *********************************/
 	/*********************************************************************************************/
 	
-	public static void cardsAgainstHumanity(){
-		// TODO: Create in-game GUI.
-		// TODO: This is the main communication channel for when inside the game.
+	public static void inGame(){
+		while(true) {
+			try {
+				// STRING - INT - STRING - INT
+				Object[] tuple = game.get(new ActualField("ingame"), new FormalField(String.class), new ActualField(userID), new FormalField(String.class), new FormalField(Integer.class));
+				System.out.println("Listener: Got response from server: " + tuple[1]);
+				if (tuple[0].equals("ingame")){
+					if (tuple[0].equals("white")) {
+						whiteCards[(int) tuple[4]] = (String) tuple[3];
+						// TODO: Update GUI whitecards
+					} else if (tuple[0].equals("black")) {
+						amountOfBlanks = (int) tuple[4];
+						// TODO: Set Black card to given string on GUI
+					}
+					// TODO: Player leaves/joins in mid-game
+				}
+			}
+			catch (InterruptedException e) {
+
+			}
+		}
+	}
+	
+	public boolean pickWhiteCard(int i) {
+		if (!turnToPick) {
+			return false;
+		}
+		game.put("pickwhite", userID, i);
+		return true;
+	}
+
+	public boolean isPlayerTurn() {
+		return turnToPick;
+	}
+
+	public static String[] getWhiteCards() {
+		return whiteCards;
 	}
 	
 }

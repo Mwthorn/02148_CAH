@@ -39,12 +39,13 @@ public class Lobby extends JFrame implements ActionListener{
 
 		//Create buttons
 		Dimension btnsize1 = new Dimension(200,80);
-		Dimension btnsize2 = new Dimension(150,80);
+		Dimension btnsize2 = new Dimension(130,40);
 
 		// Create game button
 		b1 = new JButton("Create Game");
-		b1.setPreferredSize(btnsize1);
+		b1.setPreferredSize(btnsize2);
 		b1.setBackground(Color.BLACK);
+		b1.setForeground(Color.WHITE);
 		b1.addActionListener(this);
 		b1.setAlignmentX(Component.CENTER_ALIGNMENT);
 
@@ -52,6 +53,7 @@ public class Lobby extends JFrame implements ActionListener{
 		b2 = new JButton("Sign Out");
 		b2.setPreferredSize(btnsize2);
 		b2.setBackground(Color.BLACK);
+		b2.setForeground(Color.WHITE);
 		b2.addActionListener(this);
 		b2.setAlignmentX(Component.CENTER_ALIGNMENT);
 
@@ -59,6 +61,7 @@ public class Lobby extends JFrame implements ActionListener{
 		b3 = new JButton("Join Game");
 		b3.setPreferredSize(btnsize2);
 		b3.setBackground(Color.BLACK);
+		b3.setForeground(Color.WHITE);
 		b3.addActionListener(this);
 		b3.setAlignmentX(Component.CENTER_ALIGNMENT);
 		
@@ -66,6 +69,7 @@ public class Lobby extends JFrame implements ActionListener{
 		b4 = new JButton("Refresh");
 		b4.setPreferredSize(btnsize2);
 		b4.setBackground(Color.BLACK);
+		b4.setForeground(Color.WHITE);
 		b4.addActionListener(this);
 		b4.setAlignmentX(Component.CENTER_ALIGNMENT);
 		
@@ -93,17 +97,21 @@ public class Lobby extends JFrame implements ActionListener{
 		//Creates panel for buttons
 		JPanel p1 = new JPanel();
 
-		p1.setLayout(new BoxLayout(p1, BoxLayout.LINE_AXIS));
+		FlowLayout flow = new FlowLayout(FlowLayout.CENTER);
+		p1.setLayout(flow);
 		p1.setBackground(Color.WHITE);
-		p1.add(Box.createRigidArea(new Dimension(0,100)));
+//		p1.add(Box.createRigidArea(new Dimension(0,100)));
 		p1.add(b2);
-		p1.add(Box.createHorizontalGlue());
+//		p1.add(Box.createHorizontalGlue());
 		p1.add(b4);
-		p1.add(Box.createHorizontalGlue());
+//		p1.add(Box.createHorizontalGlue());
 		p1.add(b3);
-		p1.add(Box.createHorizontalGlue());
+//		p1.add(Box.createHorizontalGlue());
 		p1.add(b1);
 
+		flow.setHgap(30);
+		
+		
 		getContentPane().add(p1, BorderLayout.SOUTH);
 
 		//Creates panel for labels
