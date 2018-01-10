@@ -305,33 +305,29 @@ public class MainGUI extends JFrame implements ActionListener {
 		mainLobby.setLayout(new BorderLayout()); //Default layout
 		mainLobby.setBackground(Color.WHITE);
 
+
 		//Create buttons
-		//		Dimension btnsize1 = new Dimension(200,80);
-		//		Dimension btnsize2 = new Dimension(150,80);
+		Dimension btnsize2 = new Dimension(160,70);
 
 		// Create game button
 		b1 = new JButton("Create Game");
+		b1.setPreferredSize(btnsize2);
+		b1.setBackground(Color.BLACK);
 		b1.setForeground(Color.WHITE);
-		b1.setBackground(Color.black);
 		b1.addActionListener(this);
 		b1.setAlignmentX(Component.CENTER_ALIGNMENT);
-		b1.setMinimumSize(btnsize5);
-		b1.setMaximumSize(btnsize5);
 		b1.setFont(new Font("calibri",1,21));
 		b1.setBorderPainted(false);
 		b1.setFocusPainted(false);
 		b1.setEnabled(true);
 
-
-
 		// Sign out button
 		b2 = new JButton("Sign Out");
+		b2.setPreferredSize(btnsize2);
+		b2.setBackground(Color.BLACK);
 		b2.setForeground(Color.WHITE);
-		b2.setBackground(Color.black);
 		b2.addActionListener(this);
 		b2.setAlignmentX(Component.CENTER_ALIGNMENT);
-		b2.setMinimumSize(btnsize5);
-		b2.setMaximumSize(btnsize5);
 		b2.setFont(new Font("calibri",1,21));
 		b2.setBorderPainted(false);
 		b2.setFocusPainted(false);
@@ -339,12 +335,11 @@ public class MainGUI extends JFrame implements ActionListener {
 
 		// Join game button
 		b3 = new JButton("Join Game");
+		b3.setPreferredSize(btnsize2);
+		b3.setBackground(Color.BLACK);
 		b3.setForeground(Color.WHITE);
-		b3.setBackground(Color.black);
 		b3.addActionListener(this);
 		b3.setAlignmentX(Component.CENTER_ALIGNMENT);
-		b3.setMinimumSize(btnsize5);
-		b3.setMaximumSize(btnsize5);
 		b3.setFont(new Font("calibri",1,21));
 		b3.setBorderPainted(false);
 		b3.setFocusPainted(false);
@@ -352,12 +347,11 @@ public class MainGUI extends JFrame implements ActionListener {
 
 		// Refresh button
 		b4 = new JButton("Refresh");
+		b4.setPreferredSize(btnsize2);
+		b4.setBackground(Color.BLACK);
 		b4.setForeground(Color.WHITE);
-		b4.setBackground(Color.black);
 		b4.addActionListener(this);
 		b4.setAlignmentX(Component.CENTER_ALIGNMENT);
-		b4.setMinimumSize(btnsize5);
-		b4.setMaximumSize(btnsize5);
 		b4.setFont(new Font("calibri",1,21));
 		b4.setBorderPainted(false);
 		b4.setFocusPainted(false);
@@ -372,8 +366,8 @@ public class MainGUI extends JFrame implements ActionListener {
 		// Implementing pictures for white cards and black cards as JLabel
 		l2 = new JLabel();
 		l3 = new JLabel();
-		l2.setIcon(new ImageIcon(new ImageIcon("BCLobby.png").getImage().getScaledInstance(250, 376, Image.SCALE_DEFAULT)));
-		l3.setIcon(new ImageIcon(new ImageIcon("WCLobby.png").getImage().getScaledInstance(250, 376, Image.SCALE_DEFAULT)));
+		l2.setIcon(new ImageIcon(new ImageIcon("BCLobby.png").getImage().getScaledInstance(249, 381, Image.SCALE_DEFAULT)));
+		l3.setIcon(new ImageIcon(new ImageIcon("WCLobby.png").getImage().getScaledInstance(306, 556, Image.SCALE_DEFAULT)));
 		l2.setAlignmentX(Component.CENTER_ALIGNMENT);
 		l3.setAlignmentX(Component.CENTER_ALIGNMENT);
 
@@ -387,13 +381,17 @@ public class MainGUI extends JFrame implements ActionListener {
 		//Creates panel for buttons
 		JPanel p1 = new JPanel();
 
-		p1.setLayout(new FlowLayout(FlowLayout.CENTER));
+		FlowLayout flow = new FlowLayout(FlowLayout.CENTER);
+		p1.setLayout(flow);
 		p1.setBackground(Color.WHITE);
 		p1.add(b2);
 		p1.add(b4);
+		flow.setHgap(100);
 		p1.add(b3);
 		p1.add(b1);
-//		p1.add(Box.createRigidArea(new Dimension(850,200)));
+		p1.add(Box.createRigidArea(new Dimension(0,200)));
+
+		
 
 
 		mainLobby.add(p1, BorderLayout.SOUTH);
@@ -407,12 +405,13 @@ public class MainGUI extends JFrame implements ActionListener {
 		// Panel for Title label
 		p2.setLayout(new BoxLayout(p2, BoxLayout.PAGE_AXIS));
 		p2.setBackground(Color.WHITE);
+		p2.add(Box.createRigidArea(new Dimension(50, 0)));
 		p2.add(l1);
 
 		// Panel for Black Card image
 		p3.setLayout(new BoxLayout(p3, BoxLayout.LINE_AXIS));
 		p3.setBackground(Color.WHITE);
-		
+
 		p3.add(Box.createRigidArea(new Dimension(50, 0)));
 		p3.add(l2);
 		p3.add(Box.createRigidArea(new Dimension(50, 0)));
@@ -422,7 +421,7 @@ public class MainGUI extends JFrame implements ActionListener {
 		JPanel p4 = new JPanel();
 		p4.setLayout(new BoxLayout(p4, BoxLayout.LINE_AXIS));
 		p4.setBackground(Color.WHITE);
-		
+
 		p4.add(Box.createRigidArea(new Dimension(50, 0)));
 		p4.add(l3);
 
@@ -474,7 +473,7 @@ public class MainGUI extends JFrame implements ActionListener {
 
 			System.out.println(name);
 			System.out.println(IP);
-			
+
 			mainLogin.setVisible(false);
 
 			mainLobby.setVisible(true);
