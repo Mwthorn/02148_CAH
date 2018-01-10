@@ -1,10 +1,9 @@
 package common.src.main.gui;
 
-import java.awt.EventQueue;
-import javax.swing.JFrame;
+import javax.swing.*;
 
 @SuppressWarnings("serial")
-public class MainGUI{
+public class MainGUI extends JFrame{
 
 	// DECLARATIONS
 	Login newLogin;
@@ -35,10 +34,15 @@ public class MainGUI{
 	// CONSTRUCTOR
 	public MainGUI(){
 
+		Login newLogin = new Login();
+		newLogin.setVisible(true);
+		
+		/*
 		// LOGIN		
 		if(start || lob2Log){
 
 			if (lob2Log){
+				newLobby.dispose();
 				newLobby.setVisible(false);
 			}
 			
@@ -50,7 +54,9 @@ public class MainGUI{
 		else if(newLogin.signIn || game2Lob || gLob2Lob || cg2Lob){
 
 			if (newLogin.signIn){
+				newLogin.dispose();
 				newLogin.setVisible(false);
+				
 			} else if (game2Lob){
 				// newGameGUI.setVisible(false);
 			} else if (gLob2Lob){
@@ -62,6 +68,7 @@ public class MainGUI{
 			}
 
 			try {
+				
 				newLobby = new Lobby();
 				newLobby.setVisible(true);
 			} catch (InterruptedException e) {
@@ -90,6 +97,6 @@ public class MainGUI{
 
 		} else {
 			// Something went terribly wrong! ha. 
-		}
+		} */
 	}
 }
