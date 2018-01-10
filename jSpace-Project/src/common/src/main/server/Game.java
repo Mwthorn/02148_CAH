@@ -115,6 +115,10 @@ public class Game implements Runnable {
 
 	private void readyUpdate(int playerID) {
 		Player actor = getPlayerwithID(playerID);
+        if (actor == null) {
+            System.out.print("Game: No player found with ID " + playerID + " in readyUpdate");
+            return;
+        }
 		actor.changeReady();
 		
 		for (int i = 0; i < players.size(); i++) {
@@ -125,6 +129,10 @@ public class Game implements Runnable {
 	
     private void playerLeavesGame(int playerID) {
 		Player actor = getPlayerwithID(playerID);
+        if (actor == null) {
+            System.out.print("Game: No player found with ID " + playerID + " in playerLeavesGame");
+            return;
+        }
 		players.remove(actor);
 		
 		game.put("updateLobby","leave",actor.getId(), null);

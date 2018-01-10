@@ -115,7 +115,7 @@ public class Server {
     }
 
 	public CardDataBase getCardDataBase() {
-		return this.cardDataBase;
+		return cardDataBase;
 	}
 
 }

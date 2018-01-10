@@ -12,7 +12,6 @@ import java.util.ArrayList;
 public class Client {
 	private static RemoteSpace lobby, game;
 	private static int userID;
-	private static int gameID;
 	private static String serverIP;
 	private static String name;
 
@@ -30,20 +29,16 @@ public class Client {
 				System.out.println("Trying to create game");
 				createNewGame();
 	
-				joinGame();
+				//joinGame();
 				
 				// 3 threads
 				gameLobby();
 				
 
-			} catch (UnknownHostException e) {
-				e.printStackTrace();
-			} catch (IOException e) {
-				e.printStackTrace();
-			} catch (InterruptedException e) {
+			} catch (IOException | InterruptedException e) {
 				e.printStackTrace();
 			}
-    }
+	}
 
 	private static void createNewGame() {
 		lobby.put("lobby", "createGame", "no nobs plx", userID);
@@ -59,11 +54,7 @@ public class Client {
 			game.put("testing");
 			// gameLobby();
 			
-		} catch (InterruptedException e) {
-			e.printStackTrace();
-		} catch (UnknownHostException e) {
-			e.printStackTrace();
-		} catch (IOException e) {
+		} catch (InterruptedException | IOException e) {
 			e.printStackTrace();
 		}
 	}
@@ -107,17 +98,13 @@ public class Client {
 		return games;
 	}
 
-	public static void joinGame() throws InterruptedException {
+	public static void joinGame(int gameID) throws InterruptedException {
 		String stringID = Integer.toString(userID);
-		lobby.put("lobby", "joinGame", stringID, gameID);
-
 		Object[] info = lobby.get(new ActualField("joinedGame"), new ActualField(userID), new FormalField(Integer.class));
 		int gameSlot = (int) info[2];
 
 		try {
 			game = new RemoteSpace("tcp://" + serverIP + ":9001/game" + gameSlot + "?keep");
-		} catch (UnknownHostException e) {
-			e.printStackTrace();
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
