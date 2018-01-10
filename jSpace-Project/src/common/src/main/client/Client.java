@@ -47,25 +47,25 @@ public class Client {
 			} catch (IOException | InterruptedException e) {
 				e.printStackTrace();
 			}
-	}
-
-	private static void createNewGame() {
-		lobby.put("lobby", "createGame", "no nobs plx", userID);
+	} // End of main function
+	
+	/*********************************************************************************************/
+	/********************************** User/Lobby Interactions **********************************/
+	/*********************************************************************************************/
+	
+	private static void lobby(int buttonPressed, int gameID) throws InterruptedException{
+		// Create lobby GUI.
 		
-		try {
-			System.out.println("Trying to recieve info");
-			Object[] info = lobby.get(new ActualField("gameCreated"), new ActualField(userID), new FormalField(Integer.class));
-			int gameSlot = (int) info[2];
-			
-			// Connects the host to the tuple space.
-			game = new RemoteSpace("tcp://" + serverIP + ":9001/game" + gameSlot + "?keep");
-			
-			game.put("testing");
-			// gameLobby();
-		} catch (InterruptedException | IOException e) {
-			e.printStackTrace();
+		if (buttonPressed == 0){ // Join game button clicked
+			joinGame(gameID);
+		} else if (buttonPressed == 1){ // Create game button clicked
+			createNewGame();
+		} else if (buttonPressed == 2){ // Refresh game list buttton clicked
+			getGameList();
+		} else if (buttonPressed == 3){ // Sign out buttton clicked
+			signOut();
 		}
-	}
+	} // End of lobby function
 
 	public static void loginUser(String IP, String name) throws IOException, InterruptedException {
 		// TODO: The two lines below assigning IP and name should be retrieved
@@ -82,30 +82,25 @@ public class Client {
 		userID = (int) tuple[2];
 		serverIP = IP;
 		System.out.println("Client was assigned ID: " + userID);
-	}
-
-	private static void cardsAgainstHumanity() {
-		// Create game GUI
-		// Tons of different game features, move it to another function?
+	} // End of login user  function
+	
+	private static void createNewGame() {
+		lobby.put("lobby", "createGame", "no nobs plx", userID);
 		
-	}
-
-	public static ArrayList<GamePreview> getGameList() throws InterruptedException {
-		lobby.put("lobby", "refreshGameList", "", userID);
-
-		Object[] tuple = lobby.get(new ActualField("GameListSize"), new ActualField(userID), new FormalField(Integer.class));
-		Object[] gT;
-		int n = (int) tuple[2];
-		ArrayList<GamePreview> games = new ArrayList<>();
-		System.out.println("Got " + n + " games from server!");
-		for (int i = 0; i < n; i++) {
-			gT = lobby.get(new ActualField("GameList"),
-					new ActualField(userID),
-					new FormalField(GamePreview.class));
-			games.add((GamePreview) gT[2]);
+		try {
+			System.out.println("Trying to recieve info");
+			Object[] info = lobby.get(new ActualField("gameCreated"), new ActualField(userID), new FormalField(Integer.class));
+			int gameSlot = (int) info[2];
+			
+			// Connects the host to the tuple space.
+			game = new RemoteSpace("tcp://" + serverIP + ":9001/game" + gameSlot + "?keep");
+			
+			game.put("testing");
+			// gameLobby();
+		} catch (InterruptedException | IOException e) {
+			e.printStackTrace();
 		}
-		return games;
-	}
+	} // End of createNewGame function
 
 	public static void joinGame(int gameID) throws InterruptedException {
 		System.out.println("Trying to join gameID: " + gameID);
@@ -122,7 +117,24 @@ public class Client {
 
 		game.put("testing");
 		// gameLobby();
-	}
+	} // End of joinGame function
+	
+	public static ArrayList<GamePreview> getGameList() throws InterruptedException {
+		lobby.put("lobby", "refreshGameList", "", userID);
+
+		Object[] tuple = lobby.get(new ActualField("GameListSize"), new ActualField(userID), new FormalField(Integer.class));
+		Object[] gT;
+		int n = (int) tuple[2];
+		ArrayList<GamePreview> games = new ArrayList<>();
+		System.out.println("Got " + n + " games from server!");
+		for (int i = 0; i < n; i++) {
+			gT = lobby.get(new ActualField("GameList"),
+					new ActualField(userID),
+					new FormalField(GamePreview.class));
+			games.add((GamePreview) gT[2]);
+		}
+		return games;
+	} // end of getGameList function
 
 	public static ArrayList<Player> getPlayers() throws InterruptedException {
 
@@ -139,7 +151,7 @@ public class Client {
 		}
 
 		return ps;
-	}
+	} // End of getPlayers function
 
 	public static void refreshPlayerList() throws InterruptedException {
 		// TODO:
@@ -156,25 +168,15 @@ public class Client {
 		else if (tuple[1].equals("refreshGameList")) {
 
 		}
-	}
-	
-	private static void lobby(int buttonPressed, int gameID) throws InterruptedException{
-		// Create lobby GUI.
-		
-		if (buttonPressed == 0){ // Join game button clicked
-			joinGame(gameID);
-		} else if (buttonPressed == 1){ // Create game button clicked
-			createNewGame();
-		} else if (buttonPressed == 2){ // Refresh game list buttton clicked
-			getGameList();
-		} else if (buttonPressed == 3){ // Sign out buttton clicked
-			signOut();
-		}
-	}
+	} // End of refreshPlayerList function
 	
 	private static void signOut() {
 		
-	}
+	}// End of signOut function
+	
+	/*********************************************************************************************/
+	/******************************* User/Game Lobby Interactions ********************************/
+	/*********************************************************************************************/
 
 	private static void gameLobby() {
 		// Create game lobby GUI.
@@ -213,7 +215,7 @@ public class Client {
 		
 		// TODO: Leave game: Return the player to the main lobby, adjust tuple spaces.
     	// Update GUI, change from game tuple space to lobby tuple space, adjust other players GUI by sending message to server.
-	}
+	} // End of gameLobby function
 
 	public static void sendReady() {
 		game.put("game", "ready", userID);
@@ -235,5 +237,15 @@ public class Client {
 		} else if (buttonPressed == 2){ // leave game buttton clicked
 			game.put("game", "leave", userID);
 		}
+	} // End of talker function
+	
+	/*********************************************************************************************/
+	/********************************* User/In-Game Interactions *********************************/
+	/*********************************************************************************************/
+	
+	public static void cardsAgainstHumanity(){
+		// TODO: Create in-game GUI.
+		// TODO: This is the main communication channel for when inside the game.
 	}
+	
 }
