@@ -32,10 +32,18 @@ public class Login extends JFrame implements ActionListener {
 	public boolean signIn = false;
 
 	public Login(){
-
-		//Der benyttes BorderLayout
+		
+		// Using BorderLayout
 		getContentPane().setLayout(new BorderLayout());
-
+		
+		// Window dimensions
+		setTitle("Cards Against Humanity");
+		setSize(1900,1000);
+		setResizable(true);
+		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		setVisible(true);
+		setLocationRelativeTo(null);
+		
 		// Dimensions of buttons
 		Dimension btnsize4 = new Dimension(110,40);
 		Dimension btnsize2 = new Dimension(120,60);
@@ -187,9 +195,9 @@ public class Login extends JFrame implements ActionListener {
 		PRight.setLayout(new BoxLayout(PRight, BoxLayout.PAGE_AXIS));
 		PRight.setBackground(Color.white);
 
-		PRight.add(Box.createRigidArea(new Dimension(365,250)));
+		PRight.add(Box.createRigidArea(new Dimension(365,350)));
 		PRight.add(LFigure2);
-		PRight.add(Box.createRigidArea(new Dimension(365,200)));
+		PRight.add(Box.createRigidArea(new Dimension(365,50)));
 		PRight.add(BQuit);
 		PRight.add(Box.createRigidArea(new Dimension(365,50)));
 
@@ -253,8 +261,11 @@ public class Login extends JFrame implements ActionListener {
 				txtfld2.setText("Incorrect IP");
 			} 
 		}
+
+	
 	}
 
+	/*
 
 	public static void main(String[] args) {
 
@@ -268,7 +279,7 @@ public class Login extends JFrame implements ActionListener {
 		login.setLocationRelativeTo(null);
 
 	}
-
+*/
 
 
 

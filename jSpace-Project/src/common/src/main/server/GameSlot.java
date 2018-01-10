@@ -5,10 +5,12 @@ public class GameSlot {
     private int slot;
     private String name;
     private boolean ready;
+    private boolean hasPlayer;
 
-    public GameSlot(int slot, String name) {
+    public GameSlot(int slot, String name, boolean hasPlayer) {
         this.slot = slot;
         this.name = name;
+        this.hasPlayer = hasPlayer;
         this.ready = false;
     }
 

@@ -17,7 +17,7 @@ public class Lobby extends JFrame implements ActionListener{
 	private JTextField WP;
 	private static JList list;
 
-
+	
 	public static ArrayList<GamePreview> putList() throws InterruptedException{
 		for (GamePreview gp : Client.getGameList()) {
 			gp.getCurrentPlayerSize();
@@ -37,6 +37,14 @@ public class Lobby extends JFrame implements ActionListener{
 		getContentPane().setLayout(new BorderLayout()); //Default layout
 		getContentPane().setBackground(Color.WHITE);
 
+		//Window dimensions
+		setSize(1080, 720);
+		setLocationRelativeTo(null);
+		setDefaultCloseOperation(EXIT_ON_CLOSE);
+		setTitle("Cards Against Humanity");
+		setResizable(true);
+		setVisible(true);
+		
 		//Create buttons
 		Dimension btnsize1 = new Dimension(200,80);
 		Dimension btnsize2 = new Dimension(150,80);
@@ -178,7 +186,7 @@ public class Lobby extends JFrame implements ActionListener{
 
 	}
 
-	
+	/*
 	public static void main(String[] args) throws InterruptedException {
 
 		Lobby lobby = new Lobby();
@@ -192,6 +200,6 @@ public class Lobby extends JFrame implements ActionListener{
 
 		System.out.println(Client.getGameList());
 
-	} 
+	} */
 
 }

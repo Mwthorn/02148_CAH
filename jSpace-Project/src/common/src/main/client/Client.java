@@ -28,11 +28,14 @@ public class Client {
 				
 				System.out.println("Trying to create game");
 				createNewGame();
-	
-				//joinGame();
+
+				Thread.sleep(1000);
+
+				ArrayList<GamePreview> gp = getGameList();
+				joinGame(gp.get(0).getId());
 				
 				// 3 threads
-				gameLobby();
+				//gameLobby();
 				
 
 			} catch (IOException | InterruptedException e) {
@@ -52,25 +55,26 @@ public class Client {
 			game = new RemoteSpace("tcp://" + serverIP + ":9001/game" + gameSlot + "?keep");
 			
 			game.put("testing");
-			
+			// gameLobby();
 		} catch (InterruptedException | IOException e) {
 			e.printStackTrace();
 		}
 	}
 
-	public static void loginUser(String serverIP, String name) throws IOException, InterruptedException {
+	public static void loginUser(String IP, String name) throws IOException, InterruptedException {
 		// TODO: The two lines below assigning IP and name should be retrieved
 		// when first signing in to the lobby.
 		// serverIP = "127.0.0.1";
 		// name = "Alex";
 		
-		lobby = new RemoteSpace("tcp://" + serverIP + ":9001/lobby?keep");
+		lobby = new RemoteSpace("tcp://" + IP + ":9001/lobby?keep");
 
 		//lobby.put("test");
 		lobby.put("lobby","enter",name,0);
 
 		Object[] tuple = lobby.get(new ActualField("UserID"),new ActualField(name), new FormalField(Integer.class));
 		userID = (int) tuple[2];
+		serverIP = IP;
 		System.out.println("Client was assigned ID: " + userID);
 	}
 
@@ -85,19 +89,22 @@ public class Client {
 
 		Object[] tuple = lobby.get(new ActualField("GameListSize"), new ActualField(userID), new FormalField(Integer.class));
 		Object[] gT;
-		int n = (int) tuple[1];
+		int n = (int) tuple[2];
 		ArrayList<GamePreview> games = new ArrayList<>();
 		System.out.println("Got " + n + " games from server!");
 		for (int i = 0; i < n; i++) {
 			gT = lobby.get(new ActualField("GameList"),
 					new ActualField(userID),
-					new FormalField(Game.class));
+					new FormalField(GamePreview.class));
 			games.add((GamePreview) gT[2]);
 		}
 		return games;
 	}
 
 	public static void joinGame(int gameID) throws InterruptedException {
+		System.out.println("Trying to join gameID: " + gameID);
+		lobby.put("lobby", "joinGame", Integer.toString(userID), gameID);
+
 		String stringID = Integer.toString(userID);
 		Object[] info = lobby.get(new ActualField("joinedGame"), new ActualField(userID), new FormalField(Integer.class));
 		int gameSlot = (int) info[2];
@@ -109,6 +116,7 @@ public class Client {
 		}
 
 		game.put("testing");
+		// gameLobby();
 	}
 
 	public static ArrayList<Player> getPlayers() throws InterruptedException {
@@ -159,7 +167,15 @@ public class Client {
 		}
 	}
 	
+	private static void lobby(){
+		// Create lobby GUI.
+		
+		// Respond to stuff in the lobby here.
+	}
+	
 	private static void gameLobby() {
+		// Create game lobby GUI.
+		
 		// Setup of a local tuple space.
 		Space local = new SequentialSpace();
 		
@@ -173,16 +189,14 @@ public class Client {
 			try {
 				tuple = local.get(new ActualField("local"),new FormalField(String.class), new FormalField(GameSlot.class));
 				System.out.println("Local Lobby: Got response: " + tuple[1]);
-		        if (tuple[1].equals("ready")) {
-					// TODO: Ready button: A toggle option to be ready/not be ready.
-		        	// Update personal GUI
-		        } else if (tuple[1].equals("start")){
+		        if (tuple[1].equals("start")){
 		        	// TODO: Start game: A button for the host, possibly to entirely replace his ready button.
 		        	// Starts the game, many stuff happens.
 		        } else if (tuple[1].equals("update")){
 		        	// TODO: Update from the server, update relevant GUI.
-		        	// Possible updates: User joins, user leaves, user checks ready, user unchecks ready.
+		        	// Occurs when a player joins/leaves/changes ready state, will fully update a specified game slot.
 		        } else if (tuple[1].equals("leave")){
+		        	// Call the lobby function.
 		        	break;
 		        }
 			} catch (InterruptedException e) {
