@@ -115,24 +115,32 @@ public class Game implements Runnable {
 
 	private void readyUpdate(int playerID) {
 		Player actor = getPlayerwithID(playerID);
+        if (actor == null) {
+            System.out.print("Game: No player found with ID " + playerID + " in readyUpdate");
+            return;
+        }
 		actor.changeReady();
-		
-		for (int i = 0; i < players.size(); i++) {
-			int recieverID = players.get(i).getId();
-			game.put("updateLobby","ready", recieverID, actor.getGameSlot());
-		}
+
+        for (Player player : players) {
+            int recieverID = player.getId();
+            game.put("updateLobby", "ready", recieverID, actor.getGameSlot());
+        }
 	}
 	
 	
 	
     private void playerLeavesGame(int playerID) {
 		Player actor = getPlayerwithID(playerID);
-		players.remove(actor);
-		
-		for (int i = 0; i < players.size(); i++) {
-			int recieverID = players.get(i).getId();
-			game.put("updateLobby","ready", recieverID, actor.getGameSlot());
-		}
+        if (actor == null) {
+            System.out.print("Game: No player found with ID " + playerID + " in playerLeavesGame");
+            return;
+        }
+        players.remove(actor);
+
+        for (Player player : players) {
+            int recieverID = player.getId();
+            game.put("updateLobby", "ready", recieverID, actor.getGameSlot());
+        }
 
 	}
     

@@ -11,22 +11,13 @@ public class GamePreview {
     private int maxPlayerSize;
     private int id;
 
-    
-    public GamePreview(String gameName, String gameStatus, boolean hasPassword, int currentPlayerSize, int maxPlayerSize, int id) {
-        this.gameName = gameName;
-        this.gameStatus = gameStatus;
-        this.hasPassword = hasPassword;
-        this.currentPlayerSize = currentPlayerSize;
-        this.maxPlayerSize = maxPlayerSize;
-        this.id = id;
-    }
-
     public GamePreview(Game game) {
         this.gameName = game.getGameName();
         this.gameStatus = game.getStatus();
         this.hasPassword = (game.getPassword() != null);
         this.currentPlayerSize = game.getPlayers().size();
         this.maxPlayerSize = game.getMaxPlayers();
+        this.id = game.getID();
     }
 
     public String getGameName() {

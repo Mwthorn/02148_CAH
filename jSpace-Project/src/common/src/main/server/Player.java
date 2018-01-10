@@ -12,6 +12,7 @@ public class Player {
         this.name = name;
         this.points = 0;
         this.id = id;
+        this.gameSlot = new GameSlot(0,name);
         
         ready = false;
     }
@@ -48,11 +49,7 @@ public class Player {
     }
 
     public void changeReady() {
-    	if (this.ready == false){
-    		this.ready = true;
-    	} else {
-    		this.ready = false;
-    	}
+    	this.ready = !this.ready;
     	gameSlot.setReady(this.ready);
     }
 
