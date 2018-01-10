@@ -166,12 +166,25 @@ public class Client {
 		}
 	}
 	
-	private static void lobby(){
+	private static void lobby(int buttonPressed, int gameID) throws InterruptedException{
 		// Create lobby GUI.
 		
-		// Respond to stuff in the lobby here.
+		if (buttonPressed == 0){ // Join game button clicked
+			joinGame(gameID);
+		} else if (buttonPressed == 1){ // Create game button clicked
+			createNewGame();
+		} else if (buttonPressed == 2){ // Refresh game list buttton clicked
+			getGameList();
+		} else if (buttonPressed == 3){ // Sign out buttton clicked
+			signOut();
+		}
+		
 	}
 	
+	private static void signOut() {
+		
+	}
+
 	private static void gameLobby() {
 		// Create game lobby GUI.
 		
@@ -205,11 +218,6 @@ public class Client {
 		
 		// TODO: Leave game: Return the player to the main lobby, adjust tuple spaces.
     	// Update GUI, change from game tuple space to lobby tuple space, adjust other players GUI by sending message to server.
-		
-		
-		
-		
-		
 	}
 	
 	private static void talker (int buttonPressed){

@@ -5,6 +5,8 @@ import org.jspace.FormalField;
 import org.jspace.RemoteSpace;
 import org.jspace.Space;
 
+import common.src.main.server.GameSlot;
+
 public class Listener implements Runnable{
 	private static Space local;
 	private static RemoteSpace game;
@@ -22,7 +24,7 @@ public class Listener implements Runnable{
 		while (true){
 			try {
 				// UpdateLobby - Type of Action - UserID, gameslot to be acted upon.
-				Object[] tuple = game.get(new ActualField("updateLobby"), new FormalField(String.class), new ActualField(userID), new FormalField(Integer.class));
+				Object[] tuple = game.get(new ActualField("updateLobby"), new FormalField(String.class), new ActualField(userID), new FormalField(GameSlot.class));
 				System.out.println("Listener: Got response from server: " + tuple[1]);
 		        if (tuple[1].equals("start")){
 		        	// TODO: Start game: A button for the host, possibly to entirely replace his ready button.
@@ -40,6 +42,6 @@ public class Listener implements Runnable{
 				e.printStackTrace();
 			}
 		}
-	}
+	} // End of run();
 
 }
