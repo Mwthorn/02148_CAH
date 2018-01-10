@@ -28,11 +28,15 @@ public class Client {
 				
 				System.out.println("Trying to create game");
 				createNewGame();
-	
-				//joinGame();
+
+				Thread.sleep(1000);
+
+				ArrayList<GamePreview> gp = getGameList();
+				System.out.println(gp.get(1).getId());
+				//joinGame(gp.get(1).getId());
 				
 				// 3 threads
-				gameLobby();
+				//gameLobby();
 				
 
 			} catch (IOException | InterruptedException e) {
@@ -53,7 +57,6 @@ public class Client {
 			
 			game.put("testing");
 			// gameLobby();
-			
 		} catch (InterruptedException | IOException e) {
 			e.printStackTrace();
 		}

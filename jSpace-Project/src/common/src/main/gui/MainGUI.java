@@ -43,17 +43,13 @@ public class MainGUI extends JFrame {
 		this.setLocationRelativeTo(null);
 		this.setVisible(true);
 		
-		newLogin = new Login();
-		this.add(newLogin);
-		// pack();
-		
 		// LOGIN		
 		if(lob2Log || start){
 
 			if (lob2Log){
 				newLobby.setVisible(false);
 			}
-
+			
 			start = false;
 			newLogin = new Login();
 			this.add(newLogin);

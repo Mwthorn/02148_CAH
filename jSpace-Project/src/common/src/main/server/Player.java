@@ -12,7 +12,6 @@ public class Player {
         this.name = name;
         this.points = 0;
         this.id = id;
-        this.gameSlot = new GameSlot(0,name);
         
         ready = false;
         
