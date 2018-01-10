@@ -12,7 +12,7 @@ import java.net.SocketException;
 public class CreateGame extends JFrame implements ActionListener {
 
 	//Initialize Buttons, Labels, Images and Textfields.
-	private JButton BQuit, BSignIn;
+	private JButton BQuit, BSignIn, BCreateGame;
 	private JLabel LTitle, LText, LFigure1, LName, LIP, LFigure2, LRounds, LTime, LPass, LPassword;
 	private JTextField txtfld1, txtfld2, txtfld3, txtfld4, txtfld5;
 	
@@ -26,10 +26,13 @@ public class CreateGame extends JFrame implements ActionListener {
 		Dimension btnsize2 = new Dimension(120,60);
 
 		//Textfield laves
-		Dimension txtfldsize = new Dimension(400, 30);
+		Dimension txtfldsize = new Dimension(300, 30);
 		
 		//Labels
-		Dimension lsize = new Dimension(100,50);
+		Dimension lsize = new Dimension(200,30);
+		
+		// Text font size:
+		int fontsize = 25;
 		
 		// Make Quit Button
 		BQuit = new JButton("Quit");
@@ -54,6 +57,20 @@ public class CreateGame extends JFrame implements ActionListener {
 		BSignIn.setEnabled(true);
 		BSignIn.setForeground(Color.WHITE);
 		BSignIn.setBackground(Color.black);	
+
+		// Make Sign In button
+		BCreateGame = new JButton("Create Game");
+		BCreateGame.setMinimumSize(new Dimension(200,100));
+		BCreateGame.setMaximumSize(new Dimension(200,100));
+		BCreateGame.addActionListener(this);
+		BCreateGame.setAlignmentX(Component.CENTER_ALIGNMENT);
+		BCreateGame.setFont(new Font("calibri",1,30));
+		BCreateGame.setBorderPainted(false);
+		BCreateGame.setFocusPainted(false);
+		BCreateGame.setEnabled(true);
+		BCreateGame.setForeground(Color.WHITE);
+		BCreateGame.setBackground(Color.black);
+		
 		
 		//Makes Title
 		LTitle = new JLabel("Cards Against Humanity");
@@ -62,42 +79,40 @@ public class CreateGame extends JFrame implements ActionListener {
 		LTitle.setForeground(Color.BLACK);
 
 		//Makes lower title
-		LText = new JLabel("Welcome to Cards Against Humanity");
+		LText = new JLabel("Create a new game!");
 		LText.setAlignmentX(Component.CENTER_ALIGNMENT);
 		LText.setFont(new Font("calibri",Font.PLAIN,30));
 		LText.setForeground(Color.black);
 		
 		// Name Label
-		LName = new JLabel("Name:");
+		LName = new JLabel("Game name:");
 		LName.setMaximumSize(lsize);
-		LName.setFont(new Font("calibri",Font.PLAIN,40));
+		LName.setFont(new Font("calibri",Font.PLAIN,fontsize));
 		LName.setAlignmentX(Component.CENTER_ALIGNMENT);
 
 		// Name Label
 		LRounds = new JLabel("Rounds to win:");
 		LRounds.setMaximumSize(lsize);
-		LRounds.setFont(new Font("calibri",Font.PLAIN,40));
+		LRounds.setFont(new Font("calibri",Font.PLAIN,fontsize));
 		LRounds.setAlignmentX(Component.CENTER_ALIGNMENT);
 		
 		// Name Label
 		LTime = new JLabel("Time to answer:");
 		LTime.setMaximumSize(lsize);
-		LTime.setFont(new Font("calibri",Font.PLAIN,40));
+		LTime.setFont(new Font("calibri",Font.PLAIN,fontsize));
 		LTime.setAlignmentX(Component.CENTER_ALIGNMENT);
 
 		// Name Label
 		LPass = new JLabel("Password Protected:");
 		LPass.setMaximumSize(lsize);
-		LPass.setFont(new Font("calibri",Font.PLAIN,40));
+		LPass.setFont(new Font("calibri",Font.PLAIN,fontsize));
 		LPass.setAlignmentX(Component.CENTER_ALIGNMENT);
 		
 		// Name Label
 		LPassword = new JLabel("Password:");
 		LPassword.setMaximumSize(lsize);
-		LPassword.setFont(new Font("calibri",Font.PLAIN,40));
+		LPassword.setFont(new Font("calibri",Font.PLAIN,fontsize));
 		LPassword.setAlignmentX(Component.CENTER_ALIGNMENT);
-		
-		
 		
 		// The two cards in the sides
 		LFigure1 = new JLabel();
@@ -137,45 +152,67 @@ public class CreateGame extends JFrame implements ActionListener {
 		txtfld5.setFont(new Font("calibri",Font.PLAIN,20));
 		txtfld5.setAlignmentX(Component.CENTER_ALIGNMENT);
 		
-		//Left JPanel
+		//Other center
+		JPanel PC = new JPanel();
+		JPanel PCLEFT = new JPanel();
+		JPanel PCRIGHT = new JPanel();
+		
+		PC.setLayout(new BorderLayout());
+		
+		PCLEFT.add(Box.createRigidArea(new Dimension(220,50)));
+		PCRIGHT.add(Box.createRigidArea(new Dimension(220,50)));
+		
+		
+		PCLEFT.setBackground(Color.WHITE);
+		PCRIGHT.setBackground(Color.WHITE);
+				
+		PC.add(PCLEFT,BorderLayout.LINE_START);
+		PC.add(PCRIGHT,BorderLayout.LINE_END);
+		
+		
+		//Center Panel
 		JPanel PCenter = new JPanel();
-		PCenter.setLayout(new BorderLayout());
 		PCenter.setBorder(BorderFactory.createMatteBorder(4, 4, 4, 4, Color.black));		
+		PCenter.setLayout(new BorderLayout());
+		PCenter.setSize(600, 500);
+		
+		
 		
 		JPanel PL = new JPanel();
 		PL.setLayout(new BoxLayout(PL, BoxLayout.PAGE_AXIS));
 		PL.setBackground(Color.white);
 		
-		PL.add(Box.createRigidArea(new Dimension(100,50)));
+		PL.add(Box.createRigidArea(new Dimension(300,50)));
 		PL.add(LName);
-		PL.add(Box.createRigidArea(new Dimension(100,50)));
+		PL.add(Box.createRigidArea(new Dimension(300,50)));
 		PL.add(LRounds);
-		PL.add(Box.createRigidArea(new Dimension(100,50)));
+		PL.add(Box.createRigidArea(new Dimension(300,50)));
 		PL.add(LTime);
-		PL.add(Box.createRigidArea(new Dimension(100,50)));
-		PL.add(LPass);
-		PL.add(Box.createRigidArea(new Dimension(100,50)));
+		PL.add(Box.createRigidArea(new Dimension(300,50)));
 		PL.add(LPassword);
+		PL.add(Box.createRigidArea(new Dimension(300,25)));
+
 		
 		JPanel PR = new JPanel();
 		PR.setLayout(new BoxLayout(PR, BoxLayout.PAGE_AXIS));
 		PR.setBackground(Color.white);
 
-		PR.add(Box.createRigidArea(new Dimension(150,50)));
+		PR.add(Box.createRigidArea(new Dimension(350,50)));
 		PR.add(txtfld1);
-		PR.add(Box.createRigidArea(new Dimension(150,50)));
+		PR.add(Box.createRigidArea(new Dimension(350,50)));
 		PR.add(txtfld2);
-		PR.add(Box.createRigidArea(new Dimension(150,50)));
+		PR.add(Box.createRigidArea(new Dimension(350,50)));
 		PR.add(txtfld3);
-		PR.add(Box.createRigidArea(new Dimension(150,50)));
-		PR.add(txtfld4);
-		PR.add(Box.createRigidArea(new Dimension(150,50)));
+		PR.add(Box.createRigidArea(new Dimension(350,50)));
 		PR.add(txtfld5);
+		PL.add(Box.createRigidArea(new Dimension(350,25)));
+
 		
 		
-		PCenter.add(PL, BorderLayout.CENTER);
-		PCenter.add(PR, BorderLayout.EAST);
+		PCenter.add(PL, BorderLayout.WEST);
+		PCenter.add(PR, BorderLayout.CENTER);
 		
+		PC.add(PCenter, BorderLayout.CENTER);
 		
 		//Left JPanel
 		JPanel PLeft = new JPanel();
@@ -207,15 +244,19 @@ public class CreateGame extends JFrame implements ActionListener {
 		PMiddle.setSize(400, 1000);
 		PMiddle.add(LTitle);
 		PMiddle.add(Box.createRigidArea(new Dimension(100, 100)));
-		PMiddle.add(PCenter);
-		PMiddle.add(Box.createRigidArea(new Dimension(400, 150)));
-		PMiddle.add(Box.createRigidArea(new Dimension(400, 800)));				
+		PMiddle.add(LText);
+		PMiddle.add(Box.createRigidArea(new Dimension(100, 50)));
+		PMiddle.add(PC);
+		PMiddle.add(Box.createRigidArea(new Dimension(400, 100)));
+		PMiddle.add(BCreateGame);
+		PMiddle.add(Box.createRigidArea(new Dimension(400, 400)));				
 				
 		//Add PMiddle and set center
 		getContentPane().add(PMiddle, BorderLayout.CENTER);
 
 		PMiddle.setBackground(Color.WHITE);
 		getContentPane().add(PMiddle);
+		
 		
 		
 	}
@@ -251,15 +292,6 @@ public class CreateGame extends JFrame implements ActionListener {
 			}
 		}
 	}
-	
-//	public String getName() {
-//		return name;
-//	}
-//	
-//	public String getIP() {
-//		return IP;
-//	}
-	
 	
 	public static void main(String[] args) {
 	

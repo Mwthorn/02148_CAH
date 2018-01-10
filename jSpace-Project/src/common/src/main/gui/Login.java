@@ -33,7 +33,7 @@ public class Login extends JFrame implements ActionListener {
 
 	public Login(){
 		
-		//Using BorderLayout
+		// Using BorderLayout
 		getContentPane().setLayout(new BorderLayout());
 		
 		// Window dimensions
@@ -195,9 +195,9 @@ public class Login extends JFrame implements ActionListener {
 		PRight.setLayout(new BoxLayout(PRight, BoxLayout.PAGE_AXIS));
 		PRight.setBackground(Color.white);
 
-		PRight.add(Box.createRigidArea(new Dimension(365,250)));
+		PRight.add(Box.createRigidArea(new Dimension(365,350)));
 		PRight.add(LFigure2);
-		PRight.add(Box.createRigidArea(new Dimension(365,200)));
+		PRight.add(Box.createRigidArea(new Dimension(365,50)));
 		PRight.add(BQuit);
 		PRight.add(Box.createRigidArea(new Dimension(365,50)));
 
