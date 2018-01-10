@@ -32,8 +32,7 @@ public class Client {
 				Thread.sleep(1000);
 
 				ArrayList<GamePreview> gp = getGameList();
-				System.out.println(gp.get(1).getId());
-				joinGame(gp.get(1).getId());
+				joinGame(gp.get(0).getId());
 				
 				// 3 threads
 				//gameLobby();
@@ -96,16 +95,16 @@ public class Client {
 		for (int i = 0; i < n; i++) {
 			gT = lobby.get(new ActualField("GameList"),
 					new ActualField(userID),
-					new FormalField(Game.class));
+					new FormalField(GamePreview.class));
 			games.add((GamePreview) gT[2]);
 		}
 		return games;
 	}
 
 	public static void joinGame(int gameID) throws InterruptedException {
-		lobby.put("lobby", "joinGame", userID, gameID);
-
-		String stringID = Integer.toString(userID);
+		System.out.println("Trying to join gameID: " + gameID);
+		lobby.put("lobby", "joinGame", Integer.toString(userID), gameID);
+		
 		Object[] info = lobby.get(new ActualField("joinedGame"), new ActualField(userID), new FormalField(Integer.class));
 		int gameSlot = (int) info[2];
 
@@ -167,12 +166,25 @@ public class Client {
 		}
 	}
 	
-	private static void lobby(){
+	private static void lobby(int buttonPressed, int gameID) throws InterruptedException{
 		// Create lobby GUI.
 		
-		// Respond to stuff in the lobby here.
+		if (buttonPressed == 0){ // Join game button clicked
+			joinGame(gameID);
+		} else if (buttonPressed == 1){ // Create game button clicked
+			createNewGame();
+		} else if (buttonPressed == 2){ // Refresh game list buttton clicked
+			getGameList();
+		} else if (buttonPressed == 3){ // Sign out buttton clicked
+			signOut();
+		}
+		
 	}
 	
+	private static void signOut() {
+		
+	}
+
 	private static void gameLobby() {
 		// Create game lobby GUI.
 		
@@ -206,11 +218,6 @@ public class Client {
 		
 		// TODO: Leave game: Return the player to the main lobby, adjust tuple spaces.
     	// Update GUI, change from game tuple space to lobby tuple space, adjust other players GUI by sending message to server.
-		
-		
-		
-		
-		
 	}
 	
 	private static void talker (int buttonPressed){
