@@ -14,8 +14,7 @@ public class MainGUI extends JFrame{
 	// CONSTRUCTOR
 	public MainGUI(){
 
-		Login newLogin = new Login();
-		newLogin.setVisible(true);
+		new Login().setVisible(true);
 		
 	}
 }
