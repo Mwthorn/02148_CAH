@@ -97,7 +97,8 @@ public class Lobby extends JFrame implements ActionListener{
 		//Creates panel for buttons
 		JPanel p1 = new JPanel();
 
-		p1.setLayout(new FlowLayout(FlowLayout.CENTER));
+		FlowLayout flow = new FlowLayout(FlowLayout.CENTER);
+		p1.setLayout(flow);
 		p1.setBackground(Color.WHITE);
 //		p1.add(Box.createRigidArea(new Dimension(0,100)));
 		p1.add(b2);
@@ -108,6 +109,9 @@ public class Lobby extends JFrame implements ActionListener{
 //		p1.add(Box.createHorizontalGlue());
 		p1.add(b1);
 
+		flow.setHgap(30);
+		
+		
 		getContentPane().add(p1, BorderLayout.SOUTH);
 
 		//Creates panel for labels
