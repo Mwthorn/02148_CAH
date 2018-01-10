@@ -9,9 +9,7 @@ import org.jspace.FormalField;
 import org.jspace.SequentialSpace;
 import org.jspace.SpaceRepository;
 
-import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.Objects;
+import java.util.*;
 
 public class Game implements Runnable {
 
@@ -24,6 +22,7 @@ public class Game implements Runnable {
     private String status;
     private int id;
     private int hostID;
+    private int currentTurn;
     private int gameSlot;
 
     SpaceRepository repository = new SpaceRepository();
@@ -48,6 +47,8 @@ public class Game implements Runnable {
         this.gameName = gameName;
         this.whiteCards = whiteCards;
         this.blackCards = blackCards;
+        Collections.shuffle(this.whiteCards);
+        Collections.shuffle(this.blackCards);
         this.password = null;
         this.serverLobby = serverLobby;
         this.maxPlayers = maxPlayers;
@@ -110,10 +111,68 @@ public class Game implements Runnable {
     }
 
 	private void startGame() {
-		// TODO: This is where all the in-game stuff happens.
+		// This is where all the in-game stuff happens.
 		// TODO: At first, initialise the game for all players, then add actual game stuff
-		
+
+        for (Player player : players) {
+            game.put("updateLobby", "start", player.getId(), player.getGameSlot());
+
+            ArrayList<WhiteCard> cards = new ArrayList<>();
+            for(int i = 0; i < 10; i++) {
+                WhiteCard card = takeWhiteCard();
+                cards.add(card);
+                // STRING - INT - STRING
+                game.put("white", player.getId(), card.getSentence());
+            }
+            player.setWhiteCards(cards);
+        }
+
+        Random rand = new Random();
+        int n = rand.nextInt(players.size()) - 1;
+        this.currentTurn = n;
+        nextRound();
 	}
+
+    public void nextRound() {
+        this.currentTurn++;
+
+        // Makes sure that all players have 10 white cards each
+        fillWhiteCards();
+
+        // Show black card to players
+        BlackCard blackCard = takeBlackCard();
+        for (Player player : players) {
+            // STRING - INT - STRING - INT
+            game.put("black", player.getId(), blackCard.getSentence(), blackCard.getBlanks());
+        }
+
+        // TODO: Listen on players to pick their white card
+
+    }
+
+    public void fillWhiteCards() {
+        for (Player player : players) {
+            int n = player.getWhiteCards().size();
+            for (int i = n; i < 10; i++) {
+                WhiteCard card = takeWhiteCard();
+                player.addWhiteCard(card);
+                // STRING - INT - STRING
+                game.put("white", player.getId(), card.getSentence());
+            }
+        }
+    }
+
+    public WhiteCard takeWhiteCard() {
+        WhiteCard card = whiteCards.get(0);
+        whiteCards.remove(0);
+        return card;
+    }
+
+    public BlackCard takeBlackCard() {
+        BlackCard card = blackCards.get(0);
+        blackCards.remove(0);
+        return card;
+    }
 	
 	private Player getPlayerwithID(int id) {
 	        for (Player player : players) {

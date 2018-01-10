@@ -1,5 +1,9 @@
 package common.src.main.server;
 
+import common.src.main.server.utilities.WhiteCard;
+
+import java.util.ArrayList;
+
 public class Player {
 
     private String name;
@@ -7,6 +11,7 @@ public class Player {
     private int id;
     private boolean ready;
     private GameSlot gameSlot;
+    private ArrayList<WhiteCard> whiteCards;
 
     public Player(String name, int id) {
         this.name = name;
@@ -24,6 +29,22 @@ public class Player {
         this.points = player.getPoints();
         this.id = player.getId();
         this.ready = player.getReady();
+    }
+
+    public void setWhiteCards(ArrayList<WhiteCard> whiteCards) {
+        this.whiteCards = whiteCards;
+    }
+
+    public void addWhiteCard(WhiteCard whiteCard) {
+        this.whiteCards.add(whiteCard);
+    }
+
+    public void removeWhiteCard(int index) {
+        this.whiteCards.remove(index);
+    }
+
+    public ArrayList<WhiteCard> getWhiteCards() {
+        return this.whiteCards;
     }
 
     public int getPoints() {
@@ -58,5 +79,7 @@ public class Player {
 	public GameSlot getGameSlot() {
 		return this.gameSlot;
 	}
+
+
 
 }
