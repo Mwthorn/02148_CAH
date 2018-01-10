@@ -14,6 +14,9 @@ public class Player {
         this.id = id;
         
         ready = false;
+        
+        // TODO: Find a way to add the correct gameslot.
+        this.gameSlot = new GameSlot(0, name, true);
     }
 
     public Player(Player player) {

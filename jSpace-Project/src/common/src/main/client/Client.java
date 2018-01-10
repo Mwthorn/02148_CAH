@@ -57,6 +57,7 @@ public class Client {
 			game = new RemoteSpace("tcp://" + serverIP + ":9001/game" + gameSlot + "?keep");
 			
 			game.put("testing");
+			// gameLobby();
 			
 		} catch (InterruptedException e) {
 			e.printStackTrace();
@@ -122,6 +123,7 @@ public class Client {
 		}
 
 		game.put("testing");
+		// gameLobby();
 	}
 
 	public static ArrayList<Player> getPlayers() throws InterruptedException {
@@ -172,7 +174,15 @@ public class Client {
 		}
 	}
 	
+	private static void lobby(){
+		// Create lobby GUI.
+		
+		// Respond to stuff in the lobby here.
+	}
+	
 	private static void gameLobby() {
+		// Create game lobby GUI.
+		
 		// Setup of a local tuple space.
 		Space local = new SequentialSpace();
 		
@@ -186,16 +196,14 @@ public class Client {
 			try {
 				tuple = local.get(new ActualField("local"),new FormalField(String.class), new FormalField(GameSlot.class));
 				System.out.println("Local Lobby: Got response: " + tuple[1]);
-		        if (tuple[1].equals("ready")) {
-					// TODO: Ready button: A toggle option to be ready/not be ready.
-		        	// Update personal GUI
-		        } else if (tuple[1].equals("start")){
+		        if (tuple[1].equals("start")){
 		        	// TODO: Start game: A button for the host, possibly to entirely replace his ready button.
 		        	// Starts the game, many stuff happens.
 		        } else if (tuple[1].equals("update")){
 		        	// TODO: Update from the server, update relevant GUI.
-		        	// Possible updates: User joins, user leaves, user checks ready, user unchecks ready.
+		        	// Occurs when a player joins/leaves/changes ready state, will fully update a specified game slot.
 		        } else if (tuple[1].equals("leave")){
+		        	// Call the lobby function.
 		        	break;
 		        }
 			} catch (InterruptedException e) {

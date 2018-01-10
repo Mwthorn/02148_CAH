@@ -119,25 +119,26 @@ public class Game implements Runnable {
 		
 		for (int i = 0; i < players.size(); i++) {
 			int recieverID = players.get(i).getId();
-			game.put("updateLobby","ready", recieverID, actor.getGameSlot());
+			game.put("updateLobby","update", recieverID, actor.getGameSlot());
 		}
 	}
-	
-	
 	
     private void playerLeavesGame(int playerID) {
 		Player actor = getPlayerwithID(playerID);
 		players.remove(actor);
 		
+		game.put("updateLobby","leave",actor.getId(), null);
 		for (int i = 0; i < players.size(); i++) {
 			int recieverID = players.get(i).getId();
-			game.put("updateLobby","ready", recieverID, actor.getGameSlot());
+			game.put("updateLobby","update", recieverID, new GameSlot(0, "", false));
 		}
-
 	}
     
-    private void playerJoinsGame(int playerID) {
-
+    public void playerJoinsGame(Player actor) {
+		for (int i = 0; i < players.size(); i++) {
+			int recieverID = players.get(i).getId();
+			game.put("updateLobby","update", recieverID, actor.getGameSlot());
+		}
 	}
 
 	public String getGameName() {
