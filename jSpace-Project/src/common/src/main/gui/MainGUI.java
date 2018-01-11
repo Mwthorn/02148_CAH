@@ -23,6 +23,7 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JList;
 import javax.swing.JPanel;
+import javax.swing.JScrollPane;
 import javax.swing.JTextField;
 import javax.swing.ListSelectionModel;
 import javax.swing.border.Border;
@@ -480,30 +481,18 @@ public class MainGUI extends JFrame implements ActionListener {
 		//ArrayList<GamePreview> info;
 
 		DefaultListModel model = new DefaultListModel();
+		JScrollPane scrollPane = new JScrollPane(list);
 		list = new JList(model);
-
-		try {
-			if(Client.getGameList() == null){
-
-				model.addElement("There are currently no games available");
-
-			}
-			else{
-
+		list.ensureIndexIsVisible(list.getSelectedIndex());
+		list.setFont(new Font("AR JULIAN",Font.PLAIN,20));
+		list.setAlignmentX(CENTER_ALIGNMENT);
+		list.setAlignmentY(CENTER_ALIGNMENT);
+		
 				for (int i = 0; i < 5; i++) {
-					model.addElement(Client.getGameList().get(i).getGameName());
-					model.addElement(Client.getGameList().get(i).isPasswordProtected());
-					model.addElement(Client.getGameList().get(i).getGameStatus());
-					model.addElement(Client.getGameList().get(i).getCurrentPlayerSize());
-					model.addElement(Client.getGameList().get(i).getMaxPlayerSize());
+					model.addElement("string" + i);
+					
 				}
-			}
-		} catch (InterruptedException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch(NullPointerException e){
-			e.printStackTrace();
-		}
+		
 
 		list.setSelectionMode(ListSelectionModel.SINGLE_INTERVAL_SELECTION);
 		list.setVisibleRowCount(-1);
@@ -566,6 +555,8 @@ public class MainGUI extends JFrame implements ActionListener {
 
 		p5.setLayout(new BoxLayout(p5, BoxLayout.LINE_AXIS));
 		p5.setBackground(Color.WHITE);
+		p5.setAlignmentX(CENTER_ALIGNMENT);
+		p5.setAlignmentY(CENTER_ALIGNMENT);
 		p5.add(list);
 
 		mainLobby.add(p5, BorderLayout.CENTER);
