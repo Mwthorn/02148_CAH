@@ -71,7 +71,7 @@ public class Game implements Runnable {
 		
     	/* Game lobby */
     	while (true) {
-            // Communication Channel - Type of Action - Integer
+            // ???????Lobby - Type  of Action - String - Integer
             Object[] tuple;
             try {
                 tuple = game.get(new ActualField("game"), new FormalField(String.class), new FormalField(Integer.class));
@@ -97,6 +97,9 @@ public class Game implements Runnable {
             }
         }
         
+    	
+		
+    	// TODO: Respond to the messages and new players joining in real time.
     	// TODO: Chat?
     }
 
@@ -340,7 +343,7 @@ public class Game implements Runnable {
     	
         // Sends all players current game slot to the joining player.
         for (Player player : players){
-        	game.put("updateLobby", "update", actorID, player.getGameSlot());
+        	game.put("updateLobby", "update", actor.getId(), player.getGameSlot());
         }
         
     	// Adds the player to the game.

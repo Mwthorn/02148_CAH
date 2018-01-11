@@ -3,6 +3,7 @@ package common.src.main.gui;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Component;
+import java.awt.ComponentOrientation;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.Font;
@@ -23,6 +24,7 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JList;
 import javax.swing.JPanel;
+import javax.swing.JTextArea;
 import javax.swing.JTextField;
 import javax.swing.border.Border;
 
@@ -40,7 +42,7 @@ public class MainGUI extends JFrame implements ActionListener {
 
 	// Lobby
 	private static final String String = null;
-	private JButton b1, b2, b3, b4;
+	private JButton b1, b2, b3, b4, b5;
 	private JLabel l1,l2,l3,l4,l5;
 	private JTextField WP;
 	private static JList list;
@@ -48,7 +50,7 @@ public class MainGUI extends JFrame implements ActionListener {
 	// Create Game
 	private JButton BCreateGame;
 	private JLabel  LRounds, LTime, LPass, LPassword;
-	private JTextField txtfld3, txtfld4, txtfld5;
+	private JTextField txtfld3, txtfld4, txtfld5, txtfld6;
 
 
 
@@ -762,6 +764,102 @@ public class MainGUI extends JFrame implements ActionListener {
 			hideAll();
 			mainLobby.setVisible(true);
 			add(mainLobby);
+			
+			
+		} else if (e.getSource() == b3) {
+			// THIS NEEDS TO CHECK IF GAME HAS PASSWORD AS WELL
+
+			JFrame rules = new JFrame("Rules");
+			rules.setLayout(new BorderLayout());
+			rules.setVisible(true);
+			rules.setResizable(false);
+			rules.setSize(600,200);
+			rules.setLocationRelativeTo(null);
+
+			
+			JButton b9 = new JButton();
+			b9 = new JButton("Back");
+			b9.setPreferredSize(new Dimension(120, 20));
+			b9.setBorder(new RoundedBorder(30));
+			b9.setBackground(Color.white);
+			b9.setForeground(Color.black);
+			b9.addActionListener(this);
+			b9.setAlignmentX(Component.CENTER_ALIGNMENT);
+			b9.setFont(new Font("calibri",1,21));
+			b9.setBorderPainted(true);
+			b9.setFocusPainted(false);
+			b9.setEnabled(true);
+			
+			JButton b10 = new JButton();
+			b10 = new JButton("Join");
+			b10.setPreferredSize(new Dimension(120, 20));
+			b10.setBorder(new RoundedBorder(30));
+			b10.setBackground(Color.white);
+			b10.setForeground(Color.black);
+			b10.addActionListener(this);
+			b10.setAlignmentX(Component.CENTER_ALIGNMENT);
+			b10.setFont(new Font("calibri",1,21));
+			b10.setBorderPainted(true);
+			b10.setFocusPainted(false);
+			b10.setEnabled(true);
+
+			//Den lukker Rules JFrame hvis man klikker pÂ den button, som er pÂ den. 
+			b9.addActionListener(new ActionListener() {
+
+				public void actionPerformed(ActionEvent e){    	
+					rules.dispose();
+				}
+			});
+			
+			//Laver Jpanel til det
+			JPanel panel = new JPanel();
+			
+			
+			JPanel panelcenter = new JPanel();
+			FlowLayout flow = new FlowLayout();
+			panelcenter.setLayout(flow);
+			panelcenter.setBackground(Color.WHITE);
+
+			// Name Label
+			l4 = new JLabel("Enter Password:");
+			l4.setMaximumSize(lsize);
+			l4.setFont(new Font("calibri",Font.PLAIN,30));
+			l4.setAlignmentX(Component.CENTER_ALIGNMENT);
+			
+			// Name textfield
+			txtfld6 = new JTextField(15);
+			txtfld6.setMaximumSize(txtfldsize);
+			txtfld6.setFont(new Font("calibri",Font.PLAIN,20));
+			txtfld6.setAlignmentX(Component.CENTER_ALIGNMENT);
+			
+			panelcenter.add(l4);
+			panelcenter.add(txtfld6);
+			panelcenter.setComponentOrientation(ComponentOrientation.LEFT_TO_RIGHT);
+
+			
+			JPanel panelsouth = new JPanel();
+
+			FlowLayout flow1 = new FlowLayout(FlowLayout.CENTER);
+			panelsouth.setLayout(flow1);
+			panelsouth.setBackground(Color.WHITE);
+			panelsouth.add(Box.createRigidArea(new Dimension(0,40)));
+			panelsouth.add(b9);
+			panelsouth.add(b10);
+			panelsouth.add(Box.createRigidArea(new Dimension(0,5)));
+			
+			flow1.setHgap(10);
+			
+			rules.add(panel);
+
+			//SÊtter tekstfelt og button pÂ JPanel
+			panel.setLayout(new BoxLayout(panel, BoxLayout.PAGE_AXIS));
+			panel.add(Box.createRigidArea(new Dimension(200,40)));
+			panel.add(panelcenter, BorderLayout.CENTER);
+			panel.add(Box.createRigidArea(new Dimension(200,10)));
+			panel.add(panelsouth, BorderLayout.SOUTH);
+			panel.add(Box.createRigidArea(new Dimension(200,10)));
+			panel.setBackground(Color.WHITE);
+
 			
 		}
 
