@@ -12,9 +12,7 @@ import java.awt.Image;
 import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.io.IOException;
 import java.util.ArrayList;
-
 import javax.swing.BorderFactory;
 import javax.swing.Box;
 import javax.swing.BoxLayout;
@@ -25,7 +23,6 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JList;
 import javax.swing.JPanel;
-import javax.swing.JTextArea;
 import javax.swing.JTextField;
 import javax.swing.ListSelectionModel;
 import javax.swing.border.Border;
@@ -45,7 +42,7 @@ public class MainGUI extends JFrame implements ActionListener {
 	// Lobby
 	private static final String String = null;
 	private JButton b1, b2, b3, b4, b5;
-	private JLabel l1,l2,l3,l4,l5;
+	private JLabel l1, l2, l3, l4, l5, l6;
 	private JTextField WP;
 	private static JList list;
 
@@ -141,6 +138,73 @@ public class MainGUI extends JFrame implements ActionListener {
 		mainLogin.setVisible(false);
 		mainLobby.setVisible(false);
 		mainCreate.setVisible(false);
+
+	}
+
+	public void ErrorPopup(){
+
+		JFrame Error = new JFrame("Error Occurred");
+		Error.setLayout(new BorderLayout());
+		Error.setVisible(true);
+		Error.setResizable(false);
+		Error.setSize(500,200);
+		Error.setLocationRelativeTo(null);
+
+		JButton BOK = new JButton();
+		BOK = new JButton("OK");
+		BOK.setMaximumSize(new Dimension(90, 40));
+		BOK.setBorder(new RoundedBorder(30));
+		BOK.setBackground(Color.white);
+		BOK.setForeground(Color.RED);
+		BOK.addActionListener(this);
+		BOK.setAlignmentX(Component.CENTER_ALIGNMENT);
+		BOK.setFont(new Font("calibri",1,21));
+		BOK.setBorderPainted(true);
+		BOK.setFocusPainted(false);
+		BOK.setEnabled(true);
+
+		// Name Label
+		l6 = new JLabel("WARNING: ERROR OCCURRED!");
+		l6.setMaximumSize(new Dimension(400, 40));
+		l6.setFont(new Font("calibri",Font.PLAIN,30));
+		l6.setAlignmentX(Component.CENTER_ALIGNMENT);
+		l6.setForeground(Color.RED);
+
+		//		panelcenter.add(l4);
+		//
+		//		//SÊtter tekstfelt og button pÂ JPanel
+		//		panel.setLayout(new BoxLayout(panel, BoxLayout.PAGE_AXIS));
+		//		panel.add(Box.createRigidArea(new Dimension(200,40)));
+		//		panel.add(panelcenter, BorderLayout.CENTER);
+		//		panel.add(Box.createRigidArea(new Dimension(200,10)));
+		//		panel.setBackground(Color.WHITE);
+
+		//Laver Jpanel til det
+		JPanel panel = new JPanel();
+		panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
+		panel.setBackground(Color.WHITE);
+		
+
+		//		JPanel panelcenter = new JPanel();
+		//		FlowLayout flow = new FlowLayout();
+		//		panelcenter.setLayout(flow);
+		//		panelcenter.setBackground(Color.WHITE);
+
+		panel.add(Box.createRigidArea(new Dimension(400,10)));
+		panel.add(l6);
+		panel.add(Box.createRigidArea(new Dimension(400,10)));
+		panel.add(BOK);
+		panel.add(Box.createRigidArea(new Dimension(400,10)));
+
+		Error.add(panel);
+
+		//Den lukker Rules JFrame hvis man klikker pÂ den button, som er pÂ den. 
+		BOK.addActionListener(new ActionListener() {
+
+			public void actionPerformed(ActionEvent e){    	
+				Error.dispose();
+			}
+		});
 
 	}
 
@@ -796,6 +860,9 @@ public class MainGUI extends JFrame implements ActionListener {
 			mainLobby.setVisible(true);
 			add(mainLobby);
 
+			
+		} else if (e.getSource() == b4) {
+			ErrorPopup();
 
 		} else if (e.getSource() == b3) {
 			// THIS NEEDS TO CHECK IF GAME HAS PASSWORD AS WELL
