@@ -474,10 +474,11 @@ public class MainGUI extends JFrame implements ActionListener {
 		mainLobby.add(p5, BorderLayout.CENTER);
 		 */
 
-
+	}
+	
 		/////////////////////////////////////////////// LOBBY //////////////////////////////////////////////////////////////////
 
-	}
+	
 
 
 	public void runCreate(){
