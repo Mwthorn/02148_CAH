@@ -64,14 +64,14 @@ public class MainGUI extends JFrame implements ActionListener {
 
 	public static void main(String[] args) throws InterruptedException {
 
-		/*MainGUI main = new MainGUI();
+		MainGUI main = new MainGUI();
 
 		main.setTitle("Cards Against Humanity");
 		main.setSize(1900,1000);
 		main.setResizable(true);
 		main.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		main.setVisible(true);
-		main.setLocationRelativeTo(null);*/
+		main.setLocationRelativeTo(null);
 
 	}
 
