@@ -12,9 +12,7 @@ import java.awt.Image;
 import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.io.IOException;
 import java.util.ArrayList;
-
 import javax.swing.BorderFactory;
 import javax.swing.Box;
 import javax.swing.BoxLayout;
@@ -24,7 +22,6 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JList;
 import javax.swing.JPanel;
-import javax.swing.JTextArea;
 import javax.swing.JTextField;
 import javax.swing.border.Border;
 
@@ -43,7 +40,7 @@ public class MainGUI extends JFrame implements ActionListener {
 	// Lobby
 	private static final String String = null;
 	private JButton b1, b2, b3, b4, b5;
-	private JLabel l1,l2,l3,l4,l5;
+	private JLabel l1, l2, l3, l4, l5, l6;
 	private JTextField WP;
 	private static JList list;
 
@@ -140,6 +137,73 @@ public class MainGUI extends JFrame implements ActionListener {
 		mainLogin.setVisible(false);
 		mainLobby.setVisible(false);
 		mainCreate.setVisible(false);
+
+	}
+
+	public void ErrorPopup(){
+
+		JFrame Error = new JFrame("Error Occurred");
+		Error.setLayout(new BorderLayout());
+		Error.setVisible(true);
+		Error.setResizable(false);
+		Error.setSize(500,200);
+		Error.setLocationRelativeTo(null);
+
+		JButton BOK = new JButton();
+		BOK = new JButton("OK");
+		BOK.setMaximumSize(new Dimension(90, 40));
+		BOK.setBorder(new RoundedBorder(30));
+		BOK.setBackground(Color.white);
+		BOK.setForeground(Color.RED);
+		BOK.addActionListener(this);
+		BOK.setAlignmentX(Component.CENTER_ALIGNMENT);
+		BOK.setFont(new Font("calibri",1,21));
+		BOK.setBorderPainted(true);
+		BOK.setFocusPainted(false);
+		BOK.setEnabled(true);
+
+		// Name Label
+		l6 = new JLabel("WARNING: ERROR OCCURRED!");
+		l6.setMaximumSize(new Dimension(400, 40));
+		l6.setFont(new Font("calibri",Font.PLAIN,30));
+		l6.setAlignmentX(Component.CENTER_ALIGNMENT);
+		l6.setForeground(Color.RED);
+
+		//		panelcenter.add(l4);
+		//
+		//		//SÊtter tekstfelt og button pÂ JPanel
+		//		panel.setLayout(new BoxLayout(panel, BoxLayout.PAGE_AXIS));
+		//		panel.add(Box.createRigidArea(new Dimension(200,40)));
+		//		panel.add(panelcenter, BorderLayout.CENTER);
+		//		panel.add(Box.createRigidArea(new Dimension(200,10)));
+		//		panel.setBackground(Color.WHITE);
+
+		//Laver Jpanel til det
+		JPanel panel = new JPanel();
+		panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
+		panel.setBackground(Color.WHITE);
+		
+
+		//		JPanel panelcenter = new JPanel();
+		//		FlowLayout flow = new FlowLayout();
+		//		panelcenter.setLayout(flow);
+		//		panelcenter.setBackground(Color.WHITE);
+
+		panel.add(Box.createRigidArea(new Dimension(400,10)));
+		panel.add(l6);
+		panel.add(Box.createRigidArea(new Dimension(400,10)));
+		panel.add(BOK);
+		panel.add(Box.createRigidArea(new Dimension(400,10)));
+
+		Error.add(panel);
+
+		//Den lukker Rules JFrame hvis man klikker pÂ den button, som er pÂ den. 
+		BOK.addActionListener(new ActionListener() {
+
+			public void actionPerformed(ActionEvent e){    	
+				Error.dispose();
+			}
+		});
 
 	}
 
@@ -477,10 +541,10 @@ public class MainGUI extends JFrame implements ActionListener {
 		 */
 
 	}
-	
-		/////////////////////////////////////////////// LOBBY //////////////////////////////////////////////////////////////////
 
-	
+	/////////////////////////////////////////////// LOBBY //////////////////////////////////////////////////////////////////
+
+
 
 
 	public void runCreate(){
@@ -752,7 +816,7 @@ public class MainGUI extends JFrame implements ActionListener {
 			hideAll();
 			mainCreate.setVisible(true);
 			add(mainCreate);
-			
+
 		} else if(e.getSource()==b2) {
 
 			hideAll();
@@ -760,12 +824,14 @@ public class MainGUI extends JFrame implements ActionListener {
 			add(mainLogin);
 
 		} else if (e.getSource() == BBack) {
-			
+
 			hideAll();
 			mainLobby.setVisible(true);
 			add(mainLobby);
 			
-			
+		} else if (e.getSource() == b4) {
+			ErrorPopup();
+
 		} else if (e.getSource() == b3) {
 			// THIS NEEDS TO CHECK IF GAME HAS PASSWORD AS WELL
 
@@ -776,7 +842,7 @@ public class MainGUI extends JFrame implements ActionListener {
 			rules.setSize(600,200);
 			rules.setLocationRelativeTo(null);
 
-			
+
 			JButton b9 = new JButton();
 			b9 = new JButton("Back");
 			b9.setPreferredSize(new Dimension(120, 20));
@@ -789,7 +855,7 @@ public class MainGUI extends JFrame implements ActionListener {
 			b9.setBorderPainted(true);
 			b9.setFocusPainted(false);
 			b9.setEnabled(true);
-			
+
 			JButton b10 = new JButton();
 			b10 = new JButton("Join");
 			b10.setPreferredSize(new Dimension(120, 20));
@@ -810,11 +876,11 @@ public class MainGUI extends JFrame implements ActionListener {
 					rules.dispose();
 				}
 			});
-			
+
 			//Laver Jpanel til det
 			JPanel panel = new JPanel();
-			
-			
+
+
 			JPanel panelcenter = new JPanel();
 			FlowLayout flow = new FlowLayout();
 			panelcenter.setLayout(flow);
@@ -825,18 +891,18 @@ public class MainGUI extends JFrame implements ActionListener {
 			l4.setMaximumSize(lsize);
 			l4.setFont(new Font("calibri",Font.PLAIN,30));
 			l4.setAlignmentX(Component.CENTER_ALIGNMENT);
-			
+
 			// Name textfield
 			txtfld6 = new JTextField(15);
 			txtfld6.setMaximumSize(txtfldsize);
 			txtfld6.setFont(new Font("calibri",Font.PLAIN,20));
 			txtfld6.setAlignmentX(Component.CENTER_ALIGNMENT);
-			
+
 			panelcenter.add(l4);
 			panelcenter.add(txtfld6);
 			panelcenter.setComponentOrientation(ComponentOrientation.LEFT_TO_RIGHT);
 
-			
+
 			JPanel panelsouth = new JPanel();
 
 			FlowLayout flow1 = new FlowLayout(FlowLayout.CENTER);
@@ -846,9 +912,9 @@ public class MainGUI extends JFrame implements ActionListener {
 			panelsouth.add(b9);
 			panelsouth.add(b10);
 			panelsouth.add(Box.createRigidArea(new Dimension(0,5)));
-			
+
 			flow1.setHgap(10);
-			
+
 			rules.add(panel);
 
 			//SÊtter tekstfelt og button pÂ JPanel
@@ -860,7 +926,7 @@ public class MainGUI extends JFrame implements ActionListener {
 			panel.add(Box.createRigidArea(new Dimension(200,10)));
 			panel.setBackground(Color.WHITE);
 
-			
+
 		}
 
 
