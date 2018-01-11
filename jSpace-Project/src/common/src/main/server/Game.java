@@ -72,7 +72,7 @@ public class Game implements Runnable {
 		
     	/* Game lobby */
     	while (true) {
-            // ???????Lobby - Type  of Action - String - Integer
+            // Communication Channel - Type of Action - Integer
             Object[] tuple;
             try {
                 tuple = game.get(new ActualField("game"), new FormalField(String.class), new FormalField(Integer.class));
@@ -98,9 +98,6 @@ public class Game implements Runnable {
             }
         }
         
-    	
-		
-    	// TODO: Respond to the messages and new players joining in real time.
     	// TODO: Chat?
     }
 
@@ -301,11 +298,20 @@ public class Game implements Runnable {
         player.addPoints(i);
     }
 
-    public void addPlayerToGame(Player actor) {
+    public int addPlayerToGame(Player actor) {
+    	int actorID = actor.getId();
+    	// Checks if the player is already in the game
+    	for (Player player : players) {
+			if (player.getId() == actorID) {
+				System.out.println(actor.getName()+" is already in the game.");
+				// TODO: Add a return tuple to the player if the game is full
+				return 0;
+			}
+		}
     	
         // Sends all players current game slot to the joining player.
         for (Player player : players){
-        	game.put("updateLobby","update",actor.getId(), player.getGameSlot());
+        	game.put("updateLobby", "update", actorID, player.getGameSlot());
         }
         
     	// Adds the player to the game.
@@ -324,6 +330,7 @@ public class Game implements Runnable {
         for (Player player : players) {
             game.put("updateLobby", "update", player.getId(), actor.getGameSlot());
         }
+        return 0;
     }
 
     public void setStatus(String status) {
