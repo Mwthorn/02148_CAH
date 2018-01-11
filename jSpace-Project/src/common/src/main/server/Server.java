@@ -84,8 +84,8 @@ public class Server {
     } // End of main();
     
 	public static void createNewGame(String gameName, int hostID) throws InterruptedException {
-        int gameSlot = 0;
         int gameId = gameBase.getUniqueID();
+        int gameSlot = gameId;
         int maxPlayers = 8;
         Player player = playerBase.getPlayerwithID(hostID);
         

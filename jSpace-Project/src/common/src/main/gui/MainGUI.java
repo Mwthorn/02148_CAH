@@ -48,6 +48,8 @@ public class MainGUI extends JFrame implements ActionListener {
 	private JLabel l1, l2, l3, l4, l5, l6;
 	private JTextField WP;
 	private static JList list;
+	private JPanel availableGames;
+	private JScrollPane scrollPaneMain;
 
 	// Create Game
 	private JButton BCreateGame;
@@ -55,6 +57,7 @@ public class MainGUI extends JFrame implements ActionListener {
 	private JTextField txtfld3, txtfld4, txtfld5, txtfld6;
 
 	// Games available list
+	private int gameSelected;
 	private int numberOfGames;
 	private int maxGames = 42;
 	private ArrayList<GamePreview> games;
@@ -64,14 +67,14 @@ public class MainGUI extends JFrame implements ActionListener {
 
 	public static void main(String[] args) throws InterruptedException {
 
-		MainGUI main = new MainGUI();
+		/*MainGUI main = new MainGUI();
 
 		main.setTitle("Cards Against Humanity");
 		main.setSize(1900,1000);
 		main.setResizable(true);
 		main.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		main.setVisible(true);
-		main.setLocationRelativeTo(null);
+		main.setLocationRelativeTo(null);*/
 
 	}
 
@@ -486,59 +489,6 @@ public class MainGUI extends JFrame implements ActionListener {
 		//MainGUI lob = new MainGUI();
 		//ArrayList<GamePreview> info;
 
-		DefaultListModel model = new DefaultListModel();
-		list = new JList(model);	
-
-		JScrollPane scrollPane = new JScrollPane(list);
-
-		scrollPane.setPreferredSize(new Dimension(1000, 650));
-
-		list.setSelectionMode(ListSelectionModel.SINGLE_INTERVAL_SELECTION);
-		list.setVisibleRowCount(-1);
-		list.setLayoutOrientation(JList.VERTICAL);
-		list.ensureIndexIsVisible(list.getSelectedIndex());
-		list.setFont(new Font("calibri",Font.PLAIN,25));
-		list.setBorder(BorderFactory.createMatteBorder(4, 4, 4, 4, Color.black));			
-
-
-		//		GamePreview game = new GamePreview("Jonas","WAITING",);
-
-		String name = "Jonas";
-		String status = "WAITING";
-		Boolean lock = true;
-		int current = 7;
-		int max = 8;
-		int id = 4738920;
-		String islocked = "";
-
-		String blank = "          ";
-
-		//		ArrayList<GamePreview> games = Client.getGameList();
-		//		
-		//		numberOfGames = games.size();
-
-		//		if (numberOfGames == 0) {
-		//			model.addElement(name+blank+status+blank+islocked+blank+Integer.toString(current)+"/"+Integer.toString(max));
-		//		}
-
-		for (int i = 0; i < 15; i++) {
-
-			if (lock == true) {
-				islocked = "LOCKED";
-			} else {
-				islocked = "      ";
-			}
-			
-//			name = games.get(i).getGameName();
-//			status = games.get(i).getGameStatus();
-//			lock = games.get(i).isPasswordProtected();
-//			current = games.get(i).getCurrentPlayerSize();
-//			max = games.get(i).getMaxPlayerSize();
-			
-			model.addElement(name+blank+status+blank+islocked+blank+Integer.toString(current)+"/"+Integer.toString(max));
-
-		}
-
 		//Creates panel for buttons
 		JPanel p1 = new JPanel();
 
@@ -589,20 +539,59 @@ public class MainGUI extends JFrame implements ActionListener {
 
 		mainLobby.setVisible(false);
 
-		// Panel for list of games available
 
-		JPanel p5 = new JPanel();
+	}
+	
+	public void loadAvailableGames(){
+		
+		// Panel for list of games available
+		availableGames = new JPanel();
+		DefaultListModel model = new DefaultListModel();
+		list = new JList(model);	
+
+		scrollPaneMain = new JScrollPane(list);
+		scrollPaneMain.setPreferredSize(new Dimension(1000, 650));
+
+		list.setSelectionMode(ListSelectionModel.SINGLE_INTERVAL_SELECTION);
+		list.setVisibleRowCount(-1);
+		list.setLayoutOrientation(JList.VERTICAL);
+		list.ensureIndexIsVisible(list.getSelectedIndex());
+		list.setFont(new Font("calibri",Font.PLAIN,25));
+		list.setBorder(BorderFactory.createMatteBorder(4, 4, 4, 4, Color.black));			
+
+		try {
+			games = Client.getGameList();
+		} catch (InterruptedException e) { e.printStackTrace(); }
+		
+		numberOfGames = games.size();
+		
+		String blank = "          ";
+		for (int i = 0; i < numberOfGames; i++) {
+			if (games.get(i) != null){
+				String name = games.get(i).getGameName();
+				String status = games.get(i).getGameStatus();
+				boolean lock = games.get(i).isPasswordProtected();
+				int current = games.get(i).getCurrentPlayerSize();
+				int max = games.get(i).getMaxPlayerSize();
+				String islocked;
+				
+				if (lock == true) {
+					islocked = "LOCKED";
+				} else {
+					islocked = "      ";
+				}
+				
+				model.addElement(name+blank+status+blank+islocked+blank+Integer.toString(current)+"/"+Integer.toString(max));
+			}
+		}
 
 		//		p5.setLayout(new BoxLayout(p5, BoxLayout.LINE_AXIS));
-		p5.setBackground(Color.WHITE);
-		p5.setAlignmentX(CENTER_ALIGNMENT);
-		p5.setAlignmentY(CENTER_ALIGNMENT);
+		availableGames.setBackground(Color.WHITE);
+		availableGames.setAlignmentX(CENTER_ALIGNMENT);
+		availableGames.setAlignmentY(CENTER_ALIGNMENT);
 		//				p5.add(list);
-		p5.add(scrollPane, BorderLayout.CENTER);
-
-		mainLobby.add(p5, BorderLayout.CENTER);
-
-
+		availableGames.add(scrollPaneMain, BorderLayout.CENTER);
+		mainLobby.add(availableGames, BorderLayout.CENTER);
 	}
 
 	/////////////////////////////////////////////// LOBBY //////////////////////////////////////////////////////////////////
@@ -856,21 +845,23 @@ public class MainGUI extends JFrame implements ActionListener {
 			System.exit(0);
 
 		} else if (e.getSource() == BSignIn){
-			this.name = txtfld1.getText();
-			this.IP = txtfld2.getText();
-
-			//			try {
-			//
-			//				Client.loginUser(IP, name);
-			//
-			//			} catch (Exception e1) {
-			//				txtfld2.setText("Invalid IP");
-			//			} 
+			//this.name = txtfld1.getText();
+			//this.IP = txtfld2.getText();
+			this.name = "alex";
+			this.IP = "127.0.0.1";
+						try {
+			
+							Client.loginUser(IP, name);
+			
+						} catch (Exception e1) {
+							txtfld2.setText("Invalid IP");
+						} 
 
 			System.out.println(name);
 			System.out.println(IP);
 
 			hideAll();
+			loadAvailableGames();
 			mainLobby.setVisible(true);
 			add(mainLobby);
 
@@ -893,8 +884,10 @@ public class MainGUI extends JFrame implements ActionListener {
 			add(mainLobby);
 
 
+		} else if (e.getSource() == BCreateGame){
+			Client.createNewGame();
 		} else if (e.getSource() == b4) {
-			ErrorPopup();
+			loadAvailableGames();
 
 			//		} else if (e.getSource() == b3) {
 			//			// THIS NEEDS TO CHECK IF GAME HAS PASSWORD AS WELL
@@ -996,17 +989,20 @@ public class MainGUI extends JFrame implements ActionListener {
 
 		if (e.getSource() == b3) {
 			
-			int index = list.getSelectedIndex();
-			System.out.println("Index Selected: "+ index);
+			int gameSelected = list.getSelectedIndex();
+			System.out.println("Index Selected: "+ gameSelected);
+			GamePreview preID = games.get(gameSelected);
+			int gameID = preID.getId();
 			
-			try {
-				
-				Client.joinGame(games.get(index).getId());
 			
-			} catch (InterruptedException e1) {
-				// TODO Auto-generated catch block
-				e1.printStackTrace();
-			}
+//			try {
+//				
+//				Client.joinGame(games.get(index).getId());
+//			
+//			} catch (InterruptedException e1) {
+//				// TODO Auto-generated catch block
+//				e1.printStackTrace();
+//			}
 			
 			
 			

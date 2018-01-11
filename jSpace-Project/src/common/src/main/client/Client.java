@@ -37,7 +37,7 @@ public class Client {
 		main.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		main.setVisible(true);
 		main.setLocationRelativeTo(null);
-		
+		/*
 			try {
 				
 				// Initialize tests to game lobby.
@@ -60,7 +60,7 @@ public class Client {
 
 			} catch (IOException | InterruptedException e) {
 				e.printStackTrace();
-			}
+			}*/
 	} // End of main function
 	
 	/*********************************************************************************************/
@@ -72,7 +72,8 @@ public class Client {
 		// when first signing in to the lobby.
 		// serverIP = "127.0.0.1";
 		// name = "Alex";
-		
+		System.out.println(IP);
+		System.out.println(name);
 		lobby = new RemoteSpace("tcp://" + IP + ":9001/lobby?keep");
 
 		//lobby.put("test");
@@ -84,8 +85,8 @@ public class Client {
 		System.out.println("Client was assigned ID: " + userID);
 	} // End of login user  function
 	
-	private static void createNewGame() {
-		lobby.put("lobby", "createGame", "no nobs plx", userID);
+	public static void createNewGame() {
+		lobby.put("lobby", "createGame", "sebastian er dum", userID);
 		
 		try {
 			System.out.println("Trying to recieve info");
@@ -120,6 +121,7 @@ public class Client {
 	} // End of joinGame function
 	
 	public static ArrayList<GamePreview> getGameList() throws InterruptedException {
+		System.out.println(userID);
 		lobby.put("lobby", "refreshGameList", "", userID);
 
 		Object[] tuple = lobby.get(new ActualField("GameListSize"), new ActualField(userID), new FormalField(Integer.class));
@@ -136,7 +138,7 @@ public class Client {
 		return games;
 	} // end of getGameList function
 	
-	private static void signOut() {
+	public static void signOut() {
 		
 	}// End of signOut function
 	
