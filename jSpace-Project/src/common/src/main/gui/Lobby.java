@@ -1,16 +1,24 @@
-package common.src.main.gui;
+import java.awt.BorderLayout;
+import java.awt.Color;
+import java.awt.Component;
+import java.awt.Dimension;
+import java.awt.FlowLayout;
+import java.awt.Font;
+import java.awt.Image;
 
-import common.src.main.client.Client;
-import common.src.main.client.GamePreview;
+import javax.swing.Box;
+import javax.swing.BoxLayout;
+import javax.swing.ImageIcon;
+import javax.swing.JButton;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
 
-import javax.swing.*;
-import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.util.ArrayList;
+import common.src.main.gui.MainGUI.RoundedBorder;
 
-public class Lobby extends JFrame implements ActionListener{
+//Default layout
+		mainLobby.setBackground(Color.WHITE);
 
+<<<<<<< HEAD
 	private static final String String = null;
 	private JButton b1, b2, b3, b4;
 	private JLabel l1,l2,l3,l4,l5;
@@ -37,42 +45,63 @@ public class Lobby extends JFrame implements ActionListener{
 	public Lobby() throws InterruptedException {
 		getContentPane().setLayout(new BorderLayout()); //Default layout
 		getContentPane().setBackground(Color.WHITE);
+=======
+>>>>>>> 6596ac86be6e934d7f98d09d0c309214d378d9bf
 
 		//Create buttons
-		Dimension btnsize1 = new Dimension(200,80);
-		Dimension btnsize2 = new Dimension(130,40);
+		Dimension btnsize2 = new Dimension(180,70);
 
 		// Create game button
 		b1 = new JButton("Create Game");
 		b1.setPreferredSize(btnsize2);
-		b1.setBackground(Color.BLACK);
-		b1.setForeground(Color.WHITE);
+		b1.setBackground(Color.white);
+		b1.setForeground(Color.black);
 		b1.addActionListener(this);
+		b1.setBorder(new RoundedBorder(30));
 		b1.setAlignmentX(Component.CENTER_ALIGNMENT);
+		b1.setFont(new Font("calibri",1,21));
+		b1.setBorderPainted(true);
+		b1.setFocusPainted(false);
+		b1.setEnabled(true);
 
 		// Sign out button
 		b2 = new JButton("Sign Out");
 		b2.setPreferredSize(btnsize2);
-		b2.setBackground(Color.BLACK);
-		b2.setForeground(Color.WHITE);
+		b2.setBorder(new RoundedBorder(30));
+		b2.setBackground(Color.white);
+		b2.setForeground(Color.black);
 		b2.addActionListener(this);
 		b2.setAlignmentX(Component.CENTER_ALIGNMENT);
+		b2.setFont(new Font("calibri",1,21));
+		b2.setBorderPainted(true);
+		b2.setFocusPainted(false);
+		b2.setEnabled(true);
 
 		// Join game button
 		b3 = new JButton("Join Game");
 		b3.setPreferredSize(btnsize2);
-		b3.setBackground(Color.BLACK);
-		b3.setForeground(Color.WHITE);
+		b3.setBorder(new RoundedBorder(30));
+		b3.setBackground(Color.white);
+		b3.setForeground(Color.black);
 		b3.addActionListener(this);
 		b3.setAlignmentX(Component.CENTER_ALIGNMENT);
+<<<<<<< HEAD
+=======
+		b3.setFont(new Font("calibri",1,21));
+		b3.setBorderPainted(true);
+		b3.setFocusPainted(false);
+		b3.setEnabled(true);
+>>>>>>> 6596ac86be6e934d7f98d09d0c309214d378d9bf
 
 		// Refresh button
 		b4 = new JButton("Refresh");
 		b4.setPreferredSize(btnsize2);
-		b4.setBackground(Color.BLACK);
-		b4.setForeground(Color.WHITE);
+		b4.setBorder(new RoundedBorder(30));
+		b4.setBackground(Color.white);
+		b4.setForeground(Color.black);
 		b4.addActionListener(this);
 		b4.setAlignmentX(Component.CENTER_ALIGNMENT);
+<<<<<<< HEAD
 
 		//Create label
 		l1 = new JLabel("Cards Against Humanity ");
@@ -80,14 +109,27 @@ public class Lobby extends JFrame implements ActionListener{
 		l1.setFont(new Font("Cards Against Humanity",Font.ITALIC,40));
 		l1.setForeground(Color.BLACK);
 		l1.setAlignmentX(Component.CENTER_ALIGNMENT);
+=======
+		b4.setFont(new Font("calibri",1,21));
+		b4.setBorderPainted(true);
+		b4.setFocusPainted(false);
+		b4.setEnabled(true);
+>>>>>>> 6596ac86be6e934d7f98d09d0c309214d378d9bf
 
+		//Makes Title
+		l1 = new JLabel("Cards Against Humanity");
+		l1.setAlignmentX(Component.CENTER_ALIGNMENT);
+		l1.setFont(new Font("AR JULIAN",Font.PLAIN,70));
+		l1.setForeground(Color.BLACK);
 
 		// Implementing pictures for white cards and black cards as JLabel
 		l2 = new JLabel();
 		l3 = new JLabel();
+		l2.setIcon(new ImageIcon(new ImageIcon("BCLobby.png").getImage().getScaledInstance(249, 381, Image.SCALE_DEFAULT)));
+		l3.setIcon(new ImageIcon(new ImageIcon("WCLobby.png").getImage().getScaledInstance(306, 556, Image.SCALE_DEFAULT)));
+		l2.setAlignmentX(Component.CENTER_ALIGNMENT);
+		l3.setAlignmentX(Component.CENTER_ALIGNMENT);
 
-		l2.setIcon(new ImageIcon(new ImageIcon("BCLobby.png").getImage().getScaledInstance(187, 288, Image.SCALE_DEFAULT)));
-		l3.setIcon(new ImageIcon(new ImageIcon("WCLobby.png").getImage().getScaledInstance(221, 328, Image.SCALE_DEFAULT)));
 
 		// Create List
 		DefaultListModel model = new DefaultListModel();
@@ -107,6 +149,7 @@ public class Lobby extends JFrame implements ActionListener{
 		FlowLayout flow = new FlowLayout(FlowLayout.CENTER);
 		p1.setLayout(flow);
 		p1.setBackground(Color.WHITE);
+<<<<<<< HEAD
 		//		p1.add(Box.createRigidArea(new Dimension(0,100)));
 		p1.add(b2);
 		//		p1.add(Box.createHorizontalGlue());
@@ -114,12 +157,23 @@ public class Lobby extends JFrame implements ActionListener{
 		//		p1.add(Box.createHorizontalGlue());
 		p1.add(b3);
 		//		p1.add(Box.createHorizontalGlue());
+=======
+		p1.add(b2);
+		p1.add(b4);
+		flow.setHgap(100);
+		p1.add(b3);
+>>>>>>> 6596ac86be6e934d7f98d09d0c309214d378d9bf
 		p1.add(b1);
+		p1.add(Box.createRigidArea(new Dimension(0,200)));
 
+<<<<<<< HEAD
 		flow.setHgap(30);
 
 
 		getContentPane().add(p1, BorderLayout.SOUTH);
+=======
+		mainLobby.add(p1, BorderLayout.SOUTH);
+>>>>>>> 6596ac86be6e934d7f98d09d0c309214d378d9bf
 
 		//Creates panel for labels
 		JPanel p2 = new JPanel();
@@ -130,11 +184,13 @@ public class Lobby extends JFrame implements ActionListener{
 		// Panel for Title label
 		p2.setLayout(new BoxLayout(p2, BoxLayout.PAGE_AXIS));
 		p2.setBackground(Color.WHITE);
+		p2.add(Box.createRigidArea(new Dimension(50, 0)));
 		p2.add(l1);
 
 		// Panel for Black Card image
 		p3.setLayout(new BoxLayout(p3, BoxLayout.LINE_AXIS));
 		p3.setBackground(Color.WHITE);
+
 		p3.add(Box.createRigidArea(new Dimension(50, 0)));
 		p3.add(l2);
 		p3.add(Box.createRigidArea(new Dimension(50, 0)));
@@ -143,15 +199,16 @@ public class Lobby extends JFrame implements ActionListener{
 		// Panel for White Card image
 		JPanel p4 = new JPanel();
 		p4.setLayout(new BoxLayout(p4, BoxLayout.LINE_AXIS));
-		p4.add(Box.createRigidArea(new Dimension(50, 0)));
 		p4.setBackground(Color.WHITE);
+
+		p4.add(Box.createRigidArea(new Dimension(50, 0)));
 		p4.add(l3);
 
-		getContentPane().add(p2, BorderLayout.NORTH);
-		getContentPane().add(p3, BorderLayout.EAST);
-		getContentPane().add(p4, BorderLayout.WEST);
+		mainLobby.add(p2, BorderLayout.NORTH);
+		mainLobby.add(p3, BorderLayout.EAST);
+		mainLobby.add(p4, BorderLayout.WEST);
 
-
+<<<<<<< HEAD
 		//Window dimensions
 		setSize(1080, 720);
 		setLocationRelativeTo(null);
@@ -161,6 +218,9 @@ public class Lobby extends JFrame implements ActionListener{
 		setVisible(true);
 
 
+=======
+		mainLobby.setVisible(false);
+>>>>>>> 6596ac86be6e934d7f98d09d0c309214d378d9bf
 		// Panel for list of games available
 
 		JPanel p5 = new JPanel();
@@ -169,6 +229,7 @@ public class Lobby extends JFrame implements ActionListener{
 		p5.setBackground(Color.WHITE);
 		p5.add(list);
 
+<<<<<<< HEAD
 		getContentPane().add(p5, BorderLayout.CENTER);
 
 	}
@@ -230,3 +291,9 @@ public class Lobby extends JFrame implements ActionListener{
 	} 
 
 }
+=======
+		mainLobby.add(p5, BorderLayout.CENTER);
+		 */
+
+	
+>>>>>>> 6596ac86be6e934d7f98d09d0c309214d378d9bf
