@@ -494,8 +494,25 @@ public class MainGUI extends JFrame implements ActionListener {
 		list.ensureIndexIsVisible(list.getSelectedIndex());
 		list.setFont(new Font("calibri",Font.PLAIN,25));
 
+//		GamePreview game = new GamePreview("Jonas","WAITING",);
+		
+		String name = "Jonas";
+		String status = "WAITING";
+		Boolean lock = true;
+		int current = 7;
+		int max = 8;
+		int id = 4738920;
+		String islocked = "";
+		
+		if (lock == true) {
+			islocked = "LOCKED";
+		}
+		
+		String blank = "          ";
+		
+		
 		for (int i = 0; i < 40; i++) {
-			model.addElement("N0 nubs plx " + i + "            " + "LOCKED" + "            " + "5/7" );
+			model.addElement(name+blank+status+blank+islocked+blank+Integer.toString(current)+"/"+Integer.toString(max));
 
 		}
 
