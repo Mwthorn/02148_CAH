@@ -54,14 +54,13 @@ public class MainGUI extends JFrame implements ActionListener {
 	
 	// Games available list
 	private int numberOfGames;
-	private int maxGames = 40;
-	private GamePreview[] gameList = new GamePreview[maxGames];
-
+	private int maxGames = 42;
+	private ArrayList<GamePreview> games;
 
 
 	/////////// MAIN ///////////
 
-	public static void main(String[] args) {
+	public static void main(String[] args) throws InterruptedException {
 
 		MainGUI main = new MainGUI();
 
@@ -127,7 +126,7 @@ public class MainGUI extends JFrame implements ActionListener {
 	//Labels
 	Dimension lsize = new Dimension(99, 50);
 
-	public MainGUI(){
+	public MainGUI() throws InterruptedException{
 
 		getContentPane().setLayout(new BorderLayout());
 		getContentPane().setSize(1900,1000);
@@ -403,7 +402,7 @@ public class MainGUI extends JFrame implements ActionListener {
 	}
 
 
-	public void runLobby() {
+	public void runLobby() throws InterruptedException {
 
 		/////////////////////////////////////////////// LOBBY //////////////////////////////////////////////////////////////////
 
@@ -509,14 +508,30 @@ public class MainGUI extends JFrame implements ActionListener {
 		int id = 4738920;
 		String islocked = "";
 		
-		if (lock == true) {
-			islocked = "LOCKED";
-		}
-		
 		String blank = "          ";
 		
+		ArrayList<GamePreview> games = Client.getGameList();
 		
-		for (int i = 0; i < 40; i++) {
+		numberOfGames = games.size();
+		
+		if (numberOfGames == 0) {
+			model.addElement(name+blank+status+blank+islocked+blank+Integer.toString(current)+"/"+Integer.toString(max));
+		}
+		
+		for (int i = 0; i < numberOfGames; i++) {
+			
+			if (lock == true) {
+				islocked = "LOCKED";
+			} else {
+				islocked = "      ";
+			}
+			
+			name = games.get(i).getGameName();
+			status = games.get(i).getGameStatus();
+			lock = games.get(i).isPasswordProtected();
+			current = games.get(i).getCurrentPlayerSize();
+			max = games.get(i).getMaxPlayerSize();
+			
 			model.addElement(name+blank+status+blank+islocked+blank+Integer.toString(current)+"/"+Integer.toString(max));
 
 		}
