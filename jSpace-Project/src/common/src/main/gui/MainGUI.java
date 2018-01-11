@@ -184,7 +184,7 @@ public class MainGUI extends JFrame implements ActionListener {
 		JPanel panel = new JPanel();
 		panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
 		panel.setBackground(Color.WHITE);
-		
+
 
 		//		JPanel panelcenter = new JPanel();
 		//		FlowLayout flow = new FlowLayout();
@@ -481,22 +481,26 @@ public class MainGUI extends JFrame implements ActionListener {
 		//ArrayList<GamePreview> info;
 
 		DefaultListModel model = new DefaultListModel();
-		JScrollPane scrollPane = new JScrollPane(list);
-		list = new JList(model);
-		list.ensureIndexIsVisible(list.getSelectedIndex());
-		list.setFont(new Font("AR JULIAN",Font.PLAIN,20));
-		list.setAlignmentX(CENTER_ALIGNMENT);
-		list.setAlignmentY(CENTER_ALIGNMENT);
-		
-				for (int i = 0; i < 5; i++) {
-					model.addElement("string" + i);
-					
-				}
-		
 
+		list = new JList(model);	
+
+		JScrollPane scrollPane = new JScrollPane(list);
+
+		scrollPane.setPreferredSize(new Dimension(1000, 650));
+		
 		list.setSelectionMode(ListSelectionModel.SINGLE_INTERVAL_SELECTION);
 		list.setVisibleRowCount(-1);
-		list.setLayoutOrientation(JList.HORIZONTAL_WRAP);
+		list.setLayoutOrientation(JList.VERTICAL);
+		list.ensureIndexIsVisible(list.getSelectedIndex());
+		list.setFont(new Font("calibri",Font.PLAIN,25));
+
+		for (int i = 0; i < 40; i++) {
+			model.addElement("N0 nubs plx " + i + "            " + "LOCKED" + "            " + "5/7" );
+
+		}
+
+
+		
 
 
 		//Creates panel for buttons
@@ -553,11 +557,12 @@ public class MainGUI extends JFrame implements ActionListener {
 
 		JPanel p5 = new JPanel();
 
-		p5.setLayout(new BoxLayout(p5, BoxLayout.LINE_AXIS));
-		p5.setBackground(Color.WHITE);
+		//		p5.setLayout(new BoxLayout(p5, BoxLayout.LINE_AXIS));
+		p5.setBackground(Color.GRAY);
 		p5.setAlignmentX(CENTER_ALIGNMENT);
 		p5.setAlignmentY(CENTER_ALIGNMENT);
-		p5.add(list);
+		//				p5.add(list);
+		p5.add(scrollPane, BorderLayout.CENTER);
 
 		mainLobby.add(p5, BorderLayout.CENTER);
 
@@ -851,7 +856,7 @@ public class MainGUI extends JFrame implements ActionListener {
 			mainLobby.setVisible(true);
 			add(mainLobby);
 
-			
+
 		} else if (e.getSource() == b4) {
 			ErrorPopup();
 
