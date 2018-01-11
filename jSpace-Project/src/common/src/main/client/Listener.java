@@ -40,7 +40,7 @@ public class Listener implements Runnable{
 		        	local.put("local","leave", null);
 		        	break;
 		        } else if (tuple[1].equals("error")){
-		        	local.put("local", "leave", null);
+		        	local.put("local", "error", null);
 		        }
 			} catch (InterruptedException e) {
 				e.printStackTrace();
