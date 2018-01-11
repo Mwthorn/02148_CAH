@@ -18,6 +18,7 @@ import java.util.ArrayList;
 import javax.swing.BorderFactory;
 import javax.swing.Box;
 import javax.swing.BoxLayout;
+import javax.swing.DefaultListModel;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -26,6 +27,7 @@ import javax.swing.JList;
 import javax.swing.JPanel;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
+import javax.swing.ListSelectionModel;
 import javax.swing.border.Border;
 
 import common.src.main.client.Client;
@@ -96,13 +98,12 @@ public class MainGUI extends JFrame implements ActionListener {
 
 	public static ArrayList<GamePreview> putList() throws InterruptedException{
 		for (GamePreview gp : Client.getGameList()) {
-			gp.getCurrentPlayerSize();
 			gp.getGameName();
-			gp.getGameStatus();
-			gp.getId();
-			gp.getMaxPlayerSize();
-			gp.hasPassword();
 			gp.isPasswordProtected();
+			gp.getGameStatus();
+			gp.getCurrentPlayerSize();
+			gp.getMaxPlayerSize();
+			gp.getId();
 		}
 
 		return Client.getGameList();
@@ -411,9 +412,38 @@ public class MainGUI extends JFrame implements ActionListener {
 
 
 		// Create List
+		//MainGUI lob = new MainGUI();
+		//ArrayList<GamePreview> info;
 
-		//list = new JList(/*Client.getGameList().toArray()*/);
-		//list.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+		DefaultListModel model = new DefaultListModel();
+		list = new JList(model);
+
+		try {
+			if(Client.getGameList() == null){
+
+				model.addElement("There are currently no games available");
+
+			}
+			else{
+
+				for (int i = 0; i < 5; i++) {
+					model.addElement(Client.getGameList().get(i).getGameName());
+					model.addElement(Client.getGameList().get(i).isPasswordProtected());
+					model.addElement(Client.getGameList().get(i).getGameStatus());
+					model.addElement(Client.getGameList().get(i).getCurrentPlayerSize());
+					model.addElement(Client.getGameList().get(i).getMaxPlayerSize());
+				}
+			}
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch(NullPointerException e){
+			e.printStackTrace();
+		}
+
+		list.setSelectionMode(ListSelectionModel.SINGLE_INTERVAL_SELECTION);
+		list.setVisibleRowCount(-1);
+		list.setLayoutOrientation(JList.HORIZONTAL_WRAP);
 
 
 		//Creates panel for buttons
@@ -465,22 +495,23 @@ public class MainGUI extends JFrame implements ActionListener {
 		mainLobby.add(p4, BorderLayout.WEST);
 
 		mainLobby.setVisible(false);
+
 		// Panel for list of games available
-		/*
+
 		JPanel p5 = new JPanel();
 
 		p5.setLayout(new BoxLayout(p5, BoxLayout.LINE_AXIS));
 		p5.setBackground(Color.WHITE);
-		p5.add(l5);
+		p5.add(list);
 
 		mainLobby.add(p5, BorderLayout.CENTER);
-		 */
+
 
 	}
-	
-		/////////////////////////////////////////////// LOBBY //////////////////////////////////////////////////////////////////
 
-	
+	/////////////////////////////////////////////// LOBBY //////////////////////////////////////////////////////////////////
+
+
 
 
 	public void runCreate(){
@@ -752,7 +783,7 @@ public class MainGUI extends JFrame implements ActionListener {
 			hideAll();
 			mainCreate.setVisible(true);
 			add(mainCreate);
-			
+
 		} else if(e.getSource()==b2) {
 
 			hideAll();
@@ -760,12 +791,12 @@ public class MainGUI extends JFrame implements ActionListener {
 			add(mainLogin);
 
 		} else if (e.getSource() == BBack) {
-			
+
 			hideAll();
 			mainLobby.setVisible(true);
 			add(mainLobby);
-			
-			
+
+
 		} else if (e.getSource() == b3) {
 			// THIS NEEDS TO CHECK IF GAME HAS PASSWORD AS WELL
 
@@ -776,7 +807,7 @@ public class MainGUI extends JFrame implements ActionListener {
 			rules.setSize(600,200);
 			rules.setLocationRelativeTo(null);
 
-			
+
 			JButton b9 = new JButton();
 			b9 = new JButton("Back");
 			b9.setPreferredSize(new Dimension(120, 20));
@@ -789,7 +820,7 @@ public class MainGUI extends JFrame implements ActionListener {
 			b9.setBorderPainted(true);
 			b9.setFocusPainted(false);
 			b9.setEnabled(true);
-			
+
 			JButton b10 = new JButton();
 			b10 = new JButton("Join");
 			b10.setPreferredSize(new Dimension(120, 20));
@@ -810,11 +841,11 @@ public class MainGUI extends JFrame implements ActionListener {
 					rules.dispose();
 				}
 			});
-			
+
 			//Laver Jpanel til det
 			JPanel panel = new JPanel();
-			
-			
+
+
 			JPanel panelcenter = new JPanel();
 			FlowLayout flow = new FlowLayout();
 			panelcenter.setLayout(flow);
@@ -825,18 +856,18 @@ public class MainGUI extends JFrame implements ActionListener {
 			l4.setMaximumSize(lsize);
 			l4.setFont(new Font("calibri",Font.PLAIN,30));
 			l4.setAlignmentX(Component.CENTER_ALIGNMENT);
-			
+
 			// Name textfield
 			txtfld6 = new JTextField(15);
 			txtfld6.setMaximumSize(txtfldsize);
 			txtfld6.setFont(new Font("calibri",Font.PLAIN,20));
 			txtfld6.setAlignmentX(Component.CENTER_ALIGNMENT);
-			
+
 			panelcenter.add(l4);
 			panelcenter.add(txtfld6);
 			panelcenter.setComponentOrientation(ComponentOrientation.LEFT_TO_RIGHT);
 
-			
+
 			JPanel panelsouth = new JPanel();
 
 			FlowLayout flow1 = new FlowLayout(FlowLayout.CENTER);
@@ -846,9 +877,9 @@ public class MainGUI extends JFrame implements ActionListener {
 			panelsouth.add(b9);
 			panelsouth.add(b10);
 			panelsouth.add(Box.createRigidArea(new Dimension(0,5)));
-			
+
 			flow1.setHgap(10);
-			
+
 			rules.add(panel);
 
 			//SÊtter tekstfelt og button pÂ JPanel
@@ -860,7 +891,7 @@ public class MainGUI extends JFrame implements ActionListener {
 			panel.add(Box.createRigidArea(new Dimension(200,10)));
 			panel.setBackground(Color.WHITE);
 
-			
+
 		}
 
 

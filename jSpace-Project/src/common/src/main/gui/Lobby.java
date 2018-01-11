@@ -21,13 +21,13 @@ public class Lobby extends JFrame implements ActionListener{
 
 	public static ArrayList<GamePreview> putList() throws InterruptedException{
 		for (GamePreview gp : Client.getGameList()) {
-			gp.getCurrentPlayerSize();
 			gp.getGameName();
-			gp.getGameStatus();
-			gp.getId();
-			gp.getMaxPlayerSize();
-			gp.hasPassword();
 			gp.isPasswordProtected();
+			gp.getGameStatus();
+			gp.getCurrentPlayerSize();
+			gp.getMaxPlayerSize();
+			gp.getId();
+			
 		}
 
 		return Client.getGameList();
@@ -96,8 +96,8 @@ public class Lobby extends JFrame implements ActionListener{
 		
 		DefaultListModel model = new DefaultListModel();
 		list = new JList(model);
-		for (int i = 0; i < info.size(); i++) {
-			model.addElement(info.get(i));
+		for (int i = 0; i < 5; i++) {
+			model.addElement(info.get(i).getGameName());
 		}
 
 		list.setSelectionMode(ListSelectionModel.SINGLE_INTERVAL_SELECTION);

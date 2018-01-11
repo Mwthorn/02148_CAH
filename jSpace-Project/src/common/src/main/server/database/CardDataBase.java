@@ -9,43 +9,37 @@ import java.io.InputStreamReader;
 import java.util.ArrayList;
 
 public class CardDataBase{
-	
-	 BufferedReader reader = null;
-	 FileInputStream inputStream = null;
-	 ArrayList<WhiteCard> wDataBase  = new ArrayList<WhiteCard>();
-	 ArrayList<BlackCard> bDataBase  = new ArrayList<BlackCard>();
+	private BufferedReader reader;
+	private FileInputStream inputStream;
+	private ArrayList<WhiteCard> wDataBase  = new ArrayList<WhiteCard>();
+	private ArrayList<BlackCard> bDataBase  = new ArrayList<BlackCard>();
 	 
 	public CardDataBase() {
+		loadWhiteDeck();
+		loadBlackDeck();
+		close();
 	}
 
-	public ArrayList<WhiteCard> getWhiteDeck(){
-		String quip = null;
-		WhiteCard newWC;
+	public void loadWhiteDeck(){
+		String quip;
 		
 		try {
 			inputStream = new FileInputStream("TextWC.txt");
 			reader = new BufferedReader(new InputStreamReader(inputStream));
 
 			while( (quip = reader.readLine()) != null ){
-				
-				newWC = new WhiteCard(quip);
-				wDataBase.add(newWC);
-				quip = "";
+				wDataBase.add(new WhiteCard(quip));
 			}
 		} catch (IOException e) {
 			e.printStackTrace();
-			// System.out.println("Failed to read white cards successfully.");
 		}
 		close();
-		// System.out.println(cardList);
-		return wDataBase;
 	}
 
 
-	public ArrayList<BlackCard> getBlackDeck(){
-		String numbers, sentence = null;
+	public void loadBlackDeck(){
+		String numbers, sentence;
 		int numOfLines, numOfBlanks = 0;
-		BlackCard newBC;
 
 		try {
 			inputStream = new FileInputStream("TextBC.txt");
@@ -64,17 +58,13 @@ public class CardDataBase{
 						sentence = sentence + reader.readLine() + " ________";
 						numOfBlanks--;
 					}
-				} 
-				newBC = new BlackCard(numOfBlanks, sentence);
-				bDataBase.add(newBC);
+				}
+				bDataBase.add(new BlackCard(numOfBlanks, sentence));
 			}
 		} catch (IOException e) {
 			e.printStackTrace();
-			// System.out.println("Failed to read black cards.");
 		}
 		close();
-		// System.out.println(cardList);
-		return bDataBase;
 	}	
 
 	public void close(){
@@ -85,5 +75,13 @@ public class CardDataBase{
 			// System.out.println("Failed to close reader/inputStream.");
 			e.printStackTrace();
 		}
+	}
+	
+	public ArrayList<WhiteCard> getWhiteCards(){
+		return this.wDataBase;
+	}
+	
+	public ArrayList<BlackCard> getBlackCards(){
+		return this.bDataBase;
 	}
 }

@@ -39,6 +39,8 @@ public class Listener implements Runnable{
 		        } else if (tuple[1].equals("leave")){
 		        	local.put("local","leave", null);
 		        	break;
+		        } else if (tuple[1].equals("error")){
+		        	local.put("local", "leave", null);
 		        }
 			} catch (InterruptedException e) {
 				e.printStackTrace();
