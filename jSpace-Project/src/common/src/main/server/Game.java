@@ -22,6 +22,7 @@ public class Game implements Runnable {
     private int currentTurn;
     private int gameSlot;
     private boolean[] slotOccupied;
+    private Space local;
 
     SpaceRepository repository = new SpaceRepository();
     SequentialSpace game = new SequentialSpace();
@@ -72,7 +73,7 @@ public class Game implements Runnable {
 		
     	/* Game lobby */
     	while (true) {
-            // ???????Lobby - Type  of Action - String - Integer
+            // Communication Channel - Type of Action - Integer
             Object[] tuple;
             try {
                 tuple = game.get(new ActualField("game"), new FormalField(String.class), new FormalField(Integer.class));
@@ -98,15 +99,16 @@ public class Game implements Runnable {
             }
         }
         
-    	
-		
-    	// TODO: Respond to the messages and new players joining in real time.
     	// TODO: Chat?
     }
 
 	private void startGame() {
 		// This is where all the in-game stuff happens.
 		// TODO: At first, initialise the game for all players, then add actual game stuff
+        // Setup of a local tuple space.
+        local = new SequentialSpace();
+        GameListener gL = new GameListener(game, local);
+        new Thread(gL).start();
 
         for (Player player : players) {
             game.put("updateLobby", "start", player.getId(), player.getGameSlot());
@@ -152,37 +154,62 @@ public class Game implements Runnable {
         // TODO: Listen on players to pick their white card
 
 
-        // Setup of a local tuple space.
-        Space local = new SequentialSpace();
-        GameListener gL = new GameListener(game, local);
+
 
         Timeout timeout = new Timeout(local);
         new Thread(timeout).start();
-        new Thread(gL).start();
 
         WhiteCard[] pickedCards = new WhiteCard[players.size()];
-
+        Boolean state = true;
         try {
-            Object[] tuple = local.get(new ActualField("Game") ,new FormalField(String.class));
-            if (tuple[1] == "Timeout") {
-                for (Player player : players) {
-
+            while (state) {
+                Object[] tuple = local.get(new ActualField("Game"), new FormalField(String.class));
+                if (tuple[1] == "Timeout") {
+                    System.out.println("TIMEOUT!! Remaining players will pick a random card");
+                    for (Player player : players) {
+                        if (!player.hasPickedCard()) {
+                            Random rand = new Random();
+                            int n = rand.nextInt(10) - 1;
+                            pickedCards[players.indexOf(player)] = player.getWhiteCards().get(n);
+                            player.setPickedCard(n);
+                            game.put("ingame", "yourpick", player.getId(), null, n);
+                        }
+                    }
+                    state = false;
+                } else if (tuple[1] == "PickedCard") {
+                    Object[] tuple2 = local.get(new ActualField("Card"), new FormalField(Integer.class), new FormalField(Integer.class));
+                    int clientID = (int) tuple2[1];
+                    int cardIndex = (int) tuple2[2];
+                    Player player = FindPlayer(clientID);
+                    pickedCards[players.indexOf(player)] = player.getWhiteCards().get(cardIndex);
+                    player.setPickedCard(cardIndex);
+                    game.put("ingame", "yourpick", player.getId(), null, cardIndex);
+                    // TODO: Check if all have picked a card
+                    state = false;
+                    for (Player player1 : players) {
+                        if (!player1.hasPickedCard()) {
+                            state = true;
+                        }
+                    }
+                    if (!state) {
+                        System.out.println("All players hae picked a card! Skip!");
+                        local.put("Timeout", "Cancel");
+                    }
                 }
-            }
-            else if (tuple[1] == "PickedCard") {
-                Object[] tuple2 = local.get(new ActualField("Card") ,new FormalField(Integer.class), new FormalField(Integer.class));
-                int clientID = (int) tuple2[1];
-                int cardIndex = (int) tuple2[2];
-                Player player = FindPlayer(clientID);
-                pickedCards[players.indexOf(player)] = (player.getWhiteCards().get(cardIndex));
-                player.setPickedCard();
-                // local.put("Timeout", "Cancel");
             }
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
+        System.out.println("All players has picked a card! Now show all players the picked cards!");
+        // TODO: Somehow close GameListener in its 'get' state
 
         // Get white cards
+        // Show the picked cards to all players
+        for (WhiteCard card : pickedCards) {
+            for (Player player : players) {
+                game.put("ingame", "picked", player.getId(), card.getSentence(), 0);
+            }
+        }
 
         // TODO: Listen on chosen player to choose the winner card
 
@@ -301,7 +328,22 @@ public class Game implements Runnable {
         player.addPoints(i);
     }
 
-    public void addPlayerToGame(Player actor) {
+    public int addPlayerToGame(Player actor) {
+    	int actorID = actor.getId();
+    	// Checks if the player is already in the game
+    	for (Player player : players) {
+			if (player.getId() == actorID) {
+				System.out.println(actor.getName()+" is already in the game.");
+				// TODO: Add a return tuple to the player if the game is full
+				return 0;
+			}
+		}
+    	
+        // Sends all players current game slot to the joining player.
+        for (Player player : players){
+        	game.put("updateLobby", "update", actorID, player.getGameSlot());
+        }
+        
     	// Adds the player to the game.
         players.add(actor);
         
@@ -316,9 +358,9 @@ public class Game implements Runnable {
         
         // Sends an update to all other players currently in the game
         for (Player player : players) {
-            int recieverID = player.getId();
-            game.put("updateLobby", "update", recieverID, actor.getGameSlot());
+            game.put("updateLobby", "update", player.getId(), actor.getGameSlot());
         }
+        return 0;
     }
 
     public void setStatus(String status) {

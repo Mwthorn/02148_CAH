@@ -103,7 +103,8 @@ public class Player {
         return this.pickedCard;
     }
 
-    public void setPickedCard() {
-
+    public void setPickedCard(int index) {
+        this.pickedCard = whiteCards.get(index);
+        whiteCards.remove(index);
     }
 }

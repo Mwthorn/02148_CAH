@@ -209,11 +209,11 @@ public class Client {
 				// STRING - INT - STRING - INT
 				Object[] tuple = game.get(new ActualField("ingame"), new FormalField(String.class), new ActualField(userID), new FormalField(String.class), new FormalField(Integer.class));
 				System.out.println("Listener: Got response from server: " + tuple[1]);
-				if (tuple[0].equals("ingame")){
-					if (tuple[0].equals("white")) {
+				if (tuple[1].equals("card")){
+					if (tuple[2].equals("white")) {
 						whiteCards[(int) tuple[4]] = (String) tuple[3];
 						// TODO: Update GUI whitecards
-					} else if (tuple[0].equals("black")) {
+					} else if (tuple[2].equals("black")) {
 						amountOfBlanks = (int) tuple[4];
 						// TODO: Set Black card to given string on GUI
 					}
