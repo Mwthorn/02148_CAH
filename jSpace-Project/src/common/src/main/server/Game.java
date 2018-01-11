@@ -106,7 +106,7 @@ public class Game implements Runnable {
 
 	private void startGame() {
 		// This is where all the in-game stuff happens.
-		// TODO: At first, initialise the game for all players, then add actual game stuff
+
         // Setup of a local tuple space.
         local = new SequentialSpace();
         GameListener gL = new GameListener(game, local);
@@ -152,18 +152,18 @@ public class Game implements Runnable {
             game.put("ingame", "black", player.getId(), blackCard.getSentence(), blackCard.getBlanks());
             player.resetPickedCard();
             if (player.getId() == chosenID) {
-                // TODO: Tell player its not their turn (Chosen)
+                // TODO: Tell player its not their turn (Chosen) (Do nothing?)
             }
             else {
                 contestents.add(player);
                 // TODO: Tell players its their turn
+                game.put("ingame", "yourturn", player.getId(), null, 0);
             }
         }
 
         Timeout timeout = new Timeout(local);
         new Thread(timeout).start();
 
-        WhiteCard[] pickedCards = new WhiteCard[contestents.size()-1];
 
         Boolean state = true;
         try {
@@ -175,7 +175,7 @@ public class Game implements Runnable {
                         if (!player.hasPickedCard()) {
                             Random rand = new Random();
                             int n = rand.nextInt(10) - 1;
-                            pickedCards[contestents.indexOf(player)] = player.getWhiteCards().get(n);
+                            //pickedCards[contestents.indexOf(player)] = player.getWhiteCards().get(n);
                             player.setPickedCard(n);
                             game.put("ingame", "yourpick", player.getId(), null, n);
                         }
@@ -186,7 +186,7 @@ public class Game implements Runnable {
                     int clientID = (int) tuple2[1];
                     int cardIndex = (int) tuple2[2];
                     Player player = FindPlayer(clientID);
-                    pickedCards[contestents.indexOf(player)] = player.getWhiteCards().get(cardIndex);
+                    //pickedCards[contestents.indexOf(player)] = player.getWhiteCards().get(cardIndex);
                     player.setPickedCard(cardIndex);
                     game.put("ingame", "yourpick", player.getId(), null, cardIndex);
                     state = false;
@@ -209,17 +209,29 @@ public class Game implements Runnable {
         // TODO: Somehow close GameListener in its 'get' state
         // Suggestion: Send tuple with syntax ("gameListener", "exit", ........) and use break; on the loop.
 
-        // Get white cards
+
+        WhiteCard[] pickedCards = new WhiteCard[contestents.size()-1];
+
+        Collections.shuffle(contestents);
+        for (Player player : contestents) {
+            WhiteCard card = player.getPickedCard();
+            
+        }
+
+        // TODO: Shuffle the pickedCards (might also want to include a item connected to player)
         // Show the picked cards to all players
         for (int i = 0; i < contestents.size(); i++) {
             for (Player player : players) {
                 game.put("ingame", "picked", player.getId(), pickedCards[i], i);
             }
         }
-
+        timeout = new Timeout(local);
+        new Thread(timeout).start();
         state = true;
         Player winnerPlayer = null;
         WhiteCard winnerCard = null;
+        Player chosen = FindPlayer(chosenID);
+        game.put("ingame", "yourturn", chosen.getId(), null, 0);
         while (state) {
             try {
                 Object[] tuple = local.get(new ActualField("Game"), new FormalField(String.class));
