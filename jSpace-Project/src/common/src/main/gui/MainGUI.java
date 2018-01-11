@@ -518,19 +518,18 @@ public class MainGUI extends JFrame implements ActionListener {
 			model.addElement(name+blank+status+blank+islocked+blank+Integer.toString(current)+"/"+Integer.toString(max));
 		}
 		
-		for (int i = 0; i < 14; i++) {
+		for (int i = 0; i < 15; i++) {
 			
 			if (lock == true) {
 				islocked = "LOCKED";
 			} else {
 				islocked = "      ";
 			}
-			/*
-			name = games.get(i).getGameName();
-			status = games.get(i).getGameStatus();
-			lock = games.get(i).isPasswordProtected();
-			current = games.get(i).getCurrentPlayerSize();
-			max = games.get(i).getMaxPlayerSize();*/
+//			name = games.get(i).getGameName();
+//			status = games.get(i).getGameStatus();
+//			lock = games.get(i).isPasswordProtected();
+//			current = games.get(i).getCurrentPlayerSize();
+//			max = games.get(i).getMaxPlayerSize();
 			
 			model.addElement(name+blank+status+blank+islocked+blank+Integer.toString(current)+"/"+Integer.toString(max));
 
@@ -897,6 +896,9 @@ public class MainGUI extends JFrame implements ActionListener {
 		} else if (e.getSource() == b4) {
 			ErrorPopup();
 
+		} else if (e.getSource() == b4) {
+			ErrorPopup();
+			
 		} else if (e.getSource() == b3) {
 			// THIS NEEDS TO CHECK IF GAME HAS PASSWORD AS WELL
 

@@ -213,21 +213,32 @@ public class Client {
 				Object[] tuple = game.get(new ActualField("ingame"), new FormalField(String.class), new ActualField(userID), new FormalField(String.class), new FormalField(Integer.class));
 				System.out.println("Listener: Got response from server: " + tuple[1]);
 				if (tuple[1].equals("card")){
+					// ("ingame", "black", player.getId(), blackCard.getSentence(), blackCard.getBlanks());
 					if (tuple[2].equals("white")) {
 						whiteCards[(int) tuple[4]] = (String) tuple[3];
 						// TODO: Update GUI whitecards
 					} else if (tuple[2].equals("black")) {
 						amountOfBlanks = (int) tuple[4];
+						// tuple[3] is the text
 						// TODO: Set Black card to given string on GUI
 					}
 				}
 				else if (tuple[1].equals("yourpick")) {
+					// ("ingame", "yourpick", player.getId(), null, cardIndex);
 					int pickedCard = (int) tuple[4];
 					// TODO: Update for chosen card on Client
 				}
 				else if (tuple[1].equals("picked")) {
-
+					// ("ingame", "picked", player.getId(), pickedCards[i], i);
 					// TODO: Show picked cards on GUI
+				}
+				else if (tuple[1].equals("result")) {
+					// ("ingame", "result", player.getId(), winnerCard.getSentence(), 0);
+					// ("ingame", "result", player.getId(), winnerPlayer.getName(), 0);
+					// TODO: Show results to GUI (0 is not used)
+				}
+				else if (tuple[1].equals("yourturn")) {
+					allowPlayerTurn();
 				}
 				// TODO: Player leaves/joins in mid-game
 			}
@@ -237,15 +248,30 @@ public class Client {
 		}
 	}
 	
-	public boolean pickWhiteCard(int i) {
+	public static boolean pickWhiteCard(int i) {
 		if (!turnToPick) {
 			return false;
 		}
-		game.put("pickwhite", userID, i);
+		game.put("gameListener", "pickWhite", userID, i);
+		// game.put("pickwhite", userID, i);
+		turnToPick = false;
 		return true;
 	}
 
-	public boolean isPlayerTurn() {
+	public static boolean pickWinnerCard(int i) {
+		if (!turnToPick) {
+			return false;
+		}
+		game.put("gameListener", "chooseWinnerCard", userID, i);
+		turnToPick = false;
+		return true;
+	}
+
+	public static void allowPlayerTurn() {
+		turnToPick = true;
+	}
+
+	public static boolean isPlayerTurn() {
 		return turnToPick;
 	}
 
