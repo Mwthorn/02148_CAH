@@ -209,16 +209,14 @@ public class Game implements Runnable {
         // TODO: Somehow close GameListener in its 'get' state
         // Suggestion: Send tuple with syntax ("gameListener", "exit", ........) and use break; on the loop.
 
-
         WhiteCard[] pickedCards = new WhiteCard[contestents.size()-1];
 
+        // TODO: Shuffle the pickedCards (might also want to include a item connected to player)
         Collections.shuffle(contestents);
         for (Player player : contestents) {
-            WhiteCard card = player.getPickedCard();
-            
+            pickedCards[contestents.indexOf(player)] = player.getPickedCard();
         }
 
-        // TODO: Shuffle the pickedCards (might also want to include a item connected to player)
         // Show the picked cards to all players
         for (int i = 0; i < contestents.size(); i++) {
             for (Player player : players) {
