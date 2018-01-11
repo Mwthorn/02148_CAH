@@ -51,6 +51,11 @@ public class MainGUI extends JFrame implements ActionListener {
 	private JButton BCreateGame;
 	private JLabel  LRounds, LTime, LPass, LPassword;
 	private JTextField txtfld3, txtfld4, txtfld5, txtfld6;
+	
+	// Games available list
+	private int numberOfGames;
+	private int maxGames = 40;
+	private GamePreview[] gameList = new GamePreview[maxGames];
 
 
 
