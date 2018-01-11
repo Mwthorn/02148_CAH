@@ -55,20 +55,6 @@ public class Client {
 	/*********************************************************************************************/
 	/********************************** User/Lobby Interactions **********************************/
 	/*********************************************************************************************/
-	
-	private static void lobby(int buttonPressed, int gameID) throws InterruptedException{
-		// Create lobby GUI.
-		
-		if (buttonPressed == 0){ // Join game button clicked
-			joinGame(gameID);
-		} else if (buttonPressed == 1){ // Create game button clicked
-			createNewGame();
-		} else if (buttonPressed == 2){ // Refresh game list buttton clicked
-			getGameList();
-		} else if (buttonPressed == 3){ // Sign out buttton clicked
-			signOut();
-		}
-	} // End of lobby function
 
 	public static void loginUser(String IP, String name) throws IOException, InterruptedException {
 		// TODO: The two lines below assigning IP and name should be retrieved
@@ -167,21 +153,27 @@ public class Client {
 		        	// TODO: Start game: A button for the host, possibly to entirely replace his ready button.
 		        	// Starts the game, many stuff happens.
 		        	System.out.println("Game started! GET READY TO RUMBLE!!!!");
+		        	break;
 		        } else if (tuple[1].equals("update")){
 		        	// TODO: Update from the server, update relevant GUI.
 		        	// Occurs when a player joins/leaves/changes ready state, will fully update a specified game slot.
 					System.out.println("Game updated: " + gameSlot.getName() + ", is he ready: "+gameSlot.isReady());
 		        } else if (tuple[1].equals("leave")){
 		        	// Call the lobby function.
-		        	System.out.println("You have left the game! nob.");
-		        	break;
+		        	System.out.println("You have left the game!");
+		        	return;
+		        } else if (tuple[1].equals("error")){
+		        	System.out.println("An error occured.");
+		        	// TODO: Force an error message to pop up.
+		        	// This happens if a player 
 		        }
 			} catch (InterruptedException e) {
 				e.printStackTrace();
 			}
 		}
-		inGame();
 		
+		// Enters the game state.
+		inGame();
 		
 		// TODO: Leave game: Return the player to the main lobby, adjust tuple spaces.
     	// Update GUI, change from game tuple space to lobby tuple space, adjust other players GUI by sending message to server.

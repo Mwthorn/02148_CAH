@@ -14,9 +14,6 @@ import org.jspace.SpaceRepository;
 import java.util.ArrayList;
 
 public class Server {
-
-    private static ArrayList<WhiteCard> whiteCards;
-    private static ArrayList<BlackCard> blackCards;
     private static SequentialSpace lobby;
     private static CardDataBase cardDataBase;
     private static PlayerBase playerBase;
@@ -29,8 +26,6 @@ public class Server {
     	
     	// Data to setup games
 		cardDataBase = new CardDataBase();
-		whiteCards = cardDataBase.getWhiteDeck();
-		blackCards = cardDataBase.getBlackDeck();
         playerBase = new PlayerBase();
 		gameBase = new GameBase();
     	
@@ -95,8 +90,8 @@ public class Server {
         Player player = playerBase.getPlayerwithID(hostID);
         
         Game game = new Game(gameName,
-            whiteCards,
-            blackCards,
+            cardDataBase.getWhiteCards(),
+            cardDataBase.getBlackCards(),
             repository,
             gameSlot,
             lobby,

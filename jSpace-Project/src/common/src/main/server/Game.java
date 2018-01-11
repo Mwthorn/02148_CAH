@@ -32,7 +32,6 @@ public class Game implements Runnable {
     // TODO: Add rounds/max round?
     // TODO: Add host?
     // TODO: Add vote count?
-    // TODO: Add a check if a player already in the game tries to join again.
 
     public Game(String gameName,
                 ArrayList<WhiteCard> whiteCards,
@@ -66,7 +65,6 @@ public class Game implements Runnable {
     	try {
 			game.get(new ActualField("testing"));
 		} catch (InterruptedException e1) {
-			// TODO Auto-generated catch block
 			e1.printStackTrace();
 		}
 		System.out.println("IT'S ALIVE, IT'S ALLLIIIIIVEEEEEEEEE");
@@ -205,6 +203,7 @@ public class Game implements Runnable {
         }
         System.out.println("All players has picked a card! Now show all players the picked cards!");
         // TODO: Somehow close GameListener in its 'get' state
+        // Suggestion: Send tuple with syntax ("gameListener", "exit", ........) and use break; on the loop.
 
         // Get white cards
         // Show the picked cards to all players
@@ -272,12 +271,12 @@ public class Game implements Runnable {
             System.out.print("Game: No player found with ID " + playerID + " in playerLeavesGame");
             return;
         }
+        int actorSlot = actor.getGameSlot().getSlot();
 		players.remove(actor);
 		
-		game.put("updateLobby","leave",actor.getId(), null);
+		game.put("updateLobby", "leave", actor.getId(), null);
         for (Player player : players) {
-            int recieverID = player.getId();
-            game.put("updateLobby", "update", recieverID, new GameSlot(0, "", false));
+            game.put("updateLobby", "update", player.getId(), new GameSlot(actorSlot, "", false));
         }
 	}
 
@@ -332,10 +331,19 @@ public class Game implements Runnable {
     }
 
     public void addPlayerToGame(Player actor) {
+    	int actorID = actor.getId();
+    	// Checks if the player is already in the game
+    	for (Player player : players) {
+			if (player.getId() == actorID) {
+				System.out.println(actor.getName()+" is already in the game.");
+				game.put("updateLobby", "error", null, null);
+				return;
+			}
+		}
     	
         // Sends all players current game slot to the joining player.
         for (Player player : players){
-        	game.put("updateLobby","update",actor.getId(), player.getGameSlot());
+        	game.put("updateLobby", "update", actor.getId(), player.getGameSlot());
         }
         
     	// Adds the player to the game.
