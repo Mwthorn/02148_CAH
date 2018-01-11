@@ -302,6 +302,12 @@ public class Game implements Runnable {
     }
 
     public void addPlayerToGame(Player actor) {
+    	
+        // Sends all players current game slot to the joining player.
+        for (Player player : players){
+        	game.put("updateLobby","update",actor.getId(), player.getGameSlot());
+        }
+        
     	// Adds the player to the game.
         players.add(actor);
         
@@ -316,8 +322,7 @@ public class Game implements Runnable {
         
         // Sends an update to all other players currently in the game
         for (Player player : players) {
-            int recieverID = player.getId();
-            game.put("updateLobby", "update", recieverID, actor.getGameSlot());
+            game.put("updateLobby", "update", player.getId(), actor.getGameSlot());
         }
     }
 
