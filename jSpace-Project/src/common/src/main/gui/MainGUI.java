@@ -62,14 +62,14 @@ public class MainGUI extends JFrame implements ActionListener {
 
 	public static void main(String[] args) throws InterruptedException {
 
-		MainGUI main = new MainGUI();
+		/*MainGUI main = new MainGUI();
 
 		main.setTitle("Cards Against Humanity");
 		main.setSize(1900,1000);
 		main.setResizable(true);
 		main.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		main.setVisible(true);
-		main.setLocationRelativeTo(null);
+		main.setLocationRelativeTo(null);*/
 
 	}
 
@@ -510,27 +510,27 @@ public class MainGUI extends JFrame implements ActionListener {
 		
 		String blank = "          ";
 		
-		ArrayList<GamePreview> games = Client.getGameList();
+		//ArrayList<GamePreview> games = Client.getGameList();
 		
-		numberOfGames = games.size();
+		//numberOfGames = games.size();
 		
 		if (numberOfGames == 0) {
 			model.addElement(name+blank+status+blank+islocked+blank+Integer.toString(current)+"/"+Integer.toString(max));
 		}
 		
-		for (int i = 0; i < numberOfGames; i++) {
+		for (int i = 0; i < 14; i++) {
 			
 			if (lock == true) {
 				islocked = "LOCKED";
 			} else {
 				islocked = "      ";
 			}
-			
+			/*
 			name = games.get(i).getGameName();
 			status = games.get(i).getGameStatus();
 			lock = games.get(i).isPasswordProtected();
 			current = games.get(i).getCurrentPlayerSize();
-			max = games.get(i).getMaxPlayerSize();
+			max = games.get(i).getMaxPlayerSize();*/
 			
 			model.addElement(name+blank+status+blank+islocked+blank+Integer.toString(current)+"/"+Integer.toString(max));
 

@@ -1,5 +1,6 @@
 package common.src.main.client;
 
+import common.src.main.gui.MainGUI;
 import common.src.main.server.Game;
 import common.src.main.server.GameSlot;
 import common.src.main.server.Player;
@@ -10,6 +11,8 @@ import java.io.IOException;
 import java.net.UnknownHostException;
 import java.util.ArrayList;
 
+import javax.swing.JFrame;
+
 public class Client {
 	private static RemoteSpace lobby, game;
 	private static int userID;
@@ -19,13 +22,21 @@ public class Client {
 	private static boolean turnToPick;
 	private static String[] whiteCards = new String[10];
 
-	private static final int testNumber = 1;
+	private static final int testNumber = 0;
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws InterruptedException {
     	/* Login */
     	// Create login GUI and request name of user and IP to server.
     	
     	/* Connect to server using GUI info */
+    	MainGUI main = new MainGUI();
+
+		main.setTitle("Cards Against Humanity");
+		main.setSize(1900,1000);
+		main.setResizable(true);
+		main.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		main.setVisible(true);
+		main.setLocationRelativeTo(null);
 		
 			try {
 				
