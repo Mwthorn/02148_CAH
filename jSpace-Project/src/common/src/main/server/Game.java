@@ -6,6 +6,7 @@ import common.src.main.server.utilities.WhiteCard;
 
 import org.jspace.*;
 
+import javax.swing.plaf.synth.SynthTextAreaUI;
 import java.util.*;
 
 public class Game implements Runnable {
@@ -142,6 +143,7 @@ public class Game implements Runnable {
 
         // Pick the chosen player
         int chosenID = players.get(this.currentTurn).getId();
+        ArrayList<Player> contestents = new ArrayList<>();
 
         // Show black card to players
         BlackCard blackCard = drawBlackCard();
@@ -149,29 +151,31 @@ public class Game implements Runnable {
             // STRING - STRING - INT - STRING - INT
             game.put("ingame", "black", player.getId(), blackCard.getSentence(), blackCard.getBlanks());
             player.resetPickedCard();
-            // TODO: Tell players its their turn
+            if (player.getId() == chosenID) {
+                // TODO: Tell player its not their turn (Chosen)
+            }
+            else {
+                contestents.add(player);
+                // TODO: Tell players its their turn
+            }
         }
-
-        // TODO: Listen on players to pick their white card
-
-
-
 
         Timeout timeout = new Timeout(local);
         new Thread(timeout).start();
 
-        WhiteCard[] pickedCards = new WhiteCard[players.size()];
+        WhiteCard[] pickedCards = new WhiteCard[contestents.size()-1];
+
         Boolean state = true;
         try {
             while (state) {
                 Object[] tuple = local.get(new ActualField("Game"), new FormalField(String.class));
                 if (tuple[1] == "Timeout") {
                     System.out.println("TIMEOUT!! Remaining players will pick a random card");
-                    for (Player player : players) {
+                    for (Player player : contestents) {
                         if (!player.hasPickedCard()) {
                             Random rand = new Random();
                             int n = rand.nextInt(10) - 1;
-                            pickedCards[players.indexOf(player)] = player.getWhiteCards().get(n);
+                            pickedCards[contestents.indexOf(player)] = player.getWhiteCards().get(n);
                             player.setPickedCard(n);
                             game.put("ingame", "yourpick", player.getId(), null, n);
                         }
@@ -182,10 +186,9 @@ public class Game implements Runnable {
                     int clientID = (int) tuple2[1];
                     int cardIndex = (int) tuple2[2];
                     Player player = FindPlayer(clientID);
-                    pickedCards[players.indexOf(player)] = player.getWhiteCards().get(cardIndex);
+                    pickedCards[contestents.indexOf(player)] = player.getWhiteCards().get(cardIndex);
                     player.setPickedCard(cardIndex);
                     game.put("ingame", "yourpick", player.getId(), null, cardIndex);
-                    // TODO: Check if all have picked a card
                     state = false;
                     for (Player player1 : players) {
                         if (!player1.hasPickedCard()) {
@@ -198,6 +201,7 @@ public class Game implements Runnable {
                     }
                 }
             }
+            local.get(new ActualField("Game"), new ActualField("TimeoutFinish"));
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
@@ -207,16 +211,56 @@ public class Game implements Runnable {
 
         // Get white cards
         // Show the picked cards to all players
-        for (WhiteCard card : pickedCards) {
+        for (int i = 0; i < contestents.size(); i++) {
             for (Player player : players) {
-                game.put("ingame", "picked", player.getId(), card.getSentence(), 0);
+                game.put("ingame", "picked", player.getId(), pickedCards[i], i);
             }
         }
 
-        // TODO: Listen on chosen player to choose the winner card
+        state = true;
+        Player winnerPlayer = null;
+        WhiteCard winnerCard = null;
+        while (state) {
+            try {
+                Object[] tuple = local.get(new ActualField("Game"), new FormalField(String.class));
+                if (tuple[1] == "Timeout") {
+                    System.out.println("TIMEOUT!! Pick a random winner card!");
+                    Random rand = new Random();
+                    int n = rand.nextInt(contestents.size()) - 1;
+                    winnerPlayer = contestents.get(n);
+                    winnerCard = pickedCards[n];
+                }
+                else if (tuple[2] == "PickedWinner") {
+                    Object[] tuple2 = local.get(new ActualField("Card"), new FormalField(Integer.class), new FormalField(Integer.class));
+                    int clientID = (int) tuple2[1];
+                    int cardIndex = (int) tuple2[2];
+                    if (chosenID == clientID) {
+                        winnerPlayer = contestents.get(cardIndex);
+                        winnerCard = pickedCards[cardIndex];
+                        if (winnerPlayer.getId() == clientID) {
+                            System.out.println("WOAH!! Did you just try to choose yourself as the winner?");
+                        }
+                        state = false;
+                    }
+                    else {
+                        System.out.println("WOAH!! Invalid user tried to pick a winner!");
+                    }
+                }
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+        }
+        System.out.println("The winner chosen is: " + winnerPlayer.getName());
+        winnerPlayer.addPoints(1);
 
-
+        // Update results for all players
+        for (Player player : players) {
+            game.put("ingame", "result", player.getId(), winnerCard.getSentence(), 0);
+            game.put("ingame", "result", player.getId(), winnerPlayer.getName(), 0);
+            // TODO: Update points for all players
+        }
     }
+
 
     public void fillWhiteCards() {
         for (Player player : players) {

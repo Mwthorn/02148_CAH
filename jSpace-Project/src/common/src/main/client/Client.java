@@ -209,8 +209,16 @@ public class Client {
 						amountOfBlanks = (int) tuple[4];
 						// TODO: Set Black card to given string on GUI
 					}
-					// TODO: Player leaves/joins in mid-game
 				}
+				else if (tuple[1].equals("yourpick")) {
+					int pickedCard = (int) tuple[4];
+					// TODO: Update for chosen card on Client
+				}
+				else if (tuple[1].equals("picked")) {
+
+					// TODO: Show picked cards on GUI
+				}
+				// TODO: Player leaves/joins in mid-game
 			}
 			catch (InterruptedException e) {
 

@@ -27,7 +27,8 @@ public class GameListener implements Runnable {
                     local.put("Card",(int) tuple[2],(int) tuple[3]);
                 }
                 else if (tuple[1].equals("chooseWinnerCard")) {
-
+                    local.put("Game","PickedWinner");
+                    local.put("Card", (int) tuple[2], (int) tuple[3]);
                 }
             } catch (InterruptedException e) {
                 e.printStackTrace();
