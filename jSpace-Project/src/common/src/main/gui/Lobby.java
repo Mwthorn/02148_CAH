@@ -15,9 +15,10 @@ public class Lobby extends JFrame implements ActionListener{
 	private JButton b1, b2, b3, b4;
 	private JLabel l1,l2,l3,l4,l5;
 	private JTextField WP;
-	private static JList list;
+	private JList<String> list;
+	private static ArrayList<String> liste = new ArrayList();
 
-	
+
 	public static ArrayList<GamePreview> putList() throws InterruptedException{
 		for (GamePreview gp : Client.getGameList()) {
 			gp.getCurrentPlayerSize();
@@ -64,7 +65,7 @@ public class Lobby extends JFrame implements ActionListener{
 		b3.setForeground(Color.WHITE);
 		b3.addActionListener(this);
 		b3.setAlignmentX(Component.CENTER_ALIGNMENT);
-		
+
 		// Refresh button
 		b4 = new JButton("Refresh");
 		b4.setPreferredSize(btnsize2);
@@ -72,7 +73,7 @@ public class Lobby extends JFrame implements ActionListener{
 		b4.setForeground(Color.WHITE);
 		b4.addActionListener(this);
 		b4.setAlignmentX(Component.CENTER_ALIGNMENT);
-		
+
 		//Create label
 		l1 = new JLabel("Cards Against Humanity ");
 		l1.setPreferredSize(new Dimension(480, 50));
@@ -89,9 +90,15 @@ public class Lobby extends JFrame implements ActionListener{
 		l3.setIcon(new ImageIcon(new ImageIcon("WCLobby.png").getImage().getScaledInstance(221, 328, Image.SCALE_DEFAULT)));
 
 		// Create List
+		DefaultListModel model = new DefaultListModel();
+		list = new JList(model);
+		for (int i = 0; i < 100; i++) {
+			model.addElement("String " + i +"hello"+ i);
+		}
 
-		//list = new JList(/*Client.getGameList().toArray()*/);
-		//list.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+		list.setSelectionMode(ListSelectionModel.SINGLE_INTERVAL_SELECTION);
+		list.setVisibleRowCount(-1);
+		list.setLayoutOrientation(JList.HORIZONTAL_WRAP);
 
 
 		//Creates panel for buttons
@@ -100,18 +107,18 @@ public class Lobby extends JFrame implements ActionListener{
 		FlowLayout flow = new FlowLayout(FlowLayout.CENTER);
 		p1.setLayout(flow);
 		p1.setBackground(Color.WHITE);
-//		p1.add(Box.createRigidArea(new Dimension(0,100)));
+		//		p1.add(Box.createRigidArea(new Dimension(0,100)));
 		p1.add(b2);
-//		p1.add(Box.createHorizontalGlue());
+		//		p1.add(Box.createHorizontalGlue());
 		p1.add(b4);
-//		p1.add(Box.createHorizontalGlue());
+		//		p1.add(Box.createHorizontalGlue());
 		p1.add(b3);
-//		p1.add(Box.createHorizontalGlue());
+		//		p1.add(Box.createHorizontalGlue());
 		p1.add(b1);
 
 		flow.setHgap(30);
-		
-		
+
+
 		getContentPane().add(p1, BorderLayout.SOUTH);
 
 		//Creates panel for labels
@@ -152,24 +159,24 @@ public class Lobby extends JFrame implements ActionListener{
 		setTitle("Cards Against Humanity");
 		setResizable(true);
 		setVisible(true);
-		
-		
+
+
 		// Panel for list of games available
-		/*
+
 		JPanel p5 = new JPanel();
 
 		p5.setLayout(new BoxLayout(p5, BoxLayout.LINE_AXIS));
 		p5.setBackground(Color.WHITE);
-		p5.add(l5);
+		p5.add(list);
 
 		getContentPane().add(p5, BorderLayout.CENTER);
-		 */
+
 	}
 
 	public void actionPerformed(ActionEvent e){
 
 		if(e.getSource()==b1){
-			
+
 		}
 		if(e.getSource()==b2){
 			dispose();
@@ -206,7 +213,7 @@ public class Lobby extends JFrame implements ActionListener{
 
 	}
 
-	
+
 	public static void main(String[] args) throws InterruptedException {
 
 		Lobby lobby = new Lobby();
