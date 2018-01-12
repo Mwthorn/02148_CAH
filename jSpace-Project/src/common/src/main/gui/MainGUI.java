@@ -72,7 +72,6 @@ public class MainGUI extends JFrame implements ActionListener {
 	private JButton BReady, BLeave;
 	private JLabel LHead, LPicWC, LPicBC, Label1, Label2, Label3, Label4, Label5, Label6, Label7, Label8;
 	private static JList playerList;
-	private boolean color1 = false;; 
 
 	// Rounded Buttons
 	// Source: https://stackoverflow.com/questions/423950/rounded-swing-jbutton-using-java
@@ -109,16 +108,14 @@ public class MainGUI extends JFrame implements ActionListener {
 		return Client.getGameList();
 	}
 
-	public void changeColor(){
+	public void changeColor(int x){
 
-		if (color1 == true) {			
-			ready1.setBackground(new Color(76,153,0));
-			color1 = false;
+		if (gameSlot[x].isReady() == false) {			
+			readyBtn[x].setBackground(new Color(76,153,0));
 			System.out.println("Changed to Green");
 
 		} else {
-			ready1.setBackground(Color.RED);
-			color1 = true;
+			readyBtn[x].setBackground(Color.RED);
 			System.out.println("Changed to Red");
 
 		}
@@ -979,15 +976,15 @@ public class MainGUI extends JFrame implements ActionListener {
 		Label1.setAlignmentX(Component.CENTER_ALIGNMENT);
 
 		//"Button" 
-		ready1 = new JButton();
-		ready1.setPreferredSize(new Dimension(75, 75));
-		ready1.setBackground(Color.RED);
-		ready1.setBorderPainted(false);
-		ready1.setEnabled(false);
+		readyBtn[0] = new JButton();
+		readyBtn[0].setPreferredSize(new Dimension(75, 75));
+		readyBtn[0].setBackground(Color.RED);
+		readyBtn[0].setBorderPainted(false);
+		readyBtn[0].setEnabled(false);
 
 		p1.add(Box.createRigidArea(new Dimension(1000,12)));
 		p1.add(Label1, BorderLayout.WEST);
-		p1.add(ready1, BorderLayout.EAST);
+		p1.add(readyBtn[0], BorderLayout.EAST);
 
 
 		JPanel p2 = new JPanel();
@@ -1003,15 +1000,15 @@ public class MainGUI extends JFrame implements ActionListener {
 		Label2.setAlignmentX(Component.CENTER_ALIGNMENT);
 
 		//"Button" 
-		JButton ready2 = new JButton();
-		ready2.setPreferredSize(new Dimension(75, 75));
-		ready2.setBackground(Color.RED);
-		ready2.setBorderPainted(false);
-		ready2.setEnabled(false);
+		readyBtn[1] = new JButton();
+		readyBtn[1].setPreferredSize(new Dimension(75, 75));
+		readyBtn[1].setBackground(Color.RED);
+		readyBtn[1].setBorderPainted(false);
+		readyBtn[1].setEnabled(false);
 
 		p2.add(Box.createRigidArea(new Dimension(1000,12)));
 		p2.add(Label2, BorderLayout.WEST);
-		p2.add(ready2, BorderLayout.EAST);
+		p2.add(readyBtn[1], BorderLayout.EAST);
 
 
 		JPanel p3 = new JPanel();
@@ -1027,15 +1024,15 @@ public class MainGUI extends JFrame implements ActionListener {
 		Label3.setAlignmentX(Component.CENTER_ALIGNMENT);
 
 		//"Button" 
-		JButton ready3 = new JButton();
-		ready3.setPreferredSize(new Dimension(75, 75));
-		ready3.setBackground(Color.RED);
-		ready3.setBorderPainted(false);
-		ready3.setEnabled(false);
+		readyBtn[2] = new JButton();
+		readyBtn[2].setPreferredSize(new Dimension(75, 75));
+		readyBtn[2].setBackground(Color.RED);
+		readyBtn[2].setBorderPainted(false);
+		readyBtn[2].setEnabled(false);
 
 		p3.add(Box.createRigidArea(new Dimension(1000,12)));
 		p3.add(Label3, BorderLayout.WEST);
-		p3.add(ready3, BorderLayout.EAST);
+		p3.add(readyBtn[2], BorderLayout.EAST);
 
 
 		JPanel p4 = new JPanel();
@@ -1051,15 +1048,15 @@ public class MainGUI extends JFrame implements ActionListener {
 		Label4.setAlignmentX(Component.CENTER_ALIGNMENT);
 
 		//"Button" 
-		JButton ready4 = new JButton();
-		ready4.setPreferredSize(new Dimension(75, 75));
-		ready4.setBackground(Color.RED);
-		ready4.setBorderPainted(false);
-		ready4.setEnabled(false);
+		readyBtn[3] = new JButton();
+		readyBtn[3].setPreferredSize(new Dimension(75, 75));
+		readyBtn[3].setBackground(Color.RED);
+		readyBtn[3].setBorderPainted(false);
+		readyBtn[3].setEnabled(false);
 
 		p4.add(Box.createRigidArea(new Dimension(1000,12)));
 		p4.add(Label4, BorderLayout.WEST);
-		p4.add(ready4, BorderLayout.EAST);
+		p4.add(readyBtn[3], BorderLayout.EAST);
 
 
 		JPanel p5 = new JPanel();
@@ -1075,15 +1072,15 @@ public class MainGUI extends JFrame implements ActionListener {
 		Label5.setAlignmentX(Component.CENTER_ALIGNMENT);
 
 		//"Button" 
-		JButton ready5 = new JButton();
-		ready5.setPreferredSize(new Dimension(75, 75));
-		ready5.setBackground(Color.RED);
-		ready5.setBorderPainted(false);
-		ready5.setEnabled(false);
+		readyBtn[4] = new JButton();
+		readyBtn[4].setPreferredSize(new Dimension(75, 75));
+		readyBtn[4].setBackground(Color.RED);
+		readyBtn[4].setBorderPainted(false);
+		readyBtn[4].setEnabled(false);
 
 		p5.add(Box.createRigidArea(new Dimension(1000,12)));
 		p5.add(Label5, BorderLayout.WEST);
-		p5.add(ready5, BorderLayout.EAST);
+		p5.add(readyBtn[4], BorderLayout.EAST);
 
 
 		JPanel p6 = new JPanel();
@@ -1099,15 +1096,15 @@ public class MainGUI extends JFrame implements ActionListener {
 		Label6.setAlignmentX(Component.CENTER_ALIGNMENT);
 
 		//"Button" 
-		JButton ready6 = new JButton();
-		ready6.setPreferredSize(new Dimension(75, 75));
-		ready6.setBackground(Color.RED);
-		ready6.setBorderPainted(false);
-		ready6.setEnabled(false);
+		readyBtn[5] = new JButton();
+		readyBtn[5].setPreferredSize(new Dimension(75, 75));
+		readyBtn[5].setBackground(Color.RED);
+		readyBtn[5].setBorderPainted(false);
+		readyBtn[5].setEnabled(false);
 
 		p6.add(Box.createRigidArea(new Dimension(1000,12)));
 		p6.add(Label6, BorderLayout.WEST);
-		p6.add(ready6, BorderLayout.EAST);
+		p6.add(readyBtn[5], BorderLayout.EAST);
 
 
 		JPanel p7 = new JPanel();
@@ -1123,15 +1120,15 @@ public class MainGUI extends JFrame implements ActionListener {
 		Label7.setAlignmentX(Component.CENTER_ALIGNMENT);
 
 		//"Button" 
-		JButton ready7 = new JButton();
-		ready7.setPreferredSize(new Dimension(75, 75));
-		ready7.setBackground(Color.RED);
-		ready7.setBorderPainted(false);
-		ready7.setEnabled(false);
+		readyBtn[6] = new JButton();
+		readyBtn[6].setPreferredSize(new Dimension(75, 75));
+		readyBtn[6].setBackground(Color.RED);
+		readyBtn[6].setBorderPainted(false);
+		readyBtn[6].setEnabled(false);
 
 		p7.add(Box.createRigidArea(new Dimension(1000,12)));
 		p7.add(Label7, BorderLayout.WEST);
-		p7.add(ready7, BorderLayout.EAST);
+		p7.add(readyBtn[6], BorderLayout.EAST);
 
 
 		JPanel p8 = new JPanel();
@@ -1147,15 +1144,15 @@ public class MainGUI extends JFrame implements ActionListener {
 		Label8.setAlignmentX(Component.CENTER_ALIGNMENT);
 
 		//"Button" 
-		JButton ready8 = new JButton();
-		ready8.setPreferredSize(new Dimension(75, 75));
-		ready8.setBackground(Color.RED);
-		ready8.setBorderPainted(false);
-		ready8.setEnabled(false);
+		readyBtn[7] = new JButton();
+		readyBtn[7].setPreferredSize(new Dimension(75, 75));
+		readyBtn[7].setBackground(Color.RED);
+		readyBtn[7].setBorderPainted(false);
+		readyBtn[7].setEnabled(false);
 
 		p8.add(Box.createRigidArea(new Dimension(1000,12)));
 		p8.add(Label8, BorderLayout.WEST);
-		p8.add(ready8, BorderLayout.EAST);
+		p8.add(readyBtn[7], BorderLayout.EAST);
 
 
 		middle.add(p1);
@@ -1279,7 +1276,7 @@ public class MainGUI extends JFrame implements ActionListener {
 
 	public void updatePlayer(GameSlot gameSlot) {
 		
-		changeColor();
+		changeColor(0);
 		
 	}
 
