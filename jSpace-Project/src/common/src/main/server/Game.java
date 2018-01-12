@@ -66,7 +66,8 @@ public class Game implements Runnable {
         System.out.println("Added game to repository with gameslot: " + this.gameSlot);
         this.repository.add("talker"+this.gameSlot, listener);
         this.repository.add("listener"+this.gameSlot, talker);
-
+        
+        talker.put("updateLobby", "update", hostID, player.getGameSlot());
     }
 
     public void run() {
