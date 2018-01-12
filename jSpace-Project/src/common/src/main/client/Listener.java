@@ -7,45 +7,93 @@ import org.jspace.Space;
 
 import common.src.main.server.GameSlot;
 
+import static common.src.main.client.Client.allowPlayerTurn;
+
 public class Listener implements Runnable{
-	private static Space local;
 	private static RemoteSpace game;
 	private static int userID;
 
 	
-	public Listener(Space local, RemoteSpace game, int userID){
-		this.local = local;
+	public Listener(RemoteSpace game, int userID){
 		this.game = game;
 		this.userID = userID;
 	}
 	
 	public void run() {
-		// TODO: Puts thing up into the local tuple space when recieving commands from the server.
-		System.out.println("Listener");
+		lobbyListener();
+		inGameListener();
+		// TODO: Exit procedure when a game has ended.
+	} // End of run();
+
+	public void lobbyListener(){
 		while (true){
 			try {
-				// UpdateLobby - Type of Action - UserID, gameslot to be acted upon.
-				Object[] tuple = game.get(new ActualField("updateLobby"), new FormalField(String.class), new ActualField(userID), new FormalField(GameSlot.class));
-				System.out.println("Listener: Got response from server: " + tuple[1]);
-		        if (tuple[1].equals("start")){
-		        	// TODO: Start game: A button for the host, possibly to entirely replace his ready button.
-		        	// Starts the game, many stuff happens.
-		        	local.put("local", "start", null);
+				Object[] tuple = game.get(new ActualField("updateLobby"),new FormalField(String.class), new FormalField(GameSlot.class));
+				GameSlot gameSlot = (GameSlot) tuple[2];
+				System.out.println("Local Lobby: Got response: " + tuple[1]);
+				if (tuple[1].equals("start")){
+					// TODO: Start game: A button for the host, possibly to entirely replace his ready button.
+					// Starts the game, many stuff happens.
+					System.out.println("Game started! GET READY TO RUMBLE!!!!");
 					break;
-		        } else if (tuple[1].equals("update")){
-		        	// TODO: Update from the server, update relevant GUI.
-		        	// Possible updates: User joins, user leaves, user checks ready, user unchecks ready.
-		        	local.put("local", "update", (GameSlot) tuple[3]);
-		        } else if (tuple[1].equals("leave")){
-		        	local.put("local","leave", null);
-		        	break;
-		        } else if (tuple[1].equals("error")){
-		        	local.put("local", "error", null);
-		        }
+				} else if (tuple[1].equals("update")){
+					// TODO: Update from the server, update relevant GUI.
+					// Occurs when a player joins/leaves/changes ready state, will fully update a specified game slot.
+					System.out.println("Game updated: " + gameSlot.getName() + ", is he ready: "+gameSlot.isReady());
+				} else if (tuple[1].equals("leave")){
+					// Call the lobby function.
+					System.out.println("You have left the game!");
+					return;
+				} else if (tuple[1].equals("error")){
+					System.out.println("An error occured.");
+					// TODO: Force an error message to pop up.
+					// This happens if a player
+				}
 			} catch (InterruptedException e) {
 				e.printStackTrace();
 			}
 		}
-	} // End of run();
+	} // End of lobby listener.
+	
+	public void inGameListener(){
+		while(true) {
+			try {
+				// STRING - INT - STRING - INT
+				Object[] tuple = game.get(new ActualField("ingame"), new FormalField(String.class), new ActualField(userID), new FormalField(String.class), new FormalField(Integer.class));
+				System.out.println("Listener: Got response from server: " + tuple[1]);
+				if (tuple[1].equals("card")){
+					// ("ingame", "black", player.getId(), blackCard.getSentence(), blackCard.getBlanks());
+					if (tuple[2].equals("white")) {
+						Client.whiteCards[(int) tuple[4]] = (String) tuple[3];
+						// TODO: Update GUI whitecards
+					} else if (tuple[2].equals("black")) {
+						Client.amountOfBlanks = (int) tuple[4];
+						// tuple[3] is the text
+						// TODO: Set Black card to given string on GUI
+					}
+				}
+				else if (tuple[1].equals("yourpick")) {
+					// ("ingame", "yourpick", player.getId(), null, cardIndex);
+					int pickedCard = (int) tuple[4];
+					// TODO: Update for chosen card on Client
+				}
+				else if (tuple[1].equals("picked")) {
+					// ("ingame", "picked", player.getId(), pickedCards[i], i);
+					// TODO: Show picked cards on GUI
+				}
+				else if (tuple[1].equals("result")) {
+					// ("ingame", "result", player.getId(), winnerCard.getSentence(), 0);
+					// ("ingame", "result", player.getId(), winnerPlayer.getName(), 0);
+					// TODO: Show results to GUI (0 is not used)
+				}
+				else if (tuple[1].equals("yourturn")) {
+					allowPlayerTurn();
+				}
+				// TODO: Player leaves/joins in mid-game
+			}
+			catch (InterruptedException e) {
 
+			}
+		}
+	} // End of in game listener.
 }

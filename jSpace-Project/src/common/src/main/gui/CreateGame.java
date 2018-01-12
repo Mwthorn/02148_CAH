@@ -309,17 +309,5 @@ public class CreateGame extends JFrame implements ActionListener {
 			}
 		}
 	}
-	
-	public static void main(String[] args) {
-	
-		CreateGame game = new CreateGame();
-
-		game.setTitle("Cards Against Humanity");
-		game.setSize(1900,1000);
-		game.setResizable(true);
-		game.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		game.setVisible(true);
-		game.setLocationRelativeTo(null);
-	}
 }
 

@@ -217,20 +217,4 @@ public class Lobby extends JFrame implements ActionListener{
 
 	}
 
-
-	public static void main(String[] args) throws InterruptedException {
-
-		Lobby lobby = new Lobby();
-
-		lobby.setSize(1080, 720);
-		lobby.setLocationRelativeTo(null);
-		lobby.setDefaultCloseOperation(EXIT_ON_CLOSE);
-		lobby.setTitle("Cards Against Humanity");
-		lobby.setResizable(true);
-		lobby.setVisible(true);
-
-		System.out.println(Client.getGameList());
-
-	} 
-
 }

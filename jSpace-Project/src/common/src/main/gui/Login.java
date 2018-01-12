@@ -263,20 +263,6 @@ public class Login extends JFrame implements ActionListener {
 		}
 	}
 
-	public static void main(String[] args) {
-
-		Login login = new Login();
-
-		login.setTitle("Cards Against Humanity");
-		login.setSize(1900,1000);
-		login.setResizable(true);
-		login.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		login.setVisible(true);
-		login.setLocationRelativeTo(null);
-
-	}
-
-
 //		public String getName() {
 //			return name;
 //		}
