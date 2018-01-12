@@ -975,7 +975,7 @@ public class MainGUI extends JFrame implements ActionListener {
 		playerPanel.setBackground(Color.WHITE);
 		playerPanel.setAlignmentX(CENTER_ALIGNMENT);
 		playerPanel.setAlignmentY(CENTER_ALIGNMENT);
-		playerPanel.add(playerList);
+//		playerPanel.add(playerList);
 		playerPanel.add(scrollPane, BorderLayout.CENTER);
 
 		mainReadyUpLobby.add(playerPanel, BorderLayout.CENTER);
