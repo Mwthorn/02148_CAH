@@ -20,8 +20,12 @@ public class Listener implements Runnable{
 	}
 	
 	public void run() {
-		// TODO: Puts thing up into the local tuple space when recieving commands from the server.
-		System.out.println("Listener");
+		lobbyListener();
+		inGameListener();
+		// TODO: Exit procedure when a game has ended.
+	} // End of run();
+
+	public void lobbyListener(){
 		while (true){
 			try {
 				Object[] tuple = game.get(new ActualField("updateLobby"),new FormalField(String.class), new FormalField(GameSlot.class));
@@ -49,8 +53,9 @@ public class Listener implements Runnable{
 				e.printStackTrace();
 			}
 		}
-
-		// Enters the game state.
+	} // End of lobby listener.
+	
+	public void inGameListener(){
 		while(true) {
 			try {
 				// STRING - INT - STRING - INT
@@ -90,6 +95,5 @@ public class Listener implements Runnable{
 
 			}
 		}
-	} // End of run();
-
+	} // End of in game listener.
 }
