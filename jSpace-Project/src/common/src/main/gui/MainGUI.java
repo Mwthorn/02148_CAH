@@ -1040,6 +1040,10 @@ public class MainGUI extends JFrame implements ActionListener {
 				e1.printStackTrace();
 			}
 
+			hideAll();
+			mainReadyUpLobby.setVisible(true);
+			add(mainReadyUpLobby);
+			
 		} else if(e.getSource()==BLeave){
 			hideAll();
 			mainLobby.setVisible(true);
