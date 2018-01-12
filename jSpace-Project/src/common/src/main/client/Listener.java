@@ -41,7 +41,7 @@ public class Listener implements Runnable{
 					// TODO: Update from the server, update relevant GUI.
 					// Occurs when a player joins/leaves/changes ready state, will fully update a specified game slot.
 					System.out.println("Game updated: " + gameSlot.getName() + ", at seat " + gameSlot.getSlot() + ", is he ready: "+gameSlot.isReady());
-
+					Client.main.updatePlayer(gameSlot);
 				} else if (tuple[1].equals("leave")){
 					// Call the lobby function.
 					// TODO: Make GUI go back to main lobby

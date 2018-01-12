@@ -14,12 +14,13 @@ import java.util.ArrayList;
 import javax.swing.JFrame;
 
 public class Client {
-	private static RemoteSpace lobby, game;
-	private static int userID;
-	private static String serverIP;
+	public static RemoteSpace lobby, listener, talker;
+	public static int userID;
+	public static String serverIP;
 	public static int amountOfBlanks;
 	public static boolean turnToPick;
 	public static String[] whiteCards = new String[10];
+	public static MainGUI main;
 
 	private static final int testNumber = 0;
 
@@ -28,7 +29,7 @@ public class Client {
     	// Create login GUI and request name of user and IP to server.
     	
     	/* Connect to server using GUI info */
-    	MainGUI main = new MainGUI();
+    	main = new MainGUI();
 
 		main.setTitle("Cards Against Humanity");
 		main.setSize(1900,1000);
@@ -73,7 +74,7 @@ public class Client {
 		// name = "Alex";
 		System.out.println(IP);
 		System.out.println(name);
-		lobby = new RemoteSpace("tcp://" + IP + ":9001/lobby?conn");
+		lobby = new RemoteSpace("tcp://" + IP + ":9001/lobby?keep");
 
 		//lobby.put("test");
 		lobby.put("lobby","enter",name,0);
@@ -93,13 +94,13 @@ public class Client {
 			int gameSlot = (int) info[2];
 			
 			// Connects the host to the tuple space.
-			game = new RemoteSpace("tcp://" + serverIP + ":9001/game" + gameSlot + "?keep");
-			
-			game.put("testing");
-			gameLobby();
+			System.out.println("Connecting to game with gameSlot:" + gameSlot);
+			listener = new RemoteSpace("tcp://" + serverIP + ":9001/listener" + gameSlot + "?keep");
+			talker = new RemoteSpace("tcp://" + serverIP + ":9001/talker" + gameSlot + "?keep");
 		} catch (InterruptedException | IOException e) {
 			e.printStackTrace();
 		}
+		gameLobby();
 	} // End of createNewGame function
 
 	public static void joinGame(int gameID) throws InterruptedException {
@@ -108,14 +109,13 @@ public class Client {
 		
 		Object[] info = lobby.get(new ActualField("joinedGame"), new ActualField(userID), new FormalField(Integer.class));
 		int gameSlot = (int) info[2];
-
+		System.out.println("Connecting to game with gameSlot: " + gameSlot);
 		try {
-			game = new RemoteSpace("tcp://" + serverIP + ":9001/game" + gameSlot + "?keep");
+			listener = new RemoteSpace("tcp://" + serverIP + ":9001/listener" + gameSlot + "?keep");
+			talker = new RemoteSpace("tcp://" + serverIP + ":9001/talker" + gameSlot + "?keep");
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-
-		game.put("testing");
 		gameLobby();
 	} // End of joinGame function
 	
@@ -145,31 +145,30 @@ public class Client {
 	/******************************* User/Game Lobby Interactions ********************************/
 	/*********************************************************************************************/
 
-	private static void gameLobby() {
+	public static void gameLobby() {
 		// Create game lobby GUI.
 
 		// Setup listener.
-		new Thread(new Listener(game, userID)).start();
+		new Thread(new Listener(listener, userID)).start();
 		
 		// TODO: Implement a system similar to the listening in server main, but from the local tuple space.
-		
 
-		
 		// TODO: Leave game: Return the player to the main lobby, adjust tuple spaces.
     	// Update GUI, change from game tuple space to lobby tuple space, adjust other players GUI by sending message to server.
 	} // End of gameLobby function
 
 	public static void sendReady() {
 		System.out.println("Sending ready client...");
-		game.put("game", "ready", userID);
+		talker.put("game", "ready", userID);
+		System.out.println("Sent ready!");
 	}
 
 	public static void sendLeave() {
-		game.put("game", "leave", userID);
+		talker.put("game", "leave", userID);
 	}
 
 	public static void sendStart() {
-		game.put("game", "start", userID);
+		talker.put("game", "start", userID);
 	}
 	
 	/*********************************************************************************************/
@@ -180,7 +179,7 @@ public class Client {
 		if (!turnToPick) {
 			return false;
 		}
-		game.put("gameListener", "pickWhite", userID, i);
+		listener.put("gameListener", "pickWhite", userID, i);
 		// game.put("pickwhite", userID, i);
 		turnToPick = false;
 		return true;
@@ -190,7 +189,7 @@ public class Client {
 		if (!turnToPick) {
 			return false;
 		}
-		game.put("gameListener", "chooseWinnerCard", userID, i);
+		listener.put("gameListener", "chooseWinnerCard", userID, i);
 		turnToPick = false;
 		return true;
 	}
@@ -208,8 +207,8 @@ public class Client {
 	}
 
 	public static void sendChatMessage(String message) {
-		game.put("gameListener", "chat", userID, 0);
-		game.put("gameListenerChat", message, userID);
+		listener.put("gameListener", "chat", userID, 0);
+		listener.put("gameListenerChat", message, userID);
 		// TODO: Send message to all players in game class through tuple
 	}
 
