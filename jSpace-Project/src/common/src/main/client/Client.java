@@ -17,10 +17,9 @@ public class Client {
 	private static RemoteSpace lobby, game;
 	private static int userID;
 	private static String serverIP;
-	private static String name;
-	private static int amountOfBlanks;
-	private static boolean turnToPick;
-	private static String[] whiteCards = new String[10];
+	public static int amountOfBlanks;
+	public static boolean turnToPick;
+	public static String[] whiteCards = new String[10];
 
 	private static final int testNumber = 0;
 
@@ -157,36 +156,7 @@ public class Client {
 		
 		// TODO: Implement a system similar to the listening in server main, but from the local tuple space.
 		
-		while (true){
-			try {
-				Object[] tuple = local.get(new ActualField("local"),new FormalField(String.class), new FormalField(GameSlot.class));
-				GameSlot gameSlot = (GameSlot) tuple[2];
-				System.out.println("Local Lobby: Got response: " + tuple[1]);
-		        if (tuple[1].equals("start")){
-		        	// TODO: Start game: A button for the host, possibly to entirely replace his ready button.
-		        	// Starts the game, many stuff happens.
-		        	System.out.println("Game started! GET READY TO RUMBLE!!!!");
-		        	break;
-		        } else if (tuple[1].equals("update")){
-		        	// TODO: Update from the server, update relevant GUI.
-		        	// Occurs when a player joins/leaves/changes ready state, will fully update a specified game slot.
-					System.out.println("Game updated: " + gameSlot.getName() + ", is he ready: "+gameSlot.isReady());
-		        } else if (tuple[1].equals("leave")){
-		        	// Call the lobby function.
-		        	System.out.println("You have left the game!");
-		        	return;
-		        } else if (tuple[1].equals("error")){
-		        	System.out.println("An error occured.");
-		        	// TODO: Force an error message to pop up.
-		        	// This happens if a player 
-		        }
-			} catch (InterruptedException e) {
-				e.printStackTrace();
-			}
-		}
-		
-		// Enters the game state.
-		inGame();
+
 		
 		// TODO: Leave game: Return the player to the main lobby, adjust tuple spaces.
     	// Update GUI, change from game tuple space to lobby tuple space, adjust other players GUI by sending message to server.
@@ -207,48 +177,6 @@ public class Client {
 	/*********************************************************************************************/
 	/********************************* User/In-Game Interactions *********************************/
 	/*********************************************************************************************/
-	
-	public static void inGame(){
-		while(true) {
-			try {
-				// STRING - INT - STRING - INT
-				Object[] tuple = game.get(new ActualField("ingame"), new FormalField(String.class), new ActualField(userID), new FormalField(String.class), new FormalField(Integer.class));
-				System.out.println("Listener: Got response from server: " + tuple[1]);
-				if (tuple[1].equals("card")){
-					// ("ingame", "black", player.getId(), blackCard.getSentence(), blackCard.getBlanks());
-					if (tuple[2].equals("white")) {
-						whiteCards[(int) tuple[4]] = (String) tuple[3];
-						// TODO: Update GUI whitecards
-					} else if (tuple[2].equals("black")) {
-						amountOfBlanks = (int) tuple[4];
-						// tuple[3] is the text
-						// TODO: Set Black card to given string on GUI
-					}
-				}
-				else if (tuple[1].equals("yourpick")) {
-					// ("ingame", "yourpick", player.getId(), null, cardIndex);
-					int pickedCard = (int) tuple[4];
-					// TODO: Update for chosen card on Client
-				}
-				else if (tuple[1].equals("picked")) {
-					// ("ingame", "picked", player.getId(), pickedCards[i], i);
-					// TODO: Show picked cards on GUI
-				}
-				else if (tuple[1].equals("result")) {
-					// ("ingame", "result", player.getId(), winnerCard.getSentence(), 0);
-					// ("ingame", "result", player.getId(), winnerPlayer.getName(), 0);
-					// TODO: Show results to GUI (0 is not used)
-				}
-				else if (tuple[1].equals("yourturn")) {
-					allowPlayerTurn();
-				}
-				// TODO: Player leaves/joins in mid-game
-			}
-			catch (InterruptedException e) {
-
-			}
-		}
-	}
 	
 	public static boolean pickWhiteCard(int i) {
 		if (!turnToPick) {

@@ -157,18 +157,4 @@ public class ReadyUpLobby extends JFrame implements ActionListener{
 
 	}
 
-
-	public static void main(String[] args) throws InterruptedException {
-
-		ReadyUpLobby readyLobby = new ReadyUpLobby();
-
-		readyLobby.setSize(1080, 720);
-		readyLobby.setLocationRelativeTo(null);
-		readyLobby.setDefaultCloseOperation(EXIT_ON_CLOSE);
-		readyLobby.setTitle("Cards Against Humanity");
-		readyLobby.setResizable(true);
-		readyLobby.setVisible(true);
-
-	}
-
 }

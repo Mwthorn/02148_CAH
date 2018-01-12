@@ -56,6 +56,7 @@ public class Game implements Runnable {
         this.players.add(player);
         this.gameSlot = gameSlot;
         this.slotOccupied = new boolean[maxPlayers];
+        this.status = "Waiting for players...";
 
         this.repository = repository;
         this.repository.add("game"+this.gameSlot, game);

@@ -67,26 +67,6 @@ public class MainGUI extends JFrame implements ActionListener {
 	private JLabel LHead, LPicWC, LPicBC;
 	private static JList playerList;
 
-
-
-	/////////// MAIN ///////////
-
-	public static void main(String[] args) throws InterruptedException {
-
-		MainGUI main = new MainGUI();
-
-		main.setTitle("Cards Against Humanity");
-		main.setSize(1900,1000);
-		main.setResizable(true);
-		main.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		main.setVisible(true);
-		main.setLocationRelativeTo(null);
-
-	}
-
-	////////// MAIN ////////////
-
-
 	// Rounded Buttons
 	// Source: https://stackoverflow.com/questions/423950/rounded-swing-jbutton-using-java
 	private static class RoundedBorder implements Border {
@@ -893,7 +873,7 @@ public class MainGUI extends JFrame implements ActionListener {
 
 		// Create List
 		DefaultListModel model = new DefaultListModel();
-		playerList = new JList(model);	
+		playerList = new JList(model);
 
 		JScrollPane scrollPane = new JScrollPane(playerList);
 
@@ -1008,7 +988,7 @@ public class MainGUI extends JFrame implements ActionListener {
 
 			} catch (Exception e1) {
 				txtfld2.setText("Invalid IP");
-			} 
+			}
 
 			System.out.println(name);
 			System.out.println(IP);
@@ -1038,11 +1018,11 @@ public class MainGUI extends JFrame implements ActionListener {
 
 
 		} else if (e.getSource() == BCreateGame){
-			
+
 			hideAll();
 			mainReadyUpLobby.setVisible(true);
 			add(mainReadyUpLobby);
-			
+
 //			Client.createNewGame();
 
 		} else if (e.getSource() == b4) {
@@ -1155,9 +1135,9 @@ public class MainGUI extends JFrame implements ActionListener {
 
 
 			//			try {
-			//				
+			//
 			//				Client.joinGame(games.get(index).getId());
-			//			
+			//
 			//			} catch (InterruptedException e1) {
 			//				// TODO Auto-generated catch block
 			//				e1.printStackTrace();
