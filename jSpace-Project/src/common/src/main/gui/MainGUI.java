@@ -967,7 +967,7 @@ public class MainGUI extends JFrame implements ActionListener {
 
 
 
-	String name, IP;
+	String name, IP, gameName, rounds, time, password;
 
 	public void actionPerformed(ActionEvent e){
 
@@ -1022,7 +1022,11 @@ public class MainGUI extends JFrame implements ActionListener {
 
 
 		} else if (e.getSource() == BCreateGame){
-
+			this.gameName = txtfld8.getText();
+			this.rounds = txtfld7.getText();
+			this.time = txtfld4.getText();
+			this.password = txtfld5.getText();
+			
 			hideAll();
 			mainReadyUpLobby.setVisible(true);
 			add(mainReadyUpLobby);
