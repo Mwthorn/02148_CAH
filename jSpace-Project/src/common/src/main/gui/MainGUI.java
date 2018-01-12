@@ -44,7 +44,7 @@ public class MainGUI extends JFrame implements ActionListener {
 
 	// Lobby
 	private static final String String = null;
-	private JButton b1, b2, b3, b4, b5;
+	private JButton LCreateGameBtn, LSignOutBtn, LJoinGameBtn, LRefreshBtn, b5;
 	private JLabel l1, l2, l3, l4, l5, l6;
 	private JTextField WP;
 	private static JList list;
@@ -408,56 +408,56 @@ public class MainGUI extends JFrame implements ActionListener {
 		Dimension btnsize2 = new Dimension(180,70);
 
 		// Create game button
-		b1 = new JButton("Create Game");
-		b1.setPreferredSize(btnsize2);
-		b1.setBackground(Color.white);
-		b1.setForeground(Color.black);
-		b1.addActionListener(this);
-		b1.setBorder(new RoundedBorder(30));
-		b1.setAlignmentX(Component.CENTER_ALIGNMENT);
-		b1.setFont(new Font("calibri",1,21));
-		b1.setBorderPainted(true);
-		b1.setFocusPainted(false);
-		b1.setEnabled(true);
+		LCreateGameBtn = new JButton("Create Game");
+		LCreateGameBtn.setPreferredSize(btnsize2);
+		LCreateGameBtn.setBackground(Color.white);
+		LCreateGameBtn.setForeground(Color.black);
+		LCreateGameBtn.addActionListener(this);
+		LCreateGameBtn.setBorder(new RoundedBorder(30));
+		LCreateGameBtn.setAlignmentX(Component.CENTER_ALIGNMENT);
+		LCreateGameBtn.setFont(new Font("calibri",1,21));
+		LCreateGameBtn.setBorderPainted(true);
+		LCreateGameBtn.setFocusPainted(false);
+		LCreateGameBtn.setEnabled(true);
 
 		// Sign out button
-		b2 = new JButton("Sign Out");
-		b2.setPreferredSize(btnsize2);
-		b2.setBorder(new RoundedBorder(30));
-		b2.setBackground(Color.white);
-		b2.setForeground(Color.black);
-		b2.addActionListener(this);
-		b2.setAlignmentX(Component.CENTER_ALIGNMENT);
-		b2.setFont(new Font("calibri",1,21));
-		b2.setBorderPainted(true);
-		b2.setFocusPainted(false);
-		b2.setEnabled(true);
+		LSignOutBtn = new JButton("Sign Out");
+		LSignOutBtn.setPreferredSize(btnsize2);
+		LSignOutBtn.setBorder(new RoundedBorder(30));
+		LSignOutBtn.setBackground(Color.white);
+		LSignOutBtn.setForeground(Color.black);
+		LSignOutBtn.addActionListener(this);
+		LSignOutBtn.setAlignmentX(Component.CENTER_ALIGNMENT);
+		LSignOutBtn.setFont(new Font("calibri",1,21));
+		LSignOutBtn.setBorderPainted(true);
+		LSignOutBtn.setFocusPainted(false);
+		LSignOutBtn.setEnabled(true);
 
 		// Join game button
-		b3 = new JButton("Join Game");
-		b3.setPreferredSize(btnsize2);
-		b3.setBorder(new RoundedBorder(30));
-		b3.setBackground(Color.white);
-		b3.setForeground(Color.black);
-		b3.addActionListener(this);
-		b3.setAlignmentX(Component.CENTER_ALIGNMENT);
-		b3.setFont(new Font("calibri",1,21));
-		b3.setBorderPainted(true);
-		b3.setFocusPainted(false);
-		b3.setEnabled(true);
+		LJoinGameBtn = new JButton("Join Game");
+		LJoinGameBtn.setPreferredSize(btnsize2);
+		LJoinGameBtn.setBorder(new RoundedBorder(30));
+		LJoinGameBtn.setBackground(Color.white);
+		LJoinGameBtn.setForeground(Color.black);
+		LJoinGameBtn.addActionListener(this);
+		LJoinGameBtn.setAlignmentX(Component.CENTER_ALIGNMENT);
+		LJoinGameBtn.setFont(new Font("calibri",1,21));
+		LJoinGameBtn.setBorderPainted(true);
+		LJoinGameBtn.setFocusPainted(false);
+		LJoinGameBtn.setEnabled(true);
 
 		// Refresh button
-		b4 = new JButton("Refresh");
-		b4.setPreferredSize(btnsize2);
-		b4.setBorder(new RoundedBorder(30));
-		b4.setBackground(Color.white);
-		b4.setForeground(Color.black);
-		b4.addActionListener(this);
-		b4.setAlignmentX(Component.CENTER_ALIGNMENT);
-		b4.setFont(new Font("calibri",1,21));
-		b4.setBorderPainted(true);
-		b4.setFocusPainted(false);
-		b4.setEnabled(true);
+		LRefreshBtn = new JButton("Refresh");
+		LRefreshBtn.setPreferredSize(btnsize2);
+		LRefreshBtn.setBorder(new RoundedBorder(30));
+		LRefreshBtn.setBackground(Color.white);
+		LRefreshBtn.setForeground(Color.black);
+		LRefreshBtn.addActionListener(this);
+		LRefreshBtn.setAlignmentX(Component.CENTER_ALIGNMENT);
+		LRefreshBtn.setFont(new Font("calibri",1,21));
+		LRefreshBtn.setBorderPainted(true);
+		LRefreshBtn.setFocusPainted(false);
+		LRefreshBtn.setEnabled(true);
 
 		//Makes Title
 		l1 = new JLabel("Cards Against Humanity");
@@ -484,11 +484,11 @@ public class MainGUI extends JFrame implements ActionListener {
 		FlowLayout flow = new FlowLayout(FlowLayout.CENTER);
 		p1.setLayout(flow);
 		p1.setBackground(Color.WHITE);
-		p1.add(b2);
-		p1.add(b4);
+		p1.add(LSignOutBtn);
+		p1.add(LRefreshBtn);
 		flow.setHgap(100);
-		p1.add(b3);
-		p1.add(b1);
+		p1.add(LJoinGameBtn);
+		p1.add(LCreateGameBtn);
 		p1.add(Box.createRigidArea(new Dimension(0,200)));
 
 		mainLobby.add(p1, BorderLayout.SOUTH);
@@ -1002,13 +1002,13 @@ public class MainGUI extends JFrame implements ActionListener {
 			mainLobby.setVisible(true);
 			add(mainLobby);
 
-		} else if(e.getSource()==b1) {
+		} else if(e.getSource()==LCreateGameBtn) {
 
 			hideAll();
 			mainCreate.setVisible(true);
 			add(mainCreate);
 
-		} else if(e.getSource()==b2) {
+		} else if(e.getSource()==LSignOutBtn) {
 
 			hideAll();
 			mainLogin.setVisible(true);
@@ -1033,7 +1033,7 @@ public class MainGUI extends JFrame implements ActionListener {
 
 			Client.createNewGame();
 
-		} else if (e.getSource() == b4) {
+		} else if (e.getSource() == LRefreshBtn) {
 			loadAvailableGames();
 
 			//		} else if (e.getSource() == b3) {
@@ -1134,24 +1134,18 @@ public class MainGUI extends JFrame implements ActionListener {
 		}
 
 
-		if (e.getSource() == b3) {
+		if (e.getSource() == LJoinGameBtn) {
 
 			int gameSelected = list.getSelectedIndex();
 			System.out.println("Index Selected: "+ gameSelected);
 			GamePreview preID = games.get(gameSelected);
 			int gameID = preID.getId();
-
-
-			//			try {
-			//
-			//				Client.joinGame(games.get(index).getId());
-			//
-			//			} catch (InterruptedException e1) {
-			//				// TODO Auto-generated catch block
-			//				e1.printStackTrace();
-			//			}
-
-
+			
+			try {
+				Client.joinGame(gameID);
+			} catch (InterruptedException e1) {
+				e1.printStackTrace();
+			}
 
 		}
 
