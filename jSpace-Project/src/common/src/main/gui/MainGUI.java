@@ -54,7 +54,7 @@ public class MainGUI extends JFrame implements ActionListener {
 	// Create Game
 	private JButton BCreateGame;
 	private JLabel  LRounds, LTime, LPass, LPassword;
-	private JTextField txtfld3, txtfld4, txtfld5, txtfld6;
+	private JTextField txtfld3, txtfld4, txtfld5, txtfld6, txtfld7, txtfld8;
 
 	// Games available list
 	private int gameSelected;
@@ -704,16 +704,16 @@ public class MainGUI extends JFrame implements ActionListener {
 		LFigure2.setAlignmentX(Component.CENTER_ALIGNMENT);
 
 		// Name textfield
-		txtfld1 = new JTextField(50);
-		txtfld1.setMaximumSize(txtfldsize);
-		txtfld1.setFont(new Font("calibri",Font.PLAIN,20));
-		txtfld1.setAlignmentX(Component.CENTER_ALIGNMENT);
+		txtfld8 = new JTextField(50);
+		txtfld8.setMaximumSize(txtfldsize);
+		txtfld8.setFont(new Font("calibri",Font.PLAIN,20));
+		txtfld8.setAlignmentX(Component.CENTER_ALIGNMENT);
 
 		// Name textfield
-		txtfld2 = new JTextField(50);
-		txtfld2.setMaximumSize(txtfldsize);
-		txtfld2.setFont(new Font("calibri",Font.PLAIN,20));
-		txtfld2.setAlignmentX(Component.CENTER_ALIGNMENT);
+		txtfld7 = new JTextField(50);
+		txtfld7.setMaximumSize(txtfldsize);
+		txtfld7.setFont(new Font("calibri",Font.PLAIN,20));
+		txtfld7.setAlignmentX(Component.CENTER_ALIGNMENT);
 
 		// Name textfield
 		txtfld3 = new JTextField(50);
@@ -779,9 +779,9 @@ public class MainGUI extends JFrame implements ActionListener {
 		PR.setBackground(Color.white);
 
 		PR.add(Box.createRigidArea(new Dimension(350,50)));
-		PR.add(txtfld1);
+		PR.add(txtfld8);
 		PR.add(Box.createRigidArea(new Dimension(350,50)));
-		PR.add(txtfld2);
+		PR.add(txtfld7);
 		PR.add(Box.createRigidArea(new Dimension(350,50)));
 		PR.add(txtfld3);
 		PR.add(Box.createRigidArea(new Dimension(350,50)));
@@ -975,7 +975,7 @@ public class MainGUI extends JFrame implements ActionListener {
 		playerPanel.setBackground(Color.WHITE);
 		playerPanel.setAlignmentX(CENTER_ALIGNMENT);
 		playerPanel.setAlignmentY(CENTER_ALIGNMENT);
-//		playerPanel.add(playerList);
+		//		playerPanel.add(playerList);
 		playerPanel.add(scrollPane, BorderLayout.CENTER);
 
 		mainReadyUpLobby.add(playerPanel, BorderLayout.CENTER);
@@ -998,10 +998,16 @@ public class MainGUI extends JFrame implements ActionListener {
 			System.exit(0);
 
 		} else if (e.getSource() == BSignIn){
-			//			this.name = txtfld1.getText();
-			//			this.IP = txtfld2.getText();
-			this.name = "alex";
-			this.IP = "127.0.0.1";
+
+			this.name = txtfld1.getText();
+			this.IP = txtfld2.getText();
+
+			//			this.name = "alex";
+			//			this.IP = "127.0.0.1";
+
+			System.out.println(name);
+			System.out.println(IP);
+
 			try {
 
 				Client.loginUser(IP, name);
@@ -1010,8 +1016,6 @@ public class MainGUI extends JFrame implements ActionListener {
 				txtfld2.setText("Invalid IP");
 			} 
 
-			System.out.println(name);
-			System.out.println(IP);
 
 			hideAll();
 			loadAvailableGames();
@@ -1038,12 +1042,12 @@ public class MainGUI extends JFrame implements ActionListener {
 
 
 		} else if (e.getSource() == BCreateGame){
-			
+
 			hideAll();
 			mainReadyUpLobby.setVisible(true);
 			add(mainReadyUpLobby);
-			
-//			Client.createNewGame();
+
+			Client.createNewGame();
 
 		} else if (e.getSource() == b4) {
 			loadAvailableGames();
