@@ -69,6 +69,7 @@ public class MainGUI extends JFrame implements ActionListener {
 	// ReadyUpLobby
 	private GameSlot[] gameSlot = new GameSlot[maxPlayers];
 	private JButton[] readyBtn = new JButton[maxPlayers];
+	private JLabel[] player = new JLabel[maxPlayers];
 	private JButton BReady, BLeave;
 	private JLabel LHead, LPicWC, LPicBC, Label1, Label2, Label3, Label4, Label5, Label6, Label7, Label8;
 	private static JList playerList;
@@ -110,7 +111,7 @@ public class MainGUI extends JFrame implements ActionListener {
 
 	public void changeColor(int x){
 
-		if (gameSlot[x].isReady() == false) {			
+		if (gameSlot[x].isReady() == true) {			
 			readyBtn[x].setBackground(new Color(76,153,0));
 			System.out.println("Changed to Green");
 
@@ -970,20 +971,20 @@ public class MainGUI extends JFrame implements ActionListener {
 		p1.setBackground(Color.WHITE);
 
 		// Name Label
-		Label1 = new JLabel("   "+"Jeff");
-		Label1.setMaximumSize(lsize);
-		Label1.setFont(new Font("calibri",Font.PLAIN,30));
-		Label1.setAlignmentX(Component.CENTER_ALIGNMENT);
+		player[0] = new JLabel("   ");
+		player[0].setMaximumSize(lsize);
+		player[0].setFont(new Font("calibri",Font.PLAIN,30));
+		player[0].setAlignmentX(Component.CENTER_ALIGNMENT);
 
 		//"Button" 
 		readyBtn[0] = new JButton();
 		readyBtn[0].setPreferredSize(new Dimension(75, 75));
-		readyBtn[0].setBackground(Color.RED);
+		readyBtn[0].setBackground(Color.WHITE);
 		readyBtn[0].setBorderPainted(false);
 		readyBtn[0].setEnabled(false);
 
 		p1.add(Box.createRigidArea(new Dimension(1000,12)));
-		p1.add(Label1, BorderLayout.WEST);
+		p1.add(player[0], BorderLayout.WEST);
 		p1.add(readyBtn[0], BorderLayout.EAST);
 
 
@@ -994,20 +995,20 @@ public class MainGUI extends JFrame implements ActionListener {
 		p2.setBackground(Color.WHITE);
 
 		// Name Label
-		Label2 = new JLabel("   "+"Jeff");
-		Label2.setMaximumSize(lsize);
-		Label2.setFont(new Font("calibri",Font.PLAIN,30));
-		Label2.setAlignmentX(Component.CENTER_ALIGNMENT);
+		player[1] = new JLabel("   ");
+		player[1].setMaximumSize(lsize);
+		player[1].setFont(new Font("calibri",Font.PLAIN,30));
+		player[1].setAlignmentX(Component.CENTER_ALIGNMENT);
 
 		//"Button" 
 		readyBtn[1] = new JButton();
 		readyBtn[1].setPreferredSize(new Dimension(75, 75));
-		readyBtn[1].setBackground(Color.RED);
+		readyBtn[1].setBackground(Color.WHITE);
 		readyBtn[1].setBorderPainted(false);
 		readyBtn[1].setEnabled(false);
 
 		p2.add(Box.createRigidArea(new Dimension(1000,12)));
-		p2.add(Label2, BorderLayout.WEST);
+		p2.add(player[1], BorderLayout.WEST);
 		p2.add(readyBtn[1], BorderLayout.EAST);
 
 
@@ -1018,20 +1019,20 @@ public class MainGUI extends JFrame implements ActionListener {
 		p3.setBackground(Color.WHITE);
 
 		// Name Label
-		Label3 = new JLabel("   "+"Jeff");
-		Label3.setMaximumSize(lsize);
-		Label3.setFont(new Font("calibri",Font.PLAIN,30));
-		Label3.setAlignmentX(Component.CENTER_ALIGNMENT);
+		player[2] = new JLabel("   ");
+		player[2].setMaximumSize(lsize);
+		player[2].setFont(new Font("calibri",Font.PLAIN,30));
+		player[2].setAlignmentX(Component.CENTER_ALIGNMENT);
 
 		//"Button" 
 		readyBtn[2] = new JButton();
 		readyBtn[2].setPreferredSize(new Dimension(75, 75));
-		readyBtn[2].setBackground(Color.RED);
+		readyBtn[2].setBackground(Color.WHITE);
 		readyBtn[2].setBorderPainted(false);
 		readyBtn[2].setEnabled(false);
 
 		p3.add(Box.createRigidArea(new Dimension(1000,12)));
-		p3.add(Label3, BorderLayout.WEST);
+		p3.add(player[2], BorderLayout.WEST);
 		p3.add(readyBtn[2], BorderLayout.EAST);
 
 
@@ -1042,20 +1043,20 @@ public class MainGUI extends JFrame implements ActionListener {
 		p4.setBackground(Color.WHITE);
 
 		// Name Label
-		Label4 = new JLabel("   "+"Jeff");
-		Label4.setMaximumSize(lsize);
-		Label4.setFont(new Font("calibri",Font.PLAIN,30));
-		Label4.setAlignmentX(Component.CENTER_ALIGNMENT);
+		player[3] = new JLabel("   ");
+		player[3].setMaximumSize(lsize);
+		player[3].setFont(new Font("calibri",Font.PLAIN,30));
+		player[3].setAlignmentX(Component.CENTER_ALIGNMENT);
 
 		//"Button" 
 		readyBtn[3] = new JButton();
 		readyBtn[3].setPreferredSize(new Dimension(75, 75));
-		readyBtn[3].setBackground(Color.RED);
+		readyBtn[3].setBackground(Color.WHITE);
 		readyBtn[3].setBorderPainted(false);
 		readyBtn[3].setEnabled(false);
 
 		p4.add(Box.createRigidArea(new Dimension(1000,12)));
-		p4.add(Label4, BorderLayout.WEST);
+		p4.add(player[3], BorderLayout.WEST);
 		p4.add(readyBtn[3], BorderLayout.EAST);
 
 
@@ -1066,20 +1067,20 @@ public class MainGUI extends JFrame implements ActionListener {
 		p5.setBackground(Color.WHITE);
 
 		// Name Label
-		Label5 = new JLabel("   "+"Jeff");
-		Label5.setMaximumSize(lsize);
-		Label5.setFont(new Font("calibri",Font.PLAIN,30));
-		Label5.setAlignmentX(Component.CENTER_ALIGNMENT);
+		player[4] = new JLabel("   ");
+		player[4].setMaximumSize(lsize);
+		player[4].setFont(new Font("calibri",Font.PLAIN,30));
+		player[4].setAlignmentX(Component.CENTER_ALIGNMENT);
 
 		//"Button" 
 		readyBtn[4] = new JButton();
 		readyBtn[4].setPreferredSize(new Dimension(75, 75));
-		readyBtn[4].setBackground(Color.RED);
+		readyBtn[4].setBackground(Color.WHITE);
 		readyBtn[4].setBorderPainted(false);
 		readyBtn[4].setEnabled(false);
 
 		p5.add(Box.createRigidArea(new Dimension(1000,12)));
-		p5.add(Label5, BorderLayout.WEST);
+		p5.add(player[4], BorderLayout.WEST);
 		p5.add(readyBtn[4], BorderLayout.EAST);
 
 
@@ -1090,20 +1091,20 @@ public class MainGUI extends JFrame implements ActionListener {
 		p6.setBackground(Color.WHITE);
 
 		// Name Label
-		Label6 = new JLabel("   "+"Jeff");
-		Label6.setMaximumSize(lsize);
-		Label6.setFont(new Font("calibri",Font.PLAIN,30));
-		Label6.setAlignmentX(Component.CENTER_ALIGNMENT);
+		player[5] = new JLabel("   ");
+		player[5].setMaximumSize(lsize);
+		player[5].setFont(new Font("calibri",Font.PLAIN,30));
+		player[5].setAlignmentX(Component.CENTER_ALIGNMENT);
 
 		//"Button" 
 		readyBtn[5] = new JButton();
 		readyBtn[5].setPreferredSize(new Dimension(75, 75));
-		readyBtn[5].setBackground(Color.RED);
+		readyBtn[5].setBackground(Color.WHITE);
 		readyBtn[5].setBorderPainted(false);
 		readyBtn[5].setEnabled(false);
 
 		p6.add(Box.createRigidArea(new Dimension(1000,12)));
-		p6.add(Label6, BorderLayout.WEST);
+		p6.add(player[5], BorderLayout.WEST);
 		p6.add(readyBtn[5], BorderLayout.EAST);
 
 
@@ -1114,20 +1115,20 @@ public class MainGUI extends JFrame implements ActionListener {
 		p7.setBackground(Color.WHITE);
 
 		// Name Label
-		Label7 = new JLabel("   "+"Jeff");
-		Label7.setMaximumSize(lsize);
-		Label7.setFont(new Font("calibri",Font.PLAIN,30));
-		Label7.setAlignmentX(Component.CENTER_ALIGNMENT);
+		player[6] = new JLabel("   ");
+		player[6].setMaximumSize(lsize);
+		player[6].setFont(new Font("calibri",Font.PLAIN,30));
+		player[6].setAlignmentX(Component.CENTER_ALIGNMENT);
 
 		//"Button" 
 		readyBtn[6] = new JButton();
 		readyBtn[6].setPreferredSize(new Dimension(75, 75));
-		readyBtn[6].setBackground(Color.RED);
+		readyBtn[6].setBackground(Color.WHITE);
 		readyBtn[6].setBorderPainted(false);
 		readyBtn[6].setEnabled(false);
 
 		p7.add(Box.createRigidArea(new Dimension(1000,12)));
-		p7.add(Label7, BorderLayout.WEST);
+		p7.add(player[6], BorderLayout.WEST);
 		p7.add(readyBtn[6], BorderLayout.EAST);
 
 
@@ -1138,20 +1139,20 @@ public class MainGUI extends JFrame implements ActionListener {
 		p8.setBackground(Color.WHITE);
 
 		// Name Label
-		Label8 = new JLabel("   "+"Jeff");
-		Label8.setMaximumSize(lsize);
-		Label8.setFont(new Font("calibri",Font.PLAIN,30));
-		Label8.setAlignmentX(Component.CENTER_ALIGNMENT);
+		player[7] = new JLabel("   ");
+		player[7].setMaximumSize(lsize);
+		player[7].setFont(new Font("calibri",Font.PLAIN,30));
+		player[7].setAlignmentX(Component.CENTER_ALIGNMENT);
 
 		//"Button" 
 		readyBtn[7] = new JButton();
 		readyBtn[7].setPreferredSize(new Dimension(75, 75));
-		readyBtn[7].setBackground(Color.RED);
+		readyBtn[7].setBackground(Color.WHITE);
 		readyBtn[7].setBorderPainted(false);
 		readyBtn[7].setEnabled(false);
 
 		p8.add(Box.createRigidArea(new Dimension(1000,12)));
-		p8.add(Label8, BorderLayout.WEST);
+		p8.add(player[7], BorderLayout.WEST);
 		p8.add(readyBtn[7], BorderLayout.EAST);
 
 
@@ -1274,9 +1275,23 @@ public class MainGUI extends JFrame implements ActionListener {
 		}
 	}
 
-	public void updatePlayer(GameSlot gameSlot) {
+	public void updatePlayer(GameSlot givenSlot) {
 		
-		changeColor(0);
+		int index = givenSlot.getSlot();
+		
+		gameSlot[index] = givenSlot;
+		
+		player[index].setText("   "+gameSlot[index].getName());
+		
+		if (gameSlot[index].isReady() == true) {			
+			readyBtn[index].setBackground(new Color(76,153,0));
+			System.out.println("Changed to Green");
+
+		} else {
+			readyBtn[index].setBackground(Color.RED);
+			System.out.println("Changed to Red");
+
+		}
 		
 	}
 
