@@ -36,6 +36,7 @@ public class Chat extends JFrame implements ActionListener {
 	JScrollPane chatScroll;
 
 	String username = "Yael";
+	private int chatWidth, chatHeight;
 
 
 	public Chat() {
@@ -57,7 +58,7 @@ public class Chat extends JFrame implements ActionListener {
 		chatArea.setLineWrap(true);
 
 		// TEXTFIELD
-		chatField = new JTextField(40);
+		chatField = new JTextField(50);
 		chatField.requestFocusInWindow();
 		chatField.setFont(new Font("calibri",Font.PLAIN,20));
 		chatField.setForeground(Color.BLACK);
@@ -71,49 +72,57 @@ public class Chat extends JFrame implements ActionListener {
 		sendButton.addActionListener(this);
 
 		// **** GBC for PANELS ***
-		// LEFT
+		// LEFT - ChatField
 		GridBagConstraints left = new GridBagConstraints();
-		left.anchor = GridBagConstraints.LINE_START;
+		left.anchor = GridBagConstraints.SOUTHWEST;
 		left.fill = GridBagConstraints.HORIZONTAL;
 		left.weightx = 512.0D;
 		left.weighty = 1.0D;
-		// RIGHT
+		// RIGHT - SendButto
 	    GridBagConstraints right = new GridBagConstraints();
-        right.insets = new Insets(0, 10, 0, 0);
-        right.anchor = GridBagConstraints.LINE_END;
+        right.anchor = GridBagConstraints.SOUTHEAST;
         right.fill = GridBagConstraints.NONE;
         right.weightx = 1.0D;
         right.weighty = 1.0D;
-
+        // NORTH - ChatArea
+	    GridBagConstraints north = new GridBagConstraints();
+        right.anchor = GridBagConstraints.NORTH;
+        right.fill = GridBagConstraints.NONE;
+        right.weightx = 1.0D;
+        right.weighty = 1.0D;
+        
+        
         // GBC used
         
-		preChatPanel.add(new JScrollPane(chatArea),BorderLayout.EAST);
+		preChatPanel.add(new JScrollPane(chatArea),BorderLayout.CENTER);
 
+        chatPanel.add(chatArea, north);
 		chatPanel.add(chatField, left);
 		chatPanel.add(sendButton, right);
-        chatPanel.add(chatArea);
 
 	
 		preChatPanel.add(chatPanel);
 
-		// JFRAME
-				setTitle("Cards Against Humanity");
-				setSize(400, 550); //400,550);
-				setResizable(false);
-				setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-				setVisible(true);
-				setLocationRelativeTo(null);
 		// ADD PANEL2FRAME
 		add(BorderLayout.CENTER, preChatPanel);
+		
+		// JFRAME
+		setTitle("Cards Against Humanity");
+		chatWidth = 400;
+		chatHeight = 550;
+		setSize(chatWidth, chatHeight); //400,550);
+		setResizable(false);
+		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		setVisible(true);
+		setLocationRelativeTo(null);
 	}
 
 	public void actionPerformed(ActionEvent e){
 		if (chatField.getText().length() < 1) {
-			chatField.setForeground(Color.LIGHT_GRAY);
-			chatField.setText("Enter Message");	
+			// DO NOTHING
 		} else if (chatField.getText().equals(".clear")) {
 			chatArea.setText("Cleared all messages\n");
-			chatField.setText("");
+			chatField.setText("");	
 		} else {
 			//Client.sendChatMessage(chatField.getText());
 			chatArea.append("<" + username + ">:  " + chatField.getText() + "\n");
