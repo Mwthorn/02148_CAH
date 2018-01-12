@@ -26,6 +26,7 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextField;
 import javax.swing.ListSelectionModel;
+import javax.swing.SwingConstants;
 import javax.swing.border.Border;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
@@ -64,8 +65,8 @@ public class MainGUI extends JFrame implements ActionListener {
 	private ArrayList<GamePreview> games;
 
 	// ReadyUpLobby
-	private JButton BReady, BLeave;
-	private JLabel LHead, LPicWC, LPicBC;
+	private JButton BReady, BLeave, ready1;
+	private JLabel LHead, LPicWC, LPicBC, Label1, Label2, Label3, Label4, Label5, Label6, Label7, Label8;
 	private static JList playerList;
 
 	// Rounded Buttons
@@ -137,7 +138,7 @@ public class MainGUI extends JFrame implements ActionListener {
 		mainLobby.setVisible(false);
 		mainCreate.setVisible(false);
 		mainReadyUpLobby.setVisible(false);
-		
+
 	}
 
 	public void ErrorPopup(){
@@ -532,13 +533,13 @@ public class MainGUI extends JFrame implements ActionListener {
 
 
 	}
-	
+
 	public void updateGameList(){
-		
+
 		for (int i = 0; i < numberOfGames; i++) {
 			model.remove(i);
 		}
-		
+
 		try {
 			games = Client.getGameList();
 		} catch (InterruptedException e) { e.printStackTrace(); }
@@ -938,43 +939,133 @@ public class MainGUI extends JFrame implements ActionListener {
 		WCPanel.add(Box.createRigidArea(new Dimension(50, 0)));
 		WCPanel.add(LPicWC);
 
-		Dimension maxsize = new Dimension(1000, 80);
+		Dimension maxsize = new Dimension(1000, 75);
 
 		// Middle JPanels
 		JPanel middle = new JPanel();
 		middle.setPreferredSize(new Dimension(1000, 656));
 
+		
+		
+		
+		
+		
 		JPanel p1 = new JPanel();
+		p1.setLayout(new BorderLayout());
 		p1.setPreferredSize(maxsize);
 		p1.setBorder(BorderFactory.createMatteBorder(1, 1, 1, 1, Color.black));
+		p1.setBackground(Color.WHITE);
+		
+		// Name Label
+		Label1 = new JLabel("Some veyr sbhfindoaspnklaæsjdbjnksoaxz name 1");
+		Label1.setMaximumSize(lsize);
+		Label1.setFont(new Font("calibri",Font.PLAIN,30));
+		Label1.setAlignmentX(Component.CENTER_ALIGNMENT);
+
+		//"Button" 
+		ready1 = new JButton();
+		
+		p1.add(Box.createRigidArea(new Dimension(1000,12)));
+		p1.add(Label1, BorderLayout.WEST);
+
+		
+		
+		
+		
+		
+		
+		
 		
 		JPanel p2 = new JPanel();
 		p2.setPreferredSize(maxsize);
-		p2.setBorder(BorderFactory.createMatteBorder(1, 1, 1, 1, Color.black));		
-		
+		p2.setBorder(BorderFactory.createMatteBorder(1, 1, 1, 1, Color.black));	
+
+		// Name Label
+		Label2 = new JLabel("Some name 2");
+		Label2.setMaximumSize(lsize);
+		Label2.setFont(new Font("calibri",Font.PLAIN,30));
+		Label2.setAlignmentX(Component.CENTER_ALIGNMENT);
+
+		p2.add(Box.createRigidArea(new Dimension(1000,12)));
+		p2.add(Label2);
+
 		JPanel p3 = new JPanel();
 		p3.setPreferredSize(maxsize);
-		p3.setBorder(BorderFactory.createMatteBorder(1, 1, 1, 1, Color.black));		
-		
+		p3.setBorder(BorderFactory.createMatteBorder(1, 1, 1, 1, Color.black));	
+
+		// Name Label
+		Label3 = new JLabel("Some name 3");
+		Label3.setMaximumSize(lsize);
+		Label3.setFont(new Font("calibri",Font.PLAIN,30));
+		Label3.setAlignmentX(Component.CENTER_ALIGNMENT);
+
+		p3.add(Box.createRigidArea(new Dimension(1000,12)));
+		p3.add(Label3);
+
 		JPanel p4 = new JPanel();
 		p4.setPreferredSize(maxsize);
 		p4.setBorder(BorderFactory.createMatteBorder(1, 1, 1, 1, Color.black));		
-		
+
+		// Name Label
+		Label4 = new JLabel("Some name 4");
+		Label4.setMaximumSize(lsize);
+		Label4.setFont(new Font("calibri",Font.PLAIN,30));
+		Label4.setAlignmentX(Component.CENTER_ALIGNMENT);
+
+		p4.add(Box.createRigidArea(new Dimension(1000,12)));
+		p4.add(Label4);
+
 		JPanel p5 = new JPanel();
 		p5.setPreferredSize(maxsize);
-		p5.setBorder(BorderFactory.createMatteBorder(1, 1, 1, 1, Color.black));		
-		
+		p5.setBorder(BorderFactory.createMatteBorder(1, 1, 1, 1, Color.black));	
+
+		// Name Label
+		Label5 = new JLabel("Some name 5");
+		Label5.setMaximumSize(lsize);
+		Label5.setFont(new Font("calibri",Font.PLAIN,30));
+		Label5.setAlignmentX(Component.CENTER_ALIGNMENT);
+
+		p5.add(Box.createRigidArea(new Dimension(1000,12)));
+		p5.add(Label5);
+
 		JPanel p6 = new JPanel();
 		p6.setPreferredSize(maxsize);
 		p6.setBorder(BorderFactory.createMatteBorder(1, 1, 1, 1, Color.black));		
-		
+
+		// Name Label
+		Label6 = new JLabel("Some name 6");
+		Label6.setMaximumSize(lsize);
+		Label6.setFont(new Font("calibri",Font.PLAIN,30));
+		Label6.setAlignmentX(Component.CENTER_ALIGNMENT);
+
+		p6.add(Box.createRigidArea(new Dimension(1000,12)));
+		p6.add(Label6);
+
 		JPanel p7 = new JPanel();
 		p7.setPreferredSize(maxsize);
-		p7.setBorder(BorderFactory.createMatteBorder(1, 1, 1, 1, Color.black));		
-		
+		p7.setBorder(BorderFactory.createMatteBorder(1, 1, 1, 1, Color.black));	
+
+		// Name Label
+		Label7 = new JLabel("Some name 7");
+		Label7.setMaximumSize(lsize);
+		Label7.setFont(new Font("calibri",Font.PLAIN,30));
+		Label7.setAlignmentX(Component.CENTER_ALIGNMENT);
+
+		p7.add(Box.createRigidArea(new Dimension(1000,12)));
+		p7.add(Label7);
+
 		JPanel p8 = new JPanel();
 		p8.setPreferredSize(maxsize);
-		p8.setBorder(BorderFactory.createMatteBorder(1, 1, 1, 1, Color.black));		
+		p8.setBorder(BorderFactory.createMatteBorder(1, 1, 1, 1, Color.black));	
+
+		// Name Label
+		Label8 = new JLabel("Some name 8");
+		Label8.setMaximumSize(lsize);
+		Label8.setFont(new Font("calibri",Font.PLAIN,30));
+		Label8.setAlignmentX(Component.CENTER_ALIGNMENT);
+
+		p8.add(Box.createRigidArea(new Dimension(1000,12)));
+		p8.add(Label8);
 
 		middle.add(p1);
 		middle.add(p2);
@@ -984,7 +1075,7 @@ public class MainGUI extends JFrame implements ActionListener {
 		middle.add(p6);
 		middle.add(p7);
 		middle.add(p8);
-		
+
 
 		mainReadyUpLobby.add(HeadPanel, BorderLayout.NORTH);
 		mainReadyUpLobby.add(BCPanel, BorderLayout.EAST);

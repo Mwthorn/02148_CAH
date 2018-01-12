@@ -31,6 +31,19 @@ public class Login extends JFrame implements ActionListener {
 	private JTextField txtfld1, txtfld2;
 	public boolean signIn = false;
 
+	public static void main(String[] args) {
+
+		Login main = new Login();
+		
+		main.setTitle("Cards Against Humanity");
+		main.setSize(1900,1000);
+		main.setResizable(true);
+		main.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		main.setVisible(true);
+		main.setLocationRelativeTo(null);
+
+	}
+	
 	public Login(){
 		
 		// Using BorderLayout
