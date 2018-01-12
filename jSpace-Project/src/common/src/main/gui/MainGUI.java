@@ -33,9 +33,11 @@ import javax.swing.event.ListSelectionListener;
 
 import common.src.main.client.Client;
 import common.src.main.client.GamePreview;
+import common.src.main.server.GameSlot;
 
 @SuppressWarnings("serial")
 public class MainGUI extends JFrame implements ActionListener {
+	private int maxPlayers = 8;
 
 	// Login
 	private JButton BQuit, BSignIn, BBack;
@@ -65,7 +67,9 @@ public class MainGUI extends JFrame implements ActionListener {
 	private ArrayList<GamePreview> games;
 
 	// ReadyUpLobby
-	private JButton BReady, BLeave, ready1, ready2, ready3, ready4, ready5, ready6, ready7, ready8;
+	private GameSlot[] gameSlot = new GameSlot[maxPlayers];
+	private JButton[] readyBtn = new JButton[maxPlayers];
+	private JButton BReady, BLeave;
 	private JLabel LHead, LPicWC, LPicBC, Label1, Label2, Label3, Label4, Label5, Label6, Label7, Label8;
 	private static JList playerList;
 	private boolean color1 = false;; 
@@ -1269,11 +1273,14 @@ public class MainGUI extends JFrame implements ActionListener {
 			add(mainLobby);
 		}
 		else if (e.getSource() == BReady) {
-			
-			changeColor();
-			
 			Client.sendReady();
 		}
+	}
+
+	public void updatePlayer(GameSlot gameSlot) {
+		
+		changeColor();
+		
 	}
 
 
