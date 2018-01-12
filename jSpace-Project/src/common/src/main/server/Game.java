@@ -62,7 +62,9 @@ public class Game implements Runnable {
         this.status = "Waiting for players...";
 
         this.repository = repository;
+        System.out.println("Added game to repository with gameslot: " + this.gameSlot);
         this.repository.add("game"+this.gameSlot, game);
+
     }
 
     public void run() {

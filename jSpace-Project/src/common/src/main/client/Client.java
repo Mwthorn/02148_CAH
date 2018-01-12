@@ -14,9 +14,9 @@ import java.util.ArrayList;
 import javax.swing.JFrame;
 
 public class Client {
-	private static RemoteSpace lobby, game;
-	private static int userID;
-	private static String serverIP;
+	public static RemoteSpace lobby, game;
+	public static int userID;
+	public static String serverIP;
 	public static int amountOfBlanks;
 	public static boolean turnToPick;
 	public static String[] whiteCards = new String[10];
@@ -73,7 +73,7 @@ public class Client {
 		// name = "Alex";
 		System.out.println(IP);
 		System.out.println(name);
-		lobby = new RemoteSpace("tcp://" + IP + ":9001/lobby?conn");
+		lobby = new RemoteSpace("tcp://" + IP + ":9001/lobby?keep");
 
 		//lobby.put("test");
 		lobby.put("lobby","enter",name,0);
@@ -93,6 +93,7 @@ public class Client {
 			int gameSlot = (int) info[2];
 			
 			// Connects the host to the tuple space.
+			System.out.println("Connecting to game with gameSlot:" + gameSlot);
 			game = new RemoteSpace("tcp://" + serverIP + ":9001/game" + gameSlot + "?keep");
 			
 			game.put("testing");
@@ -108,7 +109,7 @@ public class Client {
 		
 		Object[] info = lobby.get(new ActualField("joinedGame"), new ActualField(userID), new FormalField(Integer.class));
 		int gameSlot = (int) info[2];
-
+		System.out.println("Connecting to game with gameSlot: " + gameSlot);
 		try {
 			game = new RemoteSpace("tcp://" + serverIP + ":9001/game" + gameSlot + "?keep");
 		} catch (IOException e) {
@@ -145,16 +146,14 @@ public class Client {
 	/******************************* User/Game Lobby Interactions ********************************/
 	/*********************************************************************************************/
 
-	private static void gameLobby() {
+	public static void gameLobby() {
 		// Create game lobby GUI.
 
 		// Setup listener.
 		new Thread(new Listener(game, userID)).start();
 		
 		// TODO: Implement a system similar to the listening in server main, but from the local tuple space.
-		
 
-		
 		// TODO: Leave game: Return the player to the main lobby, adjust tuple spaces.
     	// Update GUI, change from game tuple space to lobby tuple space, adjust other players GUI by sending message to server.
 	} // End of gameLobby function
@@ -162,6 +161,7 @@ public class Client {
 	public static void sendReady() {
 		System.out.println("Sending ready client...");
 		game.put("game", "ready", userID);
+		System.out.println("Sent ready!");
 	}
 
 	public static void sendLeave() {

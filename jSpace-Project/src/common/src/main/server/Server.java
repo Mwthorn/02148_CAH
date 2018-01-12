@@ -32,7 +32,8 @@ public class Server {
     	
     	// Setup for the lobby tuple space
     	lobby = new SequentialSpace();
-		repository.addGate("tcp://127.0.0.1:9001/?conn");
+		repository.addGate("tcp://127.0.0.1:9001/?keep");
+		// TODO: Muligvis bruge conn istedet for keep
 		repository.add("lobby", lobby);
 
         /* Listening for messages on the tuple space */
