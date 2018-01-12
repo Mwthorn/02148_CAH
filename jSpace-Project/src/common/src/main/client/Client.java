@@ -1,5 +1,6 @@
 package common.src.main.client;
 
+import common.src.main.gui.MainGUI;
 import common.src.main.server.Game;
 import common.src.main.server.GameSlot;
 import common.src.main.server.Player;
@@ -10,6 +11,8 @@ import java.io.IOException;
 import java.net.UnknownHostException;
 import java.util.ArrayList;
 
+import javax.swing.JFrame;
+
 public class Client {
 	private static RemoteSpace lobby, game;
 	private static int userID;
@@ -19,14 +22,22 @@ public class Client {
 	private static boolean turnToPick;
 	private static String[] whiteCards = new String[10];
 
-	private static final int testNumber = 1;
+	private static final int testNumber = 0;
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws InterruptedException {
     	/* Login */
     	// Create login GUI and request name of user and IP to server.
     	
     	/* Connect to server using GUI info */
-		
+    	MainGUI main = new MainGUI();
+
+		main.setTitle("Cards Against Humanity");
+		main.setSize(1900,1000);
+		main.setResizable(true);
+		main.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		main.setVisible(true);
+		main.setLocationRelativeTo(null);
+		/*
 			try {
 				
 				// Initialize tests to game lobby.
@@ -49,7 +60,7 @@ public class Client {
 
 			} catch (IOException | InterruptedException e) {
 				e.printStackTrace();
-			}
+			}*/
 	} // End of main function
 	
 	/*********************************************************************************************/
@@ -61,7 +72,8 @@ public class Client {
 		// when first signing in to the lobby.
 		// serverIP = "127.0.0.1";
 		// name = "Alex";
-		
+		System.out.println(IP);
+		System.out.println(name);
 		lobby = new RemoteSpace("tcp://" + IP + ":9001/lobby?keep");
 
 		//lobby.put("test");
@@ -73,8 +85,8 @@ public class Client {
 		System.out.println("Client was assigned ID: " + userID);
 	} // End of login user  function
 	
-	private static void createNewGame() {
-		lobby.put("lobby", "createGame", "no nobs plx", userID);
+	public static void createNewGame() {
+		lobby.put("lobby", "createGame", "sebastian er dum", userID);
 		
 		try {
 			System.out.println("Trying to recieve info");
@@ -109,6 +121,7 @@ public class Client {
 	} // End of joinGame function
 	
 	public static ArrayList<GamePreview> getGameList() throws InterruptedException {
+		System.out.println(userID);
 		lobby.put("lobby", "refreshGameList", "", userID);
 
 		Object[] tuple = lobby.get(new ActualField("GameListSize"), new ActualField(userID), new FormalField(Integer.class));
@@ -125,7 +138,7 @@ public class Client {
 		return games;
 	} // end of getGameList function
 	
-	private static void signOut() {
+	public static void signOut() {
 		
 	}// End of signOut function
 	
