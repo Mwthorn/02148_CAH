@@ -1,6 +1,35 @@
 package common.src.main.gui;
 
-import javax.swing.*;
+
+import java.awt.BorderLayout;
+import java.awt.Color;
+import java.awt.Component;
+import java.awt.ComponentOrientation;
+import java.awt.Dimension;
+import java.awt.FlowLayout;
+import java.awt.Font;
+import java.awt.Graphics;
+import java.awt.Image;
+import java.awt.Insets;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.util.ArrayList;
+import javax.swing.BorderFactory;
+import javax.swing.Box;
+import javax.swing.BoxLayout;
+import javax.swing.DefaultListModel;
+import javax.swing.ImageIcon;
+import javax.swing.JButton;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JList;
+import javax.swing.JPanel;
+import javax.swing.JScrollPane;
+import javax.swing.JTextField;
+import javax.swing.ListSelectionModel;
+import javax.swing.border.Border;
+import javax.swing.event.ListSelectionEvent;
+import javax.swing.event.ListSelectionListener;
 
 import common.src.main.client.Client;
 import common.src.main.client.GamePreview;
@@ -12,148 +41,205 @@ import java.util.ArrayList;
 
 public class ReadyUpLobby extends JFrame implements ActionListener{
 
-	private JButton b1, b2, b3, b4;
-	private JLabel l1,l2,l3,l4,l5;
-	private JList pList;
+	// ReadyUpLobby
+	private JButton BReady, BLeave;
+	private JLabel LHead, LPicWC, LPicBC;
+	private static JList playerList;
 
 
+	
 
-	/*
-	public static ArrayList<GamePreview> putList() throws InterruptedException{
-		for (GamePreview gp : Client.getGameList()) {
-			gp.getCurrentPlayerSize();
-			gp.getGameName();
-			gp.getGameStatus();
-			gp.getId();
-			gp.getMaxPlayerSize();
-			gp.hasPassword();
-			gp.isPasswordProtected();
-		}
-
-		return Client.getGameList();
-	}
-	 */
+	JPanel mainReadyUpLobby = new JPanel();
 
 	public ReadyUpLobby(){
-		getContentPane().setLayout(new BorderLayout()); //Default layout
-		getContentPane().setBackground(Color.WHITE);
+
+		setTitle("Cards Against Humanity");
+		setSize(1900,1000);
+		setResizable(true);
+		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		setVisible(true);
+		setLocationRelativeTo(null);
+		
+		getContentPane().setLayout(new BorderLayout());
+		getContentPane().setSize(1900,1000);
+
+		runReadyUpLobby();
+	}
+
+	// Rounded Buttons
+	// Source: https://stackoverflow.com/questions/423950/rounded-swing-jbutton-using-java
+	private static class RoundedBorder implements Border {
+		private int radius;
+
+		RoundedBorder(int radius) {
+			this.radius = radius;
+		}
+
+		public Insets getBorderInsets(Component c) {
+			return new Insets(this.radius+1, this.radius+1, this.radius+2, this.radius);
+		}
+
+		public boolean isBorderOpaque() {
+			return true;
+		}
+
+		public void paintBorder(Component c, Graphics g, int x, int y, int width, int height) {
+			g.drawRoundRect(x, y, width-1, height-1, radius, radius);
+		}
+	}
+
+	/////////////////////////////////////////////// READYUPLOBBY //////////////////////////////////////////////////////////////////
+
+	public void runReadyUpLobby(){
+		mainReadyUpLobby.setLayout(new BorderLayout()); //Default layout
+		mainReadyUpLobby.setBackground(Color.WHITE);
 
 		//Create buttons
-		Dimension btnsize1 = new Dimension(200,100);
-		Dimension btnsize2 = new Dimension(150,55);
+		Dimension btnsize2 = new Dimension(180,70);
 
 		// Create game button
-		b1 = new JButton("Ready");
-		b1.setPreferredSize(btnsize1);
-		b1.addActionListener(this);
-		b1.setAlignmentX(Component.CENTER_ALIGNMENT);
-		b1.setBorderPainted(true);
-		b1.setFocusPainted(true);
-		b1.setEnabled(true);
-		b1.setForeground(Color.WHITE);
-		b1.setBackground(Color.BLACK);
+		BReady = new JButton("Ready");
+		BReady.setPreferredSize(btnsize2);
+		BReady.setBackground(Color.white);
+		BReady.setForeground(Color.black);
+		BReady.addActionListener(this);
+		BReady.setBorder(new RoundedBorder(30));
+		BReady.setAlignmentX(Component.CENTER_ALIGNMENT);
+		BReady.setFont(new Font("calibri",1,21));
+		BReady.setBorderPainted(true);
+		BReady.setFocusPainted(false);
+		BReady.setEnabled(true);
 
 		// Sign out button
-		b2 = new JButton("Leave Game");
-		b2.setPreferredSize(btnsize1);
-		b2.addActionListener(this);
-		b2.setAlignmentX(Component.CENTER_ALIGNMENT);
-		b2.setBorderPainted(true);
-		b2.setFocusPainted(true);
-		b2.setEnabled(true);
-		b2.setForeground(Color.WHITE);
-		b2.setBackground(Color.BLACK);
-		
-		b3 = new JButton("ready?");
-		b3.addActionListener(this);
-		b3.setAlignmentX(Component.CENTER_ALIGNMENT);
-		b3.setBorderPainted(true);
-		b3.setFocusPainted(true);
-		b3.setEnabled(true);
-		b3.setForeground(Color.WHITE);
-		b3.setBackground(Color.BLACK);
+		BLeave = new JButton("Leave Game");
+		BLeave.setPreferredSize(btnsize2);
+		BLeave.setBorder(new RoundedBorder(30));
+		BLeave.setBackground(Color.white);
+		BLeave.setForeground(Color.black);
+		BLeave.addActionListener(this);
+		BLeave.setAlignmentX(Component.CENTER_ALIGNMENT);
+		BLeave.setFont(new Font("calibri",1,21));
+		BLeave.setBorderPainted(true);
+		BLeave.setFocusPainted(false);
+		BLeave.setEnabled(true);
 
+		//Makes Title
+		LHead = new JLabel("Cards Against Humanity");
+		LHead.setAlignmentX(Component.CENTER_ALIGNMENT);
+		LHead.setFont(new Font("AR JULIAN",Font.PLAIN,70));
+		LHead.setForeground(Color.BLACK);
 
-		// Creates label "Cards Against Humanity"
-		l1 = new JLabel("Cards Against Humanity ");
-		l1.setPreferredSize(new Dimension(480, 50));
-		l1.setFont(new Font("Cards Against Humanity",Font.ITALIC,40));
-		l1.setForeground(Color.BLACK);
-		l1.setAlignmentX(Component.CENTER_ALIGNMENT);
 
 		// Implementing pictures for white cards and black cards as JLabel
-		l2 = new JLabel();
-		l3 = new JLabel();
+		LPicBC = new JLabel();
+		LPicWC = new JLabel();
+		LPicBC.setIcon(new ImageIcon(new ImageIcon("BCLobby.png").getImage().getScaledInstance(249, 381, Image.SCALE_DEFAULT)));
+		LPicWC.setIcon(new ImageIcon(new ImageIcon("WCLobby.png").getImage().getScaledInstance(306, 556, Image.SCALE_DEFAULT)));
+		LPicBC.setAlignmentX(Component.CENTER_ALIGNMENT);
+		LPicWC.setAlignmentX(Component.CENTER_ALIGNMENT);
 
-		l2.setIcon(new ImageIcon(new ImageIcon("BCRLobby.png").getImage().getScaledInstance(190, 295, Image.SCALE_DEFAULT)));
-		l3.setIcon(new ImageIcon(new ImageIcon("WCRLobby.png").getImage().getScaledInstance(195, 300, Image.SCALE_DEFAULT)));
+		// Create List
+		DefaultListModel model = new DefaultListModel();
+		playerList = new JList(model);
 
-		// PANELS ARE BEING CREATED
+		JScrollPane scrollPane = new JScrollPane(playerList);
+
+		scrollPane.setPreferredSize(new Dimension(1000, 650));
+
+		playerList.setSelectionMode(ListSelectionModel.SINGLE_INTERVAL_SELECTION);
+		playerList.setVisibleRowCount(-1);
+		playerList.setLayoutOrientation(JList.VERTICAL);
+		//		playerList.ensureIndexIsVisible(list.getSelectedIndex());
+		playerList.setFont(new Font("calibri",Font.PLAIN,25));
+		playerList.setBorder(BorderFactory.createMatteBorder(4, 4, 4, 4, Color.black));
+
+		String name = "Jonas";
+		String status = "WAITING";
+		Boolean lock = true;
+		int current = 7;
+		int max = 8;
+		int id = 4738920;
+		String islocked = "";
+
+		String blank = "          ";
+
+		for (int i = 0; i < 15; i++) {
+
+			if (lock == true) {
+				islocked = "LOCKED";
+			} else {
+				islocked = "      ";
+			}
+
+			model.addElement(name+blank+status+blank+islocked+blank+Integer.toString(current)+"/"+Integer.toString(max));
+
+		}
+
 		//Creates panel for buttons
-		JPanel p1 = new JPanel();
+		JPanel BtnPanel = new JPanel();
 
-		p1.setLayout(new BoxLayout(p1, BoxLayout.LINE_AXIS));
-		p1.setBackground(Color.WHITE);
-		p1.add(Box.createRigidArea(new Dimension(0,100)));
-		p1.add(b2);
-		p1.add(Box.createHorizontalGlue());
-		p1.add(b3);
-		p1.add(Box.createHorizontalGlue());
-		p1.add(b1);
+		FlowLayout flow = new FlowLayout(FlowLayout.CENTER);
+		BtnPanel.setLayout(flow);
+		BtnPanel.setBackground(Color.WHITE);
+		BtnPanel.add(BLeave);
+		flow.setHgap(100);
+		BtnPanel.add(BReady);
+		BtnPanel.add(Box.createRigidArea(new Dimension(0,200)));
 
-		getContentPane().add(p1, BorderLayout.SOUTH);
-
-		//Creates panel for labels
-		JPanel p2 = new JPanel();
-		JPanel p3 = new JPanel();
-		p3.setLayout(new BoxLayout(p3, BoxLayout.PAGE_AXIS));
-		p3.setBackground(Color.WHITE);
-
-		JPanel p4 = new JPanel();
+		mainReadyUpLobby.add(BtnPanel, BorderLayout.SOUTH);
 
 		// Panel for Title label
-		p2.setLayout(new BoxLayout(p2, BoxLayout.PAGE_AXIS));
-		p2.setBackground(Color.WHITE);
-		p2.add(l1);
+		JPanel HeadPanel = new JPanel();
+		HeadPanel.setLayout(new BoxLayout(HeadPanel, BoxLayout.PAGE_AXIS));
+		HeadPanel.setBackground(Color.WHITE);
+		HeadPanel.add(Box.createRigidArea(new Dimension(50, 0)));
+		HeadPanel.add(LHead);
 
 		// Panel for Black Card image
-		p3.setLayout(new BoxLayout(p3, BoxLayout.LINE_AXIS));
-		p3.setBackground(Color.WHITE);
-		p3.add(Box.createRigidArea(new Dimension(50, 0)));
-		p3.add(l2);
-		p3.add(Box.createRigidArea(new Dimension(50, 0)));
+		JPanel BCPanel = new JPanel();
+		BCPanel.setLayout(new BoxLayout(BCPanel, BoxLayout.LINE_AXIS));
+		BCPanel.setBackground(Color.WHITE);
+		BCPanel.add(Box.createRigidArea(new Dimension(50, 0)));
+		BCPanel.add(LPicBC);
+		BCPanel.add(Box.createRigidArea(new Dimension(50, 0)));
 
 
 		// Panel for White Card image
-		p4.setLayout(new BoxLayout(p4, BoxLayout.LINE_AXIS));
-		p4.add(Box.createRigidArea(new Dimension(50, 0)));
-		p4.setBackground(Color.WHITE);
-		p4.add(l3);
+		JPanel WCPanel = new JPanel();
+		WCPanel.setLayout(new BoxLayout(WCPanel, BoxLayout.LINE_AXIS));
+		WCPanel.setBackground(Color.WHITE);
+		WCPanel.add(Box.createRigidArea(new Dimension(50, 0)));
+		WCPanel.add(LPicWC);
 
-		getContentPane().add(p2, BorderLayout.NORTH);
-		getContentPane().add(p3, BorderLayout.EAST);
-		getContentPane().add(p4, BorderLayout.WEST);
+		mainReadyUpLobby.add(HeadPanel, BorderLayout.NORTH);
+		mainReadyUpLobby.add(BCPanel, BorderLayout.EAST);
+		mainReadyUpLobby.add(WCPanel, BorderLayout.WEST);
+
+		JPanel playerPanel = new JPanel();
+
+		playerPanel.setBackground(Color.WHITE);
+		playerPanel.setAlignmentX(CENTER_ALIGNMENT);
+		playerPanel.setAlignmentY(CENTER_ALIGNMENT);
+		playerPanel.add(scrollPane, BorderLayout.CENTER);
+
+		mainReadyUpLobby.add(playerPanel, BorderLayout.CENTER);
+
+		getContentPane().add(mainReadyUpLobby, BorderLayout.CENTER);
+		
 	}
+	/////////////////////////////////////////////// READYUPLOBBY //////////////////////////////////////////////////////////////////
+
 
 	public void actionPerformed(ActionEvent e) {
 		
-		if(e.getSource()==b1 && l2 != null){
-			l2.removeAll();
+		if(e.getSource()==BLeave){
 		}
-		
-		if(e.getSource()==b2){
-			try {
-				new Lobby();
-			} catch (InterruptedException e1) {
-				// TODO Auto-generated catch block
-				e1.printStackTrace();
-			}
 
-		}
-		if(e.getSource()==b3){
-			
+	}
+	
+	public static void main(String[] args) {
 
-		}
+		ReadyUpLobby main = new ReadyUpLobby();
 
 	}
 

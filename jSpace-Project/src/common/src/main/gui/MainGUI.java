@@ -277,12 +277,14 @@ public class MainGUI extends JFrame implements ActionListener {
 		txtfld1.setMaximumSize(txtfldsize);
 		txtfld1.setFont(new Font("calibri",Font.PLAIN,20));
 		txtfld1.setAlignmentX(Component.CENTER_ALIGNMENT);
+		txtfld1.setText("Alex");
 
 		// Name textfield
 		txtfld2 = new JTextField(50);
 		txtfld2.setMaximumSize(txtfldsize);
 		txtfld2.setFont(new Font("calibri",Font.PLAIN,20));
 		txtfld2.setAlignmentX(Component.CENTER_ALIGNMENT);
+		txtfld2.setText("127.0.0.1");
 
 
 		// Create the 
@@ -871,43 +873,6 @@ public class MainGUI extends JFrame implements ActionListener {
 		LPicBC.setAlignmentX(Component.CENTER_ALIGNMENT);
 		LPicWC.setAlignmentX(Component.CENTER_ALIGNMENT);
 
-		// Create List
-		DefaultListModel model = new DefaultListModel();
-		playerList = new JList(model);
-
-		JScrollPane scrollPane = new JScrollPane(playerList);
-
-		scrollPane.setPreferredSize(new Dimension(1000, 650));
-
-		playerList.setSelectionMode(ListSelectionModel.SINGLE_INTERVAL_SELECTION);
-		playerList.setVisibleRowCount(-1);
-		playerList.setLayoutOrientation(JList.VERTICAL);
-		//		playerList.ensureIndexIsVisible(list.getSelectedIndex());
-		playerList.setFont(new Font("calibri",Font.PLAIN,25));
-		playerList.setBorder(BorderFactory.createMatteBorder(4, 4, 4, 4, Color.black));
-
-		String name = "Jonas";
-		String status = "WAITING";
-		Boolean lock = true;
-		int current = 7;
-		int max = 8;
-		int id = 4738920;
-		String islocked = "";
-
-		String blank = "          ";
-
-		for (int i = 0; i < 15; i++) {
-
-			if (lock == true) {
-				islocked = "LOCKED";
-			} else {
-				islocked = "      ";
-			}
-
-			model.addElement(name+blank+status+blank+islocked+blank+Integer.toString(current)+"/"+Integer.toString(max));
-
-		}
-
 		//Creates panel for buttons
 		JPanel BtnPanel = new JPanel();
 
@@ -944,6 +909,54 @@ public class MainGUI extends JFrame implements ActionListener {
 		WCPanel.add(Box.createRigidArea(new Dimension(50, 0)));
 		WCPanel.add(LPicWC);
 
+		Dimension maxsize = new Dimension(1000, 80);
+
+		// Middle JPanels
+		JPanel middle = new JPanel();
+		middle.setPreferredSize(new Dimension(1000, 656));
+
+		JPanel p1 = new JPanel();
+		p1.setPreferredSize(maxsize);
+		p1.setBorder(BorderFactory.createMatteBorder(1, 1, 1, 1, Color.black));
+		
+		JPanel p2 = new JPanel();
+		p2.setPreferredSize(maxsize);
+		p2.setBorder(BorderFactory.createMatteBorder(1, 1, 1, 1, Color.black));		
+		
+		JPanel p3 = new JPanel();
+		p3.setPreferredSize(maxsize);
+		p3.setBorder(BorderFactory.createMatteBorder(1, 1, 1, 1, Color.black));		
+		
+		JPanel p4 = new JPanel();
+		p4.setPreferredSize(maxsize);
+		p4.setBorder(BorderFactory.createMatteBorder(1, 1, 1, 1, Color.black));		
+		
+		JPanel p5 = new JPanel();
+		p5.setPreferredSize(maxsize);
+		p5.setBorder(BorderFactory.createMatteBorder(1, 1, 1, 1, Color.black));		
+		
+		JPanel p6 = new JPanel();
+		p6.setPreferredSize(maxsize);
+		p6.setBorder(BorderFactory.createMatteBorder(1, 1, 1, 1, Color.black));		
+		
+		JPanel p7 = new JPanel();
+		p7.setPreferredSize(maxsize);
+		p7.setBorder(BorderFactory.createMatteBorder(1, 1, 1, 1, Color.black));		
+		
+		JPanel p8 = new JPanel();
+		p8.setPreferredSize(maxsize);
+		p8.setBorder(BorderFactory.createMatteBorder(1, 1, 1, 1, Color.black));		
+
+		middle.add(p1);
+		middle.add(p2);
+		middle.add(p3);
+		middle.add(p4);
+		middle.add(p5);
+		middle.add(p6);
+		middle.add(p7);
+		middle.add(p8);
+		
+
 		mainReadyUpLobby.add(HeadPanel, BorderLayout.NORTH);
 		mainReadyUpLobby.add(BCPanel, BorderLayout.EAST);
 		mainReadyUpLobby.add(WCPanel, BorderLayout.WEST);
@@ -955,8 +968,8 @@ public class MainGUI extends JFrame implements ActionListener {
 		playerPanel.setBackground(Color.WHITE);
 		playerPanel.setAlignmentX(CENTER_ALIGNMENT);
 		playerPanel.setAlignmentY(CENTER_ALIGNMENT);
-		//		playerPanel.add(playerList);
-		playerPanel.add(scrollPane, BorderLayout.CENTER);
+		playerPanel.add(middle);
+		//		playerPanel.add(scrollPane, BorderLayout.CENTER);
 
 		mainReadyUpLobby.add(playerPanel, BorderLayout.CENTER);
 
@@ -977,7 +990,7 @@ public class MainGUI extends JFrame implements ActionListener {
 
 			//System.exit(0);
 			dispose();
-			
+
 		} else if (e.getSource() == BSignIn){
 			this.name = txtfld1.getText();
 			this.IP = txtfld2.getText();
@@ -1044,7 +1057,7 @@ public class MainGUI extends JFrame implements ActionListener {
 			hideAll();
 			mainReadyUpLobby.setVisible(true);
 			add(mainReadyUpLobby);
-			
+
 		} else if(e.getSource()==BLeave){
 			hideAll();
 			mainLobby.setVisible(true);
@@ -1172,7 +1185,42 @@ public class MainGUI extends JFrame implements ActionListener {
 
 
 
-
+	//	// Create List
+	//			DefaultListModel model = new DefaultListModel();
+	//			playerList = new JList(model);
+	//
+	//			JScrollPane scrollPane = new JScrollPane(playerList);
+	//
+	//			scrollPane.setPreferredSize(new Dimension(1000, 656));
+	//
+	//			playerList.setSelectionMode(ListSelectionModel.SINGLE_INTERVAL_SELECTION);
+	//			playerList.setVisibleRowCount(-1);
+	//			playerList.setLayoutOrientation(JList.VERTICAL);
+	//			//		playerList.ensureIndexIsVisible(list.getSelectedIndex());
+	//			playerList.setFont(new Font("calibri",Font.PLAIN,25));
+	//			playerList.setBorder(BorderFactory.createMatteBorder(4, 4, 4, 4, Color.black));
+	//
+	//			String name = "Jonas";
+	//			String status = "WAITING";
+	//			Boolean lock = true;
+	//			int current = 7;
+	//			int max = 8;
+	//			int id = 4738920;
+	//			String islocked = "";
+	//
+	//			String blank = "          ";
+	//
+	//			for (int i = 0; i < 15; i++) {
+	//
+	//				if (lock == true) {
+	//					islocked = "LOCKED";
+	//				} else {
+	//					islocked = "      ";
+	//				}
+	//
+	//				model.addElement(name+blank+status+blank+islocked+blank+Integer.toString(current)+"/"+Integer.toString(max));
+	//
+	//			}
 
 
 
