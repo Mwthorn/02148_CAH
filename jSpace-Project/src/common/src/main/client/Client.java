@@ -160,6 +160,7 @@ public class Client {
 	} // End of gameLobby function
 
 	public static void sendReady() {
+		System.out.println("Sending ready client...");
 		game.put("game", "ready", userID);
 	}
 
