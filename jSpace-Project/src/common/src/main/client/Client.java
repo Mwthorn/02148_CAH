@@ -84,8 +84,8 @@ public class Client {
 		System.out.println("Client was assigned ID: " + userID);
 	} // End of login user  function
 	
-	public static void createNewGame() {
-		lobby.put("lobby", "createGame", "sebastian er dum", userID);
+	public static void createNewGame(String name) {
+		lobby.put("lobby", "createGame", name, userID);
 		
 		try {
 			System.out.println("Trying to recieve info");

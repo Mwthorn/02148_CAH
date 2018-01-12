@@ -1136,18 +1136,12 @@ public class MainGUI extends JFrame implements ActionListener {
 			System.out.println("Index Selected: "+ gameSelected);
 			GamePreview preID = games.get(gameSelected);
 			int gameID = preID.getId();
-
-
-			//			try {
-			//
-			//				Client.joinGame(games.get(index).getId());
-			//
-			//			} catch (InterruptedException e1) {
-			//				// TODO Auto-generated catch block
-			//				e1.printStackTrace();
-			//			}
-
-
+			
+			try {
+				Client.joinGame(gameID);
+			} catch (InterruptedException e1) {
+				e1.printStackTrace();
+			}
 
 		}
 
