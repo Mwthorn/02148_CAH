@@ -47,9 +47,10 @@ public class MainGUI extends JFrame implements ActionListener {
 	private JButton LCreateGameBtn, LSignOutBtn, LJoinGameBtn, LRefreshBtn, b5;
 	private JLabel l1, l2, l3, l4, l5, l6;
 	private JTextField WP;
-	private static JList list;
+	private JList list = new JList();
 	private JPanel availableGames;
 	private JScrollPane scrollPaneMain;
+	private DefaultListModel model;
 
 	// Create Game
 	private JButton BCreateGame;
@@ -128,7 +129,6 @@ public class MainGUI extends JFrame implements ActionListener {
 		runLobby();
 		runCreate();
 		runReadyUpLobby();
-
 	}
 
 	public void hideAll(){
@@ -137,7 +137,7 @@ public class MainGUI extends JFrame implements ActionListener {
 		mainLobby.setVisible(false);
 		mainCreate.setVisible(false);
 		mainReadyUpLobby.setVisible(false);
-
+		
 	}
 
 	public void ErrorPopup(){
@@ -530,12 +530,44 @@ public class MainGUI extends JFrame implements ActionListener {
 
 
 	}
+	
+	public void updateGameList(){
+		
+		for (int i = 0; i < numberOfGames; i++) {
+			model.remove(i);
+		}
+		
+		try {
+			games = Client.getGameList();
+		} catch (InterruptedException e) { e.printStackTrace(); }
+
+		numberOfGames = games.size();
+
+		String blank = "          ";
+		for (int i = 0; i < numberOfGames; i++) {
+			if (games.get(i) != null){
+				String name = games.get(i).getGameName();
+				String status = games.get(i).getGameStatus();
+				boolean lock = games.get(i).isPasswordProtected();
+				int current = games.get(i).getCurrentPlayerSize();
+				int max = games.get(i).getMaxPlayerSize();
+				String islocked;
+
+				if (lock == true) {
+					islocked = "LOCKED";
+				} else {
+					islocked = "      ";
+				}
+
+				model.addElement(name+blank+status+blank+islocked+blank+Integer.toString(current)+"/"+Integer.toString(max));
+			}
+		}
+	}
 
 	public void loadAvailableGames(){
-
 		// Panel for list of games available
 		availableGames = new JPanel();
-		DefaultListModel model = new DefaultListModel();
+		model = new DefaultListModel();
 		list = new JList(model);	
 
 		scrollPaneMain = new JScrollPane(list);
@@ -584,9 +616,6 @@ public class MainGUI extends JFrame implements ActionListener {
 	}
 
 	/////////////////////////////////////////////// LOBBY //////////////////////////////////////////////////////////////////
-
-
-
 
 	public void runCreate(){
 
@@ -1026,12 +1055,13 @@ public class MainGUI extends JFrame implements ActionListener {
 			Client.createNewGame(gameName);
 
 		} else if (e.getSource() == LRefreshBtn) {
-			loadAvailableGames();
+			updateGameList();
 
 		} else if (e.getSource() == LJoinGameBtn) {
 
-			int gameSelected = list.getSelectedIndex();
+			gameSelected = list.getSelectedIndex();
 			System.out.println("Index Selected: "+ gameSelected);
+			if (gameSelected < 0){ return; }
 			GamePreview preID = games.get(gameSelected);
 			int gameID = preID.getId();
 
