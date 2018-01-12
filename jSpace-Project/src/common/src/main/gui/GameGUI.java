@@ -25,6 +25,8 @@ public class GameGUI extends JFrame implements ActionListener {
 	private JButton Card1, Card2, Card3, Card4, Card5, Card6, Card7, Card8, Card9, Card10;
 	//	private List<JButton> Cards = new ArrayList<JButton>();
 	private JLabel BlackCard,BlackCard2;
+	String[] ChosenCards = new String[8];
+	private JLabel ChosCard[] = new JLabel[ChosenCards.length];
 
 
 	public static void main(String[] args) {
@@ -47,6 +49,31 @@ public class GameGUI extends JFrame implements ActionListener {
 		int FontSizeOfCards = 18;
 		Dimension SizeOfPlayerCards = new Dimension(135,190);
 		Border BorderForBlackCard = BorderFactory.createLineBorder(Color.BLACK, 1);
+		
+		
+		
+		
+		
+		
+		
+		if(ChosenCards.length==8){
+			
+			for(int i=0; i<ChosenCards.length; i++){
+				ChosCard[i] = new JLabel("Label" + i);			
+				}
+		}
+		else if(ChosenCards.length==16){
+			
+			for(int i=0; i<ChosenCards.length; i++){
+				ChosCard[i] = new JLabel("Label" + i);				
+				}
+		}
+		else if(ChosenCards.length==24){
+			
+			for(int i=0; i<ChosenCards.length; i++){
+				ChosCard[i] = new JLabel("Label" + i);			
+				}
+		}
 
 
 		// Czars black card of choice
