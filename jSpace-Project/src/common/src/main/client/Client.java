@@ -147,12 +147,9 @@ public class Client {
 
 	private static void gameLobby() {
 		// Create game lobby GUI.
-		
-		// Setup of a local tuple space.
-		Space local = new SequentialSpace();
-		
+
 		// Setup listener.
-		new Thread(new Listener(local, game, userID)).start();
+		new Thread(new Listener(game, userID)).start();
 		
 		// TODO: Implement a system similar to the listening in server main, but from the local tuple space.
 		

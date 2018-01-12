@@ -157,7 +157,6 @@ public class Game implements Runnable {
             }
             else {
                 contestents.add(player);
-                // TODO: Tell players its their turn
                 game.put("ingame", "yourturn", player.getId(), null, 0);
             }
         }
@@ -270,6 +269,9 @@ public class Game implements Runnable {
             game.put("ingame", "result", player.getId(), winnerPlayer.getName(), 0);
             // TODO: Update points for all players
         }
+
+        // TODO: Next round? End?
+        nextRound();
     }
 
 

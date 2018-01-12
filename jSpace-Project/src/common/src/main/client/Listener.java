@@ -10,13 +10,11 @@ import common.src.main.server.GameSlot;
 import static common.src.main.client.Client.allowPlayerTurn;
 
 public class Listener implements Runnable{
-	private static Space local;
 	private static RemoteSpace game;
 	private static int userID;
 
 	
-	public Listener(Space local, RemoteSpace game, int userID){
-		this.local = local;
+	public Listener(RemoteSpace game, int userID){
 		this.game = game;
 		this.userID = userID;
 	}
@@ -26,7 +24,7 @@ public class Listener implements Runnable{
 		System.out.println("Listener");
 		while (true){
 			try {
-				Object[] tuple = local.get(new ActualField("local"),new FormalField(String.class), new FormalField(GameSlot.class));
+				Object[] tuple = game.get(new ActualField("updateLobby"),new FormalField(String.class), new FormalField(GameSlot.class));
 				GameSlot gameSlot = (GameSlot) tuple[2];
 				System.out.println("Local Lobby: Got response: " + tuple[1]);
 				if (tuple[1].equals("start")){
