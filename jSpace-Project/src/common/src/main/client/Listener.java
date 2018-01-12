@@ -42,6 +42,7 @@ public class Listener implements Runnable{
 					System.out.println("Game updated: " + gameSlot.getName() + ", is he ready: "+gameSlot.isReady());
 				} else if (tuple[1].equals("leave")){
 					// Call the lobby function.
+					// TODO: Make GUI go back to main lobby
 					System.out.println("You have left the game!");
 					return;
 				} else if (tuple[1].equals("error")){

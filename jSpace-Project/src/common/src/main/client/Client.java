@@ -205,5 +205,11 @@ public class Client {
 	public static String[] getWhiteCards() {
 		return whiteCards;
 	}
-	
+
+	public static void sendChatMessage(String message) {
+		game.put("gameListener", "chat", userID, 0);
+		game.put("gameListenerChat", message, userID);
+		// TODO: Send message to all players in game class through tuple
+	}
+
 }
