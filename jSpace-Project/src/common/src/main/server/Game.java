@@ -1,12 +1,10 @@
 package common.src.main.server;
 
-import common.src.main.server.database.PlayerBase;
 import common.src.main.server.utilities.BlackCard;
 import common.src.main.server.utilities.WhiteCard;
 
 import org.jspace.*;
 
-import javax.swing.plaf.synth.SynthTextAreaUI;
 import java.util.*;
 
 public class Game implements Runnable {
@@ -56,6 +54,11 @@ public class Game implements Runnable {
         this.players.add(player);
         this.gameSlot = gameSlot;
         this.slotOccupied = new boolean[maxPlayers];
+        for (int i = 0; i < maxPlayers; i++) {
+            slotOccupied[i] = false;
+        }
+        slotOccupied[0] = true;
+        player.setGameSlot(0);
         this.status = "Waiting for players...";
 
         this.repository = repository;
@@ -74,25 +77,33 @@ public class Game implements Runnable {
     	/* Game lobby */
     	while (true) {
             // ???????Lobby - Type  of Action - String - Integer
+            System.out.println("Now listening in game lobby...");
             Object[] tuple;
             try {
                 tuple = game.get(new ActualField("game"), new FormalField(String.class), new FormalField(Integer.class));
                 System.out.println("Game Lobby: Got response: " + tuple[1]);
                 if (tuple[1].equals("ready")) {
                     readyUpdate((int) tuple[2]);
-                    Boolean allReady = true;
-                    for (Player player : players) {
-                        if (!player.getReady()) {
-                            allReady = false;
+                    if (players.size() > 2) {
+                        Boolean allReady = true;
+                        for (Player player : players) {
+                            if (!player.getReady()) {
+                                allReady = false;
+                            }
                         }
-                    }
-                    if (allReady) {
-                        startGame();
+                        if (allReady) {
+                            startGame();
+                        }
                     }
                 } else if (tuple[1].equals("leave")) {
                     playerLeavesGame((int) tuple[2]);
                 } else if (tuple[1].equals("start")) {
-                    startGame();
+                    if ((int) tuple[2] == hostID) {
+                        startGame();
+                    }
+                    else {
+                        System.out.println("WOAH!! A non-host player tried to start game!");
+                    }
                 }
             } catch (InterruptedException e) {
                 e.printStackTrace();
@@ -112,6 +123,8 @@ public class Game implements Runnable {
         local = new SequentialSpace();
         GameListener gL = new GameListener(game, local);
         new Thread(gL).start();
+        // Suggestion: Send tuple with syntax ("gameListener", "exit", ........) and use break; on the loop.
+
 
         for (Player player : players) {
             game.put("updateLobby", "start", player.getId(), player.getGameSlot());
@@ -128,9 +141,10 @@ public class Game implements Runnable {
 
 
         Random rand = new Random();
-        int n = rand.nextInt(players.size()) - 1;
-        this.currentTurn = n;
-        nextRound();
+        this.currentTurn = rand.nextInt(players.size()) - 1;
+        while (true) {
+            nextRound();
+        }
 	}
 
     public void nextRound() {
@@ -206,12 +220,9 @@ public class Game implements Runnable {
             e.printStackTrace();
         }
         System.out.println("All players has picked a card! Now show all players the picked cards!");
-        // TODO: Somehow close GameListener in its 'get' state
-        // Suggestion: Send tuple with syntax ("gameListener", "exit", ........) and use break; on the loop.
 
         WhiteCard[] pickedCards = new WhiteCard[contestents.size()-1];
 
-        // TODO: Shuffle the pickedCards (might also want to include a item connected to player)
         Collections.shuffle(contestents);
         for (Player player : contestents) {
             pickedCards[contestents.indexOf(player)] = player.getPickedCard();
@@ -271,7 +282,7 @@ public class Game implements Runnable {
         }
 
         // TODO: Next round? End?
-        nextRound();
+
     }
 
 
@@ -408,7 +419,7 @@ public class Game implements Runnable {
         
         // Set the players game slot.
         for (int i = 0; i < maxPlayers; i++) {
-			if (slotOccupied[i] == false){
+			if (!slotOccupied[i]){
 				actor.setGameSlot(i);
 				slotOccupied[i] = true;
 				break;
@@ -419,6 +430,7 @@ public class Game implements Runnable {
         for (Player player : players) {
             game.put("updateLobby", "update", player.getId(), actor.getGameSlot());
         }
+        System.out.println("Added player " + actor.getId() + " to GameID: " + this.id);
     }
 
     public void setStatus(String status) {

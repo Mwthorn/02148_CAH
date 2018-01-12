@@ -26,10 +26,11 @@ public class Listener implements Runnable{
 	} // End of run();
 
 	public void lobbyListener(){
+		System.out.println("Listener: Now listening on Client...");
 		while (true){
 			try {
-				Object[] tuple = game.get(new ActualField("updateLobby"),new FormalField(String.class), new FormalField(GameSlot.class));
-				GameSlot gameSlot = (GameSlot) tuple[2];
+				Object[] tuple = game.get(new ActualField("updateLobby"),new FormalField(String.class), new ActualField(userID), new FormalField(GameSlot.class));
+				GameSlot gameSlot = (GameSlot) tuple[3];
 				System.out.println("Local Lobby: Got response: " + tuple[1]);
 				if (tuple[1].equals("start")){
 					// TODO: Start game: A button for the host, possibly to entirely replace his ready button.
@@ -39,9 +40,11 @@ public class Listener implements Runnable{
 				} else if (tuple[1].equals("update")){
 					// TODO: Update from the server, update relevant GUI.
 					// Occurs when a player joins/leaves/changes ready state, will fully update a specified game slot.
-					System.out.println("Game updated: " + gameSlot.getName() + ", is he ready: "+gameSlot.isReady());
+					System.out.println("Game updated: " + gameSlot.getName() + ", at seat " + gameSlot.getSlot() + ", is he ready: "+gameSlot.isReady());
+
 				} else if (tuple[1].equals("leave")){
 					// Call the lobby function.
+					// TODO: Make GUI go back to main lobby
 					System.out.println("You have left the game!");
 					return;
 				} else if (tuple[1].equals("error")){
