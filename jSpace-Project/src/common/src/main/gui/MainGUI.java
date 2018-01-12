@@ -1093,6 +1093,9 @@ public class MainGUI extends JFrame implements ActionListener {
 			mainLobby.setVisible(true);
 			add(mainLobby);
 		}
+		else if (e.getSource() == BReady) {
+			Client.sendReady();
+		}
 	}
 
 

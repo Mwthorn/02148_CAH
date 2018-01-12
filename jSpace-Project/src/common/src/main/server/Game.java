@@ -54,6 +54,11 @@ public class Game implements Runnable {
         this.players.add(player);
         this.gameSlot = gameSlot;
         this.slotOccupied = new boolean[maxPlayers];
+        for (int i = 0; i < maxPlayers; i++) {
+            slotOccupied[i] = false;
+        }
+        slotOccupied[0] = true;
+        player.setGameSlot(0);
         this.status = "Waiting for players...";
 
         this.repository = repository;
@@ -72,6 +77,7 @@ public class Game implements Runnable {
     	/* Game lobby */
     	while (true) {
             // ???????Lobby - Type  of Action - String - Integer
+            System.out.println("Now listening in game lobby...");
             Object[] tuple;
             try {
                 tuple = game.get(new ActualField("game"), new FormalField(String.class), new FormalField(Integer.class));
@@ -424,6 +430,7 @@ public class Game implements Runnable {
         for (Player player : players) {
             game.put("updateLobby", "update", player.getId(), actor.getGameSlot());
         }
+        System.out.println("Added player " + actor.getId() + " to GameID: " + this.id);
     }
 
     public void setStatus(String status) {
