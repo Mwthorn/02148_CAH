@@ -73,7 +73,7 @@ public class Client {
 		// name = "Alex";
 		System.out.println(IP);
 		System.out.println(name);
-		lobby = new RemoteSpace("tcp://" + IP + ":9001/lobby?keep");
+		lobby = new RemoteSpace("tcp://" + IP + ":9001/lobby?conn");
 
 		//lobby.put("test");
 		lobby.put("lobby","enter",name,0);

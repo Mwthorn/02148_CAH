@@ -975,8 +975,9 @@ public class MainGUI extends JFrame implements ActionListener {
 		// Quit button closes game
 		if(e.getSource() == BQuit){
 
-			System.exit(0);
-
+			//System.exit(0);
+			dispose();
+			
 		} else if (e.getSource() == BSignIn){
 			this.name = txtfld1.getText();
 			this.IP = txtfld2.getText();
