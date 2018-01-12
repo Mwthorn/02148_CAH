@@ -1023,7 +1023,7 @@ public class MainGUI extends JFrame implements ActionListener {
 			mainReadyUpLobby.setVisible(true);
 			add(mainReadyUpLobby);
 
-//			Client.createNewGame();
+			Client.createNewGame();
 
 		} else if (e.getSource() == b4) {
 			loadAvailableGames();
