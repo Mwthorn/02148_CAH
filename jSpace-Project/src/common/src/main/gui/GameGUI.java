@@ -7,8 +7,6 @@ import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.util.ArrayList;
-import java.util.List;
 
 import javax.swing.BorderFactory;
 import javax.swing.Box;
@@ -22,8 +20,6 @@ import javax.swing.border.Border;
 
 public class GameGUI extends JFrame implements ActionListener {
 
-	private JButton Card1, Card2, Card3, Card4, Card5, Card6, Card7, Card8, Card9, Card10;
-	//	private List<JButton> Cards = new ArrayList<JButton>();
 	private JLabel BlackCard,BlackCard2;
 	String[] ChosenCards = new String[8];
 	private JButton[] PlayerCards = new JButton[10];
@@ -55,7 +51,48 @@ public class GameGUI extends JFrame implements ActionListener {
 		Border BorderForCards = BorderFactory.createLineBorder(Color.BLACK, 1);
 
 
+		// Czars black card of choice
+		BlackCard = new JLabel("SOME TEXT");
+		BlackCard.setMaximumSize(SizeOfBlackCards);
+		BlackCard.setFont(new Font("calibri",1,FontSizeOfCards));
+		BlackCard.setBorder(BorderForCards);
+		BlackCard.setBackground(Color.BLACK);
+		BlackCard.setForeground(Color.WHITE);
+		BlackCard.setAlignmentX(Component.CENTER_ALIGNMENT);
+		BlackCard.setEnabled(true);
 
+		// Czars black card of choice used to fill out
+		BlackCard2 = new JLabel("SOME TEXT");
+		BlackCard2.setMaximumSize(SizeOfBlackCards);
+		BlackCard2.setFont(new Font("calibri",1,FontSizeOfCards));
+		BlackCard2.setBorder(BorderForCards);
+		BlackCard2.setBackground(Color.BLACK);
+		BlackCard2.setForeground(Color.WHITE);
+		BlackCard2.setAlignmentX(Component.CENTER_ALIGNMENT);
+		BlackCard2.setEnabled(true);
+
+
+		// Cards on players hand is being created
+		if(ChosenCards.length<9){
+
+			for(int i=0; i<10; i++){
+				PlayerCards[i] = new JButton("Some Text"+i);
+
+				PlayerCards[i].setMaximumSize(SizeOfChosenCards);
+				PlayerCards[i].setMaximumSize(new Dimension(SizeOfPlayerCards));
+				PlayerCards[i].setBackground(Color.white);
+				PlayerCards[i].setForeground(Color.BLACK);
+				PlayerCards[i].addActionListener(this);
+				PlayerCards[i].setAlignmentX(Component.CENTER_ALIGNMENT);
+				PlayerCards[i].setFont(new Font("calibri",1,FontSizeOfCards));
+				PlayerCards[i].setBorderPainted(true);
+				PlayerCards[i].setFocusPainted(false);
+				PlayerCards[i].setEnabled(true);	
+
+			}
+		}
+		
+		// Creates chosen cards
 		if(ChosenCards.length<9){
 
 			for(int i=0; i<ChosenCards.length; i++){
@@ -103,49 +140,8 @@ public class GameGUI extends JFrame implements ActionListener {
 		}
 
 
-		// Czars black card of choice
-		BlackCard = new JLabel("SOME TEXT");
-		BlackCard.setMaximumSize(SizeOfBlackCards);
-		BlackCard.setFont(new Font("calibri",1,FontSizeOfCards));
-		BlackCard.setBorder(BorderForCards);
-		BlackCard.setBackground(Color.BLACK);
-		BlackCard.setForeground(Color.WHITE);
-		BlackCard.setAlignmentX(Component.CENTER_ALIGNMENT);
-		BlackCard.setEnabled(true);
-
-		// Czars black card of choice used to fill out
-		BlackCard2 = new JLabel("SOME TEXT");
-		BlackCard2.setMaximumSize(SizeOfBlackCards);
-		BlackCard2.setFont(new Font("calibri",1,FontSizeOfCards));
-		BlackCard2.setBorder(BorderForCards);
-		BlackCard2.setBackground(Color.BLACK);
-		BlackCard2.setForeground(Color.WHITE);
-		BlackCard2.setAlignmentX(Component.CENTER_ALIGNMENT);
-		BlackCard2.setEnabled(true);
+		/////////////////////////////////////////////// PANELS //////////////////////////////////////////////////////////////////
 		
-		
-		// Cards on players hand is being created
-		if(ChosenCards.length<9){
-
-			for(int i=0; i<10; i++){
-				PlayerCards[i] = new JButton("Some Text"+i);
-
-				PlayerCards[i].setMaximumSize(SizeOfChosenCards);
-				PlayerCards[i].setMaximumSize(new Dimension(SizeOfPlayerCards));
-				PlayerCards[i].setBackground(Color.white);
-				PlayerCards[i].setForeground(Color.BLACK);
-				PlayerCards[i].addActionListener(this);
-				PlayerCards[i].setAlignmentX(Component.CENTER_ALIGNMENT);
-				PlayerCards[i].setFont(new Font("calibri",1,FontSizeOfCards));
-				PlayerCards[i].setBorderPainted(true);
-				PlayerCards[i].setFocusPainted(false);
-				PlayerCards[i].setEnabled(true);	
-
-			}
-		}
-		
-
-
 		JPanel PAll = new JPanel();
 
 		PAll.setLayout(new BorderLayout());
@@ -178,7 +174,8 @@ public class GameGUI extends JFrame implements ActionListener {
 		JPanel PUMid = new JPanel();
 		JPanel PUCard = new JPanel();
 		JPanel PDCard = new JPanel();
-
+		
+		// Settings for panels
 		PUMid.setLayout(new BoxLayout(PUMid, BoxLayout.LINE_AXIS));
 		PUCard.setLayout(new BoxLayout(PUCard, BoxLayout.LINE_AXIS));
 		PDCard.setLayout(new BoxLayout(PDCard, BoxLayout.LINE_AXIS));
@@ -188,19 +185,22 @@ public class GameGUI extends JFrame implements ActionListener {
 		PUCard.setBackground(Color.WHITE);
 		PDCard.setBackground(Color.WHITE);
 
+
+		// Chosen card being added to panel
 		if(ChosenCards.length<9){
-			for(int i=0; i<ChosenCards.length;i++) {
+			for(int i=0; i<ChosenCards.length; i++) {
 				PUMid.add(ChosCard[i]);
 			}
 		}
-		
+
+
 		// First five cards on the hand is being added to the JPanel
 		PUCard.add(Box.createRigidArea(new Dimension(20,0)));
 		for(int i=0; i<5; i++) {
 			PUCard.add(PlayerCards[i]);
 		}
 		PUCard.add(Box.createRigidArea(new Dimension(20,0)));
-		
+
 		// Last five cards on the hand is being added to the JPanel
 		PDCard.add(Box.createRigidArea(new Dimension(20,0)));
 		for(int i=5; i<10; i++) {
