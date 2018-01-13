@@ -2,8 +2,6 @@ package common.src.main.gui;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
-import java.awt.Component;
-import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
@@ -11,123 +9,100 @@ import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
+import javax.swing.SwingUtilities;
+import javax.swing.UIManager;
 
 import common.src.main.client.Client;
 
 @SuppressWarnings("serial")
 public class Chat extends JFrame implements ActionListener {
 
+	
 	public static void main(String[] args) {
-
-		Chat mainC = new Chat();
-
+		 Chat chat = new Chat();
 	}
 
-	JTextArea chatArea;
-	JTextField chatField;
+	JTextArea chatBox;
+	JTextField messageField;
 	JButton sendButton;
-	JScrollPane chatScroll;
-
-	String username = "Yael";
-	private int chatWidth, chatHeight;
-
+	JPanel chatPanel, sendPanel;
+	public String username;
+	public String message;
 
 	public Chat() {
 
+		// Panels
+		chatPanel = new JPanel();
+		chatPanel.setLayout(new BorderLayout());
 
-		// PANEL
-		JPanel preChatPanel = new JPanel();
-		preChatPanel.setLayout(new BorderLayout());
+		sendPanel = new JPanel();
+		sendPanel.setBackground(Color.WHITE);
+		sendPanel.setLayout(new GridBagLayout());
 
-		JPanel chatPanel = new JPanel();
-		chatPanel.setBackground(Color.WHITE);
-		chatPanel.setLayout(new GridBagLayout());
+		// Message field and send button
+		messageField = new JTextField();
+		messageField.requestFocusInWindow();
 
-		// TEXTAREA
-		chatArea = new JTextArea(300, 50);
-		chatArea.setBackground(Color.BLUE);
-		chatArea.setEditable(false);
-		chatArea.setFont(new Font("calibri",Font.PLAIN,20));
-		chatArea.setLineWrap(true);
-
-		// TEXTFIELD
-		chatField = new JTextField(50);
-		chatField.requestFocusInWindow();
-		chatField.setFont(new Font("calibri",Font.PLAIN,20));
-		chatField.setForeground(Color.BLACK);
-		chatField.setAlignmentX(Component.WIDTH);
-
-		//Dimension txtfldsize = new Dimension(400, 30);
-
-
-		// SEND BUTTON
-		sendButton = new JButton("Send");
+		sendButton = new JButton(" Send ");
 		sendButton.addActionListener(this);
-
-		// **** GBC for PANELS ***
-		// LEFT - ChatField
-		GridBagConstraints left = new GridBagConstraints();
-		left.anchor = GridBagConstraints.SOUTHWEST;
-		left.fill = GridBagConstraints.HORIZONTAL;
-		left.weightx = 512.0D;
-		left.weighty = 1.0D;
-		// RIGHT - SendButto
-	    GridBagConstraints right = new GridBagConstraints();
-        right.anchor = GridBagConstraints.SOUTHEAST;
-        right.fill = GridBagConstraints.NONE;
-        right.weightx = 1.0D;
-        right.weighty = 1.0D;
-        // NORTH - ChatArea
-	    GridBagConstraints north = new GridBagConstraints();
-        right.anchor = GridBagConstraints.NORTH;
-        right.fill = GridBagConstraints.NONE;
-        right.weightx = 1.0D;
-        right.weighty = 1.0D;
-        
-        
-        // GBC used
-        
-		preChatPanel.add(new JScrollPane(chatArea),BorderLayout.CENTER);
-
-        chatPanel.add(chatArea, north);
-		chatPanel.add(chatField, left);
-		chatPanel.add(sendButton, right);
-
-	
-		preChatPanel.add(chatPanel);
-
-		// ADD PANEL2FRAME
-		add(BorderLayout.CENTER, preChatPanel);
 		
-		// JFRAME
-		setTitle("Cards Against Humanity");
-		chatWidth = 400;
-		chatHeight = 550;
-		setSize(chatWidth, chatHeight); //400,550);
-		setResizable(false);
+		// Chat area
+		chatBox = new JTextArea();
+		chatBox.setEditable(false);
+		chatBox.setFont(new Font("Serif", Font.PLAIN, 15));
+		chatBox.setLineWrap(true);
+		
+		// GRIDBAG CONSTRAINTS
+		// GBC for send button
+		GridBagConstraints left = new GridBagConstraints();
+		left.anchor = GridBagConstraints.LINE_START;
+		left.fill = GridBagConstraints.HORIZONTAL;
+		left.weightx = 300.0D;
+		left.weighty = 1.0D;
+		// GBC for message field
+		GridBagConstraints right = new GridBagConstraints();
+		right.anchor = GridBagConstraints.LINE_END;
+		right.fill = GridBagConstraints.NONE;
+		right.weightx = 1.0D;
+		right.weighty = 1.0D;
+
+		// adding elements
+		chatPanel.add(new JScrollPane(chatBox), BorderLayout.CENTER);
+		sendPanel.add(messageField, left);
+		sendPanel.add(sendButton, right);
+		chatPanel.add(BorderLayout.SOUTH, sendPanel);
+		add(chatPanel);
+		
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setVisible(true);
+		setSize(275, 350);
+		setResizable(false);
 		setLocationRelativeTo(null);
+		setVisible(true);
+		SwingUtilities.getRootPane(sendButton).setDefaultButton(sendButton);
+	}
+
+
+	public void sendChatMessage(String username, String message) {
+		chatBox.append("<" + username + ">:  " + message + "\n");
 	}
 
 	public void actionPerformed(ActionEvent e){
-		if (chatField.getText().length() < 1) {
-			// DO NOTHING
-		} else if (chatField.getText().equals(".clear")) {
-			chatArea.setText("Cleared all messages\n");
-			chatField.setText("");	
-		} else {
-			//Client.sendChatMessage(chatField.getText());
-			chatArea.append("<" + username + ">:  " + chatField.getText() + "\n");
-			chatField.setText("");
+		if ( e.getSource() == sendButton ) {
+			if (messageField.getText().length() < 1) {
+				// DO NOTHING
+			} else {
+				chatBox.append("<" + "Yael" + ">:  " + messageField.getText() + "\n"); // Skal slettes efter chat-test er færdige
+				// Nedenstående skal køre, når clienten skal forbindes.
+				// Client.sendChatMessage(messageField.getText());
+				messageField.setText("");
+			}
+			messageField.requestFocusInWindow();
 		}
-		chatField.requestFocusInWindow();
 	}
 }
