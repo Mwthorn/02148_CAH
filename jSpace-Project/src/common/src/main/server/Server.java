@@ -73,6 +73,29 @@ public class Server {
 					int gameSlot = jGame.getGameSlot();
 					jGame.addPlayerToGame(jPlayer);
 					lobby.put("joinedGame", jPlayer.getId(), gameSlot);
+				} else if (tuple[1].equals("joinGamePass")) {
+					System.out.println("Client attempting to join game with password...");
+					Game jGame = gameBase.getGamewithID((int) tuple[3]);
+
+					if (jGame.hasPassword()) {
+						int playerID = new Integer((String) tuple[2]);
+						Object[] pass = lobby.get(new ActualField("lobby"), new ActualField("joinGameWord"), new ActualField(playerID), new FormalField(String.class));
+						String passWord = (String) pass[3];
+						if (passWord == jGame.getPassword()) {
+							System.out.println("Password correct");
+							Player jPlayer = playerBase.getPlayerwithID(playerID);
+
+							int gameSlot = jGame.getGameSlot();
+							jGame.addPlayerToGame(jPlayer);
+							lobby.put("joinedGame", jPlayer.getId(), gameSlot);
+						}
+						else {
+							System.out.println("WRONG PASSWORD!");
+						}
+					}
+					else {
+						System.out.println("WOAH!! This game does not have a password!");
+					}
 				} else if (tuple[1].equals("signOut")) {
 
 				}
