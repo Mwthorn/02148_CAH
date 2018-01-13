@@ -1243,7 +1243,9 @@ public class MainGUI extends JFrame implements ActionListener {
 			add(mainReadyUpLobby);
 
 			Client.createNewGame(gameName);
-
+			
+			
+			
 		} else if (e.getSource() == LRefreshBtn) {
 			updateGameList();
 
