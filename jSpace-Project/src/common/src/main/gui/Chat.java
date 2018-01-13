@@ -32,8 +32,6 @@ public class Chat extends JFrame implements ActionListener {
 	JTextField messageField;
 	JButton sendButton;
 	JPanel chatPanel, sendPanel;
-	public String username;
-	public String message;
 
 	public Chat() {
 
