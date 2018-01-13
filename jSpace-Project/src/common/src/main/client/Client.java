@@ -21,6 +21,7 @@ public class Client {
 	public static boolean turnToPick;
 	public static String[] whiteCards = new String[10];
 	public static MainGUI main;
+	public static String userName;
 
 	private static final int testNumber = 0;
 
@@ -33,7 +34,7 @@ public class Client {
 
 		main.setTitle("Cards Against Humanity");
 		main.setSize(1900,1000);
-		main.setResizable(true);
+		main.setResizable(false);
 		main.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		main.setVisible(true);
 		main.setLocationRelativeTo(null);
@@ -82,6 +83,7 @@ public class Client {
 		Object[] tuple = lobby.get(new ActualField("UserID"),new ActualField(name), new FormalField(Integer.class));
 		userID = (int) tuple[2];
 		serverIP = IP;
+		userName = name;
 		System.out.println("Client was assigned ID: " + userID);
 	} // End of login user  function
 	
@@ -118,6 +120,32 @@ public class Client {
 		}
 		gameLobby();
 	} // End of joinGame function
+
+	public static boolean joinGame(int gameID, String pass) throws InterruptedException {
+		System.out.println("Trying to join gameID: " + gameID);
+		lobby.put("lobby", "joinGamePass", Integer.toString(userID), gameID);
+		lobby.put("lobby", "joinGameWord", userID, pass);
+
+		Object[] check = lobby.get(new ActualField("joinedGamePassGet"), new ActualField(userID), new FormalField(Boolean.class));
+		Boolean correct = (Boolean) check[2];
+		if (correct) {
+			Object[] info = lobby.get(new ActualField("joinedGame"), new ActualField(userID), new FormalField(Integer.class));
+			int gameSlot = (int) info[2];
+			System.out.println("Connecting to game with gameSlot: " + gameSlot);
+			try {
+				listener = new RemoteSpace("tcp://" + serverIP + ":9001/listener" + gameSlot + "?keep");
+				talker = new RemoteSpace("tcp://" + serverIP + ":9001/talker" + gameSlot + "?keep");
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+			gameLobby();
+			return true;
+		}
+		else {
+			return false;
+		}
+	} // End of joinGame function
+
 	
 	public static ArrayList<GamePreview> getGameList() throws InterruptedException {
 		System.out.println(userID);
@@ -210,6 +238,10 @@ public class Client {
 		listener.put("gameListener", "chat", userID, 0);
 		listener.put("gameListenerChat", message, userID);
 		// TODO: Send message to all players in game class through tuple
+	}
+
+	public static String getName() {
+		return userName;
 	}
 
 }
