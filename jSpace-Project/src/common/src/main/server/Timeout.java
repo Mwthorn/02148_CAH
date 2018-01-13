@@ -21,7 +21,8 @@ public class Timeout implements Runnable {
             try {
                 Thread.sleep(1000);
                 timeout++;
-                if (timeout < 30) {
+                System.out.println("Timeout: " + timeout);
+                if (timeout > 10) {
                     System.out.println("Timeout: TIMEOUT!!");
                     local.put("Game", "Timeout");
                     state = false;
@@ -36,6 +37,11 @@ public class Timeout implements Runnable {
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
+        }
+        try {
+            local.put("Game", "TimeoutFinish");
+        } catch (InterruptedException e) {
+            e.printStackTrace();
         }
     }
 }

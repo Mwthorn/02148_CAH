@@ -22,6 +22,7 @@ public class Game implements Runnable {
     private int gameSlot;
     private boolean[] slotOccupied;
     private Space local;
+    private final int whiteCardsPerPlayer = 10;
 
     SpaceRepository repository = new SpaceRepository();
     SequentialSpace listener = new SequentialSpace();
@@ -44,7 +45,9 @@ public class Game implements Runnable {
                 Player player) {
         this.gameName = gameName;
         this.whiteCards = whiteCards;
+        System.out.println("The size of the white deck: " + whiteCards.size() + " " + this.whiteCards.size());
         this.blackCards = blackCards;
+        System.out.println("The size of the black deck: " + blackCards.size() + " " + this.blackCards.size());
         Collections.shuffle(this.whiteCards);
         Collections.shuffle(this.blackCards);
         this.password = null;
@@ -129,7 +132,7 @@ public class Game implements Runnable {
             talker.put("updateLobby", "start", player.getId(), player.getGameSlot());
 
             ArrayList<WhiteCard> cards = new ArrayList<>();
-            for(int i = 0; i < 10; i++) {
+            for(int i = 0; i < this.whiteCardsPerPlayer; i++) {
                 WhiteCard card = drawWhiteCard();
                 cards.add(card);
                 // STRING - STRING - INT - STRING - INT
@@ -152,7 +155,7 @@ public class Game implements Runnable {
             this.currentTurn = 0;
         }
 
-        // Makes sure that all players have 10 white cards each
+        // Makes sure that all players have this.whiteCardsPerPlayer white cards each
         fillWhiteCards();
 
         // Pick the chosen player
@@ -187,10 +190,12 @@ public class Game implements Runnable {
                     for (Player player : contestents) {
                         if (!player.hasPickedCard()) {
                             Random rand = new Random();
-                            int n = rand.nextInt(10) - 1;
+                            int n = rand.nextInt(this.whiteCardsPerPlayer-1);
                             //pickedCards[contestents.indexOf(player)] = player.getWhiteCards().get(n);
                             player.setPickedCard(n);
+                            System.out.println("Set picked card for PLAYER " + player.getId() + " to card " + n);
                             talker.put("ingame", "yourpick", player.getId(), null, n);
+                            System.out.println("Done!");
                         }
                     }
                     state = false;
@@ -220,7 +225,7 @@ public class Game implements Runnable {
         }
         System.out.println("All players has picked a card! Now show all players the picked cards!");
 
-        WhiteCard[] pickedCards = new WhiteCard[contestents.size()-1];
+        WhiteCard[] pickedCards = new WhiteCard[contestents.size()];
 
         Collections.shuffle(contestents);
         for (Player player : contestents) {
@@ -246,11 +251,12 @@ public class Game implements Runnable {
                 if (tuple[1] == "Timeout") {
                     System.out.println("TIMEOUT!! Pick a random winner card!");
                     Random rand = new Random();
-                    int n = rand.nextInt(contestents.size()) - 1;
+                    int n = rand.nextInt(contestents.size()-1);
                     winnerPlayer = contestents.get(n);
                     winnerCard = pickedCards[n];
+                    state = false;
                 }
-                else if (tuple[2] == "PickedWinner") {
+                else if (tuple[1] == "PickedWinner") {
                     Object[] tuple2 = local.get(new ActualField("Card"), new FormalField(Integer.class), new FormalField(Integer.class));
                     int clientID = (int) tuple2[1];
                     int cardIndex = (int) tuple2[2];
@@ -278,6 +284,13 @@ public class Game implements Runnable {
             talker.put("ingame", "result", player.getId(), winnerCard.getSentence(), 0);
             talker.put("ingame", "result", player.getId(), winnerPlayer.getName(), 0);
             // TODO: Update points for all players
+            talker.put("ingame", "points", player.getId(), player.getGameSlot().getSlot(), winnerPlayer.getPoints());
+        }
+        try {
+            System.out.println("Sleeping...");
+            Thread.sleep(4000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
         }
 
         // TODO: Next round? End?
@@ -288,7 +301,7 @@ public class Game implements Runnable {
     public void fillWhiteCards() {
         for (Player player : players) {
             int n = player.getWhiteCards().size();
-            for (int i = n; i < 10; i++) {
+            for (int i = n; i < this.whiteCardsPerPlayer; i++) {
                 WhiteCard card = drawWhiteCard();
                 player.addWhiteCard(card);
                 // STRING - STRING - INT - STRING - INT
@@ -298,6 +311,7 @@ public class Game implements Runnable {
     }
 
     public WhiteCard drawWhiteCard() {
+        System.out.println("Size of the white deck: " + whiteCards.size());
         WhiteCard card = whiteCards.get(0);
         whiteCards.remove(0);
         return card;

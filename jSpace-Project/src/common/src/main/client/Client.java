@@ -21,6 +21,7 @@ public class Client {
 	public static boolean turnToPick;
 	public static String[] whiteCards = new String[10];
 	public static MainGUI main;
+	public static String userName;
 
 	private static final int testNumber = 0;
 
@@ -33,7 +34,7 @@ public class Client {
 
 		main.setTitle("Cards Against Humanity");
 		main.setSize(1900,1000);
-		main.setResizable(true);
+		main.setResizable(false);
 		main.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		main.setVisible(true);
 		main.setLocationRelativeTo(null);
@@ -82,6 +83,7 @@ public class Client {
 		Object[] tuple = lobby.get(new ActualField("UserID"),new ActualField(name), new FormalField(Integer.class));
 		userID = (int) tuple[2];
 		serverIP = IP;
+		userName = name;
 		System.out.println("Client was assigned ID: " + userID);
 	} // End of login user  function
 	
@@ -210,6 +212,10 @@ public class Client {
 		listener.put("gameListener", "chat", userID, 0);
 		listener.put("gameListenerChat", message, userID);
 		// TODO: Send message to all players in game class through tuple
+	}
+
+	public static String getName() {
+		return userName;
 	}
 
 }
