@@ -120,6 +120,32 @@ public class Client {
 		}
 		gameLobby();
 	} // End of joinGame function
+
+	public static boolean joinGame(int gameID, String pass) throws InterruptedException {
+		System.out.println("Trying to join gameID: " + gameID);
+		lobby.put("lobby", "joinGamePass", Integer.toString(userID), gameID);
+		lobby.put("lobby", "joinGameWord", userID, pass);
+
+		Object[] check = lobby.get(new ActualField("joinedGamePassGet"), new ActualField(userID), new FormalField(Boolean.class));
+		Boolean correct = (Boolean) check[2];
+		if (correct) {
+			Object[] info = lobby.get(new ActualField("joinedGame"), new ActualField(userID), new FormalField(Integer.class));
+			int gameSlot = (int) info[2];
+			System.out.println("Connecting to game with gameSlot: " + gameSlot);
+			try {
+				listener = new RemoteSpace("tcp://" + serverIP + ":9001/listener" + gameSlot + "?keep");
+				talker = new RemoteSpace("tcp://" + serverIP + ":9001/talker" + gameSlot + "?keep");
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+			gameLobby();
+			return true;
+		}
+		else {
+			return false;
+		}
+	} // End of joinGame function
+
 	
 	public static ArrayList<GamePreview> getGameList() throws InterruptedException {
 		System.out.println(userID);
