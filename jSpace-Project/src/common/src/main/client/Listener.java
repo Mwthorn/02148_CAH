@@ -70,11 +70,11 @@ public class Listener implements Runnable{
 					// ("ingame", "black", player.getId(), blackCard.getSentence(), blackCard.getBlanks());
 					if (tuple[2].equals("white")) {
 						Client.whiteCards[(int) tuple[4]] = (String) tuple[3];
-						// TODO: Update GUI whitecards
+						Client.main.setWhite((String) tuple[3], (int) tuple[4]);
 					} else if (tuple[2].equals("black")) {
 						Client.amountOfBlanks = (int) tuple[4];
 						// tuple[3] is the text
-						// TODO: Set Black card to given string on GUI
+						Client.main.setBlack((String) tuple[3]);
 					}
 				}
 				else if (tuple[1].equals("yourpick")) {
