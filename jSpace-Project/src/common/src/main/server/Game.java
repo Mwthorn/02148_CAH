@@ -94,6 +94,7 @@ public class Game implements Runnable {
                             }
                         }
                         if (allReady) {
+                        	status = "Game Started";
                             startGame();
                         }
                     }
@@ -374,6 +375,9 @@ public class Game implements Runnable {
             return;
         }
         int actorSlot = actor.getGameSlot().getSlot();
+        if (players.size() == maxPlayers){
+        	status = "Waiting for players...";
+        }
 		players.remove(actor);
 		
 		talker.put("updateLobby", "leave", actor.getId(), null);
@@ -432,8 +436,15 @@ public class Game implements Runnable {
         player.addPoints(i);
     }
 
-    public void addPlayerToGame(Player actor) {
+    public void addPlayerToGame(Player actor) {  	
     	int actorID = actor.getId();
+    	
+    	// Check if the game has started.
+    	if (status == "Game Full"){
+    		System.out.println("Player with ID "+actorID+" attempted to join a full game.");
+    		return;
+    	}
+    	
     	// Checks if the player is already in the game
     	for (Player player : players) {
 			if (player.getId() == actorID) {
@@ -450,6 +461,11 @@ public class Game implements Runnable {
         
     	// Adds the player to the game.
         players.add(actor);
+        
+        // Check if the game is full.
+        if (players.size() == maxPlayers){
+        	status = "Game Full";
+        }
         
         // Set the players game slot.
         for (int i = 0; i < maxPlayers; i++) {
