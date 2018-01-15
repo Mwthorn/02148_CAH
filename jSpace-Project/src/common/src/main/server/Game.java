@@ -170,12 +170,14 @@ public class Game implements Runnable {
         fillWhiteCards();
 
         // Pick the chosen player
-        int chosenID = players.get(this.currentTurn).getId();
+        Player chosenPlayer = players.get(this.currentTurn);
+        int chosenID = chosenPlayer.getId();
         ArrayList<Player> contestents = new ArrayList<>();
 
         // Show black card to players
         BlackCard blackCard = drawBlackCard();
         for (Player player : players) {
+            talker.put("ingame", "czar", player.getId(), chosenPlayer.getName(), 0);
             // STRING - STRING - INT - STRING - INT
             talker.put("ingame", "black", player.getId(), blackCard.getSentence(), blackCard.getBlanks());
             player.resetPickedCards();
@@ -217,23 +219,32 @@ public class Game implements Runnable {
                     Object[] tuple2 = local.get(new ActualField("Card"), new FormalField(Integer.class), new FormalField(Integer.class));
                     System.out.println("Got additional information");
                     int clientID = (int) tuple2[1];
-                    int cardIndex = (int) tuple2[2];
-                    Player player = FindPlayer(clientID);
-                    //pickedCards[contestents.indexOf(player)] = player.getWhiteCards().get(cardIndex);
-                    player.chooseWhiteCard(cardIndex);
-                    talker.put("ingame", "yourpick", player.getId(), null, cardIndex);
-                    System.out.println("Sent yourpick to client");
-                    state = false;
-                    for (Player player1 : players) {
-                        for (int i = 0; i < blackCard.getBlanks(); i++) {
-                            if (!player1.hasPickedCard(i)) {
-                                state = true;
+                    if (clientID != chosenID) {
+                        int cardIndex = (int) tuple2[2];
+                        Player player = FindPlayer(clientID);
+                        //pickedCards[contestents.indexOf(player)] = player.getWhiteCards().get(cardIndex);
+                        if (player.getPickedCards().size() < blackCard.getBlanks()) {
+                            player.chooseWhiteCard(cardIndex);
+                            talker.put("ingame", "yourpick", player.getId(), null, cardIndex);
+                            System.out.println("Sent yourpick to client");
+                            state = false;
+                            for (Player player1 : players) {
+                                for (int i = 0; i < blackCard.getBlanks(); i++) {
+                                    if (!player1.hasPickedCard(i)) {
+                                        state = true;
+                                    }
+                                }
                             }
+                            if (!state) {
+                                System.out.println("All players hae picked a card! Skip!");
+                                local.put("Timeout", "Cancel");
+                            }
+                        } else {
+                            System.out.println("Client has already picked their cards! No refund!");
                         }
                     }
-                    if (!state) {
-                        System.out.println("All players hae picked a card! Skip!");
-                        local.put("Timeout", "Cancel");
+                    else {
+                        System.out.println("WOAH!! The host tried to pick a white card!");
                     }
                 }
             }

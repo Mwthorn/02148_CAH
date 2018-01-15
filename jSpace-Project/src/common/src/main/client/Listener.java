@@ -91,6 +91,10 @@ public class Listener implements Runnable{
 					//Object[] pickedInfo = game.get(new ActualField("ingame"), new FormalField(String.class), new ActualField(userID), new FormalField(String[].class), new FormalField(Integer.class));
 					Client.main.setSelected((int) tuple[4], (String) tuple[3]);
 				}
+				else if (tuple[1].equals("czar")) {
+					// ("ingame", "picked", player.getId(), pickedCards[i], i);
+					Client.main.setCzar((String) tuple[3]);
+				}
 				else if (tuple[1].equals("result")) {
 					// ("ingame", "result", player.getId(), winnerCard.getSentence(), 0);
 					// TODO: Show results to GUI (0 is not used)
