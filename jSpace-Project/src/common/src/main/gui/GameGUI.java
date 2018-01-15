@@ -47,6 +47,7 @@ public class GameGUI extends JFrame implements ActionListener {
 	private String message, username = null;
 	private JTextField messageField;
 	private JButton sendButton;
+	private JTextArea pointsPlayer;
 
 
 
@@ -93,15 +94,15 @@ public class GameGUI extends JFrame implements ActionListener {
 		BlackCard.setEnabled(true);
 
 		// Czars black card of choice used to fill out
-//		BlackCard2 = new JTextArea("SOME TEXT");
-//		BlackCard2.setMaximumSize(SizeOfBlackCards);
-//		BlackCard2.setFont(new Font("calibri",1,FontSizeOfCards));
-//		BlackCard2.setBorder(BorderForCards);
-//		BlackCard2.setBackground(Color.BLACK);
-//		BlackCard2.setForeground(Color.WHITE);
-//		BlackCard2.setAlignmentX(Component.CENTER_ALIGNMENT);
-//		BlackCard2.setEnabled(true);
-//		BlackCard2.setVisible(false);
+		//		BlackCard2 = new JTextArea("SOME TEXT");
+		//		BlackCard2.setMaximumSize(SizeOfBlackCards);
+		//		BlackCard2.setFont(new Font("calibri",1,FontSizeOfCards));
+		//		BlackCard2.setBorder(BorderForCards);
+		//		BlackCard2.setBackground(Color.BLACK);
+		//		BlackCard2.setForeground(Color.WHITE);
+		//		BlackCard2.setAlignmentX(Component.CENTER_ALIGNMENT);
+		//		BlackCard2.setEnabled(true);
+		//		BlackCard2.setVisible(false);
 
 		label = new JLabel("Current Black Card");
 		label.setForeground(Color.BLACK);
@@ -215,6 +216,18 @@ public class GameGUI extends JFrame implements ActionListener {
 			}
 		}
 
+		pointsPlayer = new JTextArea("Yael has 0 points");
+		//				ChosCard1[i].setMaximumSize(SizeOfChosenCards);
+		//				ChosCard1[i].setMinimumSize(SizeOfChosenCards);
+		pointsPlayer.setPreferredSize(SizeOfChosenCards);
+		pointsPlayer.setBorder(BorderForCards);
+		pointsPlayer.setBackground(Color.white);
+		pointsPlayer.setForeground(Color.BLACK);
+		pointsPlayer.setFont(new Font("calibri",1,FontSizeOfCards));
+		pointsPlayer.setEditable(false);
+		pointsPlayer.setLineWrap(true);
+		pointsPlayer.setWrapStyleWord(true);
+
 
 		/////////////////////////////////////////////// PANELS //////////////////////////////////////////////////////////////////
 
@@ -243,24 +256,31 @@ public class GameGUI extends JFrame implements ActionListener {
 
 		// Panel for the right side.
 		JPanel PRight = new JPanel();
-
+		JPanel chatPanel = new JPanel();
+		JPanel sendPanel = new JPanel();
+		
 		PRight.setLayout(new BoxLayout(PRight, BoxLayout.PAGE_AXIS));
 		PRight.setPreferredSize(new Dimension(300,1000));
 		PRight.setBackground(Color.WHITE);
-		PRight.add(Box.createRigidArea(new Dimension(0,50)));
 		PAll.add(PRight, BorderLayout.EAST);
 
-
+	
 		// CHAT 
-
+		
 		// Panels
-		JPanel chatPanel, sendPanel; // chat panels
-		chatPanel = new JPanel();
+		
 		chatPanel.setLayout(new BorderLayout());
-		sendPanel = new JPanel();
+		chatPanel.setPreferredSize(new Dimension(0,600));
+		chatPanel.setVisible(true);
 		sendPanel.setBackground(Color.WHITE);
 		sendPanel.setLayout(new GridBagLayout());
+		
+		PRight.add(pointsPlayer);
+		PRight.add(Box.createRigidArea(new Dimension(0,200)));
+		PRight.add(chatPanel);
+		PRight.add(Box.createRigidArea(new Dimension(0,72)));
 
+	
 		// Message field and send button
 		messageField = new JTextField();
 		messageField.requestFocusInWindow();
@@ -293,13 +313,9 @@ public class GameGUI extends JFrame implements ActionListener {
 		sendPanel.add(messageField, left);
 		sendPanel.add(sendButton, right);
 		chatPanel.add(BorderLayout.SOUTH, sendPanel);
-		PRight.add(Box.createRigidArea(new Dimension(0,600)));
+//		PRight.add(Box.createRigidArea(new Dimension(0,20)));
 
-		PRight.add(chatPanel);
 
-		chatPanel.setSize(275, 350);
-		chatPanel.setVisible(true);
-		
 		// CHAT END
 
 
@@ -433,11 +449,11 @@ public class GameGUI extends JFrame implements ActionListener {
 
 	}
 
-//	public void sendChatMessage(String username, String message) {
-//		this.username = username;
-//		this.message = message;
-//		chatBox.append("<" + username + ">:  " + message + "\n");
-//	}
+	//	public void sendChatMessage(String username, String message) {
+	//		this.username = username;
+	//		this.message = message;
+	//		chatBox.append("<" + username + ">:  " + message + "\n");
+	//	}
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
