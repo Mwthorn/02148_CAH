@@ -206,20 +206,23 @@ public class Game implements Runnable {
                                 //pickedCards[contestents.indexOf(player)] = player.getWhiteCards().get(n);
                                 player.chooseWhiteCard(n);
                                 System.out.println("Set picked card for PLAYER " + player.getId() + " to card " + n);
-                                talker.put("ingame", "yourpick", player.getId(), null, n);
+                                talker.put("ingame", "yourpick", player.getId(), "test", n);
                                 System.out.println("Done!");
                             }
                         }
                     }
                     state = false;
                 } else if (tuple[1] == "PickedCard") {
+                    System.out.println("Got picked card from PLAYER ");
                     Object[] tuple2 = local.get(new ActualField("Card"), new FormalField(Integer.class), new FormalField(Integer.class));
+                    System.out.println("Got additional information");
                     int clientID = (int) tuple2[1];
                     int cardIndex = (int) tuple2[2];
                     Player player = FindPlayer(clientID);
                     //pickedCards[contestents.indexOf(player)] = player.getWhiteCards().get(cardIndex);
                     player.chooseWhiteCard(cardIndex);
                     talker.put("ingame", "yourpick", player.getId(), null, cardIndex);
+                    System.out.println("Sent yourpick to client");
                     state = false;
                     for (Player player1 : players) {
                         for (int i = 0; i < blackCard.getBlanks(); i++) {
@@ -234,7 +237,7 @@ public class Game implements Runnable {
                     }
                 }
             }
-            local.get(new ActualField("Game"), new ActualField("TimeoutFinish"));
+            //local.get(new ActualField("Game"), new ActualField("TimeoutFinish"));
         } catch (InterruptedException e) {
             e.printStackTrace();
         }

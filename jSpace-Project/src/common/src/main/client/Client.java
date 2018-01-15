@@ -203,12 +203,12 @@ public class Client {
 	/*********************************************************************************************/
 	
 	public static boolean pickWhiteCard(int i) {
-		listener.put("gameListener", "pickWhite", userID, i);
+		talker.put("gameListener", "pickWhite", userID, i);
 		return true;
 	}
 
 	public static boolean pickWinnerCard(int i) {
-		listener.put("gameListener", "chooseWinnerCard", userID, i);
+		talker.put("gameListener", "chooseWinnerCard", userID, i);
 		return true;
 	}
 
@@ -221,8 +221,8 @@ public class Client {
 	}
 
 	public static void sendChatMessage(String message) {
-		listener.put("gameListener", "chat", userID, 0);
-		listener.put("gameListenerChat", message, userID);
+		talker.put("gameListener", "chat", userID, 0);
+		talker.put("gameListenerChat", message, userID);
 		// TODO: Send message to all players in game class through tuple
 	}
 

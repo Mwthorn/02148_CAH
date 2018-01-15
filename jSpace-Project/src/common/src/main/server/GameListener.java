@@ -25,6 +25,7 @@ public class GameListener implements Runnable {
                 if (tuple[1].equals("pickWhite")) {
                     local.put("Game","PickedCard");
                     local.put("Card",(int) tuple[2],(int) tuple[3]);
+                    System.out.println("Sent pickWhite to local!");
                 }
                 else if (tuple[1].equals("chooseWinnerCard")) {
                     local.put("Game","PickedWinner");

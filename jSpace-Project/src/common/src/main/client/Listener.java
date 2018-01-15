@@ -93,8 +93,13 @@ public class Listener implements Runnable{
 				}
 				else if (tuple[1].equals("result")) {
 					// ("ingame", "result", player.getId(), winnerCard.getSentence(), 0);
-					// ("ingame", "result", player.getId(), winnerPlayer.getName(), 0);
 					// TODO: Show results to GUI (0 is not used)
+				}
+				else if (tuple[1].equals("resultPlayer")) {
+					// TODO: Show results to GUI (0 is not used)
+					for (int i = 0; i < 10; i++) {
+						Client.main.setSelected(i, "");
+					}
 				}
 				else if (tuple[1].equals("yourturn")) {
 					//allowPlayerTurn();
