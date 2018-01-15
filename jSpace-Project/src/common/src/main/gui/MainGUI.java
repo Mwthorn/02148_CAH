@@ -76,7 +76,8 @@ public class MainGUI extends JFrame implements ActionListener {
 	private static JList playerList;
 
 	private JTextArea BlackCard, BlackCard2;
-	private String[] ChosenCards = new String[8];
+	private int players = 0;
+	private String[] ChosenCards = new String[players];
 	private int numberOfCards = 3;
 	private JButton[] PlayerCards = new JButton[10];
 	private JButton[] Winner = new JButton[ChosenCards.length];
@@ -1611,15 +1612,27 @@ public class MainGUI extends JFrame implements ActionListener {
 			System.out.println("Changed to Red");
 
 		}
-		
 	}
 	
 	public void startGame(int playerNumber){
 		
+		this.players = playerNumber;
+		
+		hideAll();
+		mainGame.setVisible(true);
+		add(mainGame);
+	}
+
+	public void setWhite(String text, int num){
+		
+		area[num].setText(text);
+		
+	}
+	
+	public void setBlack(){
 		
 		
 	}
-
 
 
 	//	} else if (e.getSource() == b3) {
