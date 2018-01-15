@@ -78,7 +78,7 @@ public class MainGUI extends JFrame implements ActionListener {
 	private JButton BReady, BLeave;
 	private JLabel LHead, LPicWC, LPicBC, Label1, Label2, Label3, Label4, Label5, Label6, Label7, Label8;
 	private static JList playerList;
-	
+
 	// Game
 	private JTextArea BlackCard;
 	private String[] ChosenCards = new String[8];
@@ -89,7 +89,7 @@ public class MainGUI extends JFrame implements ActionListener {
 	private JTextArea[] ChosCard2 = new JTextArea[8];
 	private JTextArea[] ChosCard3 = new JTextArea[8];
 	private JTextArea[] area = new JTextArea[10];
-	private JLabel label = new JLabel();
+	private JLabel label, czar = new JLabel();
 	private JTextArea pointsPlayer;
 
 
@@ -1362,8 +1362,8 @@ public class MainGUI extends JFrame implements ActionListener {
 				ChosCard3[i].setWrapStyleWord(true);
 			}
 		}
-		
-		
+
+
 		pointsPlayer = new JTextArea();
 		pointsPlayer.setPreferredSize(SizeOfChosenCards);
 		pointsPlayer.setBorder(BorderForCards);
@@ -1373,7 +1373,7 @@ public class MainGUI extends JFrame implements ActionListener {
 		pointsPlayer.setEditable(false);
 		pointsPlayer.setLineWrap(true);
 		pointsPlayer.setWrapStyleWord(true);
-		
+
 
 		/////////////////////////////////////////////// PANELS //////////////////////////////////////////////////////////////////
 
@@ -1382,6 +1382,11 @@ public class MainGUI extends JFrame implements ActionListener {
 		PAll.setLayout(new BorderLayout());
 		PAll.setSize(1900, 1000);
 
+		czar = new JLabel("Card Czar is: ");
+		czar.setForeground(Color.BLACK);
+		czar.setPreferredSize(new Dimension(300, 80));
+		czar.setAlignmentX(Component.CENTER_ALIGNMENT);
+		czar.setFont(new Font("calibri",1,FontSizeOfCards));
 
 		// Panel for the left side.
 		JPanel PLeft = new JPanel();
@@ -1397,6 +1402,8 @@ public class MainGUI extends JFrame implements ActionListener {
 		PLeft.add(label);
 		PLeft.add(Box.createRigidArea(new Dimension(0,10)));		
 		PLeft.add(card1);
+		PLeft.add(Box.createRigidArea(new Dimension(0,10)));
+		PLeft.add(czar);
 		PLeft.add(Box.createRigidArea(new Dimension(0,50)));
 		PAll.add(PLeft, BorderLayout.WEST);
 
@@ -1410,7 +1417,7 @@ public class MainGUI extends JFrame implements ActionListener {
 		PRight.add(pointsPlayer);
 		PRight.add(Box.createRigidArea(new Dimension(0,500)));
 
-		
+
 		PAll.add(PRight, BorderLayout.EAST);
 
 
@@ -1621,7 +1628,7 @@ public class MainGUI extends JFrame implements ActionListener {
 		else if (e.getSource() == BReady) {
 			Client.sendReady();
 		}
-		
+
 		for (int i = 0; i < 10; i++) {
 
 			if (e.getSource() == PlayerCards[i]) {
@@ -1630,29 +1637,30 @@ public class MainGUI extends JFrame implements ActionListener {
 		}
 	}
 
+
 	public void updatePlayer(GameSlot givenSlot) {
 		int index = givenSlot.getSlot();
-		
+
 		if (givenSlot.hasPlayer() == true){
 			gameSlot[index] = givenSlot;
-		
+
 			player[index].setText("   "+gameSlot[index].getName());
-			
+
 			if (gameSlot[index].isReady() == true) {			
 				readyBtn[index].setBackground(new Color(76,153,0));
 				System.out.println("Changed to Green");
-	
+
 			} else {
 				readyBtn[index].setBackground(Color.RED);
 				System.out.println("Changed to Red");
-	
+
 			}
 		} else {
 			player[index].setText("");
 			readyBtn[index].setBackground(Color.white);
 			System.out.println("Changed to White");
 		}
-		
+
 
 	}
 
@@ -1692,22 +1700,33 @@ public class MainGUI extends JFrame implements ActionListener {
 	}
 
 	public void setSelected(int num, String text){
-		
+
 		System.out.println("String: "+text+" and num: "+num);
-		
-		ChosCard1[num].setText(text);
-		
+
+		if (num < 8) {
+			ChosCard1[num].setText(text);
+		} else {
+			System.out.println("Got: "+num);
+		}
 	}
-	
+
 	public void setScore(String[] playerName, int[] points){
-		
+
 		for(int i=0; i<playerName.length; i++){
 			System.out.println(playerName[i]+" has "+points[i]+"\n");
 			pointsPlayer.append(playerName[i]+" has "+points[i]+"\n");
-			
-			
+
+
 		}
 	}
+
+	public void setCzar(String name) {
+		
+		System.out.println("Card Czar is: "+name);
+		czar.setText("Card Czar is: "+name);
+	}
+	
+	
 	
 
 	//	} else if (e.getSource() == b3) {
