@@ -448,8 +448,8 @@ public class Game implements Runnable {
     	int actorID = actor.getId();
     	
     	// Check if the game has started.
-    	if (status == "Game Full"){
-    		System.out.println("Player with ID "+actorID+" attempted to join a full game.");
+    	if (status == "Game Full" || status == "Game Started"){
+    		System.out.println("Player with ID "+actorID+" attempted to join a full or started game.");
     		return;
     	}
     	
