@@ -137,9 +137,9 @@ public class Game implements Runnable {
                 WhiteCard card = drawWhiteCard();
                 cards.add(card);
                 // STRING - STRING - INT - STRING - INT
+                player.setWhiteCard(card,i);
                 talker.put("ingame", "white", player.getId(), card.getSentence(), i);
             }
-            player.setWhiteCards((WhiteCard[]) cards.toArray());
         }
 
 
