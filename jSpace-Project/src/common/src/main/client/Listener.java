@@ -97,7 +97,7 @@ public class Listener implements Runnable{
 				}
 				else if (tuple[1].equals("resultPlayer")) {
 					// TODO: Show results to GUI (0 is not used)
-					for (int i = 0; i < 10; i++) {
+					for (int i = 0; i < 8; i++) {
 						Client.main.setSelected(i, "");
 					}
 				}
