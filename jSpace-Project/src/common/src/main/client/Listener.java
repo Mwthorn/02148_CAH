@@ -3,11 +3,8 @@ package common.src.main.client;
 import org.jspace.ActualField;
 import org.jspace.FormalField;
 import org.jspace.RemoteSpace;
-import org.jspace.Space;
 
 import common.src.main.server.GameSlot;
-
-import static common.src.main.client.Client.allowPlayerTurn;
 
 public class Listener implements Runnable{
 	private static RemoteSpace game;
@@ -80,7 +77,7 @@ public class Listener implements Runnable{
 				}
 				else if (tuple[1].equals("picked")) {
 					// ("ingame", "picked", player.getId(), pickedCards[i], i);
-					// TODO: Show picked cards on GUI
+					Client.main.setSelected((int) tuple[4], (String) tuple[3]);
 				}
 				else if (tuple[1].equals("result")) {
 					// ("ingame", "result", player.getId(), winnerCard.getSentence(), 0);
@@ -88,7 +85,8 @@ public class Listener implements Runnable{
 					// TODO: Show results to GUI (0 is not used)
 				}
 				else if (tuple[1].equals("yourturn")) {
-					allowPlayerTurn();
+					//allowPlayerTurn();
+					// TODO: Tell client its their turn (GUI Changes?)
 				}
 				// TODO: Player leaves/joins in mid-game
 			}
