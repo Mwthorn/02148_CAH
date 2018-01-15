@@ -89,7 +89,7 @@ public class MainGUI extends JFrame implements ActionListener {
 	private JTextArea[] ChosCard2 = new JTextArea[8];
 	private JTextArea[] ChosCard3 = new JTextArea[8];
 	private JTextArea[] area = new JTextArea[10];
-	private JLabel label, czar = new JLabel();
+	private JLabel label, czar, phase, number = new JLabel();
 	private JTextArea pointsPlayer;
 
 
@@ -1382,12 +1382,24 @@ public class MainGUI extends JFrame implements ActionListener {
 		PAll.setLayout(new BorderLayout());
 		PAll.setSize(1900, 1000);
 
+		number = new JLabel("Round Number: ");
+		number.setForeground(Color.BLACK);
+		number.setPreferredSize(new Dimension(300, 80));
+		number.setAlignmentX(Component.CENTER_ALIGNMENT);
+		number.setFont(new Font("calibri",1,FontSizeOfCards));
+		
 		czar = new JLabel("Card Czar is: ");
 		czar.setForeground(Color.BLACK);
 		czar.setPreferredSize(new Dimension(300, 80));
 		czar.setAlignmentX(Component.CENTER_ALIGNMENT);
 		czar.setFont(new Font("calibri",1,FontSizeOfCards));
-
+		
+		phase = new JLabel("Choosing: ");
+		phase.setForeground(Color.BLACK);
+		phase.setPreferredSize(new Dimension(300, 80));
+		phase.setAlignmentX(Component.CENTER_ALIGNMENT);
+		phase.setFont(new Font("calibri",1,FontSizeOfCards));
+		
 		// Panel for the left side.
 		JPanel PLeft = new JPanel();
 		JPanel card1 = new JPanel();
@@ -1403,7 +1415,11 @@ public class MainGUI extends JFrame implements ActionListener {
 		PLeft.add(Box.createRigidArea(new Dimension(0,10)));		
 		PLeft.add(card1);
 		PLeft.add(Box.createRigidArea(new Dimension(0,10)));
+		PLeft.add(number);
+		PLeft.add(Box.createRigidArea(new Dimension(0,10)));
 		PLeft.add(czar);
+		PLeft.add(Box.createRigidArea(new Dimension(0,10)));
+		PLeft.add(phase);
 		PLeft.add(Box.createRigidArea(new Dimension(0,50)));
 		PAll.add(PLeft, BorderLayout.WEST);
 
@@ -1635,6 +1651,18 @@ public class MainGUI extends JFrame implements ActionListener {
 				Client.pickWhiteCard(i);	
 			}
 		}
+
+		for (int i = 0; i < players; i++) {
+			System.out.println("Number of Players: "+players);
+				
+			if (e.getSource() == Winner[i]) {
+				Client.pickWinnerCard(i);
+				
+				ChosCard1[i].setBackground(Color.YELLOW);
+				
+				
+			}
+		}
 	}
 
 
@@ -1715,17 +1743,44 @@ public class MainGUI extends JFrame implements ActionListener {
 		for(int i=0; i<playerName.length; i++){
 			System.out.println(playerName[i]+" has "+points[i]+"\n");
 			pointsPlayer.append(playerName[i]+" has "+points[i]+"\n");
-
-
 		}
 	}
 
 	public void setCzar(String name) {
-		
-		System.out.println("Card Czar is: "+name);
-		czar.setText("Card Czar is: "+name);
 	}
 	
+	public void getRound(int rnd){
+		number.setText("Round Number: "+rnd);
+	}
+	
+	public void isCzar(boolean cz){
+		if (cz == true) {
+			czar.setText("You are Card Czar");
+			
+		} else {	
+			czar.setText("You are NOT Card Czar");
+		}
+	}
+	
+	public void setPhase(int p, boolean czar) {
+		
+		if (czar == true) {
+			if (p == 0) {
+				phase.setText("Waiting on other players");
+				
+			} else {
+				phase.setText("Choose a winner");
+			}
+			
+		} else {
+			if (p == 0) {
+				phase.setText("Pick your cards");
+				
+			} else {
+				phase.setText("Waiting for Card Czar");
+			}
+		}	
+	}
 	
 	
 
