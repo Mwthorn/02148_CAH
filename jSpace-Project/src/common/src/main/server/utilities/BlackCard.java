@@ -7,7 +7,12 @@ public class BlackCard {
 
     public BlackCard(int b, String s) {
         this.sentence = s;
-        this.blanks = b; 
+        if (b <= 0) {
+            this.blanks = 1;
+        }
+        else {
+            this.blanks = b;
+        }
     }
     
     public String getSentence() {

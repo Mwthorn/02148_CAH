@@ -144,8 +144,18 @@ public class Game implements Runnable {
 
         Random rand = new Random();
         this.currentTurn = rand.nextInt(players.size()) - 1;
-        while (true) {
+        Boolean state = true;
+        while (state) {
             nextRound();
+            if (blackCards.size() <= 0) {
+                System.out.println("There are no further black cards to continue!");
+                state = false;
+            }
+            else if (whiteCards.size() <= players.size()*2) {
+                System.out.println("There are not enough white cards to continue!");
+                state = false;
+            }
+            // TODO: Max rounds? Points to win?
         }
 	}
 
@@ -167,7 +177,7 @@ public class Game implements Runnable {
         for (Player player : players) {
             // STRING - STRING - INT - STRING - INT
             talker.put("ingame", "black", player.getId(), blackCard.getSentence(), blackCard.getBlanks());
-            player.resetPickedCard();
+            player.resetPickedCards();
             if (player.getId() == chosenID) {
                 // TODO: Tell player its not their turn (Chosen) (Do nothing?)
             }
@@ -188,14 +198,16 @@ public class Game implements Runnable {
                 if (tuple[1] == "Timeout") {
                     System.out.println("TIMEOUT!! Remaining players will pick a random card");
                     for (Player player : contestents) {
-                        if (!player.hasPickedCard()) {
-                            Random rand = new Random();
-                            int n = rand.nextInt(this.whiteCardsPerPlayer-1);
-                            //pickedCards[contestents.indexOf(player)] = player.getWhiteCards().get(n);
-                            player.setPickedCard(n);
-                            System.out.println("Set picked card for PLAYER " + player.getId() + " to card " + n);
-                            talker.put("ingame", "yourpick", player.getId(), null, n);
-                            System.out.println("Done!");
+                        for (int i = 0; i < blackCard.getBlanks(); i++) {
+                            if (!player.hasPickedCard(i)) {
+                                Random rand = new Random();
+                                int n = rand.nextInt(this.whiteCardsPerPlayer - 1);
+                                //pickedCards[contestents.indexOf(player)] = player.getWhiteCards().get(n);
+                                player.chooseWhiteCard(n);
+                                System.out.println("Set picked card for PLAYER " + player.getId() + " to card " + n);
+                                talker.put("ingame", "yourpick", player.getId(), null, n);
+                                System.out.println("Done!");
+                            }
                         }
                     }
                     state = false;
@@ -205,12 +217,14 @@ public class Game implements Runnable {
                     int cardIndex = (int) tuple2[2];
                     Player player = FindPlayer(clientID);
                     //pickedCards[contestents.indexOf(player)] = player.getWhiteCards().get(cardIndex);
-                    player.setPickedCard(cardIndex);
+                    player.chooseWhiteCard(cardIndex);
                     talker.put("ingame", "yourpick", player.getId(), null, cardIndex);
                     state = false;
                     for (Player player1 : players) {
-                        if (!player1.hasPickedCard()) {
-                            state = true;
+                        for (int i = 0; i < blackCard.getBlanks(); i++) {
+                            if (!player1.hasPickedCard(i)) {
+                                state = true;
+                            }
                         }
                     }
                     if (!state) {
@@ -223,13 +237,15 @@ public class Game implements Runnable {
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
-        System.out.println("All players has picked a card! Now show all players the picked cards!");
+        System.out.println("All players has picked their cards! Now show all players the picked cards!");
 
-        WhiteCard[] pickedCards = new WhiteCard[contestents.size()];
+        WhiteCard[][] pickedCards = new WhiteCard[contestents.size()][blackCard.getBlanks()];
 
         Collections.shuffle(contestents);
         for (Player player : contestents) {
-            pickedCards[contestents.indexOf(player)] = player.getPickedCard();
+            for (int i = 0; i < blackCard.getBlanks(); i++) {
+                pickedCards[contestents.indexOf(player)][i] = player.getPickedCards().get(i);
+            }
         }
 
         // Show the picked cards to all players
@@ -242,18 +258,18 @@ public class Game implements Runnable {
         new Thread(timeout).start();
         state = true;
         Player winnerPlayer = null;
-        WhiteCard winnerCard = null;
+        WhiteCard winnerCards[] = new WhiteCard[blackCard.getBlanks()];
         Player chosen = FindPlayer(chosenID);
         talker.put("ingame", "yourturn", chosen.getId(), null, 0);
         while (state) {
             try {
                 Object[] tuple = local.get(new ActualField("Game"), new FormalField(String.class));
                 if (tuple[1] == "Timeout") {
-                    System.out.println("TIMEOUT!! Pick a random winner card!");
+                    System.out.println("TIMEOUT!! Pick a random winner!");
                     Random rand = new Random();
                     int n = rand.nextInt(contestents.size()-1);
                     winnerPlayer = contestents.get(n);
-                    winnerCard = pickedCards[n];
+                    winnerCards = pickedCards[n];
                     state = false;
                 }
                 else if (tuple[1] == "PickedWinner") {
@@ -262,7 +278,7 @@ public class Game implements Runnable {
                     int cardIndex = (int) tuple2[2];
                     if (chosenID == clientID) {
                         winnerPlayer = contestents.get(cardIndex);
-                        winnerCard = pickedCards[cardIndex];
+                        winnerCards = pickedCards[cardIndex];
                         if (winnerPlayer.getId() == clientID) {
                             System.out.println("WOAH!! Did you just try to choose yourself as the winner?");
                         }
@@ -277,12 +293,18 @@ public class Game implements Runnable {
             }
         }
         System.out.println("The winner chosen is: " + winnerPlayer.getName());
+        System.out.println(blackCard.getSentence());
+        for (int i = 0; i < blackCard.getBlanks(); i++) {
+            System.out.println(winnerCards[i].getSentence());
+        }
         winnerPlayer.addPoints(1);
 
         // Update results for all players
         for (Player player : players) {
-            talker.put("ingame", "result", player.getId(), winnerCard.getSentence(), 0);
-            talker.put("ingame", "result", player.getId(), winnerPlayer.getName(), 0);
+            for (int i = 0; i < blackCard.getBlanks(); i++) {
+                talker.put("ingame", "resultCards", player.getId(), winnerCards[i].getSentence(), 0);
+            }
+            talker.put("ingame", "resultPlayer", player.getId(), winnerPlayer.getName(), 0);
             // TODO: Update points for all players
             talker.put("ingame", "points", player.getId(), player.getGameSlot().getSlot(), winnerPlayer.getPoints());
         }
@@ -292,9 +314,6 @@ public class Game implements Runnable {
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
-
-        // TODO: Next round? End?
-
     }
 
 

@@ -61,9 +61,9 @@ public class Listener implements Runnable{
 	public void inGameListener(){
 		while(true) {
 			try {
-				// STRING - INT - STRING - INT
+				// String - STRING - INT - STRING - INT
 				Object[] tuple = game.get(new ActualField("ingame"), new FormalField(String.class), new ActualField(userID), new FormalField(String.class), new FormalField(Integer.class));
-				System.out.println("Listener: Got response from server: " + tuple[1]);
+				System.out.println("Ingame: Got response from server: " + tuple[1]);
 				if (tuple[1].equals("card")){
 					// ("ingame", "black", player.getId(), blackCard.getSentence(), blackCard.getBlanks());
 					if (tuple[2].equals("white")) {
