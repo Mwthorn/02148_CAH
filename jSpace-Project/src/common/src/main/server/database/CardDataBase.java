@@ -39,7 +39,7 @@ public class CardDataBase{
 
 	public void loadBlackDeck(){
 		String numbers, sentence;
-		int numOfLines, numOfBlanks = 0;
+		int numOfLines, numOfBlanks, inputBlanks = 0;
 
 		try {
 			inputStream = new FileInputStream("TextBC.txt");
@@ -49,14 +49,16 @@ public class CardDataBase{
 				
 				numOfLines = Integer.parseInt(numbers.split(" ")[0]);
 				numOfBlanks = Integer.parseInt(numbers.split(" ")[1]);
+				inputBlanks = numOfBlanks;
+				
 				sentence = "";
 				
 				for(int i = 0; i < numOfLines; i++ ) {
-					if (numOfBlanks == 0) {
+					if (inputBlanks == 0) {
 						sentence = sentence + reader.readLine();
 					} else {
 						sentence = sentence + reader.readLine() + " ________";
-						numOfBlanks--;
+						inputBlanks--;
 					}
 				}
 				bDataBase.add(new BlackCard(numOfBlanks, sentence));

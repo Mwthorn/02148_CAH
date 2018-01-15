@@ -240,6 +240,41 @@ public class GameGUI extends JFrame implements ActionListener {
 		PRight.add(BlackCard2);
 		PAll.add(PRight, BorderLayout.EAST);
 
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
 
 		// Panels for the center
 		JPanel PMid = new JPanel();
