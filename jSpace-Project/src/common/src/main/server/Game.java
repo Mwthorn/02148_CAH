@@ -252,7 +252,9 @@ public class Game implements Runnable {
         // Show the picked cards to all players
         for (int i = 0; i < contestents.size(); i++) {
             for (Player player : players) {
-                talker.put("ingame", "picked", player.getId(), pickedCards[i], i);
+                talker.put("ingame", "picked", player.getId(), pickedCards[i][0].getSentence(), i);
+                //
+                //talker.put("ingame", "picked", player.getId(), pickedCards[i], i);
             }
         }
         timeout = new Timeout(local);

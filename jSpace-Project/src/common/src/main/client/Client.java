@@ -18,7 +18,6 @@ public class Client {
 	public static int userID;
 	public static String serverIP;
 	public static int amountOfBlanks;
-	public static boolean turnToPick;
 	public static String[] whiteCards = new String[10];
 	public static MainGUI main;
 	public static String userName;
@@ -204,31 +203,18 @@ public class Client {
 	/*********************************************************************************************/
 	
 	public static boolean pickWhiteCard(int i) {
-		if (!turnToPick) {
-			return false;
-		}
 		listener.put("gameListener", "pickWhite", userID, i);
-		// game.put("pickwhite", userID, i);
-		turnToPick = false;
 		return true;
 	}
 
 	public static boolean pickWinnerCard(int i) {
-		if (!turnToPick) {
-			return false;
-		}
 		listener.put("gameListener", "chooseWinnerCard", userID, i);
-		turnToPick = false;
 		return true;
 	}
 
-	public static void allowPlayerTurn() {
-		turnToPick = true;
-	}
-
-	public static boolean isPlayerTurn() {
-		return turnToPick;
-	}
+	// public static boolean isPlayerTurn() {
+	//	 return turnToPick;
+	// }
 
 	public static String[] getWhiteCards() {
 		return whiteCards;

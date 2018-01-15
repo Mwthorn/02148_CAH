@@ -40,6 +40,10 @@ import common.src.main.server.GameSlot;
 public class MainGUI extends JFrame implements ActionListener {
 	private int maxPlayers = 8;
 
+	String name, IP, gameName, rounds, time, password;
+	int players;
+
+
 	// Login
 	private JButton BQuit, BSignIn, BBack;
 	private JLabel LTitle, LText, LFigure1, LName, LIP, LFigure2;
@@ -76,17 +80,16 @@ public class MainGUI extends JFrame implements ActionListener {
 	private static JList playerList;
 
 	private JTextArea BlackCard, BlackCard2;
-	private int players = 0;
-	private String[] ChosenCards = new String[players];
+	private String[] ChosenCards = new String[8];
 	private int numberOfCards = 3;
 	private JButton[] PlayerCards = new JButton[10];
-	private JButton[] Winner = new JButton[ChosenCards.length];
-	private JTextArea[] ChosCard1 = new JTextArea[ChosenCards.length];
-	private JTextArea[] ChosCard2 = new JTextArea[ChosenCards.length];
-	private JTextArea[] ChosCard3 = new JTextArea[ChosenCards.length];
+	private JButton[] Winner = new JButton[8];
+	private JTextArea[] ChosCard1 = new JTextArea[8];
+	private JTextArea[] ChosCard2 = new JTextArea[8];
+	private JTextArea[] ChosCard3 = new JTextArea[8];
 	private JTextArea[] area = new JTextArea[10];
 	private JLabel label = new JLabel();
-	
+
 	// Rounded Buttons
 	// Source: https://stackoverflow.com/questions/423950/rounded-swing-jbutton-using-java
 	private static class RoundedBorder implements Border {
@@ -751,6 +754,7 @@ public class MainGUI extends JFrame implements ActionListener {
 
 		// Name textfield
 		txtfld8 = new JTextField(50);
+		txtfld8.setText("Alex' game");
 		txtfld8.setMaximumSize(txtfldsize);
 		txtfld8.setFont(new Font("calibri",Font.PLAIN,20));
 		txtfld8.setAlignmentX(Component.CENTER_ALIGNMENT);
@@ -1200,8 +1204,13 @@ public class MainGUI extends JFrame implements ActionListener {
 	}
 	/////////////////////////////////////////////// READYUPLOBBY //////////////////////////////////////////////////////////////////
 
+	public void runSelected(){
+
+	}
+
+
 	public void runGame(){
-		
+
 		mainGame.setLayout(new BorderLayout());	
 
 		int FontSizeOfCards = 16;
@@ -1218,25 +1227,25 @@ public class MainGUI extends JFrame implements ActionListener {
 		Dimension size3 = new Dimension(126,250);
 
 		// Czars black card of choice
-		BlackCard = new JTextArea("SOME TEXT");
+		//		BlackCard = new JTextArea();
+		//		BlackCard.setPreferredSize(SizeOfBlackCards);
+		//		BlackCard.setFont(new Font("calibri",1,FontSizeOfCards));
+		//		BlackCard.setBorder(BorderForCards);
+		//		BlackCard.setBackground(Color.BLACK);
+		//		BlackCard.setForeground(Color.WHITE);
+		//		BlackCard.setAlignmentX(Component.CENTER_ALIGNMENT);
+		//		BlackCard.setEnabled(true);
+
+		// Czars black card of choice used to fill out
+		BlackCard = new JTextArea();
 		BlackCard.setPreferredSize(SizeOfBlackCards);
-		BlackCard.setFont(new Font("calibri",1,FontSizeOfCards));
 		BlackCard.setBorder(BorderForCards);
 		BlackCard.setBackground(Color.BLACK);
 		BlackCard.setForeground(Color.WHITE);
-		BlackCard.setAlignmentX(Component.CENTER_ALIGNMENT);
-		BlackCard.setEnabled(true);
-
-		// Czars black card of choice used to fill out
-		BlackCard2 = new JTextArea("SOME TEXT");
-		BlackCard2.setMaximumSize(SizeOfBlackCards);
-		BlackCard2.setFont(new Font("calibri",1,FontSizeOfCards));
-		BlackCard2.setBorder(BorderForCards);
-		BlackCard2.setBackground(Color.BLACK);
-		BlackCard2.setForeground(Color.WHITE);
-		BlackCard2.setAlignmentX(Component.CENTER_ALIGNMENT);
-		BlackCard2.setEnabled(true);
-		BlackCard2.setVisible(false);
+		BlackCard.setFont(new Font("calibri",1,FontSizeOfCards+5));
+		BlackCard.setEditable(false);
+		BlackCard.setLineWrap(true);
+		BlackCard.setWrapStyleWord(true);
 
 		label = new JLabel("Current Black Card");
 		label.setForeground(Color.BLACK);
@@ -1246,7 +1255,7 @@ public class MainGUI extends JFrame implements ActionListener {
 
 		// Cards on players hand is being created
 		for(int i=0; i<10; i++){
-			area[i] = new JTextArea("Larry er et Jesus "+i);
+			area[i] = new JTextArea();
 			area[i].setMaximumSize(SizeOfPlayerCards);
 			area[i].setMinimumSize(SizeOfPlayerCards);
 			area[i].setBorder(BorderForCards);
@@ -1262,9 +1271,9 @@ public class MainGUI extends JFrame implements ActionListener {
 		for(int i=0; i<10; i++){
 			PlayerCards[i] = new JButton("Choose Card");
 
-//			PlayerCards[i].setMaximumSize(SizeOfPlayerCards);
+			//			PlayerCards[i].setMaximumSize(SizeOfPlayerCards);
 			//				PlayerCards[i].setMaximumSize(SizeOfPlayerCards);
-//			PlayerCards[i].setMinimumSize(SizeofPlayerCards1);
+			//			PlayerCards[i].setMinimumSize(SizeofPlayerCards1);
 			PlayerCards[i].setPreferredSize(SizeOfPlayerCards1);
 			PlayerCards[i].setBackground(Color.BLACK);
 			PlayerCards[i].setForeground(Color.WHITE);
@@ -1294,15 +1303,17 @@ public class MainGUI extends JFrame implements ActionListener {
 			Winner[i].setFocusPainted(false);
 			Winner[i].setEnabled(true);	
 
+
+
 		}
 
 		// Creates chosen cards
 		if(numberOfCards > 0) {
 
 			for(int i=0; i<ChosenCards.length; i++){
-				ChosCard1[i] = new JTextArea("Larry er et Jesus "+i);
-//				ChosCard1[i].setMaximumSize(SizeOfChosenCards);
-//				ChosCard1[i].setMinimumSize(SizeOfChosenCards);
+				ChosCard1[i] = new JTextArea();
+				//				ChosCard1[i].setMaximumSize(SizeOfChosenCards);
+				//				ChosCard1[i].setMinimumSize(SizeOfChosenCards);
 				ChosCard1[i].setPreferredSize(SizeOfChosenCards);
 				ChosCard1[i].setBorder(BorderForCards);
 				ChosCard1[i].setBackground(Color.white);
@@ -1311,16 +1322,15 @@ public class MainGUI extends JFrame implements ActionListener {
 				ChosCard1[i].setEditable(false);
 				ChosCard1[i].setLineWrap(true);
 				ChosCard1[i].setWrapStyleWord(true);
-
 			}
 		}
 
 		if(numberOfCards > 1) {
 
 			for(int i=0; i<ChosenCards.length; i++){
-				ChosCard2[i] = new JTextArea("Larry er et Jesus "+i);
-//				ChosCard2[i].setMaximumSize(SizeOfChosenCards);
-//				ChosCard2[i].setMinimumSize(SizeOfChosenCards);
+				ChosCard2[i] = new JTextArea();
+				//				ChosCard2[i].setMaximumSize(SizeOfChosenCards);
+				//				ChosCard2[i].setMinimumSize(SizeOfChosenCards);
 				ChosCard2[i].setPreferredSize(SizeOfChosenCards);
 				ChosCard2[i].setBorder(BorderForCards);
 				ChosCard2[i].setBackground(Color.white);
@@ -1336,9 +1346,9 @@ public class MainGUI extends JFrame implements ActionListener {
 		if(numberOfCards > 2) {
 
 			for(int i=0; i<ChosenCards.length; i++){
-				ChosCard3[i] = new JTextArea("Larry er et Jesus "+i);
-//				ChosCard3[i].setMaximumSize(SizeOfChosenCards);
-//				ChosCard3[i].setMinimumSize(SizeOfChosenCards);
+				ChosCard3[i] = new JTextArea();
+				//				ChosCard3[i].setMaximumSize(SizeOfChosenCards);
+				//				ChosCard3[i].setMinimumSize(SizeOfChosenCards);
 				ChosCard3[i].setPreferredSize(SizeOfChosenCards);
 				ChosCard3[i].setBorder(BorderForCards);
 				ChosCard3[i].setBackground(Color.white);
@@ -1383,7 +1393,7 @@ public class MainGUI extends JFrame implements ActionListener {
 		PRight.setPreferredSize(new Dimension(300,1000));
 		PRight.setBackground(Color.WHITE);
 		PRight.add(Box.createRigidArea(new Dimension(0,50)));
-		PRight.add(BlackCard2);
+		//		PRight.add(BlackCard2);
 		PAll.add(PRight, BorderLayout.EAST);
 
 
@@ -1419,7 +1429,7 @@ public class MainGUI extends JFrame implements ActionListener {
 		PUCard.setBackground(Color.WHITE);
 		PDCard.setBackground(Color.WHITE);
 
-		
+
 		//Chosen card being added to panel
 		//		PUMid.add(Box.createRigidArea(new Dimension(90,0)));
 		for(int i=0; i<ChosenCards.length; i++) {
@@ -1493,18 +1503,17 @@ public class MainGUI extends JFrame implements ActionListener {
 		PAll.add(PMid, BorderLayout.CENTER);
 		PMid.setBackground(Color.WHITE);
 		mainGame.add(PAll);
-		
+
 	}
-	
-	
-	
-	
-	
 
-	
-	
 
-	String name, IP, gameName, rounds, time, password;
+
+
+
+
+
+
+
 
 	public void actionPerformed(ActionEvent e){
 
@@ -1561,9 +1570,9 @@ public class MainGUI extends JFrame implements ActionListener {
 			add(mainReadyUpLobby);
 
 			Client.createNewGame(gameName);
-			
-			
-			
+
+
+
 		} else if (e.getSource() == LRefreshBtn) {
 			updateGameList();
 
@@ -1595,6 +1604,18 @@ public class MainGUI extends JFrame implements ActionListener {
 		else if (e.getSource() == BReady) {
 			Client.sendReady();
 		}
+
+		for (int i = 0; i < 10; i++) {
+
+			if (e.getSource() == PlayerCards[i]) {
+				Client.pickWhiteCard(i);	
+			}
+
+		}
+		
+		
+		
+
 	}
 
 	public void updatePlayer(GameSlot givenSlot) {
@@ -1622,28 +1643,50 @@ public class MainGUI extends JFrame implements ActionListener {
 		
 
 	}
-	
+
 	public void startGame(int playerNumber){
-		
-		this.players = playerNumber;
-		
+
+		players = playerNumber;
+		System.out.println("Number of players: "+players);
+
+		//		runGame();
+
+		ChosCard1[playerNumber].setVisible(true);
+		ChosCard2[playerNumber].setVisible(true);
+		ChosCard3[playerNumber].setVisible(true);
+
 		hideAll();
 		mainGame.setVisible(true);
 		add(mainGame);
+
 	}
 
 	public void setWhite(String text, int num){
-		
+
+		System.out.println("Text1: "+text);
 		area[num].setText(text);
+
+		//		runGame();
+
+	}
+
+	public void setBlack(String text){
+
+		System.out.println("Text2: "+text);
+		BlackCard.setText(text);
+
+		//		runGame();
+
+	}
+
+	public void setSelected(int num, String text){
+		
+		System.out.println("String: "+text+" and num: "+num);
+		
+		ChosCard1[num].setText(text);
 		
 	}
 	
-	public void setBlack(String text){
-		
-		BlackCard.setText(text);
-		
-	}
-
 
 	//	} else if (e.getSource() == b3) {
 	//			// THIS NEEDS TO CHECK IF GAME HAS PASSWORD AS WELL
