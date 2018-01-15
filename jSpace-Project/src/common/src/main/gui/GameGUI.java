@@ -270,7 +270,7 @@ public class GameGUI extends JFrame implements ActionListener {
 		// CHAT 
 
 		// Panels
-
+		
 		chatPanel.setLayout(new BorderLayout());
 		chatPanel.setPreferredSize(new Dimension(0,600));
 		chatPanel.setVisible(true);

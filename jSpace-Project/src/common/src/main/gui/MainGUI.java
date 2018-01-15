@@ -1408,6 +1408,8 @@ public class MainGUI extends JFrame implements ActionListener {
 		PRight.setBackground(Color.WHITE);
 		PRight.add(Box.createRigidArea(new Dimension(0,20)));
 		PRight.add(pointsPlayer);
+		PRight.add(Box.createRigidArea(new Dimension(0,500)));
+
 		
 		PAll.add(PRight, BorderLayout.EAST);
 
