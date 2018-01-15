@@ -78,8 +78,9 @@ public class MainGUI extends JFrame implements ActionListener {
 	private JButton BReady, BLeave;
 	private JLabel LHead, LPicWC, LPicBC, Label1, Label2, Label3, Label4, Label5, Label6, Label7, Label8;
 	private static JList playerList;
-
-	private JTextArea BlackCard, BlackCard2;
+	
+	// Game
+	private JTextArea BlackCard;
 	private String[] ChosenCards = new String[8];
 	private int numberOfCards = 3;
 	private JButton[] PlayerCards = new JButton[10];
@@ -89,6 +90,8 @@ public class MainGUI extends JFrame implements ActionListener {
 	private JTextArea[] ChosCard3 = new JTextArea[8];
 	private JTextArea[] area = new JTextArea[10];
 	private JLabel label = new JLabel();
+	private JTextArea pointsPlayer;
+
 
 	// Rounded Buttons
 	// Source: https://stackoverflow.com/questions/423950/rounded-swing-jbutton-using-java
@@ -1359,7 +1362,18 @@ public class MainGUI extends JFrame implements ActionListener {
 				ChosCard3[i].setWrapStyleWord(true);
 			}
 		}
-
+		
+		
+		pointsPlayer = new JTextArea();
+		pointsPlayer.setPreferredSize(SizeOfChosenCards);
+		pointsPlayer.setBorder(BorderForCards);
+		pointsPlayer.setBackground(Color.white);
+		pointsPlayer.setForeground(Color.BLACK);
+		pointsPlayer.setFont(new Font("calibri",1,FontSizeOfCards));
+		pointsPlayer.setEditable(false);
+		pointsPlayer.setLineWrap(true);
+		pointsPlayer.setWrapStyleWord(true);
+		
 
 		/////////////////////////////////////////////// PANELS //////////////////////////////////////////////////////////////////
 
@@ -1392,8 +1406,9 @@ public class MainGUI extends JFrame implements ActionListener {
 		PRight.setLayout(new BoxLayout(PRight, BoxLayout.PAGE_AXIS));
 		PRight.setPreferredSize(new Dimension(300,1000));
 		PRight.setBackground(Color.WHITE);
-		PRight.add(Box.createRigidArea(new Dimension(0,50)));
-		//		PRight.add(BlackCard2);
+		PRight.add(Box.createRigidArea(new Dimension(0,20)));
+		PRight.add(pointsPlayer);
+		
 		PAll.add(PRight, BorderLayout.EAST);
 
 
@@ -1680,6 +1695,16 @@ public class MainGUI extends JFrame implements ActionListener {
 		
 		ChosCard1[num].setText(text);
 		
+	}
+	
+	public void setScore(String[] playerName, int[] points){
+		
+		for(int i=0; i<playerName.length; i++){
+			System.out.println(playerName[i]+" has "+points[i]+"\n");
+			pointsPlayer.append(playerName[i]+" has "+points[i]+"\n");
+			
+			
+		}
 	}
 	
 
