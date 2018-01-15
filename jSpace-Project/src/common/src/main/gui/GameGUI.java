@@ -50,9 +50,6 @@ public class GameGUI extends JFrame implements ActionListener {
 	private JTextArea pointsPlayer;
 
 
-
-
-
 	public static void main(String[] args) {
 
 		GameGUI main = new GameGUI();
@@ -216,7 +213,7 @@ public class GameGUI extends JFrame implements ActionListener {
 			}
 		}
 
-		pointsPlayer = new JTextArea("Yael has 0 points");
+		pointsPlayer = new JTextArea();
 		//				ChosCard1[i].setMaximumSize(SizeOfChosenCards);
 		//				ChosCard1[i].setMinimumSize(SizeOfChosenCards);
 		pointsPlayer.setPreferredSize(SizeOfChosenCards);
@@ -227,7 +224,10 @@ public class GameGUI extends JFrame implements ActionListener {
 		pointsPlayer.setEditable(false);
 		pointsPlayer.setLineWrap(true);
 		pointsPlayer.setWrapStyleWord(true);
-
+		
+		pointsPlayer.append("Yael has 2 points\r");
+		pointsPlayer.append("Alex has 4 points");
+		pointsPlayer.append("Jonas has 3 points");
 
 		/////////////////////////////////////////////// PANELS //////////////////////////////////////////////////////////////////
 
@@ -457,12 +457,22 @@ public class GameGUI extends JFrame implements ActionListener {
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
+		
+		for(int i=0; i<10;i++){
+			
+			if(e.getSource()==PlayerCards[i]){
+				
+			}
+			
+		}
+		
+		
 		if ( e.getSource() == sendButton ) {
 			if (messageField.getText().length() < 1) {
 				// DO NOTHING
 			} else {
-				chatBox.append("<" + "Yael" + ">:  " + messageField.getText() + "\n"); // Skal slettes efter chat-test er færdige
-				// Nedenstående skal køre, når clienten skal forbindes.
+				chatBox.append("<" + "Yael" + ">:  " + messageField.getText() + "\n"); // Skal slettes efter chat-test er fï¿½rdige
+				// Nedenstï¿½ende skal kï¿½re, nï¿½r clienten skal forbindes.
 				// Client.sendChatMessage(messageField.getText());
 				messageField.setText("");
 			}
