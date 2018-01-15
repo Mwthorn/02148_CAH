@@ -1629,8 +1629,9 @@ public class MainGUI extends JFrame implements ActionListener {
 		
 	}
 	
-	public void setBlack(){
+	public void setBlack(String text){
 		
+		BlackCard.setText(text);
 		
 	}
 
