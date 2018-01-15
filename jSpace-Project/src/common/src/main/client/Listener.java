@@ -10,7 +10,7 @@ import common.src.main.server.GameSlot;
 public class Listener implements Runnable{
 	private static RemoteSpace game;
 	private static int userID;
-
+	private static boolean gameStarted = false;
 	
 	public Listener(RemoteSpace game, int userID){
 		this.game = game;
@@ -19,7 +19,9 @@ public class Listener implements Runnable{
 	
 	public void run() {
 		lobbyListener();
-		inGameListener();
+		if (gameStarted){
+			inGameListener();
+		}
 		// TODO: Exit procedure when a game has ended.
 	} // End of run();
 
@@ -36,7 +38,8 @@ public class Listener implements Runnable{
 					System.out.println("Game started! GET READY TO RUMBLE!!!!");
 					Object[] gameInfo = game.get(new ActualField("starting"), new ActualField(userID),new FormalField(Integer.class));
 					Client.main.startGame((int) gameInfo[2]);
-					break;
+					gameStarted = true;
+					return;
 				} else if (tuple[1].equals("update")){
 					// TODO: Update from the server, update relevant GUI.
 					// Occurs when a player joins/leaves/changes ready state, will fully update a specified game slot.
