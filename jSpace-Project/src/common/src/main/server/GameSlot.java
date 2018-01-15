@@ -33,4 +33,8 @@ public class GameSlot {
     public boolean isReady() {
         return this.ready;
     }
+    
+    public boolean hasPlayer(){
+    	return hasPlayer;
+    }
 }

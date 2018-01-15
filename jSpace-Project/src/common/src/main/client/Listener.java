@@ -45,10 +45,16 @@ public class Listener implements Runnable{
 					System.out.println("Game updated: " + gameSlot.getName() + ", at seat " + gameSlot.getSlot() + ", is he ready: "+gameSlot.isReady());
 					Client.main.updatePlayer(gameSlot);
 				} else if (tuple[1].equals("leave")){
-					// Call the lobby function.
-					// TODO: Make GUI go back to main lobby
 					System.out.println("You have left the game!");
-					return;
+					if (gameSlot == null){
+						Client.talker = null;
+						Client.listener = null;
+						System.out.println("You left.");
+						return;
+					} else {
+						Client.main.updatePlayer(gameSlot);
+						System.out.println("A player left");
+					}
 				} else if (tuple[1].equals("error")){
 					System.out.println("An error occured.");
 					// TODO: Force an error message to pop up.

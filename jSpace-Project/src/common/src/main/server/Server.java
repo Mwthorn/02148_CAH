@@ -133,5 +133,9 @@ public class Server {
 	public CardDataBase getCardDataBase() {
 		return cardDataBase;
 	}
+	
+	public static void removeGame(Game game){
+		gameBase.removeGame(game);
+	}
 
 }
