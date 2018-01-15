@@ -36,6 +36,8 @@ public class Listener implements Runnable{
 					// TODO: Start game: A button for the host, possibly to entirely replace his ready button.
 					// Starts the game, many stuff happens.
 					System.out.println("Game started! GET READY TO RUMBLE!!!!");
+					Object[] gameInfo = game.get(new ActualField("starting"), new ActualField(userID),new FormalField(Integer.class));
+					Client.main.startGame((int) gameInfo[2]);
 					break;
 				} else if (tuple[1].equals("update")){
 					// TODO: Update from the server, update relevant GUI.

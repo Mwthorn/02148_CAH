@@ -130,7 +130,7 @@ public class Game implements Runnable {
 
         for (Player player : players) {
             talker.put("updateLobby", "start", player.getId(), player.getGameSlot());
-
+            talker.put("starting", player.getId(), players.size());
             ArrayList<WhiteCard> cards = new ArrayList<>();
             for(int i = 0; i < this.whiteCardsPerPlayer; i++) {
                 WhiteCard card = drawWhiteCard();
