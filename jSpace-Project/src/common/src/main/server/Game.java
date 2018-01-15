@@ -138,7 +138,7 @@ public class Game implements Runnable {
                 // STRING - STRING - INT - STRING - INT
                 talker.put("ingame", "white", player.getId(), card.getSentence(), i);
             }
-            player.setWhiteCards(cards);
+            player.setWhiteCards((WhiteCard[]) cards.toArray());
         }
 
 
@@ -319,12 +319,14 @@ public class Game implements Runnable {
 
     public void fillWhiteCards() {
         for (Player player : players) {
-            int n = player.getWhiteCards().size();
-            for (int i = n; i < this.whiteCardsPerPlayer; i++) {
-                WhiteCard card = drawWhiteCard();
-                player.addWhiteCard(card);
-                // STRING - STRING - INT - STRING - INT
-                talker.put("ingame", "white", player.getId(), card.getSentence(), i);
+            WhiteCard[] whiteCards1 = player.getWhiteCards();
+            for (int i = 0; i < this.whiteCardsPerPlayer; i++) {
+                if (whiteCards1[i] == null) {
+                    WhiteCard card = drawWhiteCard();
+                    player.setWhiteCard(card, i);
+                    // STRING - STRING - INT - STRING - INT
+                    talker.put("ingame", "white", player.getId(), card.getSentence(), i);
+                }
             }
         }
     }

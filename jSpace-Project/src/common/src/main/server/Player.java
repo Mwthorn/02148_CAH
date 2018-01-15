@@ -11,13 +11,14 @@ public class Player {
     private int id;
     private boolean ready;
     private GameSlot gameSlot;
-    private ArrayList<WhiteCard> whiteCards;
+    private WhiteCard[] whiteCards;
     private ArrayList<WhiteCard> pickedCards;
 
     public Player(String name, int id) {
         this.name = name;
         this.points = 0;
         this.id = id;
+        this.whiteCards = new WhiteCard[10];
         
         ready = false;
         
@@ -30,21 +31,22 @@ public class Player {
         this.points = player.getPoints();
         this.id = player.getId();
         this.ready = player.getReady();
+        this.whiteCards = new WhiteCard[10];
     }
 
-    public void setWhiteCards(ArrayList<WhiteCard> whiteCards) {
+    public void setWhiteCards(WhiteCard[] whiteCards) {
         this.whiteCards = whiteCards;
     }
 
-    public void addWhiteCard(WhiteCard whiteCard) {
-        this.whiteCards.add(whiteCard);
+    public void setWhiteCard(WhiteCard whiteCard,int i) {
+        this.whiteCards[i] = whiteCard;
     }
 
     public void removeWhiteCard(int index) {
-        this.whiteCards.remove(index);
+        this.whiteCards[index] = null;
     }
 
-    public ArrayList<WhiteCard> getWhiteCards() {
+    public WhiteCard[] getWhiteCards() {
         return this.whiteCards;
     }
 
@@ -77,9 +79,9 @@ public class Player {
     }
 
     public void chooseWhiteCard(int i) {
-        WhiteCard card = whiteCards.get(i);
+        WhiteCard card = whiteCards[i];
         this.pickedCards.add(card);
-        whiteCards.remove(i);
+        whiteCards[i] = null;
     }
 
     public boolean getReady() {
