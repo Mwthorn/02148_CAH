@@ -754,6 +754,7 @@ public class MainGUI extends JFrame implements ActionListener {
 
 		// Name textfield
 		txtfld8 = new JTextField(50);
+		txtfld8.setText("Alex' game");
 		txtfld8.setMaximumSize(txtfldsize);
 		txtfld8.setFont(new Font("calibri",Font.PLAIN,20));
 		txtfld8.setAlignmentX(Component.CENTER_ALIGNMENT);
@@ -1605,12 +1606,13 @@ public class MainGUI extends JFrame implements ActionListener {
 		for (int i = 0; i < 10; i++) {
 
 			if (e.getSource() == PlayerCards[i]) {
-				
-				Client.pickWhiteCard(i);
-				
+				Client.pickWhiteCard(i);	
 			}
 
 		}
+		
+		
+		
 
 	}
 
@@ -1669,7 +1671,10 @@ public class MainGUI extends JFrame implements ActionListener {
 	}
 
 	public void setSelected(int num, String text){
-		Winner[num].setText(text);
+		
+		System.out.println("String: "+text+" and num: "+num);
+		
+		ChosCard1[num].setText(text);
 		
 	}
 	
