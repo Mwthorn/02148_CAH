@@ -5,6 +5,8 @@ import java.awt.Color;
 import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.Font;
+import java.awt.GridBagConstraints;
+import java.awt.GridBagLayout;
 import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -16,8 +18,11 @@ import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
+import javax.swing.JTextField;
 import javax.swing.SwingConstants;
+import javax.swing.SwingUtilities;
 import javax.swing.border.Border;
 import javax.swing.text.DefaultStyledDocument;
 import javax.swing.text.Style;
@@ -28,7 +33,7 @@ import javax.swing.text.StyledDocument;
 
 public class GameGUI extends JFrame implements ActionListener {
 
-	private JTextArea BlackCard, BlackCard2;
+	private JTextArea BlackCard;
 	private String[] ChosenCards = new String[8];
 	private int numberOfCards = 3;
 	private JButton[] PlayerCards = new JButton[10];
@@ -38,6 +43,12 @@ public class GameGUI extends JFrame implements ActionListener {
 	private JTextArea[] ChosCard3 = new JTextArea[ChosenCards.length];
 	private JTextArea[] area = new JTextArea[10];
 	private JLabel label = new JLabel();
+	public 	JTextArea chatBox = new JTextArea();
+	private String message, username = null;
+	private JTextField messageField;
+	private JButton sendButton;
+
+
 
 
 
@@ -82,15 +93,15 @@ public class GameGUI extends JFrame implements ActionListener {
 		BlackCard.setEnabled(true);
 
 		// Czars black card of choice used to fill out
-		BlackCard2 = new JTextArea("SOME TEXT");
-		BlackCard2.setMaximumSize(SizeOfBlackCards);
-		BlackCard2.setFont(new Font("calibri",1,FontSizeOfCards));
-		BlackCard2.setBorder(BorderForCards);
-		BlackCard2.setBackground(Color.BLACK);
-		BlackCard2.setForeground(Color.WHITE);
-		BlackCard2.setAlignmentX(Component.CENTER_ALIGNMENT);
-		BlackCard2.setEnabled(true);
-		BlackCard2.setVisible(false);
+//		BlackCard2 = new JTextArea("SOME TEXT");
+//		BlackCard2.setMaximumSize(SizeOfBlackCards);
+//		BlackCard2.setFont(new Font("calibri",1,FontSizeOfCards));
+//		BlackCard2.setBorder(BorderForCards);
+//		BlackCard2.setBackground(Color.BLACK);
+//		BlackCard2.setForeground(Color.WHITE);
+//		BlackCard2.setAlignmentX(Component.CENTER_ALIGNMENT);
+//		BlackCard2.setEnabled(true);
+//		BlackCard2.setVisible(false);
 
 		label = new JLabel("Current Black Card");
 		label.setForeground(Color.BLACK);
@@ -116,9 +127,9 @@ public class GameGUI extends JFrame implements ActionListener {
 		for(int i=0; i<10; i++){
 			PlayerCards[i] = new JButton("Choose Card");
 
-//			PlayerCards[i].setMaximumSize(SizeOfPlayerCards);
+			//			PlayerCards[i].setMaximumSize(SizeOfPlayerCards);
 			//				PlayerCards[i].setMaximumSize(SizeOfPlayerCards);
-//			PlayerCards[i].setMinimumSize(SizeofPlayerCards1);
+			//			PlayerCards[i].setMinimumSize(SizeofPlayerCards1);
 			PlayerCards[i].setPreferredSize(SizeOfPlayerCards1);
 			PlayerCards[i].setBackground(Color.BLACK);
 			PlayerCards[i].setForeground(Color.WHITE);
@@ -155,8 +166,8 @@ public class GameGUI extends JFrame implements ActionListener {
 
 			for(int i=0; i<ChosenCards.length; i++){
 				ChosCard1[i] = new JTextArea("Larry er et Jesus "+i);
-//				ChosCard1[i].setMaximumSize(SizeOfChosenCards);
-//				ChosCard1[i].setMinimumSize(SizeOfChosenCards);
+				//				ChosCard1[i].setMaximumSize(SizeOfChosenCards);
+				//				ChosCard1[i].setMinimumSize(SizeOfChosenCards);
 				ChosCard1[i].setPreferredSize(SizeOfChosenCards);
 				ChosCard1[i].setBorder(BorderForCards);
 				ChosCard1[i].setBackground(Color.white);
@@ -173,8 +184,8 @@ public class GameGUI extends JFrame implements ActionListener {
 
 			for(int i=0; i<ChosenCards.length; i++){
 				ChosCard2[i] = new JTextArea("Larry er et Jesus "+i);
-//				ChosCard2[i].setMaximumSize(SizeOfChosenCards);
-//				ChosCard2[i].setMinimumSize(SizeOfChosenCards);
+				//				ChosCard2[i].setMaximumSize(SizeOfChosenCards);
+				//				ChosCard2[i].setMinimumSize(SizeOfChosenCards);
 				ChosCard2[i].setPreferredSize(SizeOfChosenCards);
 				ChosCard2[i].setBorder(BorderForCards);
 				ChosCard2[i].setBackground(Color.white);
@@ -191,8 +202,8 @@ public class GameGUI extends JFrame implements ActionListener {
 
 			for(int i=0; i<ChosenCards.length; i++){
 				ChosCard3[i] = new JTextArea("Larry er et Jesus "+i);
-//				ChosCard3[i].setMaximumSize(SizeOfChosenCards);
-//				ChosCard3[i].setMinimumSize(SizeOfChosenCards);
+				//				ChosCard3[i].setMaximumSize(SizeOfChosenCards);
+				//				ChosCard3[i].setMinimumSize(SizeOfChosenCards);
 				ChosCard3[i].setPreferredSize(SizeOfChosenCards);
 				ChosCard3[i].setBorder(BorderForCards);
 				ChosCard3[i].setBackground(Color.white);
@@ -237,44 +248,61 @@ public class GameGUI extends JFrame implements ActionListener {
 		PRight.setPreferredSize(new Dimension(300,1000));
 		PRight.setBackground(Color.WHITE);
 		PRight.add(Box.createRigidArea(new Dimension(0,50)));
-		PRight.add(BlackCard2);
 		PAll.add(PRight, BorderLayout.EAST);
 
+
+		// CHAT 
+
+		// Panels
+		JPanel chatPanel, sendPanel; // chat panels
+		chatPanel = new JPanel();
+		chatPanel.setLayout(new BorderLayout());
+		sendPanel = new JPanel();
+		sendPanel.setBackground(Color.WHITE);
+		sendPanel.setLayout(new GridBagLayout());
+
+		// Message field and send button
+		messageField = new JTextField();
+		messageField.requestFocusInWindow();
+
+		sendButton = new JButton(" Send ");
+		sendButton.addActionListener(this);
+
+		// Chat area
+		chatBox = new JTextArea();
+		chatBox.setEditable(false);
+		chatBox.setFont(new Font("Serif", Font.PLAIN, 15));
+		chatBox.setLineWrap(true);
+
+		// GRIDBAG CONSTRAINTS
+		// GBC for send button
+		GridBagConstraints left = new GridBagConstraints();
+		left.anchor = GridBagConstraints.LINE_START;
+		left.fill = GridBagConstraints.HORIZONTAL;
+		left.weightx = 300.0D;
+		left.weighty = 1.0D;
+		// GBC for message field
+		GridBagConstraints right = new GridBagConstraints();
+		right.anchor = GridBagConstraints.LINE_END;
+		right.fill = GridBagConstraints.NONE;
+		right.weightx = 1.0D;
+		right.weighty = 1.0D;
+
+		// adding elements
+		chatPanel.add(new JScrollPane(chatBox), BorderLayout.CENTER);
+		sendPanel.add(messageField, left);
+		sendPanel.add(sendButton, right);
+		chatPanel.add(BorderLayout.SOUTH, sendPanel);
+		PRight.add(Box.createRigidArea(new Dimension(0,600)));
+
+		PRight.add(chatPanel);
+
+		chatPanel.setSize(275, 350);
+		chatPanel.setVisible(true);
 		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
+		// CHAT END
+
+
 
 		// Panels for the center
 		JPanel PMid = new JPanel();
@@ -308,7 +336,7 @@ public class GameGUI extends JFrame implements ActionListener {
 		PUCard.setBackground(Color.WHITE);
 		PDCard.setBackground(Color.WHITE);
 
-		
+
 		//Chosen card being added to panel
 		//		PUMid.add(Box.createRigidArea(new Dimension(90,0)));
 		for(int i=0; i<ChosenCards.length; i++) {
@@ -401,12 +429,29 @@ public class GameGUI extends JFrame implements ActionListener {
 		PMid.setBackground(Color.WHITE);
 		getContentPane().add(PAll);
 
+		SwingUtilities.getRootPane(sendButton).setDefaultButton(sendButton);
+
 	}
 
+//	public void sendChatMessage(String username, String message) {
+//		this.username = username;
+//		this.message = message;
+//		chatBox.append("<" + username + ">:  " + message + "\n");
+//	}
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
-		// TODO Auto-generated method stub
+		if ( e.getSource() == sendButton ) {
+			if (messageField.getText().length() < 1) {
+				// DO NOTHING
+			} else {
+				chatBox.append("<" + "Yael" + ">:  " + messageField.getText() + "\n"); // Skal slettes efter chat-test er færdige
+				// Nedenstående skal køre, når clienten skal forbindes.
+				// Client.sendChatMessage(messageField.getText());
+				messageField.setText("");
+			}
+			messageField.requestFocusInWindow();
+		}
 
 	}
 
