@@ -66,16 +66,12 @@ public class Listener implements Runnable{
 				// String - STRING - INT - STRING - INT
 				Object[] tuple = game.get(new ActualField("ingame"), new FormalField(String.class), new ActualField(userID), new FormalField(String.class), new FormalField(Integer.class));
 				System.out.println("Ingame: Got response from server: " + tuple[1]);
-				if (tuple[1].equals("card")){
-					// ("ingame", "black", player.getId(), blackCard.getSentence(), blackCard.getBlanks());
-					if (tuple[2].equals("white")) {
-						Client.whiteCards[(int) tuple[4]] = (String) tuple[3];
-						// TODO: Update GUI whitecards
-					} else if (tuple[2].equals("black")) {
-						Client.amountOfBlanks = (int) tuple[4];
-						// tuple[3] is the text
-						// TODO: Set Black card to given string on GUI
-					}
+				if (tuple[1].equals("white")) {
+					Client.whiteCards[(int) tuple[4]] = (String) tuple[3];
+					Client.main.setWhite((String) tuple[3], (int) tuple[4]);
+				} else if (tuple[1].equals("black")) {
+					Client.amountOfBlanks = (int) tuple[4];
+					Client.main.setBlack((String) tuple[3]);
 				}
 				else if (tuple[1].equals("yourpick")) {
 					// ("ingame", "yourpick", player.getId(), null, cardIndex);
