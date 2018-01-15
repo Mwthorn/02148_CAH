@@ -434,6 +434,11 @@ public class Game implements Runnable {
     }
 
     public void addPlayerToGame(Player actor) {
+    	// Check if the game has started.
+    	if (status == "Game Full"){
+    		return;
+    	}
+    	
     	int actorID = actor.getId();
     	// Checks if the player is already in the game
     	for (Player player : players) {
