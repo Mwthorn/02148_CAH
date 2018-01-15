@@ -13,6 +13,7 @@ public class Player {
     private GameSlot gameSlot;
     private WhiteCard[] whiteCards;
     private ArrayList<WhiteCard> pickedCards;
+    private boolean[] hasPicked;
 
     public Player(String name, int id) {
         this.name = name;
@@ -76,6 +77,7 @@ public class Player {
 
     public void resetPickedCards() {
         this.pickedCards = new ArrayList<>();
+        this.hasPicked = new boolean[10];
     }
 
     public void chooseWhiteCard(int i) {
@@ -103,5 +105,9 @@ public class Player {
 
     public ArrayList<WhiteCard> getPickedCards() {
         return this.pickedCards;
+    }
+
+    public boolean hasPickedWhiteCard(int i) {
+        return hasPicked[i];
     }
 }

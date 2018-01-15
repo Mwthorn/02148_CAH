@@ -225,10 +225,10 @@ public class Game implements Runnable {
                         //pickedCards[contestents.indexOf(player)] = player.getWhiteCards().get(cardIndex);
                         if (player.getPickedCards().size() < blackCard.getBlanks()) {
                             player.chooseWhiteCard(cardIndex);
-                            talker.put("ingame", "yourpick", player.getId(), null, cardIndex);
+                            talker.put("ingame", "yourpick", player.getId(), "test", cardIndex);
                             System.out.println("Sent yourpick to client");
                             state = false;
-                            for (Player player1 : players) {
+                            for (Player player1 : contestents) {
                                 for (int i = 0; i < blackCard.getBlanks(); i++) {
                                     if (!player1.hasPickedCard(i)) {
                                         state = true;
