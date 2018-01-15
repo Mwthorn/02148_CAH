@@ -38,10 +38,10 @@ public class Timeout implements Runnable {
                 e.printStackTrace();
             }
         }
-        try {
+        /*try {
             local.put("Game", "TimeoutFinish");
         } catch (InterruptedException e) {
             e.printStackTrace();
-        }
+        }*/
     }
 }
