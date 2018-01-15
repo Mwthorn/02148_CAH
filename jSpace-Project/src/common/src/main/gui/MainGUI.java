@@ -1602,18 +1602,13 @@ public class MainGUI extends JFrame implements ActionListener {
 		else if (e.getSource() == BReady) {
 			Client.sendReady();
 		}
-
+		
 		for (int i = 0; i < 10; i++) {
 
 			if (e.getSource() == PlayerCards[i]) {
 				Client.pickWhiteCard(i);	
 			}
-
 		}
-		
-		
-		
-
 	}
 
 	public void updatePlayer(GameSlot givenSlot) {
