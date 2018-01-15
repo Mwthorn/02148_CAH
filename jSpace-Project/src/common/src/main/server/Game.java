@@ -94,6 +94,7 @@ public class Game implements Runnable {
                             }
                         }
                         if (allReady) {
+                        	status = "Game Started";
                             startGame();
                         }
                     }
@@ -450,6 +451,11 @@ public class Game implements Runnable {
         
     	// Adds the player to the game.
         players.add(actor);
+        
+        // Check if the game is full.
+        if (players.size() == maxPlayers){
+        	status = "Game Full";
+        }
         
         // Set the players game slot.
         for (int i = 0; i < maxPlayers; i++) {
