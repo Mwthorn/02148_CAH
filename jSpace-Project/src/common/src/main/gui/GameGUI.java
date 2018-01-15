@@ -30,15 +30,14 @@ public class GameGUI extends JFrame implements ActionListener {
 
 	private JTextArea BlackCard, BlackCard2;
 	private String[] ChosenCards = new String[8];
-	private int numberOfPlayers = 8;
 	private int numberOfCards = 3;
 	private JButton[] PlayerCards = new JButton[10];
 	private JButton[] Winner = new JButton[ChosenCards.length];
-	private JButton[] ChosCard1 = new JButton[ChosenCards.length];
-	private JButton[] ChosCard2 = new JButton[ChosenCards.length];
-	private JButton[] ChosCard3 = new JButton[ChosenCards.length];
+	private JTextArea[] ChosCard1 = new JTextArea[ChosenCards.length];
+	private JTextArea[] ChosCard2 = new JTextArea[ChosenCards.length];
+	private JTextArea[] ChosCard3 = new JTextArea[ChosenCards.length];
 	private JTextArea[] area = new JTextArea[10];
-
+	private JLabel label = new JLabel();
 
 
 
@@ -91,15 +90,13 @@ public class GameGUI extends JFrame implements ActionListener {
 		BlackCard2.setForeground(Color.WHITE);
 		BlackCard2.setAlignmentX(Component.CENTER_ALIGNMENT);
 		BlackCard2.setEnabled(true);
+		BlackCard2.setVisible(false);
 
-		//		StyleContext context = new StyleContext();
-		//	    StyledDocument document = new DefaultStyledDocument(context);
-		//
-		//	    Style style = context.getStyle(StyleContext.DEFAULT_STYLE);
-		//
-		//	    StyleConstants.setLeftIndent(style, 16);
-		//	    
-		//	    document.insertString(document.getLength(), "java2s.com", style);
+		label = new JLabel("Current Black Card");
+		label.setForeground(Color.BLACK);
+		label.setPreferredSize(new Dimension(300, 80));
+		label.setAlignmentX(Component.CENTER_ALIGNMENT);
+		label.setFont(new Font("calibri",1,FontSizeOfCards+4));
 
 		// Cards on players hand is being created
 		for(int i=0; i<10; i++){
@@ -123,8 +120,8 @@ public class GameGUI extends JFrame implements ActionListener {
 			//				PlayerCards[i].setMaximumSize(SizeOfPlayerCards);
 //			PlayerCards[i].setMinimumSize(SizeofPlayerCards1);
 			PlayerCards[i].setPreferredSize(SizeOfPlayerCards1);
-			PlayerCards[i].setBackground(Color.white);
-			PlayerCards[i].setForeground(Color.BLACK);
+			PlayerCards[i].setBackground(Color.BLACK);
+			PlayerCards[i].setForeground(Color.WHITE);
 			PlayerCards[i].addActionListener(this);
 			PlayerCards[i].setAlignmentX(Component.CENTER_ALIGNMENT);
 			PlayerCards[i].setFont(new Font("calibri",1,FontSizeOfCards));
@@ -142,8 +139,8 @@ public class GameGUI extends JFrame implements ActionListener {
 			//			Winner[i].setMaximumSize(SizeOfChosenCards);
 			//				PlayerCards[i].setMaximumSize(SizeOfPlayerCards);
 			//			Winner[i].setMinimumSize(SizeOfChosenCards);
-			Winner[i].setBackground(Color.white);
-			Winner[i].setForeground(Color.BLACK);
+			Winner[i].setBackground(Color.BLACK);
+			Winner[i].setForeground(Color.WHITE);
 			Winner[i].addActionListener(this);
 			Winner[i].setAlignmentX(Component.CENTER_ALIGNMENT);
 			Winner[i].setFont(new Font("calibri",1,FontSizeOfCards));
@@ -157,16 +154,17 @@ public class GameGUI extends JFrame implements ActionListener {
 		if(numberOfCards > 0) {
 
 			for(int i=0; i<ChosenCards.length; i++){
-				ChosCard1[i] = new JButton("Some Text"+i);
+				ChosCard1[i] = new JTextArea("Larry er et Jesus "+i);
+//				ChosCard1[i].setMaximumSize(SizeOfChosenCards);
+//				ChosCard1[i].setMinimumSize(SizeOfChosenCards);
 				ChosCard1[i].setPreferredSize(SizeOfChosenCards);
-				ChosCard1[i].setFont(new Font("calibri",1,FontSizeOfChosenCards));
 				ChosCard1[i].setBorder(BorderForCards);
-				ChosCard1[i].setBackground(Color.WHITE);
+				ChosCard1[i].setBackground(Color.white);
 				ChosCard1[i].setForeground(Color.BLACK);
-				ChosCard1[i].setAlignmentX(Component.CENTER_ALIGNMENT);
-				ChosCard1[i].setBorderPainted(true);
-				ChosCard1[i].setFocusPainted(false);
-				ChosCard1[i].setEnabled(true);
+				ChosCard1[i].setFont(new Font("calibri",1,FontSizeOfCards));
+				ChosCard1[i].setEditable(false);
+				ChosCard1[i].setLineWrap(true);
+				ChosCard1[i].setWrapStyleWord(true);
 
 			}
 		}
@@ -174,16 +172,17 @@ public class GameGUI extends JFrame implements ActionListener {
 		if(numberOfCards > 1) {
 
 			for(int i=0; i<ChosenCards.length; i++){
-				ChosCard2[i] = new JButton("Some Text"+i);
+				ChosCard2[i] = new JTextArea("Larry er et Jesus "+i);
+//				ChosCard2[i].setMaximumSize(SizeOfChosenCards);
+//				ChosCard2[i].setMinimumSize(SizeOfChosenCards);
 				ChosCard2[i].setPreferredSize(SizeOfChosenCards);
-				ChosCard2[i].setFont(new Font("calibri",1,FontSizeOfChosenCards));
 				ChosCard2[i].setBorder(BorderForCards);
-				ChosCard2[i].setBackground(Color.WHITE);
+				ChosCard2[i].setBackground(Color.white);
 				ChosCard2[i].setForeground(Color.BLACK);
-				ChosCard2[i].setAlignmentX(Component.CENTER_ALIGNMENT);
-				ChosCard2[i].setBorderPainted(true);
-				ChosCard2[i].setFocusPainted(false);
-				ChosCard2[i].setEnabled(true);
+				ChosCard2[i].setFont(new Font("calibri",1,FontSizeOfCards));
+				ChosCard2[i].setEditable(false);
+				ChosCard2[i].setLineWrap(true);
+				ChosCard2[i].setWrapStyleWord(true);
 
 			}
 		}
@@ -191,17 +190,17 @@ public class GameGUI extends JFrame implements ActionListener {
 		if(numberOfCards > 2) {
 
 			for(int i=0; i<ChosenCards.length; i++){
-				ChosCard3[i] = new JButton("Some Text"+i);
+				ChosCard3[i] = new JTextArea("Larry er et Jesus "+i);
+//				ChosCard3[i].setMaximumSize(SizeOfChosenCards);
+//				ChosCard3[i].setMinimumSize(SizeOfChosenCards);
 				ChosCard3[i].setPreferredSize(SizeOfChosenCards);
-				ChosCard3[i].setFont(new Font("calibri",1,FontSizeOfChosenCards));
 				ChosCard3[i].setBorder(BorderForCards);
-				ChosCard3[i].setBackground(Color.WHITE);
+				ChosCard3[i].setBackground(Color.white);
 				ChosCard3[i].setForeground(Color.BLACK);
-				ChosCard3[i].setAlignmentX(Component.CENTER_ALIGNMENT);
-				ChosCard3[i].setBorderPainted(true);
-				ChosCard3[i].setFocusPainted(false);
-				ChosCard3[i].setEnabled(true);
-
+				ChosCard3[i].setFont(new Font("calibri",1,FontSizeOfCards));
+				ChosCard3[i].setEditable(false);
+				ChosCard3[i].setLineWrap(true);
+				ChosCard3[i].setWrapStyleWord(true);
 			}
 		}
 
@@ -223,8 +222,10 @@ public class GameGUI extends JFrame implements ActionListener {
 
 		PLeft.setLayout(new BoxLayout(PLeft, BoxLayout.PAGE_AXIS));
 		PLeft.setPreferredSize(new Dimension(300,1000));
-		PLeft.setBackground(Color.GRAY);
-		PLeft.add(Box.createRigidArea(new Dimension(0,50)));
+		PLeft.setBackground(Color.WHITE);
+		PLeft.add(Box.createRigidArea(new Dimension(0,200)));
+		PLeft.add(label);
+		PLeft.add(Box.createRigidArea(new Dimension(0,10)));		
 		PLeft.add(card1);
 		PLeft.add(Box.createRigidArea(new Dimension(0,50)));
 		PAll.add(PLeft, BorderLayout.WEST);
@@ -234,7 +235,7 @@ public class GameGUI extends JFrame implements ActionListener {
 
 		PRight.setLayout(new BoxLayout(PRight, BoxLayout.PAGE_AXIS));
 		PRight.setPreferredSize(new Dimension(300,1000));
-		PRight.setBackground(Color.GRAY);
+		PRight.setBackground(Color.WHITE);
 		PRight.add(Box.createRigidArea(new Dimension(0,50)));
 		PRight.add(BlackCard2);
 		PAll.add(PRight, BorderLayout.EAST);
@@ -257,36 +258,34 @@ public class GameGUI extends JFrame implements ActionListener {
 		PDCard.setLayout(new BoxLayout(PDCard, BoxLayout.LINE_AXIS));
 		topmiddle.setLayout(new BorderLayout());
 		PMid.setPreferredSize(new Dimension(1250,1000));
-		PUMid.setPreferredSize(new Dimension(1250,620));
+		PUMid.setPreferredSize(new Dimension(1250,590));
 		PUCard.setPreferredSize(new Dimension(1250,190));
 		PDCard.setPreferredSize(new Dimension(1250,40));
 
 
-		toptop.setPreferredSize(size2);
-		top.setPreferredSize(size);
+		toptop.setPreferredSize(new Dimension(1250,50));
+		top.setPreferredSize(new Dimension(1250,180));
 
-		topmiddle.setPreferredSize(size3);
-
-		mid.setPreferredSize(size);
-		low.setPreferredSize(size);
+		topmiddle.setPreferredSize(new Dimension(1250,230));
+		mid.setPreferredSize(new Dimension(1250,130));
+		low.setPreferredSize(new Dimension(1250,180));
 
 		PUCard.setBackground(Color.WHITE);
 		PDCard.setBackground(Color.WHITE);
 
-
-
+		
 		//Chosen card being added to panel
 		//		PUMid.add(Box.createRigidArea(new Dimension(90,0)));
 		for(int i=0; i<ChosenCards.length; i++) {
 			toptop.add(Winner[i]);
-			toptop.add(Box.createRigidArea(new Dimension(10,0)));
+			toptop.add(Box.createRigidArea(new Dimension(15,0)));
 
 		}
 
 		if(numberOfCards > 0){
 			for(int i=0; i<ChosenCards.length; i++) {
 				top.add(ChosCard1[i]);
-				top.add(Box.createRigidArea(new Dimension(10,0)));
+				top.add(Box.createRigidArea(new Dimension(15,0)));
 
 			}
 		}
@@ -294,7 +293,7 @@ public class GameGUI extends JFrame implements ActionListener {
 		if(numberOfCards > 1){
 			for(int i=0; i<ChosenCards.length; i++) {
 				mid.add(ChosCard2[i]);
-				mid.add(Box.createRigidArea(new Dimension(10,0)));
+				mid.add(Box.createRigidArea(new Dimension(15,0)));
 
 			}
 		}
@@ -302,7 +301,7 @@ public class GameGUI extends JFrame implements ActionListener {
 		if(numberOfCards > 2){
 			for(int i=0; i<ChosenCards.length; i++) {
 				low.add(ChosCard3[i]);
-				low.add(Box.createRigidArea(new Dimension(10,0)));
+				low.add(Box.createRigidArea(new Dimension(15,0)));
 
 			}
 		}
@@ -337,15 +336,11 @@ public class GameGUI extends JFrame implements ActionListener {
 			PDCard.add(Box.createRigidArea(new Dimension(5,0)));
 		}
 
-		top.setBackground(Color.WHITE);
-		mid.setBackground(Color.WHITE);
-		low.setBackground(Color.WHITE);
-
-
-		//		top.add(PUMid);
 
 		toptop.setBackground(Color.WHITE);
 		top.setBackground(Color.WHITE);
+		mid.setBackground(Color.WHITE);
+		low.setBackground(Color.WHITE);
 
 		topmiddle.add(toptop, BorderLayout.NORTH);
 		topmiddle.add(top, BorderLayout.CENTER);
