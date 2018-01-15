@@ -91,6 +91,7 @@ public class Game implements Runnable {
                         for (Player player : players) {
                             if (!player.getReady()) {
                                 allReady = false;
+                                break;
                             }
                         }
                         if (allReady) {
@@ -103,8 +104,7 @@ public class Game implements Runnable {
                 } else if (tuple[1].equals("start")) {
                     if ((int) tuple[2] == hostID) {
                         startGame();
-                    }
-                    else {
+                    } else {
                         System.out.println("WOAH!! A non-host player tried to start game!");
                     }
                 }
@@ -380,13 +380,19 @@ public class Game implements Runnable {
         if (players.size() == maxPlayers){
         	status = "Waiting for players...";
         }
-		players.remove(actor);
+        slotOccupied[actorSlot] = false;
 		
 		talker.put("updateLobby", "leave", actor.getId(), null);
         for (Player player : players) {
             talker.put("updateLobby", "update", player.getId(), new GameSlot(actorSlot, "", false));
         }
-	}
+        players.remove(actor);
+        
+        if (players.size() == 0){
+        	Server.removeGame(this);
+        }
+        
+	} // End of player leaves game.
 
 	public String getGameName() {
         return this.gameName;
@@ -442,8 +448,8 @@ public class Game implements Runnable {
     	int actorID = actor.getId();
     	
     	// Check if the game has started.
-    	if (status == "Game Full"){
-    		System.out.println("Player with ID "+actorID+" attempted to join a full game.");
+    	if (status == "Game Full" || status == "Game Started"){
+    		System.out.println("Player with ID "+actorID+" attempted to join a full or started game.");
     		return;
     	}
     	

@@ -46,4 +46,8 @@ public class GameBase {
 		games.add(game);
 	}
 
+	public void removeGame(Game game) {
+		games.remove(game);
+	}
+
 }

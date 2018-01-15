@@ -1598,6 +1598,8 @@ public class MainGUI extends JFrame implements ActionListener {
 			hideAll();
 			mainLobby.setVisible(true);
 			add(mainLobby);
+			Client.sendLeave();
+			updateGameList();
 		}
 		else if (e.getSource() == BReady) {
 			Client.sendReady();
@@ -1612,22 +1614,29 @@ public class MainGUI extends JFrame implements ActionListener {
 	}
 
 	public void updatePlayer(GameSlot givenSlot) {
-
 		int index = givenSlot.getSlot();
-
-		gameSlot[index] = givenSlot;
-
-		player[index].setText("   "+gameSlot[index].getName());
-
-		if (gameSlot[index].isReady() == true) {			
-			readyBtn[index].setBackground(new Color(76,153,0));
-			System.out.println("Changed to Green");
-
+		
+		if (givenSlot.hasPlayer() == true){
+			gameSlot[index] = givenSlot;
+		
+			player[index].setText("   "+gameSlot[index].getName());
+			
+			if (gameSlot[index].isReady() == true) {			
+				readyBtn[index].setBackground(new Color(76,153,0));
+				System.out.println("Changed to Green");
+	
+			} else {
+				readyBtn[index].setBackground(Color.RED);
+				System.out.println("Changed to Red");
+	
+			}
 		} else {
-			readyBtn[index].setBackground(Color.RED);
-			System.out.println("Changed to Red");
-
+			player[index].setText("");
+			readyBtn[index].setBackground(Color.white);
+			System.out.println("Changed to White");
 		}
+		
+
 	}
 
 	public void startGame(int playerNumber){
