@@ -252,6 +252,13 @@ public class Game implements Runnable {
                         System.out.println("WOAH!! The host tried to pick a white card!");
                     }
                 }
+                else if (tuple[1] == "time") {
+                    Object[] tuple2 = local.get(new ActualField("timer"), new FormalField(Integer.class));
+                    int timer = (int) tuple2[1];
+                    for (Player player : players) {
+                        talker.put("ingame", "timer", player.getId(), "test", timer);
+                    }
+                }
             }
             //local.get(new ActualField("Game"), new ActualField("TimeoutFinish"));
         } catch (InterruptedException e) {
@@ -309,6 +316,13 @@ public class Game implements Runnable {
                     }
                     else {
                         System.out.println("WOAH!! Invalid user tried to pick a winner!");
+                    }
+                }
+                else if (tuple[1] == "time") {
+                    Object[] tuple2 = local.get(new ActualField("timer"), new FormalField(Integer.class));
+                    int timer = (int) tuple2[1];
+                    for (Player player : players) {
+                        talker.put("ingame", "timer", player.getId(), "test", timer);
                     }
                 }
             } catch (InterruptedException e) {

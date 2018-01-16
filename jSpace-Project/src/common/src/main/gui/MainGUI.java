@@ -1425,6 +1425,8 @@ public class MainGUI extends JFrame implements ActionListener {
 		PLeft.add(czar);
 		PLeft.add(Box.createRigidArea(new Dimension(0,10)));
 		PLeft.add(phase);
+		PLeft.add(Box.createRigidArea(new Dimension(0,10)));
+		PLeft.add(timerem);
 		PLeft.add(Box.createRigidArea(new Dimension(0,50)));
 		PAll.add(PLeft, BorderLayout.WEST);
 
