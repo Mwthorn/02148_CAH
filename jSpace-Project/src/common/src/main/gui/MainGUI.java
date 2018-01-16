@@ -2068,8 +2068,8 @@ public class MainGUI extends JFrame implements ActionListener {
 	}
 	
 	public void playerButton(boolean show, int i) {
-		PlayerCards[i].setVisible(show);
-//		PlayerCards[i].set(show);
+//		PlayerCards[i].setVisible(show);
+		PlayerCards[i].setEnabled(show);
 	}
 	
 	public void hideRest (int noPlayer, boolean hide){
