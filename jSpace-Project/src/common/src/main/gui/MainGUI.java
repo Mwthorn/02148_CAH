@@ -1419,14 +1419,8 @@ public class MainGUI extends JFrame implements ActionListener {
 			Winner[i].setBorderPainted(true);
 			Winner[i].setFocusPainted(false);
 			Winner[i].setEnabled(true);	
-			Winner[i].setVisible(true);
-		}
-
-		// If it is false from the start they are not created
-		for(int i=0; i<ChosenCards.length; i++){	
 			Winner[i].setVisible(false);
 		}
-		
 		
 		// Creates chosen cards
 		if(numberOfCards > 0) {
@@ -1443,6 +1437,7 @@ public class MainGUI extends JFrame implements ActionListener {
 				ChosCard1[i].setEditable(false);
 				ChosCard1[i].setLineWrap(true);
 				ChosCard1[i].setWrapStyleWord(true);
+				ChosCard1[i].setVisible(false);
 			}
 		}
 
@@ -1460,6 +1455,7 @@ public class MainGUI extends JFrame implements ActionListener {
 				ChosCard2[i].setEditable(false);
 				ChosCard2[i].setLineWrap(true);
 				ChosCard2[i].setWrapStyleWord(true);
+				ChosCard2[i].setVisible(false);
 
 			}
 		}
@@ -1478,6 +1474,7 @@ public class MainGUI extends JFrame implements ActionListener {
 				ChosCard3[i].setEditable(false);
 				ChosCard3[i].setLineWrap(true);
 				ChosCard3[i].setWrapStyleWord(true);
+				ChosCard3[i].setVisible(false);
 			}
 		}
 
@@ -1951,22 +1948,25 @@ public class MainGUI extends JFrame implements ActionListener {
 
 	public void czarButton(boolean show, int i){
 		Winner[i].setVisible(show);
+		ChosCard1[i].setVisible(show);
+		ChosCard2[i].setVisible(show);	
+		ChosCard3[i].setVisible(show);
 //		Winner[i].setEnabled(show);
 	}
 	
 	public void playerButton(boolean show, int i) {
-		PlayerCards[i].setVisible(show);
+		PlayerCards[i].setEnabled(show);
 //		PlayerCards[i].set(show);
 	}
 	
-	public void hideRest (int noPlayer, boolean hide){
-		
-		ChosCard1[noPlayer].setVisible(hide);
-		ChosCard2[noPlayer].setVisible(hide);
-		ChosCard3[noPlayer].setVisible(hide);
-		Winner[noPlayer].setVisible(hide);
-		
-	}
+//	public void hideRest (int noPlayer, boolean hide){
+//		
+//		ChosCard1[noPlayer].setVisible(hide);
+//		ChosCard2[noPlayer].setVisible(hide);
+//		ChosCard3[noPlayer].setVisible(hide);
+//		Winner[noPlayer].setVisible(hide);
+//		
+//	}
 	
 	
 
