@@ -991,7 +991,7 @@ public class MainGUI extends JFrame implements ActionListener {
 		// Panels
 		lobbyChatPanel = new JPanel();
 		lobbyChatPanel.setLayout(new BorderLayout());
-		lobbyChatPanel.setPreferredSize(new Dimension(200, 400));
+		lobbyChatPanel.setPreferredSize(new Dimension(200, 300));
 		lobbySendPanel = new JPanel();
 		lobbySendPanel.setBackground(Color.WHITE);
 		lobbySendPanel.setLayout(new GridBagLayout());
@@ -1060,7 +1060,7 @@ public class MainGUI extends JFrame implements ActionListener {
 		BLeave.setEnabled(true);
 
 		//Makes Title
-		LHead = new JLabel("Cards Against Humanity");
+		LHead = new JLabel("Cards Against Humanity       ");
 		LHead.setAlignmentX(Component.CENTER_ALIGNMENT);
 		LHead.setFont(new Font("AR JULIAN",Font.PLAIN,70));
 		LHead.setForeground(Color.BLACK);
