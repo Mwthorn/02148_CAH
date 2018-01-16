@@ -1485,11 +1485,18 @@ public class MainGUI extends JFrame implements ActionListener {
 		pointsPlayer.setLineWrap(true);
 		pointsPlayer.setWrapStyleWord(true);
 		
-		for(int i = 0; i<8; i++){
+		int playersInGame = 8;
+		
+		
+		
+		
+		for(int i = 0; i<playersInGame; i++){
+			
 			scores[i] = new JLabel();
 			scores[i].setBackground(Color.white);
 			scores[i].setForeground(Color.BLACK);
 			scores[i].setFont(new Font("calibri",1,FontSizeOfCards));
+			scores[i].setText("Sebastian");
 		}
 
 
@@ -1556,7 +1563,7 @@ public class MainGUI extends JFrame implements ActionListener {
 		PRight.setPreferredSize(new Dimension(300,1000));
 		PRight.setBackground(Color.WHITE);
 		PRight.add(Box.createRigidArea(new Dimension(0,20)));
-		for(int i=0; i<scores.length; i++){
+		for(int i=0; i<playersInGame; i++){
 			PRight.add(scores[i]);	
 		}
 		PRight.add(Box.createRigidArea(new Dimension(0,500)));
