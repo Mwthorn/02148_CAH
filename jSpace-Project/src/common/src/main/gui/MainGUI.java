@@ -1362,7 +1362,7 @@ public class MainGUI extends JFrame implements ActionListener {
 
 
 		chatPanel.setLayout(new BorderLayout());
-		chatPanel.setPreferredSize(new Dimension(0,600));
+		chatPanel.setPreferredSize(new Dimension(0,100));
 		chatPanel.setVisible(true);
 		sendPanel.setBackground(Color.WHITE);
 		sendPanel.setLayout(new GridBagLayout());
@@ -1870,8 +1870,7 @@ public class MainGUI extends JFrame implements ActionListener {
 			mainLobby.requestFocus();
 			Client.sendLeave();
 			updateGameList();
-		}
-		else if (e.getSource() == BReady) {
+		} else if (e.getSource() == BReady) {
 			Client.sendReady();
 		} else if ( e.getSource() == lobbySendButton ) {
 			if (lobbyMessageField.getText().length() < 1) {
