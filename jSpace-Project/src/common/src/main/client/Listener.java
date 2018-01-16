@@ -124,6 +124,9 @@ public class Listener implements Runnable{
 					Client.main.setCzar(true);
 					Client.main.setPhase(WAIT);
 				}
+				else if (tuple[1].equals("timer")) {
+					Client.main.setTime((int) tuple[4]);
+				}
 				// TODO: Player leaves/joins in mid-game
 			}
 			catch (InterruptedException e) {
