@@ -8,6 +8,7 @@ import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.Font;
 import java.awt.Graphics;
+import java.awt.GridBagLayout;
 import java.awt.Image;
 import java.awt.Insets;
 import java.awt.event.ActionEvent;
@@ -77,7 +78,11 @@ public class MainGUI extends JFrame implements ActionListener {
 	private JButton BReady, BLeave;
 	private JLabel LHead, LPicWC, LPicBC, Label1, Label2, Label3, Label4, Label5, Label6, Label7, Label8;
 	private static JList playerList;
-	public Chat lobbyChat;
+	private Chat lobbyChat;
+	private JTextArea lobbyChatBox;
+	private JTextField lobbyMessageField;
+	private JButton lobbySendButton;
+	private JPanel lobbyChatPanel, lobbySendPanel;
 
 	// Game
 	private JTextArea BlackCard;
@@ -893,6 +898,44 @@ public class MainGUI extends JFrame implements ActionListener {
 
 
 	}
+	
+	public void lobbyChat() {
+
+		// Panels
+		lobbyChatPanel = new JPanel();
+		lobbyChatPanel.setLayout(new BorderLayout());
+		lobbyChatPanel.setPreferredSize(new Dimension(200, 400));
+		lobbySendPanel = new JPanel();
+		lobbySendPanel.setBackground(Color.WHITE);
+		lobbySendPanel.setLayout(new GridBagLayout());
+
+		// Message field and send button
+		lobbyMessageField = new JTextField();
+		lobbyMessageField.requestFocusInWindow();
+		lobbyMessageField.setPreferredSize(new Dimension(400, 20));
+
+		lobbySendButton = new JButton(" Send ");
+		lobbySendButton.addActionListener(this);
+		
+		// Chat area
+		lobbyChatBox = new JTextArea();
+		lobbyChatBox.setEditable(false);
+		lobbyChatBox.setFont(new Font("Serif", Font.PLAIN, 15));
+		lobbyChatBox.setLineWrap(true);
+		
+		// adding elements
+		lobbyChatPanel.add(new JScrollPane(lobbyChatBox), BorderLayout.CENTER);
+		lobbySendPanel.add(lobbyMessageField);
+		lobbySendPanel.add(lobbySendButton);
+		lobbyChatPanel.add(BorderLayout.SOUTH, lobbySendPanel);
+		
+		//SwingUtilities.getRootPane(sendButton).setDefaultButton(sendButton);
+	}
+
+
+	public void chatMessageRecived(String message) {
+		lobbyChatBox.append(message+"\n");
+	}
 
 	/////////////////////////////////////////////// READYUPLOBBY //////////////////////////////////////////////////////////////////
 
@@ -958,7 +1001,7 @@ public class MainGUI extends JFrame implements ActionListener {
 		mainReadyUpLobby.add(BtnPanel, BorderLayout.SOUTH);
 		
 		// Chat
-		lobbyChat = new Chat(200, 400);
+		lobbyChat();
 
 		// Panel for Title label
 		JPanel HeadPanel = new JPanel();
@@ -972,8 +1015,8 @@ public class MainGUI extends JFrame implements ActionListener {
 		BCPanel.setLayout(new BoxLayout(BCPanel, BoxLayout.Y_AXIS));
 		BCPanel.setBackground(Color.GRAY);
 		BCPanel.add(LPicBC);
-		BCPanel.add(lobbyChat.chatPanel);
-		BCPanel.add(lobbyChat.sendPanel);
+		BCPanel.add(lobbyChatPanel);
+		BCPanel.add(lobbySendPanel);
 		BCPanel.add(Box.createRigidArea(new Dimension(50, 0)));
 
 
@@ -1655,6 +1698,14 @@ public class MainGUI extends JFrame implements ActionListener {
 		}
 		else if (e.getSource() == BReady) {
 			Client.sendReady();
+		} else if ( e.getSource() == lobbySendButton ) {
+			if (lobbyMessageField.getText().length() < 1) {
+				// DO NOTHING
+			} else {
+				Client.sendChatMessage(lobbyMessageField.getText());
+				lobbyMessageField.setText("");
+			}
+			lobbyMessageField.requestFocusInWindow();
 		}
 
 		for (int i = 0; i < 10; i++) {
