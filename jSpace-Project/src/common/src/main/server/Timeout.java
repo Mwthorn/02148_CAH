@@ -22,7 +22,7 @@ public class Timeout implements Runnable {
                 Thread.sleep(1000);
                 timeout++;
                 System.out.println("Timeout: " + timeout);
-                if (timeout > 10) {
+                if (timeout > 30) {
                     System.out.println("Timeout: TIMEOUT!!");
                     local.put("Game", "Timeout");
                     state = false;

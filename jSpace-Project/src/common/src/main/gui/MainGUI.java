@@ -1740,45 +1740,52 @@ public class MainGUI extends JFrame implements ActionListener {
 	public void setScore(String[] playerName, int[] points){
 
 		for(int i=0; i<playerName.length; i++){
-			System.out.println(playerName[i]+" has "+points[i]+"\n");
-			pointsPlayer.append(playerName[i]+" has "+points[i]+"\n");
+			System.out.println(playerName[i]+" has "+points[i]+".\n");
+			pointsPlayer.append(playerName[i]+" has "+points[i]+".\n");
 		}
 	}
 
-	public void setCzar(String name) {
-	}
-
-	public void getRound(int rnd){
+	
+	public void setRound(int rnd){
 		number.setText("Round Number: "+rnd);
 	}
 	
-	public void isCzar(boolean cz){
-		if (cz == true) {
+	public void setCzar(boolean cz){
+		if (cz) {
 			czar.setText("You are Card Czar");
-			
 		} else {	
 			czar.setText("You are NOT Card Czar");
 		}
 	}
-	
-	public void setPhase(int p, boolean czar) {
-		
-		if (czar == true) {
-			if (p == 0) {
-				phase.setText("Waiting on other players");
-				
-			} else {
-				phase.setText("Choose a winner");
+
+	public enum phases {WAIT, PICK, WAITCZAR, CZAR, WINNER}
+
+	public void setPhase(phases phase1) {
+		switch (phase1) {
+			case WAIT: {
+				phase.setText("Waiting on other players...");
+				break;
 			}
-			
-		} else {
-			if (p == 0) {
+			case PICK: {
 				phase.setText("Pick your cards");
-				
-			} else {
-				phase.setText("Waiting for Card Czar");
+				break;
 			}
-		}	
+			case WAITCZAR: {
+				phase.setText("Waiting for Czar...");
+				break;
+			}
+			case CZAR: {
+				phase.setText("Choose a winner");
+				break;
+			}
+			case WINNER: {
+				phase.setText("Winner was chosen");
+				break;
+			}
+			default: {
+				phase.setText("null");
+			}
+		}
 	}
 	
 	

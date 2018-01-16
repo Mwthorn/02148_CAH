@@ -20,6 +20,7 @@ public class Game implements Runnable {
     private int hostID;
     private int currentTurn;
     private int gameSlot;
+    private int round;
     private boolean[] slotOccupied;
     private Space local;
     private final int whiteCardsPerPlayer = 10;
@@ -146,6 +147,7 @@ public class Game implements Runnable {
         Random rand = new Random();
         this.currentTurn = rand.nextInt(players.size()) - 1;
         Boolean state = true;
+        this.round = 0;
         while (state) {
             nextRound();
             if (blackCards.size() <= 0) {
@@ -161,6 +163,7 @@ public class Game implements Runnable {
 	}
 
     public void nextRound() {
+        this.round++;
         this.currentTurn++;
         if (this.currentTurn == players.size()) {
             this.currentTurn = 0;
@@ -177,16 +180,17 @@ public class Game implements Runnable {
         // Show black card to players
         BlackCard blackCard = drawBlackCard();
         for (Player player : players) {
-            talker.put("ingame", "czar", player.getId(), chosenPlayer.getName(), 0);
+            talker.put("ingame", "czar", player.getId(), chosenPlayer.getName(), this.round);
             // STRING - STRING - INT - STRING - INT
             talker.put("ingame", "black", player.getId(), blackCard.getSentence(), blackCard.getBlanks());
             player.resetPickedCards();
             if (player.getId() == chosenID) {
                 // TODO: Tell player its not their turn (Chosen) (Do nothing?)
+                talker.put("ingame", "youczar", player.getId(), "test", 0);
             }
             else {
                 contestents.add(player);
-                talker.put("ingame", "yourturn", player.getId(), null, 0);
+                talker.put("ingame", "yourturn", player.getId(), "test", 0);
             }
         }
 
@@ -219,6 +223,7 @@ public class Game implements Runnable {
                     Object[] tuple2 = local.get(new ActualField("Card"), new FormalField(Integer.class), new FormalField(Integer.class));
                     System.out.println("Got additional information");
                     int clientID = (int) tuple2[1];
+                    System.out.println(clientID + " == " + chosenID);
                     if (clientID != chosenID) {
                         int cardIndex = (int) tuple2[2];
                         Player player = FindPlayer(clientID);
@@ -277,7 +282,7 @@ public class Game implements Runnable {
         Player winnerPlayer = null;
         WhiteCard winnerCards[] = new WhiteCard[blackCard.getBlanks()];
         Player chosen = FindPlayer(chosenID);
-        talker.put("ingame", "yourturn", chosen.getId(), null, 0);
+        talker.put("ingame", "czarturn", chosen.getId(), null, 0);
         while (state) {
             try {
                 Object[] tuple = local.get(new ActualField("Game"), new FormalField(String.class));
@@ -300,6 +305,7 @@ public class Game implements Runnable {
                             System.out.println("WOAH!! Did you just try to choose yourself as the winner?");
                         }
                         state = false;
+                        local.put("Timeout", "Cancel");
                     }
                     else {
                         System.out.println("WOAH!! Invalid user tried to pick a winner!");
@@ -327,7 +333,7 @@ public class Game implements Runnable {
         }
         try {
             System.out.println("Sleeping...");
-            Thread.sleep(4000);
+            Thread.sleep(10000);
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
