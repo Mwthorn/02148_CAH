@@ -1970,22 +1970,22 @@ public class MainGUI extends JFrame implements ActionListener {
 		}
 		
 		if (row == 2) {
-			ChosCard1[num].setText(text);
+			ChosCard2[num].setText(text);
 			
 			if (text.equals("")) {
-				ChosCard1[num].setVisible(false);
+				ChosCard2[num].setVisible(false);
 			} else {
-				ChosCard1[num].setVisible(true);
+				ChosCard2[num].setVisible(true);
 			}
 		}
 		
 		if (row == 3) {
-			ChosCard1[num].setText(text);
+			ChosCard3[num].setText(text);
 			
 			if (text.equals("")) {
-				ChosCard1[num].setVisible(false);
+				ChosCard3[num].setVisible(false);
 			} else {
-				ChosCard1[num].setVisible(true);
+				ChosCard3[num].setVisible(true);
 			}
 		}
 	}
