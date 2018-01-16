@@ -66,8 +66,6 @@ public class Chat extends JFrame implements ActionListener {
 
 
 	public void chatMessageRecived(String message) {
-		System.out.println("hejdqwdw");
-		System.out.println("message");
 		chatBox.append(message+"\n");
 	}
 
