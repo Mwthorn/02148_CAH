@@ -217,15 +217,15 @@ public class MainGUI extends JFrame implements ActionListener {
 		});
 
 		// Game CHAT
-//		chatPanel.getInputMap(JComponent.WHEN_FOCUSED)
-//		.put(KeyStroke.getKeyStroke(KeyEvent.VK_ENTER,0),"chat");
-//
-//		chatPanel.getActionMap().put("chat",new AbstractAction(){
-//			public void actionPerformed(ActionEvent ae){
-//				sendButton.doClick();
-//				System.out.println("!!! chat");
-//			}
-//		});
+		//		chatPanel.getInputMap(JComponent.WHEN_FOCUSED)
+		//		.put(KeyStroke.getKeyStroke(KeyEvent.VK_ENTER,0),"chat");
+		//
+		//		chatPanel.getActionMap().put("chat",new AbstractAction(){
+		//			public void actionPerformed(ActionEvent ae){
+		//				sendButton.doClick();
+		//				System.out.println("!!! chat");
+		//			}
+		//		});
 	}
 
 	public void hideAll(){
@@ -711,24 +711,16 @@ public class MainGUI extends JFrame implements ActionListener {
 		list.addMouseListener(new MouseAdapter() {
 			public void mouseClicked(MouseEvent me) {
 				if (me.getClickCount() == 2) {
-					gameSelected = list.getSelectedIndex();
-					System.out.println("Index Selected: "+ gameSelected);
-					if (gameSelected < 0){ return; }
-					GamePreview preID = games.get(gameSelected);
-					int gameID = preID.getId();
-
-					try {
-						Client.joinGame(gameID);
-					} catch (InterruptedException e1) {
-						e1.printStackTrace();
-					}
-
-					hideAll();
-					mainReadyUpLobby.setVisible(true);
-					add(mainReadyUpLobby);
-					mainReadyUpLobby.requestFocus();
-				} else if (me.getClickCount() == 1){
 					LJoinGameBtn.doClick(); 
+				} else if (me.getClickCount() == 1){
+					mainLobby.getInputMap(JComponent.WHEN_FOCUSED)
+					.put(KeyStroke.getKeyStroke(KeyEvent.VK_ENTER,0),"join");	
+					mainLobby.getActionMap().put("join",new AbstractAction(){
+						public void actionPerformed(ActionEvent ae){
+							BSignIn.doClick();
+							System.out.println("!!! join");
+						}
+					});
 				}}});
 
 
@@ -976,7 +968,7 @@ public class MainGUI extends JFrame implements ActionListener {
 
 
 	}
-	
+
 	public void lobbyChat() {
 
 		// Panels
@@ -994,19 +986,19 @@ public class MainGUI extends JFrame implements ActionListener {
 
 		lobbySendButton = new JButton(" Send ");
 		lobbySendButton.addActionListener(this);
-		
+
 		// Chat area
 		lobbyChatBox = new JTextArea();
 		lobbyChatBox.setEditable(false);
 		lobbyChatBox.setFont(new Font("Serif", Font.PLAIN, 15));
 		lobbyChatBox.setLineWrap(true);
-		
+
 		// adding elements
 		lobbyChatPanel.add(new JScrollPane(lobbyChatBox), BorderLayout.CENTER);
 		lobbySendPanel.add(lobbyMessageField);
 		lobbySendPanel.add(lobbySendButton);
 		lobbyChatPanel.add(BorderLayout.SOUTH, lobbySendPanel);
-		
+
 		//SwingUtilities.getRootPane(sendButton).setDefaultButton(sendButton);
 	}
 
@@ -1729,7 +1721,7 @@ public class MainGUI extends JFrame implements ActionListener {
 			mainLogin.setVisible(true);
 			add(mainLogin);
 			mainLogin.requestFocus();
-			
+
 		} else if (e.getSource() == BBack) {
 			hideAll();
 			mainLobby.setVisible(true);
@@ -1883,13 +1875,13 @@ public class MainGUI extends JFrame implements ActionListener {
 			System.out.println("Got: "+num);
 		}
 	}
+	
+	
+	public void setScore(int updateSlot, int points){
 
-	public void setScore(String[] playerName, int[] points){
-
-		for(int i=0; i<playerName.length; i++){
-			System.out.println(playerName[i]+" has "+points[i]+".\n");
-			pointsPlayer.append(playerName[i]+" has "+points[i]+".\n");
-		}
+			System.out.println(updateSlot+" has "+points+" points.\n");
+			pointsPlayer.append(updateSlot+" has "+points+" points.\n");
+		
 	}
 
 
