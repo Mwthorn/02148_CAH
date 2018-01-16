@@ -201,10 +201,6 @@ public class Client {
 		talker.put("game", "chat", userID, message);
 	}
 	
-	public static void sendChatMessage(String message) {
-		talker.put("game", "chat", userID, message);
-	}
-	
 	/*********************************************************************************************/
 	/********************************* User/In-Game Interactions *********************************/
 	/*********************************************************************************************/
@@ -227,10 +223,11 @@ public class Client {
 		return whiteCards;
 	}
 
-	/*public static void sendChatMessage(String message) {
-		talker.put("gameListener", "chat", userID, null, message);
-		// TODO: Send message to all players in game class through tuple
-	}*/
+	public static void sendGameChatMessage(String message) {
+		//talker.put("gameListener", "chat", userID, message);
+		// TODO: MATHIAS!!!!! sæt de rigtige tuples til at sende beskeden til game.
+	}
+	
 
 	public static String getName() {
 		return userName;

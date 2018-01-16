@@ -1020,7 +1020,7 @@ public class MainGUI extends JFrame implements ActionListener {
 	}
 
 
-	public void chatMessageRecived(String message) {
+	public void chatLobbyMessageRecived(String message) {
 		lobbyChatBox.append(message+"\n");
 	}
 
@@ -1865,7 +1865,7 @@ public class MainGUI extends JFrame implements ActionListener {
 			if (messageField.getText().length() < 1) {
 				// DO NOTHING
 			} else {
-				Client.sendChatMessage(messageField.getText());
+				Client.sendLobbyChatMessage(messageField.getText());
 				messageField.setText("");
 			}
 			messageField.requestFocusInWindow();
