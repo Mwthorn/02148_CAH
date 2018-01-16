@@ -371,7 +371,7 @@ public class Game implements Runnable {
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
-    }
+    } // End of next round function
 
 
     public void fillWhiteCards() {
@@ -422,7 +422,7 @@ public class Game implements Runnable {
             int recieverID = player.getId();
             talker.put("updateLobby", "update", recieverID, actor.getGameSlot(), "");
         }
-	}
+	} // End of ready update
 	
     private void playerLeavesGame(int playerID) {
 		Player actor = getPlayerwithID(playerID);
@@ -454,28 +454,19 @@ public class Game implements Runnable {
 
     public String getPassword() {
         return this.password;
-    }
+    } // End of get password
 
     public int getMaxPlayers() {
         return this.maxPlayers;
-    }
+    } // End of get the maximum amount of allowed players
 
     public boolean hasPassword() {
         return this.password != null;
-    }
+    } // End of get game password
 
     public ArrayList<Player> getPlayers() {
         return this.players;
-    }
-
-    public Player FindPlayer(String name) {
-    	for (Player player : players) {
-            if (Objects.equals(player.getName(), name)) {
-                return player;
-            }
-        }
-        return null;
-    }
+    } // End get player array list
 
     public Player FindPlayer(int ID) {
         for (Player player : players) {
@@ -484,19 +475,19 @@ public class Game implements Runnable {
             }
         }
         return null;
-    }
+    } // End of find player via ID
 
     public String getStatus() {
         return this.status;
-    }
+    } // End of get game status
 
     public int getID() {
         return this.id;
-    }
+    } // End of get game id
 
     public void addPointsTo(Player player, int i) {
         player.addPoints(i);
-    }
+    } // End of add points to player
 
     public void addPlayerToGame(Player actor) {  	
     	int actorID = actor.getId();
@@ -543,18 +534,18 @@ public class Game implements Runnable {
             talker.put("updateLobby", "update", player.getId(), actor.getGameSlot(), "");
         }
         System.out.println("Added player " + actor.getId() + " to GameID: " + this.id);
-    }
+    } // End of add player to game.
 
     public void setStatus(String status) {
         this.status = status;
-    }
+    } // End of set status
 
     public void setPassword(String password) {
         this.password = password;
-    }
+    } // End of set password
 
 	public int getGameSlot() {
 		return this.gameSlot;
-	}
+	} // End of get game slot
 
 }
