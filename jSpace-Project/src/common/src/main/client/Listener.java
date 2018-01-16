@@ -1,11 +1,14 @@
 package common.src.main.client;
 
+import common.src.main.gui.MainGUI;
 import common.src.main.server.utilities.WhiteCard;
 import org.jspace.ActualField;
 import org.jspace.FormalField;
 import org.jspace.RemoteSpace;
 
 import common.src.main.server.GameSlot;
+
+import static common.src.main.gui.MainGUI.phases.*;
 
 public class Listener implements Runnable{
 	private static RemoteSpace game;
@@ -24,6 +27,8 @@ public class Listener implements Runnable{
 		}
 		// TODO: Exit procedure when a game has ended.
 	} // End of run();
+
+	public enum phase {WAIT, WHITE, WAITCZAR, CZAR, WINNER}
 
 	public void lobbyListener(){
 		System.out.println("Listener: Now listening on Client...");
@@ -60,7 +65,7 @@ public class Listener implements Runnable{
 			}
 		}
 	} // End of lobby listener.
-	
+
 	public void inGameListener(){
 		while(true) {
 			try {
@@ -79,15 +84,20 @@ public class Listener implements Runnable{
 					// ("ingame", "yourpick", player.getId(), null, cardIndex);
 					int pickedCard = (int) tuple[4];
 					// TODO: Update for chosen card on Client
+					Client.main.setPhase(WAIT);
 				}
 				else if (tuple[1].equals("picked")) {
 					// ("ingame", "picked", player.getId(), pickedCards[i], i);
 					//Object[] pickedInfo = game.get(new ActualField("ingame"), new FormalField(String.class), new ActualField(userID), new FormalField(String[].class), new FormalField(Integer.class));
 					Client.main.setSelected((int) tuple[4], (String) tuple[3]);
+					Client.main.setPhase(WAITCZAR);
 				}
 				else if (tuple[1].equals("czar")) {
+
 					// ("ingame", "picked", player.getId(), pickedCards[i], i);
-					Client.main.setCzar((String) tuple[3]);
+					// Client.main.setCzar((String) tuple[3]);
+					Client.main.setPhase(WAIT);
+					Client.main.setRound((int) tuple[4]);
 				}
 				else if (tuple[1].equals("result")) {
 					// ("ingame", "result", player.getId(), winnerCard.getSentence(), 0);
@@ -95,13 +105,24 @@ public class Listener implements Runnable{
 				}
 				else if (tuple[1].equals("resultPlayer")) {
 					// TODO: Show results to GUI (0 is not used)
+					Client.main.setPhase(WINNER);
 					for (int i = 0; i < 8; i++) {
 						Client.main.setSelected(i, "");
 					}
 				}
 				else if (tuple[1].equals("yourturn")) {
 					//allowPlayerTurn();
-					// TODO: Tell client its their turn (GUI Changes?)
+					Client.main.setPhase(PICK);
+					Client.main.setCzar(false);
+				}
+				else if (tuple[1].equals("czarturn")) {
+					//allowPlayerTurn();
+					Client.main.setPhase(CZAR);
+				}
+				else if (tuple[1].equals("youczar")) {
+					//allowPlayerTurn();
+					Client.main.setCzar(true);
+					Client.main.setPhase(WAIT);
 				}
 				// TODO: Player leaves/joins in mid-game
 			}
