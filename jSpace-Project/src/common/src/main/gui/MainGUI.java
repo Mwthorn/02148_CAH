@@ -1875,14 +1875,43 @@ public class MainGUI extends JFrame implements ActionListener {
 
 	}
 
-	public void setSelected(int num, String text){
+	public void setSelected(int num, String[] text, boolean show){
 
 		System.out.println("String: "+text+" and num: "+num);
+//		ChosCard1[num].setVisible(show);
+//		ChosCard2[num].setVisible(show);	
+//		ChosCard3[num].setVisible(show);
 
-		if (num < 8) {
-			ChosCard1[num].setText(text);
+		int len = text.length;
+		
+		if (len == 1) {
+			
+			ChosCard1[num].setText(text[1]);
+			ChosCard2[num].setText("");
+			ChosCard3[num].setText("");
+			
+			ChosCard1[num].setVisible(show);
+
+			
+		} else if (len == 2) {
+			
+			ChosCard1[num].setText(text[1]);
+			ChosCard2[num].setText(text[2]);
+			ChosCard3[num].setText("");
+			
+			ChosCard1[num].setVisible(show);
+			ChosCard2[num].setVisible(show);	
+			
 		} else {
-			System.out.println("Got: "+num);
+		
+			ChosCard1[num].setText(text[1]);
+			ChosCard2[num].setText(text[2]);
+			ChosCard3[num].setText(text[3]);
+			
+			ChosCard1[num].setVisible(show);
+			ChosCard2[num].setVisible(show);	
+			ChosCard3[num].setVisible(show);
+			
 		}
 	}
 	
