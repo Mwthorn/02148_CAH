@@ -1933,11 +1933,18 @@ public class MainGUI extends JFrame implements ActionListener {
 	}
 
 
-	public void highlightWinner(int i){
+	public void highlightWinner(int i, boolean winner){
 
-		ChosCard1[i].setBackground(new Color(255,215,0));
-		ChosCard2[i].setBackground(new Color(255,215,0));
-		ChosCard3[i].setBackground(new Color(255,215,0));
+		if (winner) {
+			ChosCard1[i].setBackground(new Color(255,215,0));
+			ChosCard2[i].setBackground(new Color(255,215,0));
+			ChosCard3[i].setBackground(new Color(255,215,0));
+		} else {
+			ChosCard1[i].setBackground(Color.WHITE);
+			ChosCard2[i].setBackground(Color.WHITE);
+			ChosCard3[i].setBackground(Color.WHITE);
+		}
+		
 		
 	}
 
