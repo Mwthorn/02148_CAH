@@ -8,17 +8,24 @@ import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.Font;
 import java.awt.Graphics;
+import java.awt.GridBagLayout;
 import java.awt.Image;
 import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.KeyEvent;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.util.ArrayList;
+
+import javax.swing.AbstractAction;
 import javax.swing.BorderFactory;
 import javax.swing.Box;
 import javax.swing.BoxLayout;
 import javax.swing.DefaultListModel;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
+import javax.swing.JComponent;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JList;
@@ -26,6 +33,7 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
+import javax.swing.KeyStroke;
 import javax.swing.ListSelectionModel;
 import javax.swing.SwingConstants;
 import javax.swing.border.Border;
@@ -77,7 +85,11 @@ public class MainGUI extends JFrame implements ActionListener {
 	private JButton BReady, BLeave;
 	private JLabel LHead, LPicWC, LPicBC, Label1, Label2, Label3, Label4, Label5, Label6, Label7, Label8;
 	private static JList playerList;
-	public Chat lobbyChat;
+	private Chat lobbyChat;
+	private JTextArea lobbyChatBox;
+	private JTextField lobbyMessageField;
+	private JButton lobbySendButton;
+	private JPanel lobbyChatPanel, lobbySendPanel;
 
 	// Game
 	private JTextArea BlackCard;
@@ -169,6 +181,51 @@ public class MainGUI extends JFrame implements ActionListener {
 		runCreate();
 		runReadyUpLobby();
 		runGame();
+		runEnter();
+	}
+
+
+	public void runEnter(){
+		mainLogin.getInputMap(JComponent.WHEN_FOCUSED)
+		.put(KeyStroke.getKeyStroke(KeyEvent.VK_ENTER,0),"signIn");
+
+		mainLogin.getActionMap().put("signIn",new AbstractAction(){
+			public void actionPerformed(ActionEvent ae){
+				BSignIn.doClick();
+				System.out.println("!!! signedIn");
+			}
+		});
+
+		mainReadyUpLobby.getInputMap(JComponent.WHEN_FOCUSED)
+		.put(KeyStroke.getKeyStroke(KeyEvent.VK_ENTER,0),"ready");
+
+		mainReadyUpLobby.getActionMap().put("ready",new AbstractAction(){
+			public void actionPerformed(ActionEvent ae){
+				BReady.doClick();
+				System.out.println("!!! ready");
+			}
+		});
+
+		mainCreate.getInputMap(JComponent.WHEN_FOCUSED)
+		.put(KeyStroke.getKeyStroke(KeyEvent.VK_ENTER,0),"creatGame");
+
+		mainCreate.getActionMap().put("creatGame",new AbstractAction(){
+			public void actionPerformed(ActionEvent ae){
+				BCreateGame.doClick();
+				System.out.println("!!! creatGame");
+			}
+		});
+
+		// Game CHAT
+		//		chatPanel.getInputMap(JComponent.WHEN_FOCUSED)
+		//		.put(KeyStroke.getKeyStroke(KeyEvent.VK_ENTER,0),"chat");
+		//
+		//		chatPanel.getActionMap().put("chat",new AbstractAction(){
+		//			public void actionPerformed(ActionEvent ae){
+		//				sendButton.doClick();
+		//				System.out.println("!!! chat");
+		//			}
+		//		});
 	}
 
 	public void hideAll(){
@@ -432,6 +489,7 @@ public class MainGUI extends JFrame implements ActionListener {
 
 		PMiddle.setBackground(Color.WHITE);
 		add(mainLogin);		
+		mainLogin.requestFocus();
 
 		/////////////////////////////////////////////// LOGIN //////////////////////////////////////////////////////////////////
 
@@ -648,6 +706,23 @@ public class MainGUI extends JFrame implements ActionListener {
 				model.addElement(name+blank+status+blank+islocked+blank+Integer.toString(current)+"/"+Integer.toString(max));
 			}
 		}
+
+		// catch double-click events
+		list.addMouseListener(new MouseAdapter() {
+			public void mouseClicked(MouseEvent me) {
+				if (me.getClickCount() == 2) {
+					LJoinGameBtn.doClick(); 
+				} else if (me.getClickCount() == 1){
+					mainLobby.getInputMap(JComponent.WHEN_FOCUSED)
+					.put(KeyStroke.getKeyStroke(KeyEvent.VK_ENTER,0),"join");	
+					mainLobby.getActionMap().put("join",new AbstractAction(){
+						public void actionPerformed(ActionEvent ae){
+							BSignIn.doClick();
+							System.out.println("!!! join");
+						}
+					});
+				}}});
+
 
 		//		p5.setLayout(new BoxLayout(p5, BoxLayout.LINE_AXIS));
 		availableGames.setBackground(Color.WHITE);
@@ -894,6 +969,44 @@ public class MainGUI extends JFrame implements ActionListener {
 
 	}
 
+	public void lobbyChat() {
+
+		// Panels
+		lobbyChatPanel = new JPanel();
+		lobbyChatPanel.setLayout(new BorderLayout());
+		lobbyChatPanel.setPreferredSize(new Dimension(200, 400));
+		lobbySendPanel = new JPanel();
+		lobbySendPanel.setBackground(Color.WHITE);
+		lobbySendPanel.setLayout(new GridBagLayout());
+
+		// Message field and send button
+		lobbyMessageField = new JTextField();
+		lobbyMessageField.requestFocusInWindow();
+		lobbyMessageField.setPreferredSize(new Dimension(400, 20));
+
+		lobbySendButton = new JButton(" Send ");
+		lobbySendButton.addActionListener(this);
+
+		// Chat area
+		lobbyChatBox = new JTextArea();
+		lobbyChatBox.setEditable(false);
+		lobbyChatBox.setFont(new Font("Serif", Font.PLAIN, 15));
+		lobbyChatBox.setLineWrap(true);
+
+		// adding elements
+		lobbyChatPanel.add(new JScrollPane(lobbyChatBox), BorderLayout.CENTER);
+		lobbySendPanel.add(lobbyMessageField);
+		lobbySendPanel.add(lobbySendButton);
+		lobbyChatPanel.add(BorderLayout.SOUTH, lobbySendPanel);
+
+		//SwingUtilities.getRootPane(sendButton).setDefaultButton(sendButton);
+	}
+
+
+	public void chatMessageRecived(String message) {
+		lobbyChatBox.append(message+"\n");
+	}
+
 	/////////////////////////////////////////////// READYUPLOBBY //////////////////////////////////////////////////////////////////
 
 	public void runReadyUpLobby(){
@@ -956,9 +1069,9 @@ public class MainGUI extends JFrame implements ActionListener {
 		BtnPanel.add(Box.createRigidArea(new Dimension(0,200)));
 
 		mainReadyUpLobby.add(BtnPanel, BorderLayout.SOUTH);
-		
+
 		// Chat
-		lobbyChat = new Chat(200, 400);
+		lobbyChat();
 
 		// Panel for Title label
 		JPanel HeadPanel = new JPanel();
@@ -972,8 +1085,8 @@ public class MainGUI extends JFrame implements ActionListener {
 		BCPanel.setLayout(new BoxLayout(BCPanel, BoxLayout.Y_AXIS));
 		BCPanel.setBackground(Color.GRAY);
 		BCPanel.add(LPicBC);
-		BCPanel.add(lobbyChat.chatPanel);
-		BCPanel.add(lobbyChat.sendPanel);
+		BCPanel.add(lobbyChatPanel);
+		BCPanel.add(lobbySendPanel);
 		BCPanel.add(Box.createRigidArea(new Dimension(50, 0)));
 
 
@@ -996,7 +1109,7 @@ public class MainGUI extends JFrame implements ActionListener {
 		p1.setPreferredSize(maxsize);
 		p1.setBorder(BorderFactory.createMatteBorder(1, 1, 1, 1, Color.black));
 		p1.setBackground(Color.WHITE);
-		
+
 		// Name Label
 		player[0] = new JLabel("   ");
 		player[0].setMaximumSize(lsize);
@@ -1391,25 +1504,25 @@ public class MainGUI extends JFrame implements ActionListener {
 		number.setPreferredSize(new Dimension(300, 80));
 		number.setAlignmentX(Component.CENTER_ALIGNMENT);
 		number.setFont(new Font("calibri",1,FontSizeOfCards));
-		
+
 		czar = new JLabel("Card Czar is: ");
 		czar.setForeground(Color.BLACK);
 		czar.setPreferredSize(new Dimension(300, 80));
 		czar.setAlignmentX(Component.CENTER_ALIGNMENT);
 		czar.setFont(new Font("calibri",1,FontSizeOfCards));
-		
+
 		phase = new JLabel("Choosing: ");
 		phase.setForeground(Color.BLACK);
 		phase.setPreferredSize(new Dimension(300, 80));
 		phase.setAlignmentX(Component.CENTER_ALIGNMENT);
 		phase.setFont(new Font("calibri",1,FontSizeOfCards));
-		
+
 		timerem = new JLabel("Time remaining: ");
 		timerem.setForeground(Color.BLACK);
 		timerem.setPreferredSize(new Dimension(300, 80));
 		timerem.setAlignmentX(Component.CENTER_ALIGNMENT);
 		timerem.setFont(new Font("calibri",1,FontSizeOfCards));
-		
+
 		// Panel for the left side.
 		JPanel PLeft = new JPanel();
 		JPanel card1 = new JPanel();
@@ -1595,21 +1708,25 @@ public class MainGUI extends JFrame implements ActionListener {
 			loadAvailableGames();
 			mainLobby.setVisible(true);
 			add(mainLobby);
+			mainLobby.requestFocus();
 
 		} else if(e.getSource()==LCreateGameBtn) {
 			hideAll();
 			mainCreate.setVisible(true);
 			add(mainCreate);
+			mainCreate.requestFocus();
 
 		} else if(e.getSource()==LSignOutBtn) {
 			hideAll();
 			mainLogin.setVisible(true);
 			add(mainLogin);
+			mainLogin.requestFocus();
 
 		} else if (e.getSource() == BBack) {
 			hideAll();
 			mainLobby.setVisible(true);
 			add(mainLobby);
+			mainLobby.requestFocus();
 
 		} else if (e.getSource() == BCreateGame){
 			this.gameName = txtfld8.getText();
@@ -1620,6 +1737,7 @@ public class MainGUI extends JFrame implements ActionListener {
 			hideAll();
 			mainReadyUpLobby.setVisible(true);
 			add(mainReadyUpLobby);
+			mainReadyUpLobby.requestFocus();
 
 			Client.createNewGame(gameName);
 
@@ -1645,16 +1763,26 @@ public class MainGUI extends JFrame implements ActionListener {
 			hideAll();
 			mainReadyUpLobby.setVisible(true);
 			add(mainReadyUpLobby);
+			mainReadyUpLobby.requestFocus();
 
 		} else if(e.getSource()==BLeave){
 			hideAll();
 			mainLobby.setVisible(true);
 			add(mainLobby);
+			mainLobby.requestFocus();
 			Client.sendLeave();
 			updateGameList();
 		}
 		else if (e.getSource() == BReady) {
 			Client.sendReady();
+		} else if ( e.getSource() == lobbySendButton ) {
+			if (lobbyMessageField.getText().length() < 1) {
+				// DO NOTHING
+			} else {
+				Client.sendChatMessage(lobbyMessageField.getText());
+				lobbyMessageField.setText("");
+			}
+			lobbyMessageField.requestFocusInWindow();
 		}
 
 		for (int i = 0; i < 10; i++) {
@@ -1666,10 +1794,10 @@ public class MainGUI extends JFrame implements ActionListener {
 
 		for (int i = 0; i < players; i++) {
 			System.out.println("Number of Players: "+players);
-				
+
 			if (e.getSource() == Winner[i]) {
 				Client.pickWinnerCard(i);				
-				
+
 			}
 		}
 	}
@@ -1715,6 +1843,7 @@ public class MainGUI extends JFrame implements ActionListener {
 		hideAll();
 		mainGame.setVisible(true);
 		add(mainGame);
+		mainGame.requestFocus();
 
 	}
 
@@ -1755,11 +1884,11 @@ public class MainGUI extends JFrame implements ActionListener {
 		
 	}
 
-	
+
 	public void setRound(int rnd){
 		number.setText("Round Number: "+rnd);
 	}
-	
+
 	public void setCzar(boolean cz){
 		if (cz) {
 			czar.setText("You are Card Czar");
@@ -1772,70 +1901,70 @@ public class MainGUI extends JFrame implements ActionListener {
 
 	public void setPhase(phases phase1) {
 		switch (phase1) {
-			case WAIT: {
-				phase.setText("Waiting on other players...");
-				
-				for (int i = 0; i < 10; i++) {
-					PlayerCards[i].setVisible(false);
-				}
+		case WAIT: {
+			phase.setText("Waiting on other players...");
 
-				break;
+			for (int i = 0; i < 10; i++) {
+				PlayerCards[i].setVisible(false);
 			}
-			case PICK: {
-				phase.setText("Pick your cards");
-				
-				for (int i = 0; i < 10; i++) {
-					PlayerCards[i].setVisible(true);
-				}
-				
-				break;
+
+			break;
+		}
+		case PICK: {
+			phase.setText("Pick your cards");
+
+			for (int i = 0; i < 10; i++) {
+				PlayerCards[i].setVisible(true);
 			}
-			case WAITCZAR: {
-				phase.setText("Waiting for Czar...");
-				break;
+
+			break;
+		}
+		case WAITCZAR: {
+			phase.setText("Waiting for Czar...");
+			break;
+		}
+		case CZAR: {
+			phase.setText("Choose a winner");
+
+			for (int i = 0; i < 8; i++) {
+				Winner[i].setVisible(true);
 			}
-			case CZAR: {
-				phase.setText("Choose a winner");
-				
-				for (int i = 0; i < 8; i++) {
-					Winner[i].setVisible(true);
-				}
-				
-				break;
+
+			break;
+		}
+		case WINNER: {
+			phase.setText("Winner was chosen");
+
+			for (int i = 0; i < 8; i++) {
+				Winner[i].setVisible(false);
 			}
-			case WINNER: {
-				phase.setText("Winner was chosen");
-				
-				for (int i = 0; i < 8; i++) {
-					Winner[i].setVisible(false);
-				}
-				
-				break;
-			}
-			default: {
-				phase.setText("null");
-			}
+
+			break;
+		}
+		default: {
+			phase.setText("null");
+		}
 		}
 	}
-	
+
 	public void setTime(int t) {
-		
+
 		timerem.setText("Time to answer: "+t);
-		
+
 	}
-	
-	
+
+
 	public void highlightWinner(int i){
-		
+
 		ChosCard1[i].setBackground(new Color(255,215,0));
 		ChosCard2[i].setBackground(new Color(255,215,0));
 		ChosCard3[i].setBackground(new Color(255,215,0));
 
 
-		
+
 	}
-	
-	
+
+
 
 	//	} else if (e.getSource() == b3) {
 	//			// THIS NEEDS TO CHECK IF GAME HAS PASSWORD AS WELL
