@@ -82,18 +82,27 @@ public class Listener implements Runnable{
 				} else if (tuple[1].equals("black")) {
 					Client.amountOfBlanks = (int) tuple[4];
 					Client.main.setBlack((String) tuple[3]);
+					for (int i = 0; i < 8; i++) {
+						Client.main.setSelected(i, "");
+					}
+					Client.cardsPicked = 0;
 				}
 				else if (tuple[1].equals("yourpick")) {
 					// ("ingame", "yourpick", player.getId(), null, cardIndex);
 					int pickedCard = (int) tuple[4];
 					// TODO: Update for chosen card on Client
-					Client.main.setPhase(WAIT);
+					Client.cardsPicked++;
+					if (Client.cardsPicked >= Client.amountOfBlanks) {
+						Client.main.setPhase(WAIT);
+					}
 				}
 				else if (tuple[1].equals("picked")) {
 					// ("ingame", "picked", player.getId(), pickedCards[i], i);
 					//Object[] pickedInfo = game.get(new ActualField("ingame"), new FormalField(String.class), new ActualField(userID), new FormalField(String[].class), new FormalField(Integer.class));
 					Client.main.setSelected((int) tuple[4], (String) tuple[3]);
-					Client.main.setPhase(WAITCZAR);
+					if (!Client.main.isCzar) {
+						Client.main.setPhase(WAITCZAR);
+					}
 				}
 				else if (tuple[1].equals("czar")) {
 
@@ -108,10 +117,8 @@ public class Listener implements Runnable{
 				}
 				else if (tuple[1].equals("resultPlayer")) {
 					// TODO: Show results to GUI (0 is not used)
+					Client.main.highlightWinner((int) tuple[4], true);
 					Client.main.setPhase(WINNER);
-					for (int i = 0; i < 8; i++) {
-						Client.main.setSelected(i, "");
-					}
 				}
 				else if (tuple[1].equals("yourturn")) {
 					//allowPlayerTurn();

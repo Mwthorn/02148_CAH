@@ -102,7 +102,8 @@ public class MainGUI extends JFrame implements ActionListener {
 	private JTextArea[] ChosCard3 = new JTextArea[8];
 	private JTextArea[] area = new JTextArea[10];
 	private JLabel label, czar, phase, number, timerem = new JLabel();
-	private JTextArea pointsPlayer; 
+	private JTextArea pointsPlayer;
+	public boolean isCzar;
 
 
 	// Rounded Buttons
@@ -1891,8 +1892,10 @@ public class MainGUI extends JFrame implements ActionListener {
 
 	public void setCzar(boolean cz){
 		if (cz) {
+			this.isCzar = true;
 			czar.setText("You are Card Czar");
-		} else {	
+		} else {
+			this.isCzar = false;
 			czar.setText("You are NOT Card Czar");
 		}
 	}

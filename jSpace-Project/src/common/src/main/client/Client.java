@@ -18,6 +18,7 @@ public class Client {
 	public static int userID;
 	public static String serverIP;
 	public static int amountOfBlanks;
+	public static int cardsPicked;
 	public static String[] whiteCards = new String[10];
 	public static MainGUI main;
 	public static String userName;
