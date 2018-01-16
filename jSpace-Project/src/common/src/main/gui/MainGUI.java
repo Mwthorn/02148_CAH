@@ -842,8 +842,8 @@ public class MainGUI extends JFrame implements ActionListener {
 		// The two cards in the sides
 		LFigure1 = new JLabel();
 		LFigure2 = new JLabel();
-		LFigure1.setIcon(new ImageIcon(new ImageIcon("BCCreate.png").getImage().getScaledInstance(248, 376, Image.SCALE_DEFAULT)));
-		LFigure2.setIcon(new ImageIcon(new ImageIcon("WCCreate.png").getImage().getScaledInstance(245, 376, Image.SCALE_DEFAULT)));
+		LFigure1.setIcon(new ImageIcon(new ImageIcon("BCCreate.png").getImage().getScaledInstance(247, 380, Image.SCALE_DEFAULT)));
+		LFigure2.setIcon(new ImageIcon(new ImageIcon("WCCreate.png").getImage().getScaledInstance(244, 381, Image.SCALE_DEFAULT)));
 		LFigure1.setAlignmentX(Component.CENTER_ALIGNMENT);
 		LFigure2.setAlignmentX(Component.CENTER_ALIGNMENT);
 
@@ -1069,8 +1069,8 @@ public class MainGUI extends JFrame implements ActionListener {
 		// Implementing pictures for white cards and black cards as JLabel
 		LPicBC = new JLabel();
 		LPicWC = new JLabel();
-		LPicBC.setIcon(new ImageIcon(new ImageIcon("BCLobby.png").getImage().getScaledInstance(249, 381, Image.SCALE_DEFAULT)));
-		LPicWC.setIcon(new ImageIcon(new ImageIcon("WCLobby.png").getImage().getScaledInstance(306, 556, Image.SCALE_DEFAULT)));
+		LPicBC.setIcon(new ImageIcon(new ImageIcon("BCGLobby.png").getImage().getScaledInstance(244, 376, Image.SCALE_DEFAULT)));
+		LPicWC.setIcon(new ImageIcon(new ImageIcon("WCGLobby.png").getImage().getScaledInstance(246, 379, Image.SCALE_DEFAULT)));
 		LPicBC.setAlignmentX(Component.TOP_ALIGNMENT);
 		LPicWC.setAlignmentX(Component.CENTER_ALIGNMENT);
 
