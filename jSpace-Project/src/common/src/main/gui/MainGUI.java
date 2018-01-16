@@ -1946,43 +1946,40 @@ public class MainGUI extends JFrame implements ActionListener {
 
 	}
 
-	public void setSelected(int num, String[] text, boolean show){
-
+	public void setSelected(int num, int row, String text){
 		System.out.println("String: "+text+" and num: "+num);
 //		ChosCard1[num].setVisible(show);
 //		ChosCard2[num].setVisible(show);	
 //		ChosCard3[num].setVisible(show);
 
-		int len = text.length;
+		if (row == 1) {
+			ChosCard1[num].setText(text);
+			
+			if (text.equals("")) {
+				ChosCard1[num].setVisible(false);
+			} else {
+				ChosCard1[num].setVisible(true);
+			}
+		}
 		
-		if (len == 1) {
+		if (row == 2) {
+			ChosCard1[num].setText(text);
 			
-			ChosCard1[num].setText(text[1]);
-			ChosCard2[num].setText("");
-			ChosCard3[num].setText("");
-			
-			ChosCard1[num].setVisible(show);
-
-			
-		} else if (len == 2) {
-			
-			ChosCard1[num].setText(text[1]);
-			ChosCard2[num].setText(text[2]);
-			ChosCard3[num].setText("");
-			
-			ChosCard1[num].setVisible(show);
-			ChosCard2[num].setVisible(show);	
-			
-		} else {
+			if (text.equals("")) {
+				ChosCard1[num].setVisible(false);
+			} else {
+				ChosCard1[num].setVisible(true);
+			}
+		}
 		
-			ChosCard1[num].setText(text[1]);
-			ChosCard2[num].setText(text[2]);
-			ChosCard3[num].setText(text[3]);
+		if (row == 3) {
+			ChosCard1[num].setText(text);
 			
-			ChosCard1[num].setVisible(show);
-			ChosCard2[num].setVisible(show);	
-			ChosCard3[num].setVisible(show);
-			
+			if (text.equals("")) {
+				ChosCard1[num].setVisible(false);
+			} else {
+				ChosCard1[num].setVisible(true);
+			}
 		}
 	}
 	
