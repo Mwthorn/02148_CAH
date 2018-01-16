@@ -239,24 +239,29 @@ public class Game implements Runnable {
                         int cardIndex = (int) tuple2[2];
                         Player player = FindPlayer(clientID);
                         //pickedCards[contestents.indexOf(player)] = player.getWhiteCards().get(cardIndex);
-                        if (player.getPickedCards().size() < blackCard.getBlanks()) {
-                            player.chooseWhiteCard(cardIndex);
-                            talker.put("ingame", "yourpick", player.getId(), "test", cardIndex);
-                            System.out.println("Sent yourpick to client");
-                            state = false;
-                            for (Player player1 : contestents) {
-                                for (int i = 0; i < blackCard.getBlanks(); i++) {
-                                    if (!player1.hasPickedCard(i)) {
-                                        state = true;
+                        if (player.getWhiteCards()[cardIndex] != null) {
+                            if (player.getPickedCards().size() < blackCard.getBlanks()) {
+                                player.chooseWhiteCard(cardIndex);
+                                talker.put("ingame", "yourpick", player.getId(), "test", cardIndex);
+                                System.out.println("Sent yourpick to client");
+                                state = false;
+                                for (Player player1 : contestents) {
+                                    for (int i = 0; i < blackCard.getBlanks(); i++) {
+                                        if (!player1.hasPickedCard(i)) {
+                                            state = true;
+                                        }
                                     }
                                 }
+                                if (!state) {
+                                    System.out.println("All players hae picked a card! Skip!");
+                                    local.put("Timeout", "Cancel");
+                                }
+                            } else {
+                                System.out.println("Client has already picked their cards! No refund!");
                             }
-                            if (!state) {
-                                System.out.println("All players hae picked a card! Skip!");
-                                local.put("Timeout", "Cancel");
-                            }
-                        } else {
-                            System.out.println("Client has already picked their cards! No refund!");
+                        }
+                        else {
+                            System.out.println("WOAH!! Tried to pick a card that has already been picked!");
                         }
                     }
                     else {
@@ -300,7 +305,7 @@ public class Game implements Runnable {
         Player winnerPlayer = null;
         WhiteCard winnerCards[] = new WhiteCard[blackCard.getBlanks()];
         Player chosen = FindPlayer(chosenID);
-        talker.put("ingame", "czarturn", chosen.getId(), null, 0);
+        talker.put("ingame", "czarturn", chosen.getId(), "test", 0);
         while (state) {
             try {
                 Object[] tuple = local.get(new ActualField("Game"), new FormalField(String.class));
@@ -350,11 +355,11 @@ public class Game implements Runnable {
         // Update results for all players
         for (Player player : players) {
             for (int i = 0; i < blackCard.getBlanks(); i++) {
-                talker.put("ingame", "resultCards", player.getId(), winnerCards[i].getSentence(), 0);
+                talker.put("ingame", "resultCards", player.getId(), winnerCards[i].getSentence(), i);
             }
-            talker.put("ingame", "resultPlayer", player.getId(), winnerPlayer.getName(), 0);
+            talker.put("ingame", "resultPlayer", player.getId(), winnerPlayer.getName(), contestents.indexOf(winnerPlayer));
             // TODO: Update points for all players
-            talker.put("ingame", "points", player.getId(), player.getGameSlot().getSlot(), winnerPlayer.getPoints());
+            talker.put("ingame", "points", player.getId(), Integer.toString(player.getGameSlot().getSlot()), winnerPlayer.getPoints());
         }
         try {
             System.out.println("Sleeping...");

@@ -35,7 +35,7 @@ public class Server {
 		repository.addGate("tcp://127.0.0.1:9001/?keep");
 		// TODO: Muligvis bruge conn istedet for keep
 		repository.add("lobby", lobby);
-
+		System.out.println("Startup done!");
         /* Listening for messages on the tuple space */
         while(true) {
 			try {
