@@ -104,6 +104,7 @@ public class MainGUI extends JFrame implements ActionListener {
 	private JLabel label, czar, phase, number, timerem = new JLabel();
 	private JTextArea pointsPlayer;
 	public boolean isCzar;
+	private JLabel[] scores = new JLabel[8];
 
 
 	// Rounded Buttons
@@ -1053,6 +1054,7 @@ public class MainGUI extends JFrame implements ActionListener {
 
 		//Creates panel for buttons
 		JPanel BtnPanel = new JPanel();
+		JPanel panel = new JPanel();
 
 		FlowLayout flow = new FlowLayout(FlowLayout.CENTER);
 		BtnPanel.setLayout(flow);
@@ -1063,6 +1065,8 @@ public class MainGUI extends JFrame implements ActionListener {
 		BtnPanel.add(Box.createRigidArea(new Dimension(0,200)));
 
 		mainReadyUpLobby.add(BtnPanel, BorderLayout.SOUTH);
+
+//		panel.add
 		
 		// Chat
 		lobbyChat();
@@ -1413,8 +1417,10 @@ public class MainGUI extends JFrame implements ActionListener {
 			Winner[i].setFocusPainted(false);
 			Winner[i].setEnabled(true);	
 			Winner[i].setVisible(false);
+
+
 		}
-		
+
 		// Creates chosen cards
 		if(numberOfCards > 0) {
 
@@ -1430,7 +1436,6 @@ public class MainGUI extends JFrame implements ActionListener {
 				ChosCard1[i].setEditable(false);
 				ChosCard1[i].setLineWrap(true);
 				ChosCard1[i].setWrapStyleWord(true);
-				ChosCard1[i].setVisible(false);
 			}
 		}
 
@@ -1448,7 +1453,6 @@ public class MainGUI extends JFrame implements ActionListener {
 				ChosCard2[i].setEditable(false);
 				ChosCard2[i].setLineWrap(true);
 				ChosCard2[i].setWrapStyleWord(true);
-				ChosCard2[i].setVisible(false);
 
 			}
 		}
@@ -1467,7 +1471,6 @@ public class MainGUI extends JFrame implements ActionListener {
 				ChosCard3[i].setEditable(false);
 				ChosCard3[i].setLineWrap(true);
 				ChosCard3[i].setWrapStyleWord(true);
-				ChosCard3[i].setVisible(false);
 			}
 		}
 
@@ -1481,6 +1484,13 @@ public class MainGUI extends JFrame implements ActionListener {
 		pointsPlayer.setEditable(false);
 		pointsPlayer.setLineWrap(true);
 		pointsPlayer.setWrapStyleWord(true);
+		
+		for(int i = 0; i<8; i++){
+			scores[i] = new JLabel();
+			scores[i].setBackground(Color.white);
+			scores[i].setForeground(Color.BLACK);
+			scores[i].setFont(new Font("calibri",1,FontSizeOfCards));
+		}
 
 
 		/////////////////////////////////////////////// PANELS //////////////////////////////////////////////////////////////////
@@ -1546,7 +1556,9 @@ public class MainGUI extends JFrame implements ActionListener {
 		PRight.setPreferredSize(new Dimension(300,1000));
 		PRight.setBackground(Color.WHITE);
 		PRight.add(Box.createRigidArea(new Dimension(0,20)));
-		PRight.add(pointsPlayer);
+		for(int i=0; i<scores.length; i++){
+			PRight.add(scores[i]);	
+		}
 		PRight.add(Box.createRigidArea(new Dimension(0,500)));
 
 
@@ -1897,12 +1909,12 @@ public class MainGUI extends JFrame implements ActionListener {
 	}
 	
 	
-	public void setScore(int updateSlot, int points){
-
-			System.out.println(updateSlot+" has "+points+" points.\n");
-			pointsPlayer.append(updateSlot+" has "+points+" points.\n");
-		
-	}
+//	public void setScore(int updateSlot, int points){
+//
+//			System.out.println(updateSlot+" has "+points+" points.\n");
+//			scores.(updateSlot+" has "+points+" points.\n");
+//		
+//	}
 
 
 	public void setRound(int rnd){
@@ -1974,18 +1986,18 @@ public class MainGUI extends JFrame implements ActionListener {
 	}
 	
 	public void playerButton(boolean show, int i) {
-		PlayerCards[i].setEnabled(show);
+		PlayerCards[i].setVisible(show);
 //		PlayerCards[i].set(show);
 	}
 	
-//	public void hideRest (int noPlayer, boolean hide){
-//		
-//		ChosCard1[noPlayer].setVisible(hide);
-//		ChosCard2[noPlayer].setVisible(hide);
-//		ChosCard3[noPlayer].setVisible(hide);
-//		Winner[noPlayer].setVisible(hide);
-//		
-//	}
+	public void hideRest (int noPlayer, boolean hide){
+		
+		ChosCard1[noPlayer].setVisible(hide);
+		ChosCard2[noPlayer].setVisible(hide);
+		ChosCard3[noPlayer].setVisible(hide);
+		Winner[noPlayer].setVisible(hide);
+		
+	}
 	
 	
 
