@@ -275,6 +275,12 @@ public class Game implements Runnable {
                         talker.put("ingame", "timer", player.getId(), "test", timer);
                     }
                 }
+                else if (tuple[1] == "chat") {
+                    Object[] tuple2 = local.get(new ActualField("chatsender"), new FormalField(Integer.class));
+                    for (Player player :players) {
+                        talker.put("ingame", "chat", player.getId(), "", 0);
+                    }
+                }
             }
             //local.get(new ActualField("Game"), new ActualField("TimeoutFinish"));
         } catch (InterruptedException e) {
