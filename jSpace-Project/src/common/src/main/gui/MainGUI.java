@@ -1991,12 +1991,12 @@ public class MainGUI extends JFrame implements ActionListener {
 	}
 	
 	
-//	public void setScore(int updateSlot, int points){
-//
+	public void setScore(int updateSlot, int points){
+
 //			System.out.println(updateSlot+" has "+points+" points.\n");
 //			scores.(updateSlot+" has "+points+" points.\n");
-//		
-//	}
+		
+	}
 
 
 	public void setRound(int rnd){
