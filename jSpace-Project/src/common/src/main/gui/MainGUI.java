@@ -192,12 +192,12 @@ public class MainGUI extends JFrame implements ActionListener {
 		});
 
 		mainReadyUpLobby.getInputMap(JComponent.WHEN_FOCUSED)
-		.put(KeyStroke.getKeyStroke(KeyEvent.VK_ENTER,0),"lobChat");
+		.put(KeyStroke.getKeyStroke(KeyEvent.VK_ENTER,0),"ready");
 
-		mainReadyUpLobby.getActionMap().put("lobChat",new AbstractAction(){
+		mainReadyUpLobby.getActionMap().put("ready",new AbstractAction(){
 			public void actionPerformed(ActionEvent ae){
-				lobSendButton.doClick();
-				System.out.println("!!! lobChat");
+				BReady.doClick();
+				System.out.println("!!! ready");
 			}
 		});
 
@@ -211,15 +211,16 @@ public class MainGUI extends JFrame implements ActionListener {
 			}
 		});
 
-		chatPanel.getInputMap(JComponent.WHEN_FOCUSED)
-		.put(KeyStroke.getKeyStroke(KeyEvent.VK_ENTER,0),"chat");
-
-		chatPanel.getActionMap().put("chat",new AbstractAction(){
-			public void actionPerformed(ActionEvent ae){
-				sendButton.doClick();
-				System.out.println("!!! chat");
-			}
-		});
+		// Game CHAT
+//		chatPanel.getInputMap(JComponent.WHEN_FOCUSED)
+//		.put(KeyStroke.getKeyStroke(KeyEvent.VK_ENTER,0),"chat");
+//
+//		chatPanel.getActionMap().put("chat",new AbstractAction(){
+//			public void actionPerformed(ActionEvent ae){
+//				sendButton.doClick();
+//				System.out.println("!!! chat");
+//			}
+//		});
 	}
 
 	public void hideAll(){
