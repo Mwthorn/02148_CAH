@@ -1108,16 +1108,19 @@ public class MainGUI extends JFrame implements ActionListener {
 		// Panel for Black Card image
 		JPanel BCPanel = new JPanel();
 		BCPanel.setLayout(new BoxLayout(BCPanel, BoxLayout.Y_AXIS));
+//		BCPanel.setSize(300, 800);
 		BCPanel.setBackground(Color.WHITE);
 		BCPanel.add(LPicBC);
+		BCPanel.add(Box.createRigidArea(new Dimension(50, 75)));
 		BCPanel.add(lobbyChatPanel);
 		BCPanel.add(lobbySendPanel);
-		BCPanel.add(Box.createRigidArea(new Dimension(50, 0)));
+//		BCPanel.add(Box.createRigidArea(new Dimension(50, 0)));
 
 
 		// Panel for White Card image
 		JPanel WCPanel = new JPanel();
 		WCPanel.setLayout(new BoxLayout(WCPanel, BoxLayout.LINE_AXIS));
+		WCPanel.setSize(300, 800);
 		WCPanel.setBackground(Color.WHITE);
 		WCPanel.add(Box.createRigidArea(new Dimension(50, 0)));
 		WCPanel.add(LPicWC);
