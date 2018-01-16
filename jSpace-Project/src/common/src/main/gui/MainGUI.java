@@ -106,14 +106,11 @@ public class MainGUI extends JFrame implements ActionListener {
 	private JLabel label, czar, phase, number, timerem = new JLabel();
 	public boolean isCzar;
 	private JLabel[] scores = new JLabel[8];
-	private JPanel PRight;
-
-	// Game Chat
-	public 	JTextArea chatBox = new JTextArea();
-	private String message, username = null;
+	private JTextArea chatBox;
 	private JTextField messageField;
 	private JButton sendButton;
-
+	private JPanel PRight, chatPanel, sendPanel;
+	
 	// Rounded Buttons
 	// Source: https://stackoverflow.com/questions/423950/rounded-swing-jbutton-using-java
 	private static class RoundedBorder implements Border {
@@ -240,16 +237,24 @@ public class MainGUI extends JFrame implements ActionListener {
 			}
 		});
 
-		// Game CHAT
-		//		chatPanel.getInputMap(JComponent.WHEN_FOCUSED)
-		//		.put(KeyStroke.getKeyStroke(KeyEvent.VK_ENTER,0),"chat");
-		//
-		//		chatPanel.getActionMap().put("chat",new AbstractAction(){
-		//			public void actionPerformed(ActionEvent ae){
-		//				sendButton.doClick();
-		//				System.out.println("!!! chat");
-		//			}
-		//		});
+		// Game Chat
+		mainGame.getInputMap(JComponent.WHEN_FOCUSED)
+		.put(KeyStroke.getKeyStroke(KeyEvent.VK_ENTER,0),"gameChat");
+
+		mainGame.getActionMap().put("gameChat",new AbstractAction(){
+			public void actionPerformed(ActionEvent ae){
+				sendButton.doClick();
+				System.out.println("!!! gameChat");
+			}
+		});
+		messageField.getInputMap(JComponent.WHEN_FOCUSED)
+		.put(KeyStroke.getKeyStroke(KeyEvent.VK_ENTER,0),"gameChat2");
+		messageField.getActionMap().put("gameChat2",new AbstractAction(){
+			public void actionPerformed(ActionEvent ae){
+				sendButton.doClick();
+				System.out.println("!!! gameChat2");
+			}
+		});
 	}
 
 	public void hideAll(){
@@ -950,7 +955,7 @@ public class MainGUI extends JFrame implements ActionListener {
 		PLeft.add(Box.createRigidArea(new Dimension(365,100)));
 
 		//Right JPanel
-		JPanel PRight = new JPanel();
+		PRight = new JPanel();
 		PRight.setLayout(new BoxLayout(PRight, BoxLayout.PAGE_AXIS));
 		PRight.setBackground(Color.white);
 
@@ -1342,9 +1347,72 @@ public class MainGUI extends JFrame implements ActionListener {
 
 		mainReadyUpLobby.add(playerPanel, BorderLayout.CENTER);
 	}
-	/////////////////////////////////////////////// READYUPLOBBY //////////////////////////////////////////////////////////////////
+	/////////////////////////////////////////////// END READYUPLOBBY //////////////////////////////////////////////////////////////////
+
+	public void gameChat(){
+
+		// CHAT 
+
+		// Panels
+		chatPanel = new JPanel();
+		sendPanel = new JPanel();
 
 
+		chatPanel.setLayout(new BorderLayout());
+		chatPanel.setPreferredSize(new Dimension(0,600));
+		chatPanel.setVisible(true);
+		sendPanel.setBackground(Color.WHITE);
+		sendPanel.setLayout(new GridBagLayout());
+
+		PRight.add(chatPanel);
+		PRight.add(Box.createRigidArea(new Dimension(0,72)));
+		PRight.setBorder(BorderFactory.createEmptyBorder(0,10,0,10));
+
+		// Message field and send button
+		messageField = new JTextField();
+		messageField.requestFocusInWindow();
+
+		sendButton = new JButton(" Send ");
+		sendButton.addActionListener(this);
+
+		// Chat area
+		chatBox = new JTextArea();
+		chatBox.setEditable(false);
+		chatBox.setFont(new Font("Serif", Font.PLAIN, 15));
+		chatBox.setLineWrap(true);
+
+		// GRIDBAG CONSTRAINTS
+		// GBC for send button
+		GridBagConstraints left = new GridBagConstraints();
+		left.anchor = GridBagConstraints.LINE_START;
+		left.fill = GridBagConstraints.HORIZONTAL;
+		left.weightx = 300.0D;
+		left.weighty = 1.0D;
+		// GBC for message field
+		GridBagConstraints right = new GridBagConstraints();
+		right.anchor = GridBagConstraints.LINE_END;
+		right.fill = GridBagConstraints.NONE;
+		right.weightx = 1.0D;
+		right.weighty = 1.0D;
+
+		// adding elements
+		chatPanel.add(new JScrollPane(chatBox), BorderLayout.CENTER);
+		sendPanel.add(messageField, left);
+		sendPanel.add(sendButton, right);
+		chatPanel.add(BorderLayout.SOUTH, sendPanel);
+		//		PRight.add(Box.createRigidArea(new Dimension(0,20)));
+
+
+		// CHAT END
+
+	}
+
+	public void sendChatMessage(String message) {
+		lobbyChatBox.append(message+"\n");
+	}
+	
+	
+	
 	public void runGame(){
 
 		mainGame.setLayout(new BorderLayout());	
@@ -1569,58 +1637,7 @@ public class MainGUI extends JFrame implements ActionListener {
 		scoreboard.setText("SCOREBOARD");
 		PRight.add(scoreboard);
 		
-		// Game Chat
-		// Panels
-		JPanel chatPanel = new JPanel();
-		JPanel sendPanel = new JPanel();
-		
-		chatPanel.setLayout(new BorderLayout());
-		chatPanel.setPreferredSize(new Dimension(0,600));
-		chatPanel.setVisible(true);
-		sendPanel.setBackground(Color.WHITE);
-		sendPanel.setLayout(new GridBagLayout());
-
-	
-		// Message field and send button
-		messageField = new JTextField();
-		messageField.requestFocusInWindow();
-
-		sendButton = new JButton(" Send ");
-		sendButton.addActionListener(this);
-
-		// Chat area
-		chatBox = new JTextArea();
-		chatBox.setEditable(false);
-		chatBox.setFont(new Font("Serif", Font.PLAIN, 15));
-		chatBox.setLineWrap(true);
-
-		// GRIDBAG CONSTRAINTS
-		// GBC for send button
-		GridBagConstraints left = new GridBagConstraints();
-		left.anchor = GridBagConstraints.LINE_START;
-		left.fill = GridBagConstraints.HORIZONTAL;
-		left.weightx = 300.0D;
-		left.weighty = 1.0D;
-		// GBC for message field
-		GridBagConstraints right = new GridBagConstraints();
-		right.anchor = GridBagConstraints.LINE_END;
-		right.fill = GridBagConstraints.NONE;
-		right.weightx = 1.0D;
-		right.weighty = 1.0D;
-
-		// adding elements
-		chatPanel.add(new JScrollPane(chatBox), BorderLayout.CENTER);
-		sendPanel.add(messageField, left);
-		sendPanel.add(sendButton, right);
-		chatPanel.add(BorderLayout.SOUTH, sendPanel);
-		//		PRight.add(Box.createRigidArea(new Dimension(0,20)));
-
-
-		// CHAT END
-
-
-		
-		
+		gameChat();		
 
 		// Panels for the center
 		JPanel PMid = new JPanel();
