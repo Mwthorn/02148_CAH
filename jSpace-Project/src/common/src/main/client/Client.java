@@ -201,6 +201,10 @@ public class Client {
 		talker.put("game", "chat", userID, message);
 	}
 	
+	public static void sendChatMessage(String message) {
+		talker.put("game", "chat", userID, message);
+	}
+	
 	/*********************************************************************************************/
 	/********************************* User/In-Game Interactions *********************************/
 	/*********************************************************************************************/
