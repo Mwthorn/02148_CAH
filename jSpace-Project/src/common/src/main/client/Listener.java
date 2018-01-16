@@ -47,15 +47,9 @@ public class Listener implements Runnable{
 					Client.main.updatePlayer(gameSlot);
 				} else if (tuple[1].equals("leave")){
 					System.out.println("You have left the game!");
-					if (gameSlot == null){
-						Client.talker = null;
-						Client.listener = null;
-						System.out.println("You left.");
-						return;
-					} else {
-						Client.main.updatePlayer(gameSlot);
-						System.out.println("A player left");
-					}
+					Client.talker = null;
+					Client.listener = null;
+					return;
 				} else if (tuple[1].equals("error")){
 					System.out.println("An error occured.");
 					// TODO: Force an error message to pop up.
