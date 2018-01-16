@@ -78,6 +78,7 @@ public class MainGUI extends JFrame implements ActionListener {
 	private JButton BReady, BLeave;
 	private JLabel LHead, LPicWC, LPicBC, Label1, Label2, Label3, Label4, Label5, Label6, Label7, Label8;
 	private static JList playerList;
+	public Chat lobbyChat;
 
 	// Game
 	private JTextArea BlackCard;
@@ -941,7 +942,7 @@ public class MainGUI extends JFrame implements ActionListener {
 		LPicWC = new JLabel();
 		LPicBC.setIcon(new ImageIcon(new ImageIcon("BCLobby.png").getImage().getScaledInstance(249, 381, Image.SCALE_DEFAULT)));
 		LPicWC.setIcon(new ImageIcon(new ImageIcon("WCLobby.png").getImage().getScaledInstance(306, 556, Image.SCALE_DEFAULT)));
-		LPicBC.setAlignmentX(Component.CENTER_ALIGNMENT);
+		LPicBC.setAlignmentX(Component.TOP_ALIGNMENT);
 		LPicWC.setAlignmentX(Component.CENTER_ALIGNMENT);
 
 		//Creates panel for buttons
@@ -956,6 +957,9 @@ public class MainGUI extends JFrame implements ActionListener {
 		BtnPanel.add(Box.createRigidArea(new Dimension(0,200)));
 
 		mainReadyUpLobby.add(BtnPanel, BorderLayout.SOUTH);
+		
+		// Chat
+		lobbyChat = new Chat(200, 400);
 
 		// Panel for Title label
 		JPanel HeadPanel = new JPanel();
@@ -966,10 +970,11 @@ public class MainGUI extends JFrame implements ActionListener {
 
 		// Panel for Black Card image
 		JPanel BCPanel = new JPanel();
-		BCPanel.setLayout(new BoxLayout(BCPanel, BoxLayout.LINE_AXIS));
-		BCPanel.setBackground(Color.WHITE);
-		BCPanel.add(Box.createRigidArea(new Dimension(50, 0)));
+		BCPanel.setLayout(new BoxLayout(BCPanel, BoxLayout.Y_AXIS));
+		BCPanel.setBackground(Color.GRAY);
 		BCPanel.add(LPicBC);
+		BCPanel.add(lobbyChat.chatPanel);
+		BCPanel.add(lobbyChat.sendPanel);
 		BCPanel.add(Box.createRigidArea(new Dimension(50, 0)));
 
 

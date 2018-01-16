@@ -185,17 +185,19 @@ public class Client {
 	} // End of gameLobby function
 
 	public static void sendReady() {
-		System.out.println("Sending ready client...");
-		talker.put("game", "ready", userID);
-		System.out.println("Sent ready!");
+		talker.put("game", "ready", userID, "");
 	}
 
 	public static void sendLeave() {
-		talker.put("game", "leave", userID);
+		talker.put("game", "leave", userID, "");
 	}
 
 	public static void sendStart() {
-		talker.put("game", "start", userID);
+		talker.put("game", "start", userID, "");
+	}
+	
+	public static void sendChatMessage(String message) {
+		talker.put("game", "chat", userID, message);
 	}
 	
 	/*********************************************************************************************/
@@ -220,11 +222,10 @@ public class Client {
 		return whiteCards;
 	}
 
-	public static void sendChatMessage(String message) {
-		talker.put("gameListener", "chat", userID, 0);
-		talker.put("gameListenerChat", message, userID);
+	/*public static void sendChatMessage(String message) {
+		talker.put("gameListener", "chat", userID, null, message);
 		// TODO: Send message to all players in game class through tuple
-	}
+	}*/
 
 	public static String getName() {
 		return userName;

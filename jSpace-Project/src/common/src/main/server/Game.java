@@ -70,7 +70,7 @@ public class Game implements Runnable {
         this.repository.add("talker"+this.gameSlot, listener);
         this.repository.add("listener"+this.gameSlot, talker);
         
-        talker.put("updateLobby", "update", hostID, player.getGameSlot());
+        talker.put("updateLobby", "update", hostID, player.getGameSlot(), "");
     }
 
     public void run() {
@@ -82,7 +82,7 @@ public class Game implements Runnable {
             System.out.println("Now listening in game lobby...");
             Object[] tuple;
             try {
-                tuple = listener.get(new ActualField("game"), new FormalField(String.class), new FormalField(Integer.class));
+                tuple = listener.get(new ActualField("game"), new FormalField(String.class), new FormalField(Integer.class), new FormalField(String.class));
                 System.out.println("Game Lobby: Got response: " + tuple[1]);
                 if (tuple[1].equals("ready")) {
                     readyUpdate((int) tuple[2]);
@@ -107,6 +107,8 @@ public class Game implements Runnable {
                     } else {
                         System.out.println("WOAH!! A non-host player tried to start game!");
                     }
+                } else if (tuple[1].equals("chat")){
+                	sendChat((int) tuple[2], (String) tuple[3]);
                 }
             } catch (InterruptedException e) {
                 e.printStackTrace();
@@ -119,6 +121,16 @@ public class Game implements Runnable {
     	// TODO: Chat?
     }
 
+	private void sendChat(int senderID, String message) {
+		System.out.println("hej i game");
+		message = "<"+getPlayerwithID(senderID).getName()+">: " + message;
+		System.out.println(message);
+		for (Player player : players){
+			talker.put("updateLobby", "chat", player.getId(), new GameSlot(0, "", false), message);
+		}
+		
+	}
+
 	private void startGame() {
 		// This is where all the in-game stuff happens.
 
@@ -130,7 +142,7 @@ public class Game implements Runnable {
 
 
         for (Player player : players) {
-            talker.put("updateLobby", "start", player.getId(), player.getGameSlot());
+            talker.put("updateLobby", "start", player.getId(), player.getGameSlot(), "");
             talker.put("starting", player.getId(), players.size());
             ArrayList<WhiteCard> cards = new ArrayList<>();
             for(int i = 0; i < this.whiteCardsPerPlayer; i++) {
@@ -380,7 +392,7 @@ public class Game implements Runnable {
 
         for (Player player : players) {
             int recieverID = player.getId();
-            talker.put("updateLobby", "update", recieverID, actor.getGameSlot());
+            talker.put("updateLobby", "update", recieverID, actor.getGameSlot(), "");
         }
 	}
 	
@@ -396,9 +408,9 @@ public class Game implements Runnable {
         }
         slotOccupied[actorSlot] = false;
 		
-		talker.put("updateLobby", "leave", actor.getId(), null);
+		talker.put("updateLobby", "leave", actor.getId(), "");
         for (Player player : players) {
-            talker.put("updateLobby", "update", player.getId(), new GameSlot(actorSlot, "", false));
+            talker.put("updateLobby", "update", player.getId(), new GameSlot(actorSlot, "", false), "");
         }
         players.remove(actor);
         
@@ -471,14 +483,14 @@ public class Game implements Runnable {
     	for (Player player : players) {
 			if (player.getId() == actorID) {
 				System.out.println(actor.getName()+" is already in the game.");
-				talker.put("updateLobby", "error", null, null);
+				talker.put("updateLobby", "error", null, null, "");
 				return;
 			}
 		}
     	
         // Sends all players current game slot to the joining player.
         for (Player player : players){
-        	talker.put("updateLobby", "update", actor.getId(), player.getGameSlot());
+        	talker.put("updateLobby", "update", actor.getId(), player.getGameSlot(), "");
         }
         
     	// Adds the player to the game.
@@ -500,7 +512,7 @@ public class Game implements Runnable {
         
         // Sends an update to all other players currently in the game
         for (Player player : players) {
-            talker.put("updateLobby", "update", player.getId(), actor.getGameSlot());
+            talker.put("updateLobby", "update", player.getId(), actor.getGameSlot(), "");
         }
         System.out.println("Added player " + actor.getId() + " to GameID: " + this.id);
     }

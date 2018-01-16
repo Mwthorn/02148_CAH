@@ -29,7 +29,8 @@ public class Listener implements Runnable{
 		System.out.println("Listener: Now listening on Client...");
 		while (true){
 			try {
-				Object[] tuple = game.get(new ActualField("updateLobby"),new FormalField(String.class), new ActualField(userID), new FormalField(GameSlot.class));
+				// Room - Type of Action - ID - Game Slot - Chat
+				Object[] tuple = game.get(new ActualField("updateLobby"),new FormalField(String.class), new ActualField(userID), new FormalField(GameSlot.class), new FormalField(String.class));
 				GameSlot gameSlot = (GameSlot) tuple[3];
 				System.out.println("Local Lobby: Got response: " + tuple[1]);
 				if (tuple[1].equals("start")){
@@ -54,6 +55,10 @@ public class Listener implements Runnable{
 					System.out.println("An error occured.");
 					// TODO: Force an error message to pop up.
 					// This happens if a player
+				} else if (tuple[1].equals("chat")){
+					System.out.println("hej");
+					System.out.println((String) tuple[4]);
+					Client.main.lobbyChat.chatMessageRecived((String) tuple[4]);
 				}
 			} catch (InterruptedException e) {
 				e.printStackTrace();
