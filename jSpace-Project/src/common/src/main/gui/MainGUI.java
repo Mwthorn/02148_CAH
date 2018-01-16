@@ -1796,7 +1796,7 @@ public class MainGUI extends JFrame implements ActionListener {
 				phase.setText("Choose a winner");
 				
 				for (int i = 0; i < 8; i++) {
-					Winner[i].setVisible(false);
+					Winner[i].setVisible(true);
 				}
 				
 				break;
