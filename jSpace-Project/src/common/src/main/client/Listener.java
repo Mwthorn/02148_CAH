@@ -136,6 +136,10 @@ public class Listener implements Runnable{
 				}
 				else if (tuple[1].equals("timer")) {
 					Client.main.setTime((int) tuple[4]);
+				} else if (tuple[1].equals("points")){
+					int updateSlot = (int) tuple[3];
+					int points = (int) tuple[4];
+					Client.main.setScore(updateSlot, points);
 				}
 				// TODO: Player leaves/joins in mid-game
 			}
