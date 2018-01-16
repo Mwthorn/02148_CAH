@@ -1839,9 +1839,9 @@ public class MainGUI extends JFrame implements ActionListener {
 
 		//		runGame();
 
-		ChosCard1[playerNumber].setVisible(true);
-		ChosCard2[playerNumber].setVisible(true);
-		ChosCard3[playerNumber].setVisible(true);
+//		ChosCard1[playerNumber].setVisible(true);
+//		ChosCard2[playerNumber].setVisible(true);
+//		ChosCard3[playerNumber].setVisible(true);
 
 		hideAll();
 		mainGame.setVisible(true);
