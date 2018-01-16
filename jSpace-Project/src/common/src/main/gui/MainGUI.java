@@ -1663,10 +1663,7 @@ public class MainGUI extends JFrame implements ActionListener {
 			System.out.println("Number of Players: "+players);
 				
 			if (e.getSource() == Winner[i]) {
-				Client.pickWinnerCard(i);
-				
-				ChosCard1[i].setBackground(Color.YELLOW);
-				
+				Client.pickWinnerCard(i);				
 				
 			}
 		}
@@ -1819,6 +1816,17 @@ public class MainGUI extends JFrame implements ActionListener {
 	public void setTime(int t) {
 		
 		timerem.setText("Time to answer: "+t);
+		
+	}
+	
+	
+	public void highlightWinner(int i){
+		
+		ChosCard1[i].setBackground(Color.YELLOW);
+		ChosCard2[i].setBackground(Color.YELLOW);
+		ChosCard3[i].setBackground(Color.YELLOW);
+
+
 		
 	}
 	
