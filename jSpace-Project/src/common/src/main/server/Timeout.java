@@ -23,6 +23,7 @@ public class Timeout implements Runnable {
                 Thread.sleep(1000);
                 timeout++;
                 System.out.println("Timeout: " + timeout);
+                // TODO: Check if cards were chosen in the last second
                 if (timeout > timetotal) {
                     System.out.println("Timeout: TIMEOUT!!");
                     local.put("Game", "Timeout");
