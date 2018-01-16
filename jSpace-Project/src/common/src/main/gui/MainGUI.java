@@ -1060,7 +1060,6 @@ public class MainGUI extends JFrame implements ActionListener {
 
 		//Creates panel for buttons
 		JPanel BtnPanel = new JPanel();
-		JPanel panel = new JPanel();
 
 		FlowLayout flow = new FlowLayout(FlowLayout.CENTER);
 		BtnPanel.setLayout(flow);
@@ -1071,8 +1070,6 @@ public class MainGUI extends JFrame implements ActionListener {
 		BtnPanel.add(Box.createRigidArea(new Dimension(0,200)));
 
 		mainReadyUpLobby.add(BtnPanel, BorderLayout.SOUTH);
-
-//		panel.add
 		
 		// Chat
 		lobbyChat();
@@ -1422,11 +1419,15 @@ public class MainGUI extends JFrame implements ActionListener {
 			Winner[i].setBorderPainted(true);
 			Winner[i].setFocusPainted(false);
 			Winner[i].setEnabled(true);	
-			Winner[i].setVisible(false);
-
-
+			Winner[i].setVisible(true);
 		}
 
+		// If it is false from the start they are not created
+		for(int i=0; i<ChosenCards.length; i++){	
+			Winner[i].setVisible(false);
+		}
+		
+		
 		// Creates chosen cards
 		if(numberOfCards > 0) {
 
