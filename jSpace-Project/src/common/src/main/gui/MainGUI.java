@@ -1746,13 +1746,13 @@ public class MainGUI extends JFrame implements ActionListener {
 			System.out.println("Got: "+num);
 		}
 	}
+	
+	
+	public void setScore(int updateSlot, int points){
 
-	public void setScore(String[] playerName, int[] points){
-
-		for(int i=0; i<playerName.length; i++){
-			System.out.println(playerName[i]+" has "+points[i]+".\n");
-			pointsPlayer.append(playerName[i]+" has "+points[i]+".\n");
-		}
+			System.out.println(updateSlot+" has "+points+" points.\n");
+			pointsPlayer.append(updateSlot+" has "+points+" points.\n");
+		
 	}
 
 	
