@@ -1774,20 +1774,10 @@ public class MainGUI extends JFrame implements ActionListener {
 		switch (phase1) {
 			case WAIT: {
 				phase.setText("Waiting on other players...");
-				
-				for (int i = 0; i < 10; i++) {
-					PlayerCards[i].setVisible(false);
-				}
-
 				break;
 			}
 			case PICK: {
 				phase.setText("Pick your cards");
-				
-				for (int i = 0; i < 10; i++) {
-					PlayerCards[i].setVisible(true);
-				}
-				
 				break;
 			}
 			case WAITCZAR: {
@@ -1796,20 +1786,10 @@ public class MainGUI extends JFrame implements ActionListener {
 			}
 			case CZAR: {
 				phase.setText("Choose a winner");
-				
-				for (int i = 0; i < 8; i++) {
-					Winner[i].setVisible(true);
-				}
-				
 				break;
 			}
 			case WINNER: {
 				phase.setText("Winner was chosen");
-				
-				for (int i = 0; i < 8; i++) {
-					Winner[i].setVisible(false);
-				}
-				
 				break;
 			}
 			default: {
@@ -1830,11 +1810,18 @@ public class MainGUI extends JFrame implements ActionListener {
 		ChosCard1[i].setBackground(new Color(255,215,0));
 		ChosCard2[i].setBackground(new Color(255,215,0));
 		ChosCard3[i].setBackground(new Color(255,215,0));
-
-
 		
 	}
+
+	public void czarButton(boolean show, int i){
+		Winner[i].setVisible(show);
+		Winner[i].setEnabled(show);
+	}
 	
+	public void playerButton(boolean show, int i) {
+		PlayerCards[i].setVisible(show);
+		PlayerCards[i].setVisible(show);
+	}
 	
 
 	//	} else if (e.getSource() == b3) {
