@@ -1865,7 +1865,7 @@ public class MainGUI extends JFrame implements ActionListener {
 			if (messageField.getText().length() < 1) {
 				// DO NOTHING
 			} else {
-				Client.sendChatMessage(messageField.getText());
+				Client.sendLobbyChatMessage(messageField.getText());
 				messageField.setText("");
 			}
 			messageField.requestFocusInWindow();
