@@ -198,12 +198,12 @@ public class MainGUI extends JFrame implements ActionListener {
 		});
 
 		mainReadyUpLobby.getInputMap(JComponent.WHEN_FOCUSED)
-		.put(KeyStroke.getKeyStroke(KeyEvent.VK_ENTER,0),"ready");
+		.put(KeyStroke.getKeyStroke(KeyEvent.VK_ENTER,0),"lobSend");
 
-		mainReadyUpLobby.getActionMap().put("ready",new AbstractAction(){
+		mainReadyUpLobby.getActionMap().put("lobSend",new AbstractAction(){
 			public void actionPerformed(ActionEvent ae){
-				BReady.doClick();
-				System.out.println("!!! ready");
+				lobbySendButton.doClick();
+				System.out.println("!!! lobSend");
 			}
 		});
 
@@ -714,14 +714,7 @@ public class MainGUI extends JFrame implements ActionListener {
 				if (me.getClickCount() == 2) {
 					LJoinGameBtn.doClick(); 
 				} else if (me.getClickCount() == 1){
-					mainLobby.getInputMap(JComponent.WHEN_FOCUSED)
-					.put(KeyStroke.getKeyStroke(KeyEvent.VK_ENTER,0),"join");	
-					mainLobby.getActionMap().put("join",new AbstractAction(){
-						public void actionPerformed(ActionEvent ae){
-							BSignIn.doClick();
-							System.out.println("!!! join");
-						}
-					});
+					mainLobby.getRootPane().setDefaultButton(LJoinGameBtn);
 				}}});
 
 
