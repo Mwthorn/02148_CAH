@@ -16,13 +16,14 @@ public class Timeout implements Runnable {
     public void run() {
         boolean state = true;
         int timeout = 0;
+        int timetotal = 30;
         System.out.println("Timeout: Started...");
         while (state) {
             try {
                 Thread.sleep(1000);
                 timeout++;
                 System.out.println("Timeout: " + timeout);
-                if (timeout > 10) {
+                if (timeout > timetotal) {
                     System.out.println("Timeout: TIMEOUT!!");
                     local.put("Game", "Timeout");
                     state = false;
@@ -32,6 +33,10 @@ public class Timeout implements Runnable {
                     if (tuple != null) {
                         System.out.println("Timeout: skipped!");
                         state = false;
+                    }
+                    else {
+                        local.put("Game", "time");
+                        local.put("timer", timetotal-timeout);
                     }
                 }
             } catch (InterruptedException e) {

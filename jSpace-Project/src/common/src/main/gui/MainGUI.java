@@ -43,7 +43,6 @@ public class MainGUI extends JFrame implements ActionListener {
 	String name, IP, gameName, rounds, time, password;
 	int players;
 
-
 	// Login
 	private JButton BQuit, BSignIn, BBack;
 	private JLabel LTitle, LText, LFigure1, LName, LIP, LFigure2;
@@ -90,7 +89,7 @@ public class MainGUI extends JFrame implements ActionListener {
 	private JTextArea[] ChosCard2 = new JTextArea[8];
 	private JTextArea[] ChosCard3 = new JTextArea[8];
 	private JTextArea[] area = new JTextArea[10];
-	private JLabel label, czar, phase, number = new JLabel();
+	private JLabel label, czar, phase, number, timerem = new JLabel();
 	private JTextArea pointsPlayer;
 
 
@@ -997,7 +996,7 @@ public class MainGUI extends JFrame implements ActionListener {
 		p1.setPreferredSize(maxsize);
 		p1.setBorder(BorderFactory.createMatteBorder(1, 1, 1, 1, Color.black));
 		p1.setBackground(Color.WHITE);
-
+		
 		// Name Label
 		player[0] = new JLabel("   ");
 		player[0].setMaximumSize(lsize);
@@ -1310,7 +1309,7 @@ public class MainGUI extends JFrame implements ActionListener {
 			Winner[i].setBorderPainted(true);
 			Winner[i].setFocusPainted(false);
 			Winner[i].setEnabled(true);	
-
+			Winner[i].setVisible(false);
 
 
 		}
@@ -1405,6 +1404,12 @@ public class MainGUI extends JFrame implements ActionListener {
 		phase.setAlignmentX(Component.CENTER_ALIGNMENT);
 		phase.setFont(new Font("calibri",1,FontSizeOfCards));
 		
+		timerem = new JLabel("Time remaining: ");
+		timerem.setForeground(Color.BLACK);
+		timerem.setPreferredSize(new Dimension(300, 80));
+		timerem.setAlignmentX(Component.CENTER_ALIGNMENT);
+		timerem.setFont(new Font("calibri",1,FontSizeOfCards));
+		
 		// Panel for the left side.
 		JPanel PLeft = new JPanel();
 		JPanel card1 = new JPanel();
@@ -1425,6 +1430,8 @@ public class MainGUI extends JFrame implements ActionListener {
 		PLeft.add(czar);
 		PLeft.add(Box.createRigidArea(new Dimension(0,10)));
 		PLeft.add(phase);
+		PLeft.add(Box.createRigidArea(new Dimension(0,10)));
+		PLeft.add(timerem);
 		PLeft.add(Box.createRigidArea(new Dimension(0,50)));
 		PAll.add(PLeft, BorderLayout.WEST);
 
@@ -1661,10 +1668,7 @@ public class MainGUI extends JFrame implements ActionListener {
 			System.out.println("Number of Players: "+players);
 				
 			if (e.getSource() == Winner[i]) {
-				Client.pickWinnerCard(i);
-				
-				ChosCard1[i].setBackground(Color.YELLOW);
-				
+				Client.pickWinnerCard(i);				
 				
 			}
 		}
@@ -1751,40 +1755,84 @@ public class MainGUI extends JFrame implements ActionListener {
 		}
 	}
 
-	public void setCzar(String name) {
-	}
 	
-	public void getRound(int rnd){
+	public void setRound(int rnd){
 		number.setText("Round Number: "+rnd);
 	}
 	
-	public void isCzar(boolean cz){
-		if (cz == true) {
+	public void setCzar(boolean cz){
+		if (cz) {
 			czar.setText("You are Card Czar");
-			
 		} else {	
 			czar.setText("You are NOT Card Czar");
 		}
 	}
-	
-	public void setPhase(int p, boolean czar) {
-		
-		if (czar == true) {
-			if (p == 0) {
-				phase.setText("Waiting on other players");
+
+	public enum phases {WAIT, PICK, WAITCZAR, CZAR, WINNER}
+
+	public void setPhase(phases phase1) {
+		switch (phase1) {
+			case WAIT: {
+				phase.setText("Waiting on other players...");
 				
-			} else {
-				phase.setText("Choose a winner");
+				for (int i = 0; i < 10; i++) {
+					PlayerCards[i].setVisible(false);
+				}
+
+				break;
 			}
-			
-		} else {
-			if (p == 0) {
+			case PICK: {
 				phase.setText("Pick your cards");
 				
-			} else {
-				phase.setText("Waiting for Card Czar");
+				for (int i = 0; i < 10; i++) {
+					PlayerCards[i].setVisible(true);
+				}
+				
+				break;
 			}
-		}	
+			case WAITCZAR: {
+				phase.setText("Waiting for Czar...");
+				break;
+			}
+			case CZAR: {
+				phase.setText("Choose a winner");
+				
+				for (int i = 0; i < 8; i++) {
+					Winner[i].setVisible(true);
+				}
+				
+				break;
+			}
+			case WINNER: {
+				phase.setText("Winner was chosen");
+				
+				for (int i = 0; i < 8; i++) {
+					Winner[i].setVisible(false);
+				}
+				
+				break;
+			}
+			default: {
+				phase.setText("null");
+			}
+		}
+	}
+	
+	public void setTime(int t) {
+		
+		timerem.setText("Time to answer: "+t);
+		
+	}
+	
+	
+	public void highlightWinner(int i){
+		
+		ChosCard1[i].setBackground(new Color(255,215,0));
+		ChosCard2[i].setBackground(new Color(255,215,0));
+		ChosCard3[i].setBackground(new Color(255,215,0));
+
+
+		
 	}
 	
 	
