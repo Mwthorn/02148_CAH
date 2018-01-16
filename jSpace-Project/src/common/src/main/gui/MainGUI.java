@@ -991,7 +991,7 @@ public class MainGUI extends JFrame implements ActionListener {
 		p1.setPreferredSize(maxsize);
 		p1.setBorder(BorderFactory.createMatteBorder(1, 1, 1, 1, Color.black));
 		p1.setBackground(Color.WHITE);
-
+		
 		// Name Label
 		player[0] = new JLabel("   ");
 		player[0].setMaximumSize(lsize);
@@ -1304,7 +1304,7 @@ public class MainGUI extends JFrame implements ActionListener {
 			Winner[i].setBorderPainted(true);
 			Winner[i].setFocusPainted(false);
 			Winner[i].setEnabled(true);	
-
+			Winner[i].setVisible(false);
 
 
 		}
@@ -1770,10 +1770,20 @@ public class MainGUI extends JFrame implements ActionListener {
 		switch (phase1) {
 			case WAIT: {
 				phase.setText("Waiting on other players...");
+				
+				for (int i = 0; i < 10; i++) {
+					PlayerCards[i].setVisible(false);
+				}
+
 				break;
 			}
 			case PICK: {
 				phase.setText("Pick your cards");
+				
+				for (int i = 0; i < 10; i++) {
+					PlayerCards[i].setVisible(true);
+				}
+				
 				break;
 			}
 			case WAITCZAR: {
@@ -1782,10 +1792,20 @@ public class MainGUI extends JFrame implements ActionListener {
 			}
 			case CZAR: {
 				phase.setText("Choose a winner");
+				
+				for (int i = 0; i < 8; i++) {
+					Winner[i].setVisible(false);
+				}
+				
 				break;
 			}
 			case WINNER: {
 				phase.setText("Winner was chosen");
+				
+				for (int i = 0; i < 8; i++) {
+					Winner[i].setVisible(false);
+				}
+				
 				break;
 			}
 			default: {
