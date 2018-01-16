@@ -55,8 +55,6 @@ public class Chat extends JFrame implements ActionListener {
 		
 		// adding elements
 		chatPanel.add(new JScrollPane(chatBox), BorderLayout.CENTER);
-		//sendPanel.add(messageField, Component.LEFT_ALIGNMENT);
-		//sendPanel.add(sendButton, Component.RIGHT_ALIGNMENT);
 		sendPanel.add(messageField);
 		sendPanel.add(sendButton);
 		chatPanel.add(BorderLayout.SOUTH, sendPanel);
