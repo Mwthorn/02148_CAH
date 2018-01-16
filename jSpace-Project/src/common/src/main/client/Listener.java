@@ -137,7 +137,8 @@ public class Listener implements Runnable{
 				else if (tuple[1].equals("timer")) {
 					Client.main.setTime((int) tuple[4]);
 				} else if (tuple[1].equals("points")){
-					int updateSlot = (int) tuple[3];
+					int updateSlot = Integer.parseInt((String) tuple[3]);
+					System.out.println("Point player number: "+updateSlot);
 					int points = (int) tuple[4];
 					Client.main.setScore(updateSlot, points);
 				}
