@@ -1959,7 +1959,7 @@ public class MainGUI extends JFrame implements ActionListener {
 //		ChosCard2[num].setVisible(show);	
 //		ChosCard3[num].setVisible(show);
 
-		if (row == 1) {
+		if (row == 0) {
 			ChosCard1[num].setText(text);
 			
 			if (text.equals("")) {
@@ -1969,7 +1969,7 @@ public class MainGUI extends JFrame implements ActionListener {
 			}
 		}
 		
-		if (row == 2) {
+		if (row == 1) {
 			ChosCard2[num].setText(text);
 			
 			if (text.equals("")) {
@@ -1979,7 +1979,7 @@ public class MainGUI extends JFrame implements ActionListener {
 			}
 		}
 		
-		if (row == 3) {
+		if (row == 2) {
 			ChosCard3[num].setText(text);
 			
 			if (text.equals("")) {
