@@ -88,7 +88,7 @@ public class MainGUI extends JFrame implements ActionListener {
 	private JTextArea[] ChosCard2 = new JTextArea[8];
 	private JTextArea[] ChosCard3 = new JTextArea[8];
 	private JTextArea[] area = new JTextArea[10];
-	private JLabel label, czar, phase, number = new JLabel();
+	private JLabel label, czar, phase, number, timerem = new JLabel();
 	private JTextArea pointsPlayer;
 
 
@@ -1399,6 +1399,12 @@ public class MainGUI extends JFrame implements ActionListener {
 		phase.setAlignmentX(Component.CENTER_ALIGNMENT);
 		phase.setFont(new Font("calibri",1,FontSizeOfCards));
 		
+		timerem = new JLabel("Time remaining: ");
+		timerem.setForeground(Color.BLACK);
+		timerem.setPreferredSize(new Dimension(300, 80));
+		timerem.setAlignmentX(Component.CENTER_ALIGNMENT);
+		timerem.setFont(new Font("calibri",1,FontSizeOfCards));
+		
 		// Panel for the left side.
 		JPanel PLeft = new JPanel();
 		JPanel card1 = new JPanel();
@@ -1786,6 +1792,12 @@ public class MainGUI extends JFrame implements ActionListener {
 				phase.setText("null");
 			}
 		}
+	}
+	
+	public void setTime(int t) {
+		
+		timerem.setText("Time to answer: "+t);
+		
 	}
 	
 	
