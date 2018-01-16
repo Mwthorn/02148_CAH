@@ -91,9 +91,13 @@ public class Listener implements Runnable{
 					// ("ingame", "yourpick", player.getId(), null, cardIndex);
 					int pickedCard = (int) tuple[4];
 					// TODO: Update for chosen card on Client
+					Client.main.playerButton(false, pickedCard);
 					Client.cardsPicked++;
 					if (Client.cardsPicked >= Client.amountOfBlanks) {
 						Client.main.setPhase(WAIT);
+						for (int i = 0; i < 10; i++) {
+							Client.main.playerButton(false, i);
+						}
 					}
 				}
 				else if (tuple[1].equals("picked")) {
@@ -103,12 +107,18 @@ public class Listener implements Runnable{
 					if (!Client.main.isCzar) {
 						Client.main.setPhase(WAITCZAR);
 					}
+					for (int i = 0; i < 10; i++) {
+						Client.main.playerButton(false, i);
+					}
 				}
 				else if (tuple[1].equals("czar")) {
 
 					// ("ingame", "picked", player.getId(), pickedCards[i], i);
 					// Client.main.setCzar((String) tuple[3]);
 					Client.main.setPhase(WAIT);
+					for (int i = 0; i < 10; i++) {
+						Client.main.playerButton(false, i);
+					}
 					Client.main.setRound((int) tuple[4]);
 				}
 				else if (tuple[1].equals("result")) {
@@ -119,15 +129,24 @@ public class Listener implements Runnable{
 					// TODO: Show results to GUI (0 is not used)
 					Client.main.highlightWinner((int) tuple[4], true);
 					Client.main.setPhase(WINNER);
+					for (int i = 0; i < 8; i++) {
+						Client.main.czarButton(false, i);
+					}
 				}
 				else if (tuple[1].equals("yourturn")) {
 					//allowPlayerTurn();
 					Client.main.setPhase(PICK);
 					Client.main.setCzar(false);
+					for (int i = 0; i < 10; i++) {
+						Client.main.playerButton(true, i);
+					}
 				}
 				else if (tuple[1].equals("czarturn")) {
 					//allowPlayerTurn();
 					Client.main.setPhase(CZAR);
+					for (int i = 0; i < (int) tuple[4]; i++) {
+						Client.main.czarButton(true, i);
+					}
 				}
 				else if (tuple[1].equals("youczar")) {
 					//allowPlayerTurn();
