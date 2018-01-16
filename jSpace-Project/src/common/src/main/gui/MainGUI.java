@@ -1822,9 +1822,9 @@ public class MainGUI extends JFrame implements ActionListener {
 	
 	public void highlightWinner(int i){
 		
-		ChosCard1[i].setBackground(Color.YELLOW);
-		ChosCard2[i].setBackground(Color.YELLOW);
-		ChosCard3[i].setBackground(Color.YELLOW);
+		ChosCard1[i].setBackground(new Color(255,215,0));
+		ChosCard2[i].setBackground(new Color(255,215,0));
+		ChosCard3[i].setBackground(new Color(255,215,0));
 
 
 		
