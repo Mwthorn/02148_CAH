@@ -72,7 +72,7 @@ public class Chat extends JFrame implements ActionListener {
 			if (messageField.getText().length() < 1) {
 				// DO NOTHING
 			} else {
-				Client.sendChatMessage(messageField.getText());
+				//Client.sendChatMessage(messageField.getText());
 				messageField.setText("");
 			}
 			messageField.requestFocusInWindow();
