@@ -305,7 +305,7 @@ public class Game implements Runnable {
         Player winnerPlayer = null;
         WhiteCard winnerCards[] = new WhiteCard[blackCard.getBlanks()];
         Player chosen = FindPlayer(chosenID);
-        talker.put("ingame", "czarturn", chosen.getId(), "test", 0);
+        talker.put("ingame", "czarturn", chosen.getId(), "test", contestents.size());
         while (state) {
             try {
                 Object[] tuple = local.get(new ActualField("Game"), new FormalField(String.class));
@@ -359,7 +359,9 @@ public class Game implements Runnable {
             }
             talker.put("ingame", "resultPlayer", player.getId(), winnerPlayer.getName(), contestents.indexOf(winnerPlayer));
             // TODO: Update points for all players
-            talker.put("ingame", "points", player.getId(), Integer.toString(player.getGameSlot().getSlot()), winnerPlayer.getPoints());
+            System.out.println("This is a test");
+            System.out.println(Integer.toString(player.getGameSlot().getSlot()));
+            talker.put("ingame", "points", player.getId(), Integer.toString(winnerPlayer.getGameSlot().getSlot()), winnerPlayer.getPoints());
         }
         try {
             System.out.println("Sleeping...");
