@@ -305,7 +305,7 @@ public class Game implements Runnable {
         Player winnerPlayer = null;
         WhiteCard winnerCards[] = new WhiteCard[blackCard.getBlanks()];
         Player chosen = FindPlayer(chosenID);
-        talker.put("ingame", "czarturn", chosen.getId(), "test", 0);
+        talker.put("ingame", "czarturn", chosen.getId(), "test", contestents.size());
         while (state) {
             try {
                 Object[] tuple = local.get(new ActualField("Game"), new FormalField(String.class));

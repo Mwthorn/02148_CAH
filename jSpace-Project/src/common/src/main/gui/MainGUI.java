@@ -1060,6 +1060,7 @@ public class MainGUI extends JFrame implements ActionListener {
 
 		//Creates panel for buttons
 		JPanel BtnPanel = new JPanel();
+		JPanel panel = new JPanel();
 
 		FlowLayout flow = new FlowLayout(FlowLayout.CENTER);
 		BtnPanel.setLayout(flow);
@@ -1071,6 +1072,8 @@ public class MainGUI extends JFrame implements ActionListener {
 
 		mainReadyUpLobby.add(BtnPanel, BorderLayout.SOUTH);
 
+//		panel.add
+		
 		// Chat
 		lobbyChat();
 
@@ -1110,7 +1113,7 @@ public class MainGUI extends JFrame implements ActionListener {
 		p1.setPreferredSize(maxsize);
 		p1.setBorder(BorderFactory.createMatteBorder(1, 1, 1, 1, Color.black));
 		p1.setBackground(Color.WHITE);
-
+		
 		// Name Label
 		player[0] = new JLabel("   ");
 		player[0].setMaximumSize(lsize);
@@ -1324,10 +1327,6 @@ public class MainGUI extends JFrame implements ActionListener {
 		mainReadyUpLobby.add(playerPanel, BorderLayout.CENTER);
 	}
 	/////////////////////////////////////////////// READYUPLOBBY //////////////////////////////////////////////////////////////////
-
-	public void runSelected(){
-
-	}
 
 
 	public void runGame(){
@@ -1947,18 +1946,16 @@ public class MainGUI extends JFrame implements ActionListener {
 			ChosCard2[i].setBackground(Color.WHITE);
 			ChosCard3[i].setBackground(Color.WHITE);
 		}
-		
-		
 	}
 
 	public void czarButton(boolean show, int i){
 		Winner[i].setVisible(show);
-		Winner[i].setEnabled(show);
+//		Winner[i].setEnabled(show);
 	}
 	
 	public void playerButton(boolean show, int i) {
 		PlayerCards[i].setVisible(show);
-		PlayerCards[i].setVisible(show);
+//		PlayerCards[i].set(show);
 	}
 	
 	public void hideRest (int noPlayer, boolean hide){
