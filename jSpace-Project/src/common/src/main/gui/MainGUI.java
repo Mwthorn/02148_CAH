@@ -102,7 +102,7 @@ public class MainGUI extends JFrame implements ActionListener {
 	private JTextArea[] ChosCard3 = new JTextArea[8];
 	private JTextArea[] area = new JTextArea[10];
 	private JLabel label, czar, phase, number, timerem = new JLabel();
-	private JTextArea pointsPlayer;
+	private JTextArea pointsPlayer; 
 
 
 	// Rounded Buttons
@@ -1950,6 +1950,16 @@ public class MainGUI extends JFrame implements ActionListener {
 		PlayerCards[i].setVisible(show);
 		PlayerCards[i].setVisible(show);
 	}
+	
+	public void hideRest (int noPlayer, boolean hide){
+		
+		ChosCard1[noPlayer].setVisible(hide);
+		ChosCard2[noPlayer].setVisible(hide);
+		ChosCard3[noPlayer].setVisible(hide);
+		Winner[noPlayer].setVisible(hide);
+		
+	}
+	
 	
 
 	//	} else if (e.getSource() == b3) {
