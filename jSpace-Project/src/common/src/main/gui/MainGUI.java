@@ -93,6 +93,7 @@ public class MainGUI extends JFrame implements ActionListener {
 	private JPanel lobbyChatPanel, lobbySendPanel;
 
 	// Game
+	private ArrayList<GameSlot> inGameSlot = new ArrayList<GameSlot>();
 	private JTextArea BlackCard;
 	private String[] ChosenCards = new String[8];
 	private int numberOfCards = 3;
@@ -103,9 +104,9 @@ public class MainGUI extends JFrame implements ActionListener {
 	private JTextArea[] ChosCard3 = new JTextArea[8];
 	private JTextArea[] area = new JTextArea[10];
 	private JLabel label, czar, phase, number, timerem = new JLabel();
-	private JTextArea pointsPlayer;
 	public boolean isCzar;
 	private JLabel[] scores = new JLabel[8];
+	private JPanel PRight;
 
 	// Game Chat
 	public 	JTextArea chatBox = new JTextArea();
@@ -183,6 +184,9 @@ public class MainGUI extends JFrame implements ActionListener {
 		getContentPane().setLayout(new BorderLayout());
 		getContentPane().setSize(1900,1000);
 
+		for (int i = 0; i < 8; i++) {
+			gameSlot[i] = new GameSlot(-1, "", false);
+		}
 
 		runLogin();
 		runLobby();
@@ -470,7 +474,7 @@ public class MainGUI extends JFrame implements ActionListener {
 		PLeft.add(Box.createRigidArea(new Dimension(365,100)));
 
 		//Right JPanel
-		JPanel PRight = new JPanel();
+		PRight = new JPanel();
 		PRight.setLayout(new BoxLayout(PRight, BoxLayout.PAGE_AXIS));
 		PRight.setBackground(Color.white);
 
@@ -1491,33 +1495,7 @@ public class MainGUI extends JFrame implements ActionListener {
 				ChosCard3[i].setWrapStyleWord(true);
 			}
 		}
-
-
-		pointsPlayer = new JTextArea();
-		pointsPlayer.setPreferredSize(SizeOfChosenCards);
-		pointsPlayer.setBorder(BorderForCards);
-		pointsPlayer.setBackground(Color.white);
-		pointsPlayer.setForeground(Color.BLACK);
-		pointsPlayer.setFont(new Font("calibri",1,FontSizeOfCards));
-		pointsPlayer.setEditable(false);
-		pointsPlayer.setLineWrap(true);
-		pointsPlayer.setWrapStyleWord(true);
 		
-		int playersInGame = 8;
-		
-		
-		
-		
-		for(int i = 0; i<playersInGame; i++){
-			
-			scores[i] = new JLabel();
-			scores[i].setBackground(Color.white);
-			scores[i].setForeground(Color.BLACK);
-			scores[i].setFont(new Font("calibri",1,FontSizeOfCards));
-			scores[i].setText("Sebastian");
-		}
-
-
 		/////////////////////////////////////////////// PANELS //////////////////////////////////////////////////////////////////
 
 		JPanel PAll = new JPanel();
@@ -1575,20 +1553,22 @@ public class MainGUI extends JFrame implements ActionListener {
 		PAll.add(PLeft, BorderLayout.WEST);
 
 		// Panel for the right side.
-		JPanel PRight = new JPanel();
+		PRight = new JPanel();
 
 		PRight.setLayout(new BoxLayout(PRight, BoxLayout.PAGE_AXIS));
 		PRight.setPreferredSize(new Dimension(300,1000));
 		PRight.setBackground(Color.WHITE);
 		PRight.add(Box.createRigidArea(new Dimension(0,20)));
-		for(int i=0; i<playersInGame; i++){
-			PRight.add(scores[i]);	
-		}
 		PRight.add(Box.createRigidArea(new Dimension(0,500)));
-
-
 		PAll.add(PRight, BorderLayout.EAST);
-
+		
+		JLabel scoreboard = new JLabel();
+		scoreboard.setBackground(Color.white);
+		scoreboard.setForeground(Color.BLACK);
+		scoreboard.setFont(new Font("calibri",1,25));
+		scoreboard.setText("SCOREBOARD");
+		PRight.add(scoreboard);
+		
 		// Game Chat
 		// Panels
 		JPanel chatPanel = new JPanel();
@@ -1751,6 +1731,24 @@ public class MainGUI extends JFrame implements ActionListener {
 
 	}
 
+	public void createScoreBoard(){
+		int playersInGame = 0;
+		for (int i = 0; i < 8; i++) {
+			System.out.println("sådan her");
+			if (gameSlot[i].hasPlayer()){
+				System.out.println("nemlig");
+				gameSlot[i].setInSlot(playersInGame);
+				scores[playersInGame] = new JLabel();
+				scores[playersInGame].setBackground(Color.white);
+				scores[playersInGame].setForeground(Color.BLACK);
+				scores[playersInGame].setFont(new Font("calibri",1,16));
+				scores[playersInGame].setText(gameSlot[playersInGame].getName()+": "+0);
+				PRight.add(scores[playersInGame]);	
+				
+				playersInGame++;
+			}
+		}	
+	}
 
 
 
@@ -1892,6 +1890,7 @@ public class MainGUI extends JFrame implements ActionListener {
 
 
 	public void updatePlayer(GameSlot givenSlot) {
+		gameSlot[givenSlot.getSlot()] = givenSlot;
 		int index = givenSlot.getSlot();
 
 		if (givenSlot.hasPlayer() == true){
@@ -1927,7 +1926,8 @@ public class MainGUI extends JFrame implements ActionListener {
 //		ChosCard1[playerNumber].setVisible(true);
 //		ChosCard2[playerNumber].setVisible(true);
 //		ChosCard3[playerNumber].setVisible(true);
-
+		
+		createScoreBoard();
 		hideAll();
 		mainGame.setVisible(true);
 		add(mainGame);
@@ -1992,10 +1992,9 @@ public class MainGUI extends JFrame implements ActionListener {
 	
 	
 	public void setScore(int updateSlot, int points){
-
-//			System.out.println(updateSlot+" has "+points+" points.\n");
-//			scores.(updateSlot+" has "+points+" points.\n");
-		
+		String name = gameSlot[updateSlot].getName();
+		int index = gameSlot[updateSlot].getInSlot();
+		scores[index].setText(name+": "+points);
 	}
 
 

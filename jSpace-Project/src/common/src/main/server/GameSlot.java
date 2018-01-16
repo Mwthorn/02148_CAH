@@ -3,6 +3,7 @@ package common.src.main.server;
 public class GameSlot {
 
     private int slot;
+    private int inSlot;
     private String name;
     private boolean ready;
     private boolean hasPlayer;
@@ -36,5 +37,13 @@ public class GameSlot {
     
     public boolean hasPlayer(){
     	return hasPlayer;
+    }
+    
+    public void setInSlot(int i){
+    	this.inSlot = i;
+    }
+    
+    public int getInSlot(){
+    	return this.inSlot;
     }
 }

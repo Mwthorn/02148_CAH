@@ -162,7 +162,7 @@ public class Listener implements Runnable{
 					int updateSlot = Integer.parseInt((String) tuple[3]);
 					System.out.println("Point player number: "+updateSlot);
 					int points = (int) tuple[4];
-					//Client.main.setScore(updateSlot, points);
+					Client.main.setScore(updateSlot, points);
 				}
 				// TODO: Player leaves/joins in mid-game
 			}
