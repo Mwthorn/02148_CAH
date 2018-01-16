@@ -196,7 +196,7 @@ public class Client {
 		talker.put("game", "start", userID, "");
 	}
 	
-	public static void sendChatMessage(String message) {
+	public static void sendLobbyChatMessage(String message) {
 		talker.put("game", "chat", userID, message);
 	}
 	
