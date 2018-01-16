@@ -83,7 +83,10 @@ public class Listener implements Runnable{
 					Client.amountOfBlanks = (int) tuple[4];
 					Client.main.setBlack((String) tuple[3]);
 					for (int i = 0; i < 8; i++) {
-						Client.main.setSelected(i, "");
+						for (int j = 0; j < 3; j++) {
+							Client.main.setSelected(i, j, "");
+						}
+						Client.main.highlightWinner(i,false);
 					}
 					Client.cardsPicked = 0;
 				}
@@ -102,8 +105,8 @@ public class Listener implements Runnable{
 				}
 				else if (tuple[1].equals("picked")) {
 					// ("ingame", "picked", player.getId(), pickedCards[i], i);
-					//Object[] pickedInfo = game.get(new ActualField("ingame"), new FormalField(String.class), new ActualField(userID), new FormalField(String[].class), new FormalField(Integer.class));
-					Client.main.setSelected((int) tuple[4], (String) tuple[3]);
+					Object[] pickedInfo = game.get(new ActualField("cardPicked"), new ActualField(userID), new FormalField(Integer.class));
+					Client.main.setSelected((int) tuple[4], (int) pickedInfo[2], (String) tuple[3]);
 					if (!Client.main.isCzar) {
 						Client.main.setPhase(WAITCZAR);
 					}
@@ -159,7 +162,7 @@ public class Listener implements Runnable{
 					int updateSlot = Integer.parseInt((String) tuple[3]);
 					System.out.println("Point player number: "+updateSlot);
 					int points = (int) tuple[4];
-					Client.main.setScore(updateSlot, points);
+					//Client.main.setScore(updateSlot, points);
 				}
 				// TODO: Player leaves/joins in mid-game
 			}
