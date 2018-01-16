@@ -1020,7 +1020,7 @@ public class MainGUI extends JFrame implements ActionListener {
 	}
 
 
-	public void chatMessageRecived(String message) {
+	public void chatLobbyMessageRecived(String message) {
 		lobbyChatBox.append(message+"\n");
 	}
 
