@@ -61,8 +61,6 @@ public class Listener implements Runnable{
 					// TODO: Force an error message to pop up.
 					// This happens if a player
 				} else if (tuple[1].equals("chat")){
-					System.out.println("hej");
-					System.out.println((String) tuple[4]);
 					Client.main.lobbyChat.chatMessageRecived((String) tuple[4]);
 				}
 			} catch (InterruptedException e) {

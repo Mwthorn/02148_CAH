@@ -123,7 +123,6 @@ public class Game implements Runnable {
     }
 
 	private void sendChat(int senderID, String message) {
-		System.out.println("hej i game");
 		message = "<"+getPlayerwithID(senderID).getName()+">: " + message;
 		System.out.println(message);
 		for (Player player : players){
