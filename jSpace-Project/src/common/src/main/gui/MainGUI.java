@@ -43,7 +43,6 @@ public class MainGUI extends JFrame implements ActionListener {
 	String name, IP, gameName, rounds, time, password;
 	int players;
 
-
 	// Login
 	private JButton BQuit, BSignIn, BBack;
 	private JLabel LTitle, LText, LFigure1, LName, LIP, LFigure2;
@@ -1748,7 +1747,7 @@ public class MainGUI extends JFrame implements ActionListener {
 
 	public void setCzar(String name) {
 	}
-	
+
 	public void getRound(int rnd){
 		number.setText("Round Number: "+rnd);
 	}
