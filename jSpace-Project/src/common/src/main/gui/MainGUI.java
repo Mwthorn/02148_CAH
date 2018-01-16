@@ -999,7 +999,7 @@ public class MainGUI extends JFrame implements ActionListener {
 		// Message field and send button
 		lobbyMessageField = new JTextField();
 		lobbyMessageField.requestFocusInWindow();
-		lobbyMessageField.setPreferredSize(new Dimension(400, 20));
+		lobbyMessageField.setPreferredSize(new Dimension(300, 20));
 
 		lobbySendButton = new JButton(" Send ");
 		lobbySendButton.addActionListener(this);
@@ -1103,7 +1103,7 @@ public class MainGUI extends JFrame implements ActionListener {
 		// Panel for Black Card image
 		JPanel BCPanel = new JPanel();
 		BCPanel.setLayout(new BoxLayout(BCPanel, BoxLayout.Y_AXIS));
-		BCPanel.setBackground(Color.GRAY);
+		BCPanel.setBackground(Color.WHITE);
 		BCPanel.add(LPicBC);
 		BCPanel.add(lobbyChatPanel);
 		BCPanel.add(lobbySendPanel);
