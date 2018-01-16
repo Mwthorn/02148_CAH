@@ -8,6 +8,7 @@ import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.Font;
 import java.awt.Graphics;
+import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Image;
 import java.awt.Insets;
@@ -106,6 +107,11 @@ public class MainGUI extends JFrame implements ActionListener {
 	public boolean isCzar;
 	private JLabel[] scores = new JLabel[8];
 
+	// Game Chat
+	public 	JTextArea chatBox = new JTextArea();
+	private String message, username = null;
+	private JTextField messageField;
+	private JButton sendButton;
 
 	// Rounded Buttons
 	// Source: https://stackoverflow.com/questions/423950/rounded-swing-jbutton-using-java
@@ -207,6 +213,18 @@ public class MainGUI extends JFrame implements ActionListener {
 				System.out.println("!!! lobSend");
 			}
 		});
+		
+		lobbyMessageField.getInputMap(JComponent.WHEN_FOCUSED)
+		.put(KeyStroke.getKeyStroke(KeyEvent.VK_ENTER,0),"lobSend2");
+		
+		lobbyMessageField.getActionMap().put("lobSend2",new AbstractAction(){
+			public void actionPerformed(ActionEvent ae){
+				lobbySendButton.doClick();
+				System.out.println("!!! lobSend2");
+			}
+		});
+		
+		
 
 		mainCreate.getInputMap(JComponent.WHEN_FOCUSED)
 		.put(KeyStroke.getKeyStroke(KeyEvent.VK_ENTER,0),"creatGame");
@@ -1564,6 +1582,58 @@ public class MainGUI extends JFrame implements ActionListener {
 
 		PAll.add(PRight, BorderLayout.EAST);
 
+		// Game Chat
+		// Panels
+		JPanel chatPanel = new JPanel();
+		JPanel sendPanel = new JPanel();
+		
+		chatPanel.setLayout(new BorderLayout());
+		chatPanel.setPreferredSize(new Dimension(0,600));
+		chatPanel.setVisible(true);
+		sendPanel.setBackground(Color.WHITE);
+		sendPanel.setLayout(new GridBagLayout());
+
+	
+		// Message field and send button
+		messageField = new JTextField();
+		messageField.requestFocusInWindow();
+
+		sendButton = new JButton(" Send ");
+		sendButton.addActionListener(this);
+
+		// Chat area
+		chatBox = new JTextArea();
+		chatBox.setEditable(false);
+		chatBox.setFont(new Font("Serif", Font.PLAIN, 15));
+		chatBox.setLineWrap(true);
+
+		// GRIDBAG CONSTRAINTS
+		// GBC for send button
+		GridBagConstraints left = new GridBagConstraints();
+		left.anchor = GridBagConstraints.LINE_START;
+		left.fill = GridBagConstraints.HORIZONTAL;
+		left.weightx = 300.0D;
+		left.weighty = 1.0D;
+		// GBC for message field
+		GridBagConstraints right = new GridBagConstraints();
+		right.anchor = GridBagConstraints.LINE_END;
+		right.fill = GridBagConstraints.NONE;
+		right.weightx = 1.0D;
+		right.weighty = 1.0D;
+
+		// adding elements
+		chatPanel.add(new JScrollPane(chatBox), BorderLayout.CENTER);
+		sendPanel.add(messageField, left);
+		sendPanel.add(sendButton, right);
+		chatPanel.add(BorderLayout.SOUTH, sendPanel);
+		//		PRight.add(Box.createRigidArea(new Dimension(0,20)));
+
+
+		// CHAT END
+
+
+		
+		
 
 		// Panels for the center
 		JPanel PMid = new JPanel();
@@ -1786,6 +1856,14 @@ public class MainGUI extends JFrame implements ActionListener {
 				lobbyMessageField.setText("");
 			}
 			lobbyMessageField.requestFocusInWindow();
+		} else if ( e.getSource() == sendButton ) {
+			if (messageField.getText().length() < 1) {
+				// DO NOTHING
+			} else {
+				Client.sendChatMessage(messageField.getText());
+				messageField.setText("");
+			}
+			messageField.requestFocusInWindow();
 		}
 
 		for (int i = 0; i < 10; i++) {
