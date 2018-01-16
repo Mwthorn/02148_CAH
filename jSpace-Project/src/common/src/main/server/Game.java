@@ -277,6 +277,7 @@ public class Game implements Runnable {
                 }
                 else if (tuple[1] == "chat") {
                     Object[] tuple2 = local.get(new ActualField("chatsender"), new FormalField(Integer.class));
+                    Player sender = FindPlayer((int) tuple2[1]);
                     for (Player player :players) {
                         talker.put("ingame", "chat", player.getId(), "", 0);
                     }
