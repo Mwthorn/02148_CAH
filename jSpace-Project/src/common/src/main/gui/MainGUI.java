@@ -109,7 +109,7 @@ public class MainGUI extends JFrame implements ActionListener {
 	private JTextArea chatBox;
 	private JTextField messageField;
 	private JButton sendButton;
-	private JPanel PRight, chatPanel, sendPanel;
+	private JPanel PRight, chatPanel, sendPanel, PTopRight;
 	
 	// Rounded Buttons
 	// Source: https://stackoverflow.com/questions/423950/rounded-swing-jbutton-using-java
@@ -1625,12 +1625,14 @@ public class MainGUI extends JFrame implements ActionListener {
 
 		// Panel for the right side.
 		PRight = new JPanel();
-
+		PTopRight = new JPanel();
+		PTopRight.setLayout(new BoxLayout(PTopRight, BoxLayout.PAGE_AXIS));
+		PTopRight.setBackground(Color.WHITE);
+		
 		PRight.setLayout(new BoxLayout(PRight, BoxLayout.PAGE_AXIS));
 		PRight.setPreferredSize(new Dimension(300,1000));
 		PRight.setBackground(Color.WHITE);
-		PRight.add(Box.createRigidArea(new Dimension(0,20)));
-		PRight.add(Box.createRigidArea(new Dimension(0,500)));
+//		PRight.add(Box.createRigidArea(new Dimension(0,)));
 		PAll.add(PRight, BorderLayout.EAST);
 		
 		JLabel scoreboard = new JLabel();
@@ -1638,9 +1640,13 @@ public class MainGUI extends JFrame implements ActionListener {
 		scoreboard.setForeground(Color.BLACK);
 		scoreboard.setFont(new Font("calibri",1,25));
 		scoreboard.setText("SCOREBOARD");
-		PRight.add(scoreboard);
+		PTopRight.add(scoreboard);
 		
+		PRight.add(Box.createRigidArea(new Dimension(0,50)));
+		PRight.add(PTopRight);
+		PRight.add(Box.createRigidArea(new Dimension(0,150)));
 		gameChat();		
+		PRight.add(Box.createRigidArea(new Dimension(0,50)));
 
 		// Panels for the center
 		JPanel PMid = new JPanel();
@@ -1763,7 +1769,7 @@ public class MainGUI extends JFrame implements ActionListener {
 				scores[playersInGame].setForeground(Color.BLACK);
 				scores[playersInGame].setFont(new Font("calibri",1,16));
 				scores[playersInGame].setText(gameSlot[playersInGame].getName()+": "+0);
-				PRight.add(scores[playersInGame]);	
+				PTopRight.add(scores[playersInGame]);	
 				
 				playersInGame++;
 			}
