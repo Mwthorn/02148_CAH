@@ -224,8 +224,7 @@ public class Client {
 	}
 
 	public static void sendGameChatMessage(String message) {
-		//talker.put("gameListener", "chat", userID, message);
-		// TODO: MATHIAS!!!!! sæt de rigtige tuples til at sende beskeden til game.
+		talker.put("gameListener", "chat", userID, message, 0);
 	}
 	
 
