@@ -24,7 +24,6 @@ public class Timeout implements Runnable {
             try {
                 Thread.sleep(1000);
                 timeout++;
-                System.out.println("Timeout: " + timeout);
                 java.lang.Object[] tuple = local.getp(new ActualField("Timeout") ,new ActualField("Cancel"));
                 if (tuple != null) {
                     System.out.println("Timeout: skipped!");
@@ -37,7 +36,9 @@ public class Timeout implements Runnable {
                 }
                 else {
                     local.put("Game", "time");
-                    local.put("timer", timetotal-timeout);
+                    int timeleft = timetotal-timeout;
+                    System.out.println("Timeout: " + timeleft);
+                    local.put("timer", timeleft);
                 }
 
             } catch (InterruptedException e) {

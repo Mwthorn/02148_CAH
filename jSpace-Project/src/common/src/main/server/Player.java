@@ -81,9 +81,9 @@ public class Player {
     }
 
     public void chooseWhiteCard(int i) {
-        WhiteCard card = whiteCards[i];
+        WhiteCard card = this.whiteCards[i];
         this.pickedCards.add(card);
-        whiteCards[i] = null;
+        this.whiteCards[i] = null;
     }
 
     public boolean getReady() {

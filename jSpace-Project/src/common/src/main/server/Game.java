@@ -221,12 +221,18 @@ public class Game implements Runnable {
                         for (int i = 0; i < blackCard.getBlanks(); i++) {
                             if (!player.hasPickedCard(i)) {
                                 Random rand = new Random();
-                                int n = rand.nextInt(this.whiteCardsPerPlayer - 1);
-                                //pickedCards[contestents.indexOf(player)] = player.getWhiteCards().get(n);
-                                player.chooseWhiteCard(n);
-                                System.out.println("Set picked card for PLAYER " + player.getId() + " to card " + n);
-                                talker.put("ingame", "yourpick", player.getId(), "test", n);
-                                System.out.println("Done!");
+                                boolean pickedCard = false;
+                                while (!pickedCard) {
+                                    int n = rand.nextInt(this.whiteCardsPerPlayer - 1);
+                                    //pickedCards[contestents.indexOf(player)] = player.getWhiteCards().get(n);
+                                    if (player.getWhiteCards()[n] != null) {
+                                        player.chooseWhiteCard(n);
+                                        System.out.println("Set picked card for PLAYER " + player.getId() + " to card " + n);
+                                        talker.put("ingame", "yourpick", player.getId(), "test", n);
+                                        System.out.println("Done!");
+                                        pickedCard = true;
+                                    }
+                                }
                             }
                         }
                     }
@@ -273,6 +279,7 @@ public class Game implements Runnable {
                 else if (tuple[1] == "time") {
                     Object[] tuple2 = local.get(new ActualField("timer"), new FormalField(Integer.class));
                     int timer = (int) tuple2[1];
+                    System.out.println("Timer got: " + tuple2[1] + " " + timer);
                     for (Player player : players) {
                         talker.put("ingame", "timer", player.getId(), "test", timer);
                     }
@@ -346,6 +353,7 @@ public class Game implements Runnable {
                 else if (tuple[1] == "time") {
                     Object[] tuple2 = local.get(new ActualField("timer"), new FormalField(Integer.class));
                     int timer = (int) tuple2[1];
+                    System.out.println("Timer got: " + tuple2[1] + " " + timer);
                     for (Player player : players) {
                         talker.put("ingame", "timer", player.getId(), "test", timer);
                     }
@@ -385,6 +393,9 @@ public class Game implements Runnable {
                 Object[] tuple = local.get(new ActualField("Game"), new FormalField(String.class));
                 if (tuple[1] == "Timeout") {
                     state = false;
+                }
+                else if (tuple[1] == "time") {
+                    local.get(new ActualField("timer"), new FormalField(Integer.class));
                 }
                 else if (tuple[1] == "chat") {
                     Object[] tuple2 = local.get(new ActualField("chatSender"), new FormalField(String.class), new FormalField(Integer.class));

@@ -25,12 +25,36 @@ public class Client {
 
 	private static final int testNumber = 0;
 
-    public static void main(String[] args) throws InterruptedException {
-    	/* Login */
+    public static void main(String[] args) {
+		javax.swing.SwingUtilities.invokeLater(new Runnable() {
+			public void run() {
+				// your logic here
+				/*
+				try {
+					main = new MainGUI();
+				} catch (InterruptedException e) {
+					e.printStackTrace();
+				}
+
+				main.setTitle("Cards Against Humanity");
+				main.setSize(1900,1000);
+				main.setResizable(false);
+				main.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+				main.setVisible(true);
+				main.setLocationRelativeTo(null);
+				*/
+			}
+		});
+
+		/* Login */
     	// Create login GUI and request name of user and IP to server.
     	
     	/* Connect to server using GUI info */
-    	main = new MainGUI();
+		try {
+			main = new MainGUI();
+		} catch (InterruptedException e) {
+			e.printStackTrace();
+		}
 
 		main.setTitle("Cards Against Humanity");
 		main.setSize(1900,1000);

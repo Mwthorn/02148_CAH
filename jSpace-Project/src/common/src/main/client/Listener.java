@@ -157,6 +157,7 @@ public class Listener implements Runnable{
 					Client.main.setPhase(WAIT);
 				}
 				else if (tuple[1].equals("timer")) {
+					System.out.println("Timer is: " + tuple[4]);
 					Client.main.setTime((int) tuple[4]);
 				} else if (tuple[1].equals("points")){
 					int updateSlot = Integer.parseInt((String) tuple[3]);
