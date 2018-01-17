@@ -1522,25 +1522,25 @@ public class MainGUI extends JFrame implements ActionListener {
 		number.setForeground(Color.BLACK);
 		number.setPreferredSize(new Dimension(300, 80));
 		number.setAlignmentX(Component.CENTER_ALIGNMENT);
-		number.setFont(new Font("calibri",1,FontSizeOfCards));
+		number.setFont(new Font("calibri",1,FontSizeOfCards+10));
 
 		czar = new JLabel("Card Czar is: ");
 		czar.setForeground(Color.BLACK);
 		czar.setPreferredSize(new Dimension(300, 80));
 		czar.setAlignmentX(Component.CENTER_ALIGNMENT);
-		czar.setFont(new Font("calibri",1,FontSizeOfCards));
+		czar.setFont(new Font("calibri",1,FontSizeOfCards+10));
 
 		phase = new JLabel("Choosing: ");
 		phase.setForeground(Color.BLACK);
 		phase.setPreferredSize(new Dimension(300, 80));
 		phase.setAlignmentX(Component.CENTER_ALIGNMENT);
-		phase.setFont(new Font("calibri",1,FontSizeOfCards));
+		phase.setFont(new Font("calibri",1,FontSizeOfCards+10));
 
 		timerem = new JLabel("Time remaining: ");
 		timerem.setForeground(Color.BLACK);
 		timerem.setPreferredSize(new Dimension(300, 80));
 		timerem.setAlignmentX(Component.CENTER_ALIGNMENT);
-		timerem.setFont(new Font("calibri",1,FontSizeOfCards));
+		timerem.setFont(new Font("calibri",1,FontSizeOfCards+10));
 
 		// Panel for the left side.
 		JPanel PLeft = new JPanel();
