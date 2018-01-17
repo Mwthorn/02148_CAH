@@ -109,20 +109,15 @@ public class Game implements Runnable {
                         System.out.println("WOAH!! A non-host player tried to start game!");
                     }
                 } else if (tuple[1].equals("chat")){
-                	sendChat((int) tuple[2], (String) tuple[3]);
+                    sendLobbyChat((int) tuple[2], (String) tuple[3]);
                 }
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
         }
-        
-    	
-		
-    	// TODO: Respond to the messages and new players joining in real time.
-    	// TODO: Chat?
     }
 
-	private void sendChat(int senderID, String message) {
+	private void sendLobbyChat(int senderID, String message) {
 		message = "<"+getPlayerwithID(senderID).getName()+">: " + message;
 		System.out.println(message);
 		for (Player player : players){
@@ -130,6 +125,14 @@ public class Game implements Runnable {
 		}
 		
 	}
+
+    private void sendGameChat(int senderID, String message) {
+        message = "<"+getPlayerwithID(senderID).getName()+">: " + message;
+        for (Player player : players){
+            talker.put("ingame", "chat", player.getId(), message, 0);
+        }
+    }
+
 
 	private void startGame() {
 		// This is where all the in-game stuff happens.
@@ -196,7 +199,6 @@ public class Game implements Runnable {
             talker.put("ingame", "black", player.getId(), blackCard.getSentence(), blackCard.getBlanks());
             player.resetPickedCards();
             if (player.getId() == chosenID) {
-                // TODO: Tell player its not their turn (Chosen) (Do nothing?)
                 talker.put("ingame", "youczar", player.getId(), "test", 0);
             }
             else {
@@ -205,7 +207,7 @@ public class Game implements Runnable {
             }
         }
 
-        Timeout timeout = new Timeout(local);
+        Timeout timeout = new Timeout(local, 30);
         new Thread(timeout).start();
 
 
@@ -276,11 +278,8 @@ public class Game implements Runnable {
                     }
                 }
                 else if (tuple[1] == "chat") {
-                    Object[] tuple2 = local.get(new ActualField("chatsender"), new FormalField(Integer.class));
-                    Player sender = FindPlayer((int) tuple2[1]);
-                    for (Player player :players) {
-                        talker.put("ingame", "chat", player.getId(), "", 0);
-                    }
+                    Object[] tuple2 = local.get(new ActualField("chatSender"), new FormalField(String.class), new FormalField(Integer.class));
+                    sendGameChat((int) tuple2[2], (String) tuple2[1]);
                 }
             }
             //local.get(new ActualField("Game"), new ActualField("TimeoutFinish"));
@@ -308,7 +307,7 @@ public class Game implements Runnable {
                 //talker.put("ingame", "picked", player.getId(), pickedCards[i], i);
             }
         }
-        timeout = new Timeout(local);
+        timeout = new Timeout(local, 30);
         new Thread(timeout).start();
         state = true;
         Player winnerPlayer = null;
@@ -350,6 +349,10 @@ public class Game implements Runnable {
                         talker.put("ingame", "timer", player.getId(), "test", timer);
                     }
                 }
+                else if (tuple[1] == "chat") {
+                    Object[] tuple2 = local.get(new ActualField("chatSender"), new FormalField(String.class), new FormalField(Integer.class));
+                    sendGameChat((int) tuple2[2], (String) tuple2[1]);
+                }
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
@@ -372,11 +375,22 @@ public class Game implements Runnable {
             System.out.println(Integer.toString(player.getGameSlot().getSlot()));
             talker.put("ingame", "points", player.getId(), Integer.toString(winnerPlayer.getGameSlot().getSlot()), winnerPlayer.getPoints());
         }
-        try {
-            System.out.println("Sleeping...");
-            Thread.sleep(10000);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
+        timeout = new Timeout(local, 10);
+        new Thread(timeout).start();
+        state = true;
+        while (state) {
+            try {
+                Object[] tuple = local.get(new ActualField("Game"), new FormalField(String.class));
+                if (tuple[1] == "Timeout") {
+                    state = false;
+                }
+                else if (tuple[1] == "chat") {
+                    Object[] tuple2 = local.get(new ActualField("chatSender"), new FormalField(String.class), new FormalField(Integer.class));
+                    sendGameChat((int) tuple2[2], (String) tuple2[1]);
+                }
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
         }
     } // End of next round function
 
