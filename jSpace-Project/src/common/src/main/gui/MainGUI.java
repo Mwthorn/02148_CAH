@@ -999,7 +999,7 @@ public class MainGUI extends JFrame implements ActionListener {
 	}
 
 
-	public void chatLobbyMessageRecieved(String message) {
+	public void chatLobbyMessageReceived(String message) {
 		lobbyChatBox.append(message+"\n");
 	}
 
@@ -1379,7 +1379,7 @@ public class MainGUI extends JFrame implements ActionListener {
 
 	}
 
-	public void chatGameMessageRecieved(String message) {
+	public void chatGameMessageReceived(String message) {
 		chatBox.append(message+"\n");
 	}
 	
