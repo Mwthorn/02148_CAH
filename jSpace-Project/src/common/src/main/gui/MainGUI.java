@@ -103,7 +103,7 @@ public class MainGUI extends JFrame implements ActionListener {
 	private JLabel[] scores = new JLabel[8];
 	private JTextArea chatBox;
 	private JTextField messageField;
-	private JButton sendButton;
+	private JButton gameSendButton;
 	private JPanel PRight, chatPanel, sendPanel, PTopRight;
 	
 	// Rounded Buttons
@@ -238,7 +238,7 @@ public class MainGUI extends JFrame implements ActionListener {
 
 		mainGame.getActionMap().put("gameChat",new AbstractAction(){
 			public void actionPerformed(ActionEvent ae){
-				sendButton.doClick();
+				gameSendButton.doClick();
 				System.out.println("!!! gameChat");
 			}
 		});
@@ -246,7 +246,7 @@ public class MainGUI extends JFrame implements ActionListener {
 		.put(KeyStroke.getKeyStroke(KeyEvent.VK_ENTER,0),"gameChat2");
 		messageField.getActionMap().put("gameChat2",new AbstractAction(){
 			public void actionPerformed(ActionEvent ae){
-				sendButton.doClick();
+				gameSendButton.doClick();
 				System.out.println("!!! gameChat2");
 			}
 		});
@@ -1345,8 +1345,8 @@ public class MainGUI extends JFrame implements ActionListener {
 		messageField = new JTextField();
 		messageField.requestFocusInWindow();
 
-		sendButton = new JButton(" Send ");
-		sendButton.addActionListener(this);
+		gameSendButton = new JButton(" Send ");
+		gameSendButton.addActionListener(this);
 
 		// Chat area
 		chatBox = new JTextArea();
@@ -1371,7 +1371,7 @@ public class MainGUI extends JFrame implements ActionListener {
 		// adding elements
 		chatPanel.add(new JScrollPane(chatBox), BorderLayout.CENTER);
 		sendPanel.add(messageField, left);
-		sendPanel.add(sendButton, right);
+		sendPanel.add(gameSendButton, right);
 		chatPanel.add(BorderLayout.SOUTH, sendPanel);
 
 
@@ -1823,11 +1823,11 @@ public class MainGUI extends JFrame implements ActionListener {
 				lobbyMessageField.setText("");
 			}
 			lobbyMessageField.requestFocusInWindow();
-		} else if ( e.getSource() == sendButton ) {
+		} else if ( e.getSource() == gameSendButton ) {
 			if (messageField.getText().length() < 1) {
 				// DO NOTHING
 			} else {
-				Client.sendLobbyChatMessage(messageField.getText());
+				Client.sendGameChatMessage(messageField.getText());
 				messageField.setText("");
 			}
 			messageField.requestFocusInWindow();
