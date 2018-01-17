@@ -207,7 +207,7 @@ public class Game implements Runnable {
             }
         }
 
-        Timeout timeout = new Timeout(local, 30);
+        Timeout timeout = new Timeout(local, 20+(blackCard.getBlanks()*10));
         new Thread(timeout).start();
 
 
@@ -315,7 +315,7 @@ public class Game implements Runnable {
                 //talker.put("ingame", "picked", player.getId(), pickedCards[i], i);
             }
         }
-        timeout = new Timeout(local, 30);
+        timeout = new Timeout(local, players.size()*10);
         new Thread(timeout).start();
         state = true;
         Player winnerPlayer = null;
