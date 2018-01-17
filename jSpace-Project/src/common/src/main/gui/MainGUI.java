@@ -1956,9 +1956,11 @@ public class MainGUI extends JFrame implements ActionListener {
 		if (cz) {
 			this.isCzar = true;
 			czar.setText("You are Card Czar");
+			czar.setForeground(Color.RED);
 		} else {
 			this.isCzar = false;
 			czar.setText("You are NOT Card Czar");
+			czar.setForeground(Color.BLACK);
 		}
 	}
 
