@@ -190,7 +190,7 @@ public class MainGUI extends JFrame implements ActionListener {
 
 
 	public void runEnter(){
-		mainLogin.getInputMap(JComponent.WHEN_FOCUSED)
+		mainLogin.getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW)
 		.put(KeyStroke.getKeyStroke(KeyEvent.VK_ENTER,0),"signIn");
 
 		mainLogin.getActionMap().put("signIn",new AbstractAction(){
@@ -221,8 +221,7 @@ public class MainGUI extends JFrame implements ActionListener {
 		});
 		
 		
-
-		mainCreate.getInputMap(JComponent.WHEN_FOCUSED)
+		mainCreate.getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW)
 		.put(KeyStroke.getKeyStroke(KeyEvent.VK_ENTER,0),"creatGame");
 
 		mainCreate.getActionMap().put("creatGame",new AbstractAction(){
@@ -233,7 +232,7 @@ public class MainGUI extends JFrame implements ActionListener {
 		});
 
 		// Game Chat
-		mainGame.getInputMap(JComponent.WHEN_FOCUSED)
+		mainGame.getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW)
 		.put(KeyStroke.getKeyStroke(KeyEvent.VK_ENTER,0),"gameChat");
 
 		mainGame.getActionMap().put("gameChat",new AbstractAction(){
@@ -242,7 +241,7 @@ public class MainGUI extends JFrame implements ActionListener {
 				System.out.println("!!! gameChat");
 			}
 		});
-		messageField.getInputMap(JComponent.WHEN_FOCUSED)
+		messageField.getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW)
 		.put(KeyStroke.getKeyStroke(KeyEvent.VK_ENTER,0),"gameChat2");
 		messageField.getActionMap().put("gameChat2",new AbstractAction(){
 			public void actionPerformed(ActionEvent ae){
