@@ -164,6 +164,7 @@ public class Listener implements Runnable{
 					int points = (int) tuple[4];
 					Client.main.setScore(updateSlot, points);
 				} else if (tuple[1].equals("chat")){
+					System.out.println("Client recieved chat");
 					Client.main.chatGameMessageReceived((String) tuple[3]);
 				}
 				// TODO: Player leaves/joins in mid-game

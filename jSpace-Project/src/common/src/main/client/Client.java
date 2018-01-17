@@ -224,7 +224,9 @@ public class Client {
 	}
 
 	public static void sendGameChatMessage(String message) {
-		talker.put("gameListener", "chat", userID, message, 0);
+		System.out.println("Client trying to send message");
+		talker.put("gameListener", "chat", userID, 0);
+		talker.put("gameListenerChat", message, userID);
 	}
 	
 

@@ -277,7 +277,8 @@ public class Game implements Runnable {
                         talker.put("ingame", "timer", player.getId(), "test", timer);
                     }
                 }
-                else if (tuple[1] == "chat") {
+                else if (tuple[1].equals("chat")) {
+                	System.out.println("Game recieved chat");
                     Object[] tuple2 = local.get(new ActualField("chatSender"), new FormalField(String.class), new FormalField(Integer.class));
                     sendGameChat((int) tuple2[2], (String) tuple2[1]);
                 }
@@ -350,6 +351,7 @@ public class Game implements Runnable {
                     }
                 }
                 else if (tuple[1] == "chat") {
+                	System.out.println("Game recieved chat");
                     Object[] tuple2 = local.get(new ActualField("chatSender"), new FormalField(String.class), new FormalField(Integer.class));
                     sendGameChat((int) tuple2[2], (String) tuple2[1]);
                 }

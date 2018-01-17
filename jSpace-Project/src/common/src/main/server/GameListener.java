@@ -32,8 +32,10 @@ public class GameListener implements Runnable {
                     local.put("Card", (int) tuple[2], (int) tuple[3]);
                 }
                 else if (tuple[1].equals("chat")) {
+                	System.out.println("GameListener recieved chat");
                     cTuple = game.get(new ActualField("gameListenerChat"), new FormalField(String.class), new FormalField(Integer.class));
-                    local.put("Chat", cTuple[1], tuple[2]);
+                    local.put("Game", "chat");
+                    local.put("chatSender", (String) cTuple[1], (int) cTuple[2]);
                 }
             } catch (InterruptedException e) {
                 e.printStackTrace();
