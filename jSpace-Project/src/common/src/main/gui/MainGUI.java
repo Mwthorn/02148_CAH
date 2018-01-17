@@ -38,8 +38,7 @@ import javax.swing.KeyStroke;
 import javax.swing.ListSelectionModel;
 import javax.swing.SwingConstants;
 import javax.swing.border.Border;
-import javax.swing.event.ListSelectionEvent;
-import javax.swing.event.ListSelectionListener;
+
 
 import common.src.main.client.Client;
 import common.src.main.client.GamePreview;
@@ -59,10 +58,8 @@ public class MainGUI extends JFrame implements ActionListener {
 	public boolean signIn = false;
 
 	// Lobby
-	private static final String String = null;
 	private JButton LCreateGameBtn, LSignOutBtn, LJoinGameBtn, LRefreshBtn, b5;
 	private JLabel l1, l2, l3, l4, l5, l6;
-	private JTextField WP;
 	private JList list = new JList();
 	private JPanel availableGames;
 	private JScrollPane scrollPaneMain;
@@ -76,7 +73,6 @@ public class MainGUI extends JFrame implements ActionListener {
 	// Games available list
 	private int gameSelected;
 	private int numberOfGames;
-	private int maxGames = 42;
 	private ArrayList<GamePreview> games;
 
 	// ReadyUpLobby
@@ -84,7 +80,7 @@ public class MainGUI extends JFrame implements ActionListener {
 	private JButton[] readyBtn = new JButton[maxPlayers];
 	private JLabel[] player = new JLabel[maxPlayers];
 	private JButton BReady, BLeave;
-	private JLabel LHead, LPicWC, LPicBC, Label1, Label2, Label3, Label4, Label5, Label6, Label7, Label8;
+	private JLabel LHead, LPicWC, LPicBC;
 	private static JList playerList;
 	private Chat lobbyChat;
 	private JTextArea lobbyChatBox;
@@ -93,7 +89,6 @@ public class MainGUI extends JFrame implements ActionListener {
 	private JPanel lobbyChatPanel, lobbySendPanel;
 
 	// Game
-	private ArrayList<GameSlot> inGameSlot = new ArrayList<GameSlot>();
 	private JTextArea BlackCard;
 	private String[] ChosenCards = new String[8];
 	private int numberOfCards = 3;
@@ -296,25 +291,10 @@ public class MainGUI extends JFrame implements ActionListener {
 		l6.setAlignmentX(Component.CENTER_ALIGNMENT);
 		l6.setForeground(Color.RED);
 
-		//		panelcenter.add(l4);
-		//
-		//		//SÊtter tekstfelt og button pÂ JPanel
-		//		panel.setLayout(new BoxLayout(panel, BoxLayout.PAGE_AXIS));
-		//		panel.add(Box.createRigidArea(new Dimension(200,40)));
-		//		panel.add(panelcenter, BorderLayout.CENTER);
-		//		panel.add(Box.createRigidArea(new Dimension(200,10)));
-		//		panel.setBackground(Color.WHITE);
-
 		//Laver Jpanel til det
 		JPanel panel = new JPanel();
 		panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
 		panel.setBackground(Color.WHITE);
-
-
-		//		JPanel panelcenter = new JPanel();
-		//		FlowLayout flow = new FlowLayout();
-		//		panelcenter.setLayout(flow);
-		//		panelcenter.setBackground(Color.WHITE);
 
 		panel.add(Box.createRigidArea(new Dimension(400,10)));
 		panel.add(l6);
@@ -605,8 +585,6 @@ public class MainGUI extends JFrame implements ActionListener {
 
 
 		// Create List
-		//MainGUI lob = new MainGUI();
-		//ArrayList<GamePreview> info;
 
 		//Creates panel for buttons
 		JPanel p1 = new JPanel();
@@ -746,11 +724,9 @@ public class MainGUI extends JFrame implements ActionListener {
 				}}});
 
 
-		//		p5.setLayout(new BoxLayout(p5, BoxLayout.LINE_AXIS));
 		availableGames.setBackground(Color.WHITE);
 		availableGames.setAlignmentX(CENTER_ALIGNMENT);
 		availableGames.setAlignmentY(CENTER_ALIGNMENT);
-		//				p5.add(list);
 		availableGames.add(scrollPaneMain, BorderLayout.CENTER);
 		mainLobby.add(availableGames, BorderLayout.CENTER);
 	}
@@ -939,7 +915,6 @@ public class MainGUI extends JFrame implements ActionListener {
 		PL.add(Box.createRigidArea(new Dimension(350,25)));
 
 
-
 		PCenter.add(PL, BorderLayout.WEST);
 		PCenter.add(PR, BorderLayout.CENTER);
 
@@ -1021,7 +996,6 @@ public class MainGUI extends JFrame implements ActionListener {
 		lobbySendPanel.add(lobbySendButton);
 		lobbyChatPanel.add(BorderLayout.SOUTH, lobbySendPanel);
 
-		//SwingUtilities.getRootPane(sendButton).setDefaultButton(sendButton);
 	}
 
 
@@ -1108,14 +1082,11 @@ public class MainGUI extends JFrame implements ActionListener {
 		// Panel for Black Card image
 		JPanel BCPanel = new JPanel();
 		BCPanel.setLayout(new BoxLayout(BCPanel, BoxLayout.Y_AXIS));
-//		BCPanel.setSize(300, 800);
 		BCPanel.setBackground(Color.WHITE);
 		BCPanel.add(LPicBC);
 		BCPanel.add(Box.createRigidArea(new Dimension(50, 75)));
 		BCPanel.add(lobbyChatPanel);
 		BCPanel.add(lobbySendPanel);
-//		BCPanel.add(Box.createRigidArea(new Dimension(50, 0)));
-
 
 		// Panel for White Card image
 		JPanel WCPanel = new JPanel();
@@ -1323,7 +1294,6 @@ public class MainGUI extends JFrame implements ActionListener {
 		p8.add(player[7], BorderLayout.WEST);
 		p8.add(readyBtn[7], BorderLayout.EAST);
 
-
 		middle.add(p1);
 		middle.add(p2);
 		middle.add(p3);
@@ -1346,7 +1316,6 @@ public class MainGUI extends JFrame implements ActionListener {
 		playerPanel.setAlignmentX(CENTER_ALIGNMENT);
 		playerPanel.setAlignmentY(CENTER_ALIGNMENT);
 		playerPanel.add(middle);
-		//		playerPanel.add(scrollPane, BorderLayout.CENTER);
 
 		mainReadyUpLobby.add(playerPanel, BorderLayout.CENTER);
 	}
@@ -1403,7 +1372,6 @@ public class MainGUI extends JFrame implements ActionListener {
 		sendPanel.add(messageField, left);
 		sendPanel.add(sendButton, right);
 		chatPanel.add(BorderLayout.SOUTH, sendPanel);
-		//		PRight.add(Box.createRigidArea(new Dimension(0,20)));
 
 
 		// CHAT END
@@ -1421,27 +1389,12 @@ public class MainGUI extends JFrame implements ActionListener {
 		mainGame.setLayout(new BorderLayout());	
 
 		int FontSizeOfCards = 16;
-		int FontSizeOfChosenCards = 14;
 		Dimension SizeOfPlayerCards = new Dimension(120,500);
 		Dimension SizeOfBlackCards = new Dimension(200,300);
 		Dimension SizeOfChosenCards = new Dimension(123,170);
 		Dimension SizeOfChosenCards1 = new Dimension(123,40);
 		Dimension SizeOfPlayerCards1 = new Dimension(120,40);
 		Border BorderForCards = BorderFactory.createLineBorder(Color.BLACK, 1);
-		Dimension size = new Dimension(126,180);
-		Dimension size2 = new Dimension(126,60);
-
-		Dimension size3 = new Dimension(126,250);
-
-		// Czars black card of choice
-		//		BlackCard = new JTextArea();
-		//		BlackCard.setPreferredSize(SizeOfBlackCards);
-		//		BlackCard.setFont(new Font("calibri",1,FontSizeOfCards));
-		//		BlackCard.setBorder(BorderForCards);
-		//		BlackCard.setBackground(Color.BLACK);
-		//		BlackCard.setForeground(Color.WHITE);
-		//		BlackCard.setAlignmentX(Component.CENTER_ALIGNMENT);
-		//		BlackCard.setEnabled(true);
 
 		// Czars black card of choice used to fill out
 		BlackCard = new JTextArea();
@@ -1463,6 +1416,7 @@ public class MainGUI extends JFrame implements ActionListener {
 		// Cards on players hand is being created
 		for(int i=0; i<10; i++){
 			area[i] = new JTextArea();
+			
 			area[i].setMaximumSize(SizeOfPlayerCards);
 			area[i].setMinimumSize(SizeOfPlayerCards);
 			area[i].setBorder(BorderForCards);
@@ -1477,10 +1431,7 @@ public class MainGUI extends JFrame implements ActionListener {
 		// Cards on players hand is being created
 		for(int i=0; i<10; i++){
 			PlayerCards[i] = new JButton("Choose Card");
-
-			//			PlayerCards[i].setMaximumSize(SizeOfPlayerCards);
-			//				PlayerCards[i].setMaximumSize(SizeOfPlayerCards);
-			//			PlayerCards[i].setMinimumSize(SizeofPlayerCards1);
+			
 			PlayerCards[i].setPreferredSize(SizeOfPlayerCards1);
 			PlayerCards[i].setBackground(Color.BLACK);
 			PlayerCards[i].setForeground(Color.WHITE);
@@ -1495,12 +1446,8 @@ public class MainGUI extends JFrame implements ActionListener {
 
 		for(int i=0; i<ChosenCards.length; i++){
 			Winner[i] = new JButton("Pick Winner");
-
-
+			
 			Winner[i].setPreferredSize(SizeOfChosenCards1);
-			//			Winner[i].setMaximumSize(SizeOfChosenCards);
-			//				PlayerCards[i].setMaximumSize(SizeOfPlayerCards);
-			//			Winner[i].setMinimumSize(SizeOfChosenCards);
 			Winner[i].setBackground(Color.BLACK);
 			Winner[i].setForeground(Color.WHITE);
 			Winner[i].addActionListener(this);
@@ -1519,8 +1466,7 @@ public class MainGUI extends JFrame implements ActionListener {
 
 			for(int i=0; i<ChosenCards.length; i++){
 				ChosCard1[i] = new JTextArea();
-				//				ChosCard1[i].setMaximumSize(SizeOfChosenCards);
-				//				ChosCard1[i].setMinimumSize(SizeOfChosenCards);
+				
 				ChosCard1[i].setPreferredSize(SizeOfChosenCards);
 				ChosCard1[i].setBorder(BorderForCards);
 				ChosCard1[i].setBackground(Color.white);
@@ -1536,8 +1482,7 @@ public class MainGUI extends JFrame implements ActionListener {
 
 			for(int i=0; i<ChosenCards.length; i++){
 				ChosCard2[i] = new JTextArea();
-				//				ChosCard2[i].setMaximumSize(SizeOfChosenCards);
-				//				ChosCard2[i].setMinimumSize(SizeOfChosenCards);
+
 				ChosCard2[i].setPreferredSize(SizeOfChosenCards);
 				ChosCard2[i].setBorder(BorderForCards);
 				ChosCard2[i].setBackground(Color.white);
@@ -1554,8 +1499,7 @@ public class MainGUI extends JFrame implements ActionListener {
 
 			for(int i=0; i<ChosenCards.length; i++){
 				ChosCard3[i] = new JTextArea();
-				//				ChosCard3[i].setMaximumSize(SizeOfChosenCards);
-				//				ChosCard3[i].setMinimumSize(SizeOfChosenCards);
+
 				ChosCard3[i].setPreferredSize(SizeOfChosenCards);
 				ChosCard3[i].setBorder(BorderForCards);
 				ChosCard3[i].setBackground(Color.white);
@@ -1632,7 +1576,6 @@ public class MainGUI extends JFrame implements ActionListener {
 		PRight.setLayout(new BoxLayout(PRight, BoxLayout.PAGE_AXIS));
 		PRight.setPreferredSize(new Dimension(300,1000));
 		PRight.setBackground(Color.WHITE);
-//		PRight.add(Box.createRigidArea(new Dimension(0,)));
 		PAll.add(PRight, BorderLayout.EAST);
 		
 		JLabel scoreboard = new JLabel();
@@ -1682,7 +1625,6 @@ public class MainGUI extends JFrame implements ActionListener {
 
 
 		//Chosen card being added to panel
-		//		PUMid.add(Box.createRigidArea(new Dimension(90,0)));
 		for(int i=0; i<ChosenCards.length; i++) {
 			toptop.add(Winner[i]);
 			toptop.add(Box.createRigidArea(new Dimension(15,0)));
@@ -1741,12 +1683,8 @@ public class MainGUI extends JFrame implements ActionListener {
 		PDCard.setBackground(Color.WHITE);
 		PUCard.setBackground(Color.WHITE);
 
-		//		PMid.add(comp, constraints);
-
 		mainGame.add(PMid, BorderLayout.CENTER);
 		PMid.add(PUMid,BorderLayout.NORTH);
-		//		PMid.add(PUCard,BorderLayout.CENTER);
-		//		PUMid.add(Box.createRigidArea(new Dimension(0,50)));
 		PMid.add(Box.createRigidArea(new Dimension(1250,50)));
 		PMid.add(PUCard,BorderLayout.CENTER);
 		PMid.add(PDCard,BorderLayout.SOUTH	);
@@ -1760,7 +1698,7 @@ public class MainGUI extends JFrame implements ActionListener {
 	public void createScoreBoard(){
 		int playersInGame = 0;
 		for (int i = 0; i < 8; i++) {
-			System.out.println("s�dan her");
+			System.out.println("s�dan her");
 			if (gameSlot[i].hasPlayer()){
 				System.out.println("nemlig");
 				gameSlot[i].setInSlot(playersInGame);
@@ -1790,7 +1728,6 @@ public class MainGUI extends JFrame implements ActionListener {
 		// Quit button closes game
 		if(e.getSource() == BQuit){
 
-			//System.exit(0);
 			dispose();
 
 		} else if (e.getSource() == BSignIn){
@@ -1946,11 +1883,6 @@ public class MainGUI extends JFrame implements ActionListener {
 		players = playerNumber;
 		System.out.println("Number of players: "+players);
 
-		//		runGame();
-
-//		ChosCard1[playerNumber].setVisible(true);
-//		ChosCard2[playerNumber].setVisible(true);
-//		ChosCard3[playerNumber].setVisible(true);
 		
 		createScoreBoard();
 		hideAll();
@@ -1965,8 +1897,6 @@ public class MainGUI extends JFrame implements ActionListener {
 		System.out.println("Text1: "+text);
 		area[num].setText(text);
 
-		//		runGame();
-
 	}
 
 	public void setBlack(String text){
@@ -1974,15 +1904,10 @@ public class MainGUI extends JFrame implements ActionListener {
 		System.out.println("Text2: "+text);
 		BlackCard.setText(text);
 
-		//		runGame();
-
 	}
 
 	public void setSelected(int num, int row, String text){
 		System.out.println("String: "+text+" and num: "+num);
-//		ChosCard1[num].setVisible(show);
-//		ChosCard2[num].setVisible(show);	
-//		ChosCard3[num].setVisible(show);
 
 		if (row == 0) {
 			ChosCard1[num].setText(text);
@@ -2088,11 +2013,9 @@ public class MainGUI extends JFrame implements ActionListener {
 
 	public void czarButton(boolean show, int i){
 		Winner[i].setVisible(show);
-//		Winner[i].setEnabled(show);
 	}
 	
 	public void playerButton(boolean show, int i) {
-//		PlayerCards[i].setVisible(show);
 		PlayerCards[i].setEnabled(show);
 	}
 	
@@ -2204,27 +2127,6 @@ public class MainGUI extends JFrame implements ActionListener {
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 	//	// Create List
 	//			DefaultListModel model = new DefaultListModel();
 	//			playerList = new JList(model);
@@ -2261,11 +2163,6 @@ public class MainGUI extends JFrame implements ActionListener {
 	//				model.addElement(name+blank+status+blank+islocked+blank+Integer.toString(current)+"/"+Integer.toString(max));
 	//
 	//			}
-
-
-
-
-
 
 
 
