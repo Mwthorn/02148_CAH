@@ -72,12 +72,17 @@ public class Game implements Runnable {
         this.repository.add("listener"+this.gameSlot, talker);
         
         talker.put("updateLobby", "update", hostID, player.getGameSlot(), "");
-    }
-
+    } // End of constructor
+    
     public void run() {
-		System.out.println("IT'S ALIVE, IT'S ALLLIIIIIVEEEEEEEEE");
-		
-    	/* Game lobby */
+    	gameLobby();
+    }
+    
+    /*********************************************************************************************/
+	/****************************** Server/Game Lobby Interactions *******************************/
+	/*********************************************************************************************/
+    
+    private void gameLobby(){
     	while (true) {
             // ???????Lobby - Type  of Action - String - Integer
             System.out.println("Now listening in game lobby...");
@@ -115,25 +120,125 @@ public class Game implements Runnable {
                 e.printStackTrace();
             }
         }
-    }
-
+    } // End of game lobby
+    
 	private void sendLobbyChat(int senderID, String message) {
 		message = "<"+getPlayerwithID(senderID).getName()+">: " + message;
 		System.out.println(message);
 		for (Player player : players){
 			talker.put("updateLobby", "chat", player.getId(), new GameSlot(0, "", false), message);
 		}
-		
 	}
-
-    private void sendGameChat(int senderID, String message) {
-        message = "<"+getPlayerwithID(senderID).getName()+">: " + message;
+	
+    public void addPlayerToGame(Player actor) {  	
+    	int actorID = actor.getId();
+    	
+    	// Check if the game has started.
+    	if (status == "Game Full" || status == "Game Started"){
+    		System.out.println("Player with ID "+actorID+" attempted to join a full or started game.");
+    		return;
+    	}
+    	
+    	// Checks if the player is already in the game
+    	for (Player player : players) {
+			if (player.getId() == actorID) {
+				System.out.println(actor.getName()+" is already in the game.");
+				talker.put("updateLobby", "error", null, null, "");
+				return;
+			}
+		}
+    	
+        // Sends all players current game slot to the joining player.
         for (Player player : players){
-            talker.put("ingame", "chat", player.getId(), message, 0);
+        	talker.put("updateLobby", "update", actor.getId(), player.getGameSlot(), "");
         }
-    }
+        
+    	// Adds the player to the game.
+        players.add(actor);
+        
+        // Check if the game is full.
+        if (players.size() == maxPlayers){
+        	status = "Game Full";
+        }
+        
+        // Set the players game slot.
+        for (int i = 0; i < maxPlayers; i++) {
+			if (!slotOccupied[i]){
+				actor.setGameSlot(i);
+				slotOccupied[i] = true;
+				break;
+			}
+		}
+        
+        // Sends an update to all other players currently in the game
+        for (Player player : players) {
+            talker.put("updateLobby", "update", player.getId(), actor.getGameSlot(), "");
+        }
+        System.out.println("Added player " + actor.getId() + " to GameID: " + this.id);
+    } // End of add player to game.
+    
+	private void readyUpdate(int playerID) {
+		Player actor = getPlayerwithID(playerID);
+        if (actor == null) {
+            System.out.print("Game: No player found with ID " + playerID + " in readyUpdate");
+            return;
+        }
+		actor.changeReady();
 
+        for (Player player : players) {
+            int recieverID = player.getId();
+            talker.put("updateLobby", "update", recieverID, actor.getGameSlot(), "");
+        }
+	} // End of ready update
+	
+    private void playerLeavesGame(int playerID) {
+		Player actor = getPlayerwithID(playerID);
+        if (actor == null) {
+            System.out.print("Game: No player found with ID " + playerID + " in playerLeavesGame");
+            return;
+        }
+        int actorSlot = actor.getGameSlot().getSlot();
+        if (players.size() == maxPlayers){
+        	status = "Waiting for players...";
+        }
+        slotOccupied[actorSlot] = false;
+		
+		talker.put("updateLobby", "leave", actor.getId(), "");
+        for (Player player : players) {
+            talker.put("updateLobby", "update", player.getId(), new GameSlot(actorSlot, "", false), "");
+        }
+        players.remove(actor);
+        
+        if (players.size() == 0){
+        	Server.removeGame(this);
+        }
+        
+	} // End of player leaves game.
 
+    public void setStatus(String status) {
+        this.status = status;
+    } // End of set status
+
+    public void setPassword(String password) {
+        this.password = password;
+    } // End of set password
+
+	public int getGameSlot() {
+		return this.gameSlot;
+	} // End of get game slot
+	
+    public boolean hasPassword() {
+        return this.password != null;
+    } // End of get game password
+    
+    public String getPassword() {
+        return this.password;
+    } // End of get password
+
+    /*********************************************************************************************/
+	/******************************** Server/in-Game Interactions ********************************/
+	/*********************************************************************************************/
+    
 	private void startGame() {
 		// This is where all the in-game stuff happens.
 
@@ -142,7 +247,6 @@ public class Game implements Runnable {
         GameListener gL = new GameListener(listener, local);
         new Thread(gL).start();
         // Suggestion: Send tuple with syntax ("gameListener", "exit", ........) and use break; on the loop.
-
 
         for (Player player : players) {
             talker.put("updateLobby", "start", player.getId(), player.getGameSlot(), "");
@@ -156,7 +260,6 @@ public class Game implements Runnable {
                 talker.put("ingame", "white", player.getId(), card.getSentence(), i);
             }
         }
-
 
         Random rand = new Random();
         this.currentTurn = rand.nextInt(players.size()) - 1;
@@ -407,7 +510,13 @@ public class Game implements Runnable {
         }
     } // End of next round function
 
-
+    private void sendGameChat(int senderID, String message) {
+        message = "<"+getPlayerwithID(senderID).getName()+">: " + message;
+        for (Player player : players){
+            talker.put("ingame", "chat", player.getId(), message, 0);
+        }
+    }
+    
     public void fillWhiteCards() {
         for (Player player : players) {
             WhiteCard[] whiteCards1 = player.getWhiteCards();
@@ -434,6 +543,14 @@ public class Game implements Runnable {
         blackCards.remove(0);
         return card;
     }
+    
+    public void addPointsTo(Player player, int i) {
+        player.addPoints(i);
+    } // End of add points to player
+    
+    /*********************************************************************************************/
+	/************************************** Shared Utilities *************************************/
+	/*********************************************************************************************/
 	
 	private Player getPlayerwithID(int id) {
 	        for (Player player : players) {
@@ -444,59 +561,13 @@ public class Game implements Runnable {
 	        return null;
 	    }
 
-	private void readyUpdate(int playerID) {
-		Player actor = getPlayerwithID(playerID);
-        if (actor == null) {
-            System.out.print("Game: No player found with ID " + playerID + " in readyUpdate");
-            return;
-        }
-		actor.changeReady();
-
-        for (Player player : players) {
-            int recieverID = player.getId();
-            talker.put("updateLobby", "update", recieverID, actor.getGameSlot(), "");
-        }
-	} // End of ready update
-	
-    private void playerLeavesGame(int playerID) {
-		Player actor = getPlayerwithID(playerID);
-        if (actor == null) {
-            System.out.print("Game: No player found with ID " + playerID + " in playerLeavesGame");
-            return;
-        }
-        int actorSlot = actor.getGameSlot().getSlot();
-        if (players.size() == maxPlayers){
-        	status = "Waiting for players...";
-        }
-        slotOccupied[actorSlot] = false;
-		
-		talker.put("updateLobby", "leave", actor.getId(), "");
-        for (Player player : players) {
-            talker.put("updateLobby", "update", player.getId(), new GameSlot(actorSlot, "", false), "");
-        }
-        players.remove(actor);
-        
-        if (players.size() == 0){
-        	Server.removeGame(this);
-        }
-        
-	} // End of player leaves game.
-
 	public String getGameName() {
         return this.gameName;
     }
 
-    public String getPassword() {
-        return this.password;
-    } // End of get password
-
     public int getMaxPlayers() {
         return this.maxPlayers;
     } // End of get the maximum amount of allowed players
-
-    public boolean hasPassword() {
-        return this.password != null;
-    } // End of get game password
 
     public ArrayList<Player> getPlayers() {
         return this.players;
@@ -518,67 +589,4 @@ public class Game implements Runnable {
     public int getID() {
         return this.id;
     } // End of get game id
-
-    public void addPointsTo(Player player, int i) {
-        player.addPoints(i);
-    } // End of add points to player
-
-    public void addPlayerToGame(Player actor) {  	
-    	int actorID = actor.getId();
-    	
-    	// Check if the game has started.
-    	if (status == "Game Full" || status == "Game Started"){
-    		System.out.println("Player with ID "+actorID+" attempted to join a full or started game.");
-    		return;
-    	}
-    	
-    	// Checks if the player is already in the game
-    	for (Player player : players) {
-			if (player.getId() == actorID) {
-				System.out.println(actor.getName()+" is already in the game.");
-				talker.put("updateLobby", "error", null, null, "");
-				return;
-			}
-		}
-    	
-        // Sends all players current game slot to the joining player.
-        for (Player player : players){
-        	talker.put("updateLobby", "update", actor.getId(), player.getGameSlot(), "");
-        }
-        
-    	// Adds the player to the game.
-        players.add(actor);
-        
-        // Check if the game is full.
-        if (players.size() == maxPlayers){
-        	status = "Game Full";
-        }
-        
-        // Set the players game slot.
-        for (int i = 0; i < maxPlayers; i++) {
-			if (!slotOccupied[i]){
-				actor.setGameSlot(i);
-				slotOccupied[i] = true;
-				break;
-			}
-		}
-        
-        // Sends an update to all other players currently in the game
-        for (Player player : players) {
-            talker.put("updateLobby", "update", player.getId(), actor.getGameSlot(), "");
-        }
-        System.out.println("Added player " + actor.getId() + " to GameID: " + this.id);
-    } // End of add player to game.
-
-    public void setStatus(String status) {
-        this.status = status;
-    } // End of set status
-
-    public void setPassword(String password) {
-        this.password = password;
-    } // End of set password
-
-	public int getGameSlot() {
-		return this.gameSlot;
-	} // End of get game slot
 }
