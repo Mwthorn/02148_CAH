@@ -113,15 +113,12 @@ public class MainGUI extends JFrame implements ActionListener {
 		RoundedBorder(int radius) {
 			this.radius = radius;
 		}
-
 		public Insets getBorderInsets(Component c) {
 			return new Insets(this.radius+1, this.radius+1, this.radius+2, this.radius);
 		}
-
 		public boolean isBorderOpaque() {
 			return true;
 		}
-
 		public void paintBorder(Component c, Graphics g, int x, int y, int width, int height) {
 			g.drawRoundRect(x, y, width-1, height-1, radius, radius);
 		}
@@ -136,20 +133,16 @@ public class MainGUI extends JFrame implements ActionListener {
 			gp.getMaxPlayerSize();
 			gp.getId();
 		}
-
 		return Client.getGameList();
 	}
 
 	public void changeColor(int x){
-
 		if (gameSlot[x].isReady() == true) {			
 			readyBtn[x].setBackground(new Color(76,153,0));
 			System.out.println("Changed to Green");
-
 		} else {
 			readyBtn[x].setBackground(Color.RED);
 			System.out.println("Changed to Red");
-
 		}
 	}
 
@@ -178,7 +171,6 @@ public class MainGUI extends JFrame implements ActionListener {
 		for (int i = 0; i < 8; i++) {
 			gameSlot[i] = new GameSlot(-1, "", false);
 		}
-
 		runLogin();
 		runLobby();
 		runCreate();
@@ -198,7 +190,6 @@ public class MainGUI extends JFrame implements ActionListener {
 				System.out.println("!!! signedIn");
 			}
 		});
-
 		mainReadyUpLobby.getInputMap(JComponent.WHEN_FOCUSED)
 		.put(KeyStroke.getKeyStroke(KeyEvent.VK_ENTER,0),"lobSend");
 
@@ -208,7 +199,6 @@ public class MainGUI extends JFrame implements ActionListener {
 				System.out.println("!!! lobSend");
 			}
 		});
-		
 		lobbyMessageField.getInputMap(JComponent.WHEN_FOCUSED)
 		.put(KeyStroke.getKeyStroke(KeyEvent.VK_ENTER,0),"lobSend2");
 		
@@ -218,7 +208,6 @@ public class MainGUI extends JFrame implements ActionListener {
 				System.out.println("!!! lobSend2");
 			}
 		});
-		
 		
 		mainCreate.getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW)
 		.put(KeyStroke.getKeyStroke(KeyEvent.VK_ENTER,0),"creatGame");
@@ -251,17 +240,14 @@ public class MainGUI extends JFrame implements ActionListener {
 	}
 
 	public void hideAll(){
-
 		mainLogin.setVisible(false);
 		mainLobby.setVisible(false);
 		mainCreate.setVisible(false);
 		mainReadyUpLobby.setVisible(false);
 		mainGame.setVisible(false);
-
 	}
 
 	public void ErrorPopup(){
-
 		JFrame Error = new JFrame("Error Occurred");
 		Error.setLayout(new BorderLayout());
 		Error.setVisible(true);
@@ -309,7 +295,6 @@ public class MainGUI extends JFrame implements ActionListener {
 				Error.dispose();
 			}
 		});
-
 	}
 
 	/*********************************************************************************************/
