@@ -13,7 +13,7 @@ jSpace-Project/.idea/vcs.xml
 jSpace-Project/.idea/vcs.xml
 *.xml
 *.xml
-jSpace-Project/bin/*
+jSpace-Project/bin
 .DS_Store
 jSpace-Project/bin/common/
 jSpace-Project/bin/common
