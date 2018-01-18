@@ -139,10 +139,8 @@ public class MainGUI extends JFrame implements ActionListener {
 	public void changeColor(int x){
 		if (gameSlot[x].isReady() == true) {			
 			readyBtn[x].setBackground(new Color(76,153,0));
-			System.out.println("Changed to Green");
 		} else {
 			readyBtn[x].setBackground(Color.RED);
-			System.out.println("Changed to Red");
 		}
 	}
 
@@ -187,7 +185,6 @@ public class MainGUI extends JFrame implements ActionListener {
 		mainLogin.getActionMap().put("signIn",new AbstractAction(){
 			public void actionPerformed(ActionEvent ae){
 				BSignIn.doClick();
-				System.out.println("!!! signedIn");
 			}
 		});
 		mainReadyUpLobby.getInputMap(JComponent.WHEN_FOCUSED)
@@ -196,7 +193,6 @@ public class MainGUI extends JFrame implements ActionListener {
 		mainReadyUpLobby.getActionMap().put("lobSend",new AbstractAction(){
 			public void actionPerformed(ActionEvent ae){
 				lobbySendButton.doClick();
-				System.out.println("!!! lobSend");
 			}
 		});
 		lobbyMessageField.getInputMap(JComponent.WHEN_FOCUSED)
@@ -205,7 +201,6 @@ public class MainGUI extends JFrame implements ActionListener {
 		lobbyMessageField.getActionMap().put("lobSend2",new AbstractAction(){
 			public void actionPerformed(ActionEvent ae){
 				lobbySendButton.doClick();
-				System.out.println("!!! lobSend2");
 			}
 		});
 		
@@ -215,7 +210,6 @@ public class MainGUI extends JFrame implements ActionListener {
 		mainCreate.getActionMap().put("creatGame",new AbstractAction(){
 			public void actionPerformed(ActionEvent ae){
 				BCreateGame.doClick();
-				System.out.println("!!! creatGame");
 			}
 		});
 
@@ -226,7 +220,6 @@ public class MainGUI extends JFrame implements ActionListener {
 		mainGame.getActionMap().put("gameChat",new AbstractAction(){
 			public void actionPerformed(ActionEvent ae){
 				gameSendButton.doClick();
-				System.out.println("!!! gameChat");
 			}
 		});
 		messageField.getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW)
@@ -234,7 +227,6 @@ public class MainGUI extends JFrame implements ActionListener {
 		messageField.getActionMap().put("gameChat2",new AbstractAction(){
 			public void actionPerformed(ActionEvent ae){
 				gameSendButton.doClick();
-				System.out.println("!!! gameChat2");
 			}
 		});
 	}
@@ -1082,16 +1074,12 @@ public class MainGUI extends JFrame implements ActionListener {
 
 			if (gameSlot[index].isReady() == true) {			
 				readyBtn[index].setBackground(new Color(76,153,0));
-				System.out.println("Changed to Green");
-
 			} else {
 				readyBtn[index].setBackground(Color.RED);
-				System.out.println("Changed to Red");
 			}
 		} else {
 			player[index].setText("");
 			readyBtn[index].setBackground(Color.white);
-			System.out.println("Changed to White");
 		}
 	}
 	
@@ -1498,9 +1486,7 @@ public class MainGUI extends JFrame implements ActionListener {
 	public void createScoreBoard(){
 		int playersInGame = 0;
 		for (int i = 0; i < 8; i++) {
-			System.out.println("s�dan her");
 			if (gameSlot[i].hasPlayer()){
-				System.out.println("nemlig");
 				gameSlot[i].setInSlot(playersInGame);
 				scores[playersInGame] = new JLabel();
 				scores[playersInGame].setBackground(Color.white);
@@ -1520,7 +1506,6 @@ public class MainGUI extends JFrame implements ActionListener {
 
 	public void startGame(int playerNumber){
 		players = playerNumber;
-		System.out.println("Number of players: "+players);
 		
 		createScoreBoard();
 		hideAll();
@@ -1530,18 +1515,14 @@ public class MainGUI extends JFrame implements ActionListener {
 	} // End of start game setup
 
 	public void setWhite(String text, int num){
-		System.out.println("Text1: "+text);
 		area[num].setText(text);
 	} // End of Set white card text
 
 	public void setBlack(String text){
-		System.out.println("Text2: "+text);
 		BlackCard.setText(text);
 	} // End of set black card text
 
 	public void setSelected(int num, int row, String text){
-		System.out.println("String: "+text+" and num: "+num);
-
 		if (row == 0) {
 			ChosCard1[num].setText(text);
 			
@@ -1702,7 +1683,6 @@ public class MainGUI extends JFrame implements ActionListener {
 		} else if (e.getSource() == LJoinGameBtn) {
 			/** Join Game Button, Lounge Screen **/
 			gameSelected = list.getSelectedIndex();
-			System.out.println("Index Selected: "+ gameSelected);
 			if (gameSelected < 0){ return; }
 			GamePreview preID = games.get(gameSelected);
 			int gameID = preID.getId();
