@@ -138,6 +138,7 @@ public class MainGUI extends JFrame implements ActionListener {
 		return Client.getGameList();
 	}
 
+	// Changes color of the buttons when pressed
 	public void changeColor(int x){
 		if (gameSlot[x].isReady() == true) {			
 			readyBtn[x].setBackground(new Color(76,153,0));
@@ -146,6 +147,7 @@ public class MainGUI extends JFrame implements ActionListener {
 		}
 	}
 
+	// Create main panels
 	JPanel mainLogin = new JPanel();
 	JPanel mainLobby = new JPanel();
 	JPanel mainCreate = new JPanel();
@@ -163,6 +165,7 @@ public class MainGUI extends JFrame implements ActionListener {
 	//Labels
 	Dimension lsize = new Dimension(99, 50);
 
+	// Initialize main gui and all the panels
 	public MainGUI() throws InterruptedException{
 
 		getContentPane().setLayout(new BorderLayout());
@@ -179,7 +182,7 @@ public class MainGUI extends JFrame implements ActionListener {
 		runEnter();
 	}
 
-
+	// So one can press enter in GUI
 	public void runEnter(){
 		mainLogin.getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW)
 		.put(KeyStroke.getKeyStroke(KeyEvent.VK_ENTER,0),"signIn");
@@ -233,6 +236,7 @@ public class MainGUI extends JFrame implements ActionListener {
 		});
 	}
 
+	// Hide every GUI panel
 	public void hideAll(){
 		mainLogin.setVisible(false);
 		mainLobby.setVisible(false);
@@ -240,7 +244,8 @@ public class MainGUI extends JFrame implements ActionListener {
 		mainReadyUpLobby.setVisible(false);
 		mainGame.setVisible(false);
 	}
-
+	
+	// Error popup
 	public void ErrorPopup(){
 		JFrame Error = new JFrame("Error Occurred");
 		Error.setLayout(new BorderLayout());
@@ -262,14 +267,12 @@ public class MainGUI extends JFrame implements ActionListener {
 		BOK.setFocusPainted(false);
 		BOK.setEnabled(true);
 
-		// Name Label
 		l6 = new JLabel("WARNING: ERROR OCCURRED!");
 		l6.setMaximumSize(new Dimension(400, 40));
 		l6.setFont(new Font("calibri",Font.PLAIN,30));
 		l6.setAlignmentX(Component.CENTER_ALIGNMENT);
 		l6.setForeground(Color.RED);
 
-		//Laver Jpanel til det
 		JPanel panel = new JPanel();
 		panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
 		panel.setBackground(Color.WHITE);
@@ -282,7 +285,6 @@ public class MainGUI extends JFrame implements ActionListener {
 
 		Error.add(panel);
 
-		//Den lukker Rules JFrame hvis man klikker pÃ‚ den button, som er pÃ‚ den. 
 		BOK.addActionListener(new ActionListener() {
 
 			public void actionPerformed(ActionEvent e){    	
@@ -295,6 +297,7 @@ public class MainGUI extends JFrame implements ActionListener {
 	/*************************************** Login Screen ****************************************/
 	/*********************************************************************************************/
 
+	// Login GUI
 	public void runLogin(){ 
 		// Using BorderLayout
 		mainLogin.setLayout(new BorderLayout());
@@ -356,22 +359,20 @@ public class MainGUI extends JFrame implements ActionListener {
 		LFigure1.setAlignmentX(Component.CENTER_ALIGNMENT);
 		LFigure2.setAlignmentX(Component.CENTER_ALIGNMENT);
 
-		// Name textfield
+		// textfield
 		txtfld1 = new JTextField(50);
 		txtfld1.setMaximumSize(txtfldsize);
 		txtfld1.setFont(new Font("calibri",Font.PLAIN,20));
 		txtfld1.setAlignmentX(Component.CENTER_ALIGNMENT);
 		txtfld1.setText("");
 
-		// Name textfield
+		// textfield
 		txtfld2 = new JTextField(50);
 		txtfld2.setMaximumSize(txtfldsize);
 		txtfld2.setFont(new Font("calibri",Font.PLAIN,20));
 		txtfld2.setAlignmentX(Component.CENTER_ALIGNMENT);
 		txtfld2.setText("127.0.0.1");
 
-
-		// Create the 
 		JPanel PC = new JPanel();
 		PC.setLayout(new BorderLayout());
 		PC.setSize(600, 400);
@@ -398,7 +399,6 @@ public class MainGUI extends JFrame implements ActionListener {
 		PCRight.add(Box.createRigidArea(new Dimension(10, 150)));
 		PCRight.add(BSignIn);
 
-		//Placering af button
 		PCRight.setLayout(new BoxLayout(PCRight, BoxLayout.PAGE_AXIS));
 		PCRight.add(Box.createRigidArea(new Dimension(150, 40)));
 		PCenter.add(PCRight, BorderLayout.EAST);
@@ -446,7 +446,6 @@ public class MainGUI extends JFrame implements ActionListener {
 		PRight.add(BQuit);
 		PRight.add(Box.createRigidArea(new Dimension(365,50)));
 
-		//Siger hvor de forskellige Paneler skal vÃŠre
 		mainLogin.add(PLeft, BorderLayout.WEST);
 		mainLogin.add(PRight, BorderLayout.EAST);
 
@@ -459,7 +458,6 @@ public class MainGUI extends JFrame implements ActionListener {
 		PC.setBackground(Color.WHITE);
 		PC.add(PCenter);
 
-		//Hovedpanel - Laver Center JPanel med de forskellige labels og tekstfelter
 		JPanel PMiddle = new JPanel();
 		PMiddle.setLayout(new BoxLayout(PMiddle, BoxLayout.PAGE_AXIS));
 		PMiddle.setSize(400, 1000);
@@ -482,6 +480,7 @@ public class MainGUI extends JFrame implements ActionListener {
 	/*************************************** Lounge Screen ***************************************/
 	/*********************************************************************************************/
 
+	// Create Lobby GUI
 	public void runLobby() throws InterruptedException {
 		mainLobby.setLayout(new BorderLayout()); //Default layout
 		mainLobby.setBackground(Color.WHITE);
@@ -555,8 +554,6 @@ public class MainGUI extends JFrame implements ActionListener {
 		l2.setAlignmentX(Component.CENTER_ALIGNMENT);
 		l3.setAlignmentX(Component.CENTER_ALIGNMENT);
 
-		// Create List
-
 		//Creates panel for buttons
 		JPanel p1 = new JPanel();
 
@@ -608,6 +605,7 @@ public class MainGUI extends JFrame implements ActionListener {
 		mainLobby.setVisible(false);
 	} // End of the Lounge screen GUI
 
+	// Update list of games
 	public void updateGameList(){
 		for (int i = 0; i < numberOfGames; i++) {
 			model.remove(i);
@@ -703,6 +701,7 @@ public class MainGUI extends JFrame implements ActionListener {
 	/************************************* Create Game Screen ************************************/
 	/*********************************************************************************************/
 	
+	// Create game GUI
 	public void runCreate(){
 		mainCreate.setLayout(new BorderLayout());
 
@@ -763,25 +762,25 @@ public class MainGUI extends JFrame implements ActionListener {
 		LName.setFont(new Font("calibri",Font.PLAIN,fontsize));
 		LName.setAlignmentX(Component.CENTER_ALIGNMENT);
 
-		// Name Label
+		// Rounds Label
 		LRounds = new JLabel("Rounds to win:");
 		LRounds.setMaximumSize(lsize);
 		LRounds.setFont(new Font("calibri",Font.PLAIN,fontsize));
 		LRounds.setAlignmentX(Component.CENTER_ALIGNMENT);
 
-		// Name Label
+		// Time Label
 		LTime = new JLabel("Time to answer:");
 		LTime.setMaximumSize(lsize);
 		LTime.setFont(new Font("calibri",Font.PLAIN,fontsize));
 		LTime.setAlignmentX(Component.CENTER_ALIGNMENT);
 
-		// Name Label
+		// Password Label
 		LPass = new JLabel("Password Protected:");
 		LPass.setMaximumSize(lsize);
 		LPass.setFont(new Font("calibri",Font.PLAIN,fontsize));
 		LPass.setAlignmentX(Component.CENTER_ALIGNMENT);
 
-		// Name Label
+		// Password Label
 		LPassword = new JLabel("Password:");
 		LPassword.setMaximumSize(lsize);
 		LPassword.setFont(new Font("calibri",Font.PLAIN,fontsize));
@@ -795,32 +794,32 @@ public class MainGUI extends JFrame implements ActionListener {
 		LFigure1.setAlignmentX(Component.CENTER_ALIGNMENT);
 		LFigure2.setAlignmentX(Component.CENTER_ALIGNMENT);
 
-		// Name textfield
+		// textfield
 		txtfld8 = new JTextField(50);
 		txtfld8.setText("");
 		txtfld8.setMaximumSize(txtfldsize);
 		txtfld8.setFont(new Font("calibri",Font.PLAIN,20));
 		txtfld8.setAlignmentX(Component.CENTER_ALIGNMENT);
 
-		// Name textfield
+		// textfield
 		txtfld7 = new JTextField(50);
 		txtfld7.setMaximumSize(txtfldsize);
 		txtfld7.setFont(new Font("calibri",Font.PLAIN,20));
 		txtfld7.setAlignmentX(Component.CENTER_ALIGNMENT);
 
-		// Name textfield
+		// textfield
 		txtfld3 = new JTextField(50);
 		txtfld3.setMaximumSize(txtfldsize);
 		txtfld3.setFont(new Font("calibri",Font.PLAIN,20));
 		txtfld3.setAlignmentX(Component.CENTER_ALIGNMENT);
 
-		// Name textfield
+		// textfield
 		txtfld4 = new JTextField(50);
 		txtfld4.setMaximumSize(txtfldsize);
 		txtfld4.setFont(new Font("calibri",Font.PLAIN,20));
 		txtfld4.setAlignmentX(Component.CENTER_ALIGNMENT);
 
-		// Name textfield
+		// textfield
 		txtfld5 = new JTextField(50);
 		txtfld5.setMaximumSize(txtfldsize);
 		txtfld5.setFont(new Font("calibri",Font.PLAIN,20));
@@ -852,6 +851,7 @@ public class MainGUI extends JFrame implements ActionListener {
 		PL.setLayout(new BoxLayout(PL, BoxLayout.PAGE_AXIS));
 		PL.setBackground(Color.white);
 
+		// Add labels to panel
 		PL.add(Box.createRigidArea(new Dimension(300,50)));
 		PL.add(LName);
 		PL.add(Box.createRigidArea(new Dimension(300,50)));
@@ -866,6 +866,7 @@ public class MainGUI extends JFrame implements ActionListener {
 		PR.setLayout(new BoxLayout(PR, BoxLayout.PAGE_AXIS));
 		PR.setBackground(Color.white);
 
+		// Add textfields to panel
 		PR.add(Box.createRigidArea(new Dimension(350,50)));
 		PR.add(txtfld8);
 		PR.add(Box.createRigidArea(new Dimension(350,50)));
@@ -900,11 +901,9 @@ public class MainGUI extends JFrame implements ActionListener {
 		PRight.add(BBack);
 		PRight.add(Box.createRigidArea(new Dimension(365,50)));
 
-		//Siger hvor de forskellige Paneler skal vÃŠre
 		mainCreate.add(PLeft, BorderLayout.WEST);
 		mainCreate.add(PRight, BorderLayout.EAST);
 
-		//Laver Center JPanel med de forskellige labels og tekstfelter
 		JPanel PMiddle = new JPanel();
 		PMiddle.setLayout(new BoxLayout(PMiddle, BoxLayout.PAGE_AXIS));
 		PMiddle.setSize(400, 1000);
@@ -1170,7 +1169,7 @@ public class MainGUI extends JFrame implements ActionListener {
 			area[i].setWrapStyleWord(true);
 		}
 
-		// Cards on players hand is being created
+		// buttons for the cards on players hand is being created
 		for(int i=0; i<10; i++){
 			PlayerCards[i] = new JButton("Choose Card");
 			
@@ -1185,7 +1184,8 @@ public class MainGUI extends JFrame implements ActionListener {
 			PlayerCards[i].setEnabled(true);	
 
 		}
-
+		
+		// Button for picking winner
 		for(int i=0; i<ChosenCards.length; i++){
 			Winner[i] = new JButton("Pick Winner");
 			
@@ -1260,24 +1260,28 @@ public class MainGUI extends JFrame implements ActionListener {
 		PAll.setLayout(new BorderLayout());
 		PAll.setSize(1900, 1000);
 
+		// Round number
 		number = new JLabel("Round Number: ");
 		number.setForeground(Color.BLACK);
 		number.setPreferredSize(new Dimension(300, 80));
 		number.setAlignmentX(Component.CENTER_ALIGNMENT);
 		number.setFont(new Font("calibri",1,FontSizeOfCards+10));
 
+		// Who is Czar
 		czar = new JLabel("Card Czar is: ");
 		czar.setForeground(Color.BLACK);
 		czar.setPreferredSize(new Dimension(300, 80));
 		czar.setAlignmentX(Component.CENTER_ALIGNMENT);
 		czar.setFont(new Font("calibri",1,FontSizeOfCards+10));
 
+		// which phase is it
 		phase = new JLabel("Choosing: ");
 		phase.setForeground(Color.BLACK);
 		phase.setPreferredSize(new Dimension(300, 80));
 		phase.setAlignmentX(Component.CENTER_ALIGNMENT);
 		phase.setFont(new Font("calibri",1,FontSizeOfCards+10));
 
+		// Time remaining
 		timerem = new JLabel("Time remaining: ");
 		timerem.setForeground(Color.BLACK);
 		timerem.setPreferredSize(new Dimension(300, 80));
@@ -1435,6 +1439,7 @@ public class MainGUI extends JFrame implements ActionListener {
 		PMid.setBackground(Color.WHITE);
 		mainGame.add(PAll);
 	}
+	
 	
 	public void gameChat(){
 		// Panels
