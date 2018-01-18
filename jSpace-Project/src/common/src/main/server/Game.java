@@ -581,5 +581,4 @@ public class Game implements Runnable {
 	public int getGameSlot() {
 		return this.gameSlot;
 	} // End of get game slot
-
 }
