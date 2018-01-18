@@ -48,14 +48,14 @@ import common.src.main.server.GameSlot;
 public class MainGUI extends JFrame implements ActionListener {
 	private int maxPlayers = 8;
 
-	String name, IP, gameName, rounds, time, password;
-	int players;
+	private String name, IP, gameName, rounds, time, password;
+	private int players;
 
 	// Login
 	private JButton BQuit, BSignIn, BBack;
 	private JLabel LTitle, LText, LFigure1, LName, LIP, LFigure2;
 	private JTextField txtfld1, txtfld2;
-	public boolean signIn = false;
+	private boolean signIn = false;
 
 	// Lobby
 	private JButton LCreateGameBtn, LSignOutBtn, LJoinGameBtn, LRefreshBtn, b5;
@@ -91,17 +91,15 @@ public class MainGUI extends JFrame implements ActionListener {
 
 	// Game
 	private JTextArea BlackCard;
-	private String[] ChosenCards = new String[8];
+	private String[] ChosenCards = new String[maxPlayers];
 	private int numberOfCards = 3;
 	private JButton[] PlayerCards = new JButton[10];
-	private JButton[] Winner = new JButton[8];
-	private JTextArea[] ChosCard1 = new JTextArea[8];
-	private JTextArea[] ChosCard2 = new JTextArea[8];
-	private JTextArea[] ChosCard3 = new JTextArea[8];
+	private JButton[] Winner = new JButton[maxPlayers];
+	private JTextArea[] ChosCard1, ChosCard2, ChosCard3 = new JTextArea[maxPlayers];
 	private JTextArea[] area = new JTextArea[10];
 	private JLabel label, czar, phase, number, timerem = new JLabel();
 	public boolean isCzar;
-	private JLabel[] scores = new JLabel[8];
+	private JLabel[] scores = new JLabel[maxPlayers];
 	private JTextArea chatBox;
 	private JTextField messageField;
 	private JButton gameSendButton;
