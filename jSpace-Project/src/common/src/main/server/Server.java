@@ -137,5 +137,4 @@ public class Server {
 	public static void removeGame(Game game){
 		gameBase.removeGame(game);
 	}
-
 }
