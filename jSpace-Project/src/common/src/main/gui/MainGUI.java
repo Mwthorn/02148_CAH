@@ -38,7 +38,7 @@ import javax.swing.KeyStroke;
 import javax.swing.ListSelectionModel;
 import javax.swing.SwingConstants;
 import javax.swing.border.Border;
-
+import javax.swing.text.DefaultCaret;
 
 import common.src.main.client.Client;
 import common.src.main.client.GamePreview;
@@ -282,7 +282,7 @@ public class MainGUI extends JFrame implements ActionListener {
 
 		Error.add(panel);
 
-		//Den lukker Rules JFrame hvis man klikker pÂ den button, som er pÂ den. 
+		//Den lukker Rules JFrame hvis man klikker pÃ‚ den button, som er pÃ‚ den. 
 		BOK.addActionListener(new ActionListener() {
 
 			public void actionPerformed(ActionEvent e){    	
@@ -446,7 +446,7 @@ public class MainGUI extends JFrame implements ActionListener {
 		PRight.add(BQuit);
 		PRight.add(Box.createRigidArea(new Dimension(365,50)));
 
-		//Siger hvor de forskellige Paneler skal vÊre
+		//Siger hvor de forskellige Paneler skal vÃŠre
 		mainLogin.add(PLeft, BorderLayout.WEST);
 		mainLogin.add(PRight, BorderLayout.EAST);
 
@@ -900,7 +900,7 @@ public class MainGUI extends JFrame implements ActionListener {
 		PRight.add(BBack);
 		PRight.add(Box.createRigidArea(new Dimension(365,50)));
 
-		//Siger hvor de forskellige Paneler skal vÊre
+		//Siger hvor de forskellige Paneler skal vÃŠre
 		mainCreate.add(PLeft, BorderLayout.WEST);
 		mainCreate.add(PRight, BorderLayout.EAST);
 
@@ -1109,7 +1109,11 @@ public class MainGUI extends JFrame implements ActionListener {
 		lobbyChatBox.setLineWrap(true);
 
 		// adding elements
-		lobbyChatPanel.add(new JScrollPane(lobbyChatBox), BorderLayout.CENTER);
+		JScrollPane lobbyScrollPane = new JScrollPane(lobbyChatBox);
+		DefaultCaret caretLobby = (DefaultCaret) lobbyChatBox.getCaret(); // ←
+		caretLobby.setUpdatePolicy(DefaultCaret.ALWAYS_UPDATE);
+		lobbyChatPanel.add(lobbyScrollPane, BorderLayout.CENTER);
+		lobbyScrollPane.setViewportView(lobbyChatBox);
 		lobbySendPanel.add(lobbyMessageField);
 		lobbySendPanel.add(lobbySendButton);
 		lobbyChatPanel.add(BorderLayout.SOUTH, lobbySendPanel);
@@ -1475,7 +1479,11 @@ public class MainGUI extends JFrame implements ActionListener {
 		right.weighty = 1.0D;
 
 		// adding elements
-		chatPanel.add(new JScrollPane(chatBox), BorderLayout.CENTER);
+		JScrollPane scrollPane = new JScrollPane(chatBox);
+		DefaultCaret caret = (DefaultCaret) chatBox.getCaret(); // ←
+		caret.setUpdatePolicy(DefaultCaret.ALWAYS_UPDATE);
+		chatPanel.add(scrollPane, BorderLayout.CENTER);
+		scrollPane.setViewportView(chatBox);
 		sendPanel.add(messageField, left);
 		sendPanel.add(gameSendButton, right);
 		chatPanel.add(BorderLayout.SOUTH, sendPanel);
