@@ -70,9 +70,11 @@ public class Server {
 					Player jPlayer = playerBase.getPlayerwithID(playerID);
 
 					Game jGame = gameBase.getGamewithID((int) tuple[3]);
-					int gameSlot = jGame.getGameSlot();
-					jGame.addPlayerToGame(jPlayer);
-					lobby.put("joinedGame", jPlayer.getId(), gameSlot);
+					if (jGame.getStatus() != "Game Full"){
+						int gameSlot = jGame.getGameSlot();
+						jGame.addPlayerToGame(jPlayer);
+						lobby.put("joinedGame", jPlayer.getId(), gameSlot);
+					}
 				} else if (tuple[1].equals("joinGamePass")) {
 					System.out.println("Client attempting to join game with password...");
 					Game jGame = gameBase.getGamewithID((int) tuple[3]);
