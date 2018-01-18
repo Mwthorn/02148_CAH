@@ -515,7 +515,7 @@ public class Game implements Runnable {
         for (Player player : players){
             talker.put("ingame", "chat", player.getId(), message, 0);
         }
-    }
+    } // End of send in game chat
     
     public void fillWhiteCards() {
         for (Player player : players) {
@@ -529,20 +529,20 @@ public class Game implements Runnable {
                 }
             }
         }
-    }
+    } // End of fill white cards
 
     public WhiteCard drawWhiteCard() {
         System.out.println("Size of the white deck: " + whiteCards.size());
         WhiteCard card = whiteCards.get(0);
         whiteCards.remove(0);
         return card;
-    }
+    } // End of draw white card
 
     public BlackCard drawBlackCard() {
         BlackCard card = blackCards.get(0);
         blackCards.remove(0);
         return card;
-    }
+    } // End of draw black card
     
     public void addPointsTo(Player player, int i) {
         player.addPoints(i);
@@ -553,17 +553,17 @@ public class Game implements Runnable {
 	/*********************************************************************************************/
 	
 	private Player getPlayerwithID(int id) {
-	        for (Player player : players) {
-	            if (player.getId() == id) {
-	                return player;
-	            }
-	        }
-	        return null;
-	    }
+        for (Player player : players) {
+            if (player.getId() == id) {
+                return player;
+            }
+        }
+        return null;
+    } // End  of get player with specific id
 
 	public String getGameName() {
         return this.gameName;
-    }
+    } // End of get game name
 
     public int getMaxPlayers() {
         return this.maxPlayers;
