@@ -49,5 +49,4 @@ public class GameBase {
 	public void removeGame(Game game) {
 		games.remove(game);
 	}
-
 }

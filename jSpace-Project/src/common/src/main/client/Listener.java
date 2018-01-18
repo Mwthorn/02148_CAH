@@ -39,17 +39,11 @@ public class Listener implements Runnable{
 				GameSlot gameSlot = (GameSlot) tuple[3];
 				System.out.println("Local Lobby: Got response: " + tuple[1]);
 				if (tuple[1].equals("start")){
-					// TODO: Start game: A button for the host, possibly to entirely replace his ready button.
-					// Starts the game, many stuff happens.
-					System.out.println("Game started! GET READY TO RUMBLE!!!!");
 					Object[] gameInfo = game.get(new ActualField("starting"), new ActualField(userID),new FormalField(Integer.class));
 					Client.main.startGame((int) gameInfo[2]);
 					gameStarted = true;
 					return;
 				} else if (tuple[1].equals("update")){
-					// TODO: Update from the server, update relevant GUI.
-					// Occurs when a player joins/leaves/changes ready state, will fully update a specified game slot.
-					System.out.println("Game updated: " + gameSlot.getName() + ", at seat " + gameSlot.getSlot() + ", is he ready: "+gameSlot.isReady());
 					Client.main.updatePlayer(gameSlot);
 				} else if (tuple[1].equals("leave")){
 					System.out.println("You have left the game!");
@@ -58,8 +52,6 @@ public class Listener implements Runnable{
 					return;
 				} else if (tuple[1].equals("error")){
 					System.out.println("An error occured.");
-					// TODO: Force an error message to pop up.
-					// This happens if a player
 				} else if (tuple[1].equals("chat")){
 					Client.main.chatLobbyMessageReceived((String) tuple[4]);
 				}

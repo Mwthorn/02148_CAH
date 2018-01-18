@@ -62,30 +62,6 @@ public class Client {
 		main.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		main.setVisible(true);
 		main.setLocationRelativeTo(null);
-		/*
-			try {
-				
-				// Initialize tests to game lobby.
-				if (testNumber == 0) {
-					System.out.println("Trying to create game");
-					loginUser("127.0.0.1", "Alex");
-					createNewGame();
-				}
-				else if (testNumber == 1) {
-					loginUser("127.0.0.1", "Mathias");
-					ArrayList<GamePreview> gp = getGameList();
-					joinGame(gp.get(0).getId());
-				}
-				else if (testNumber == 2) {
-					loginUser("127.0.0.1", "Jonas");
-					ArrayList<GamePreview> gp = getGameList();
-					joinGame(gp.get(0).getId());
-				}
-				
-
-			} catch (IOException | InterruptedException e) {
-				e.printStackTrace();
-			}*/
 	} // End of main function
 	
 	/*********************************************************************************************/
@@ -93,15 +69,8 @@ public class Client {
 	/*********************************************************************************************/
 
 	public static void loginUser(String IP, String name) throws IOException, InterruptedException {
-		// TODO: The two lines below assigning IP and name should be retrieved
-		// when first signing in to the lobby.
-		// serverIP = "127.0.0.1";
-		// name = "Alex";
-		System.out.println(IP);
-		System.out.println(name);
 		lobby = new RemoteSpace("tcp://" + IP + ":9001/lobby?keep");
 
-		//lobby.put("test");
 		lobby.put("lobby","enter",name,0);
 
 		Object[] tuple = lobby.get(new ActualField("UserID"),new ActualField(name), new FormalField(Integer.class));
@@ -115,7 +84,6 @@ public class Client {
 		lobby.put("lobby", "createGame", name, userID);
 		
 		try {
-			System.out.println("Trying to recieve info");
 			Object[] info = lobby.get(new ActualField("gameCreated"), new ActualField(userID), new FormalField(Integer.class));
 			int gameSlot = (int) info[2];
 			
@@ -169,10 +137,8 @@ public class Client {
 			return false;
 		}
 	} // End of joinGame function
-
 	
 	public static ArrayList<GamePreview> getGameList() throws InterruptedException {
-		System.out.println(userID);
 		lobby.put("lobby", "refreshGameList", "", userID);
 
 		Object[] tuple = lobby.get(new ActualField("GameListSize"), new ActualField(userID), new FormalField(Integer.class));
@@ -253,10 +219,7 @@ public class Client {
 		talker.put("gameListenerChat", message, userID);
 	}
 	
-
 	public static String getName() {
 		return userName;
 	}
-
-
 }

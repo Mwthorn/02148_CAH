@@ -48,14 +48,14 @@ import common.src.main.server.GameSlot;
 public class MainGUI extends JFrame implements ActionListener {
 	private int maxPlayers = 8;
 
-	String name, IP, gameName, rounds, time, password;
-	int players;
+	private String name, IP, gameName, rounds, time, password;
+	private int players;
 
 	// Login
 	private JButton BQuit, BSignIn, BBack;
 	private JLabel LTitle, LText, LFigure1, LName, LIP, LFigure2;
 	private JTextField txtfld1, txtfld2;
-	public boolean signIn = false;
+	private boolean signIn = false;
 
 	// Lobby
 	private JButton LCreateGameBtn, LSignOutBtn, LJoinGameBtn, LRefreshBtn, b5;
@@ -79,6 +79,7 @@ public class MainGUI extends JFrame implements ActionListener {
 	private GameSlot[] gameSlot = new GameSlot[maxPlayers];
 	private JButton[] readyBtn = new JButton[maxPlayers];
 	private JLabel[] player = new JLabel[maxPlayers];
+	private JPanel[] lobbyPlayerPanel = new JPanel[maxPlayers];
 	private JButton BReady, BLeave;
 	private JLabel LHead, LPicWC, LPicBC;
 	private static JList playerList;
@@ -90,17 +91,15 @@ public class MainGUI extends JFrame implements ActionListener {
 
 	// Game
 	private JTextArea BlackCard;
-	private String[] ChosenCards = new String[8];
+	private String[] ChosenCards = new String[maxPlayers];
 	private int numberOfCards = 3;
 	private JButton[] PlayerCards = new JButton[10];
-	private JButton[] Winner = new JButton[8];
-	private JTextArea[] ChosCard1 = new JTextArea[8];
-	private JTextArea[] ChosCard2 = new JTextArea[8];
-	private JTextArea[] ChosCard3 = new JTextArea[8];
+	private JButton[] Winner = new JButton[maxPlayers];
+	private JTextArea[] ChosCard1, ChosCard2, ChosCard3 = new JTextArea[maxPlayers];
 	private JTextArea[] area = new JTextArea[10];
 	private JLabel label, czar, phase, number, timerem = new JLabel();
 	public boolean isCzar;
-	private JLabel[] scores = new JLabel[8];
+	private JLabel[] scores = new JLabel[maxPlayers];
 	private JTextArea chatBox;
 	private JTextField messageField;
 	private JButton gameSendButton;
@@ -114,15 +113,12 @@ public class MainGUI extends JFrame implements ActionListener {
 		RoundedBorder(int radius) {
 			this.radius = radius;
 		}
-
 		public Insets getBorderInsets(Component c) {
 			return new Insets(this.radius+1, this.radius+1, this.radius+2, this.radius);
 		}
-
 		public boolean isBorderOpaque() {
 			return true;
 		}
-
 		public void paintBorder(Component c, Graphics g, int x, int y, int width, int height) {
 			g.drawRoundRect(x, y, width-1, height-1, radius, radius);
 		}
@@ -137,20 +133,14 @@ public class MainGUI extends JFrame implements ActionListener {
 			gp.getMaxPlayerSize();
 			gp.getId();
 		}
-
 		return Client.getGameList();
 	}
 
 	public void changeColor(int x){
-
 		if (gameSlot[x].isReady() == true) {			
 			readyBtn[x].setBackground(new Color(76,153,0));
-			System.out.println("Changed to Green");
-
 		} else {
 			readyBtn[x].setBackground(Color.RED);
-			System.out.println("Changed to Red");
-
 		}
 	}
 
@@ -179,7 +169,6 @@ public class MainGUI extends JFrame implements ActionListener {
 		for (int i = 0; i < 8; i++) {
 			gameSlot[i] = new GameSlot(-1, "", false);
 		}
-
 		runLogin();
 		runLobby();
 		runCreate();
@@ -190,80 +179,67 @@ public class MainGUI extends JFrame implements ActionListener {
 
 
 	public void runEnter(){
-		mainLogin.getInputMap(JComponent.WHEN_FOCUSED)
+		mainLogin.getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW)
 		.put(KeyStroke.getKeyStroke(KeyEvent.VK_ENTER,0),"signIn");
 
 		mainLogin.getActionMap().put("signIn",new AbstractAction(){
 			public void actionPerformed(ActionEvent ae){
 				BSignIn.doClick();
-				System.out.println("!!! signedIn");
 			}
 		});
-
 		mainReadyUpLobby.getInputMap(JComponent.WHEN_FOCUSED)
 		.put(KeyStroke.getKeyStroke(KeyEvent.VK_ENTER,0),"lobSend");
 
 		mainReadyUpLobby.getActionMap().put("lobSend",new AbstractAction(){
 			public void actionPerformed(ActionEvent ae){
 				lobbySendButton.doClick();
-				System.out.println("!!! lobSend");
 			}
 		});
-		
 		lobbyMessageField.getInputMap(JComponent.WHEN_FOCUSED)
 		.put(KeyStroke.getKeyStroke(KeyEvent.VK_ENTER,0),"lobSend2");
 		
 		lobbyMessageField.getActionMap().put("lobSend2",new AbstractAction(){
 			public void actionPerformed(ActionEvent ae){
 				lobbySendButton.doClick();
-				System.out.println("!!! lobSend2");
 			}
 		});
 		
-		
-
-		mainCreate.getInputMap(JComponent.WHEN_FOCUSED)
+		mainCreate.getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW)
 		.put(KeyStroke.getKeyStroke(KeyEvent.VK_ENTER,0),"creatGame");
 
 		mainCreate.getActionMap().put("creatGame",new AbstractAction(){
 			public void actionPerformed(ActionEvent ae){
 				BCreateGame.doClick();
-				System.out.println("!!! creatGame");
 			}
 		});
 
 		// Game Chat
-		mainGame.getInputMap(JComponent.WHEN_FOCUSED)
+		mainGame.getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW)
 		.put(KeyStroke.getKeyStroke(KeyEvent.VK_ENTER,0),"gameChat");
 
 		mainGame.getActionMap().put("gameChat",new AbstractAction(){
 			public void actionPerformed(ActionEvent ae){
 				gameSendButton.doClick();
-				System.out.println("!!! gameChat");
 			}
 		});
-		messageField.getInputMap(JComponent.WHEN_FOCUSED)
+		messageField.getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW)
 		.put(KeyStroke.getKeyStroke(KeyEvent.VK_ENTER,0),"gameChat2");
 		messageField.getActionMap().put("gameChat2",new AbstractAction(){
 			public void actionPerformed(ActionEvent ae){
 				gameSendButton.doClick();
-				System.out.println("!!! gameChat2");
 			}
 		});
 	}
 
 	public void hideAll(){
-
 		mainLogin.setVisible(false);
 		mainLobby.setVisible(false);
 		mainCreate.setVisible(false);
 		mainReadyUpLobby.setVisible(false);
 		mainGame.setVisible(false);
-
 	}
 
 	public void ErrorPopup(){
-
 		JFrame Error = new JFrame("Error Occurred");
 		Error.setLayout(new BorderLayout());
 		Error.setVisible(true);
@@ -311,14 +287,13 @@ public class MainGUI extends JFrame implements ActionListener {
 				Error.dispose();
 			}
 		});
-
 	}
 
+	/*********************************************************************************************/
+	/*************************************** Login Screen ****************************************/
+	/*********************************************************************************************/
 
 	public void runLogin(){ 
-
-		/////////////////////////////////////////////// LOGIN //////////////////////////////////////////////////////////////////
-
 		// Using BorderLayout
 		mainLogin.setLayout(new BorderLayout());
 
@@ -499,20 +474,15 @@ public class MainGUI extends JFrame implements ActionListener {
 		PMiddle.setBackground(Color.WHITE);
 		add(mainLogin);		
 		mainLogin.requestFocus();
+	} // End of login screen GUI
 
-		/////////////////////////////////////////////// LOGIN //////////////////////////////////////////////////////////////////
-
-
-	}
-
+	/*********************************************************************************************/
+	/*************************************** Lounge Screen ***************************************/
+	/*********************************************************************************************/
 
 	public void runLobby() throws InterruptedException {
-
-		/////////////////////////////////////////////// LOBBY //////////////////////////////////////////////////////////////////
-
 		mainLobby.setLayout(new BorderLayout()); //Default layout
 		mainLobby.setBackground(Color.WHITE);
-
 
 		//Create buttons
 		Dimension btnsize2 = new Dimension(180,70);
@@ -583,7 +553,6 @@ public class MainGUI extends JFrame implements ActionListener {
 		l2.setAlignmentX(Component.CENTER_ALIGNMENT);
 		l3.setAlignmentX(Component.CENTER_ALIGNMENT);
 
-
 		// Create List
 
 		//Creates panel for buttons
@@ -635,12 +604,9 @@ public class MainGUI extends JFrame implements ActionListener {
 		mainLobby.add(p4, BorderLayout.WEST);
 
 		mainLobby.setVisible(false);
-
-
-	}
+	} // End of the Lounge screen GUI
 
 	public void updateGameList(){
-
 		for (int i = 0; i < numberOfGames; i++) {
 			model.remove(i);
 		}
@@ -670,7 +636,7 @@ public class MainGUI extends JFrame implements ActionListener {
 				model.addElement(name+blank+status+blank+islocked+blank+Integer.toString(current)+"/"+Integer.toString(max));
 			}
 		}
-	}
+	} // End of the update lounge game list
 
 	public void loadAvailableGames(){
 		// Panel for list of games available
@@ -729,13 +695,13 @@ public class MainGUI extends JFrame implements ActionListener {
 		availableGames.setAlignmentY(CENTER_ALIGNMENT);
 		availableGames.add(scrollPaneMain, BorderLayout.CENTER);
 		mainLobby.add(availableGames, BorderLayout.CENTER);
-	}
+	} // End of load available games function
 
-	/////////////////////////////////////////////// LOBBY //////////////////////////////////////////////////////////////////
-
+	/*********************************************************************************************/
+	/************************************* Create Game Screen ************************************/
+	/*********************************************************************************************/
+	
 	public void runCreate(){
-
-		//Der benyttes BorderLayout
 		mainCreate.setLayout(new BorderLayout());
 
 		// Dimensions of buttons
@@ -776,7 +742,6 @@ public class MainGUI extends JFrame implements ActionListener {
 		BCreateGame.setEnabled(true);
 		BCreateGame.setForeground(Color.BLACK);
 		BCreateGame.setBackground(Color.WHITE);
-
 
 		//Makes Title
 		LTitle = new JLabel("Cards Against Humanity");
@@ -869,21 +834,17 @@ public class MainGUI extends JFrame implements ActionListener {
 		PCLEFT.add(Box.createRigidArea(new Dimension(220,50)));
 		PCRIGHT.add(Box.createRigidArea(new Dimension(220,50)));
 
-
 		PCLEFT.setBackground(Color.WHITE);
 		PCRIGHT.setBackground(Color.WHITE);
 
 		PC.add(PCLEFT,BorderLayout.LINE_START);
 		PC.add(PCRIGHT,BorderLayout.LINE_END);
 
-
 		//Center Panel
 		JPanel PCenter = new JPanel();
 		PCenter.setBorder(BorderFactory.createMatteBorder(4, 4, 4, 4, Color.black));		
 		PCenter.setLayout(new BorderLayout());
 		PCenter.setSize(600, 500);
-
-
 
 		JPanel PL = new JPanel();
 		PL.setLayout(new BoxLayout(PL, BoxLayout.PAGE_AXIS));
@@ -899,7 +860,6 @@ public class MainGUI extends JFrame implements ActionListener {
 		PL.add(LPassword);
 		PL.add(Box.createRigidArea(new Dimension(300,25)));
 
-
 		JPanel PR = new JPanel();
 		PR.setLayout(new BoxLayout(PR, BoxLayout.PAGE_AXIS));
 		PR.setBackground(Color.white);
@@ -914,10 +874,8 @@ public class MainGUI extends JFrame implements ActionListener {
 		PR.add(txtfld5);
 		PL.add(Box.createRigidArea(new Dimension(350,25)));
 
-
 		PCenter.add(PL, BorderLayout.WEST);
 		PCenter.add(PR, BorderLayout.CENTER);
-
 		PC.add(PCenter, BorderLayout.CENTER);
 
 		//Left JPanel
@@ -962,49 +920,11 @@ public class MainGUI extends JFrame implements ActionListener {
 
 		PMiddle.setBackground(Color.WHITE);
 		mainCreate.add(PMiddle);
+	} // End of create game GUI
 
-
-	}
-
-	public void lobbyChat() {
-
-		// Panels
-		lobbyChatPanel = new JPanel();
-		lobbyChatPanel.setLayout(new BorderLayout());
-		lobbyChatPanel.setPreferredSize(new Dimension(200, 300));
-		lobbySendPanel = new JPanel();
-		lobbySendPanel.setBackground(Color.WHITE);
-		lobbySendPanel.setLayout(new GridBagLayout());
-
-		// Message field and send button
-		lobbyMessageField = new JTextField();
-		lobbyMessageField.requestFocusInWindow();
-		lobbyMessageField.setPreferredSize(new Dimension(300, 20));
-
-		lobbySendButton = new JButton(" Send ");
-		lobbySendButton.addActionListener(this);
-
-		// Chat area
-		lobbyChatBox = new JTextArea();
-		lobbyChatBox.setEditable(false);
-		lobbyChatBox.setFont(new Font("Serif", Font.PLAIN, 15));
-		lobbyChatBox.setLineWrap(true);
-
-		// adding elements
-		lobbyChatPanel.add(new JScrollPane(lobbyChatBox), BorderLayout.CENTER);
-		lobbySendPanel.add(lobbyMessageField);
-		lobbySendPanel.add(lobbySendButton);
-		lobbyChatPanel.add(BorderLayout.SOUTH, lobbySendPanel);
-
-	}
-
-
-	public void chatLobbyMessageReceived(String message) {
-		lobbyChatBox.append(message+"\n");
-	}
-
-
-	/////////////////////////////////////////////// READYUPLOBBY //////////////////////////////////////////////////////////////////
+	/*********************************************************************************************/
+	/************************************ Game Lobby Screen **************************************/
+	/*********************************************************************************************/
 
 	public void runReadyUpLobby(){
 		mainReadyUpLobby.setLayout(new BorderLayout()); //Default layout
@@ -1045,7 +965,6 @@ public class MainGUI extends JFrame implements ActionListener {
 		LHead.setFont(new Font("AR JULIAN",Font.PLAIN,70));
 		LHead.setForeground(Color.BLACK);
 
-
 		// Implementing pictures for white cards and black cards as JLabel
 		LPicBC = new JLabel();
 		LPicWC = new JLabel();
@@ -1065,10 +984,7 @@ public class MainGUI extends JFrame implements ActionListener {
 		flow.setHgap(100);
 		BtnPanel.add(BReady);
 		BtnPanel.add(Box.createRigidArea(new Dimension(0,200)));
-
 		mainReadyUpLobby.add(BtnPanel, BorderLayout.SOUTH);
-
-//		panel.add
 		
 		// Chat
 		lobbyChat();
@@ -1104,206 +1020,32 @@ public class MainGUI extends JFrame implements ActionListener {
 		middle.setPreferredSize(new Dimension(1000, 656));
 		middle.setBackground(Color.white);
 
-		JPanel p1 = new JPanel();
-		p1.setLayout(new BorderLayout());
-		p1.setPreferredSize(maxsize);
-		p1.setBorder(BorderFactory.createMatteBorder(1, 1, 1, 1, Color.black));
-		p1.setBackground(Color.WHITE);
-		
-		// Name Label
-		player[0] = new JLabel("   ");
-		player[0].setMaximumSize(lsize);
-		player[0].setFont(new Font("calibri",Font.PLAIN,30));
-		player[0].setAlignmentX(Component.CENTER_ALIGNMENT);
+		for (int i = 0; i < 8; i++) {
+			lobbyPlayerPanel[i] = new JPanel();
+			lobbyPlayerPanel[i].setLayout(new BorderLayout());
+			lobbyPlayerPanel[i].setPreferredSize(maxsize);
+			lobbyPlayerPanel[i].setBorder(BorderFactory.createMatteBorder(1, 1, 1, 1, Color.black));
+			lobbyPlayerPanel[i].setBackground(Color.WHITE);
+			
+			// Name Label
+			player[i] = new JLabel("   ");
+			player[i].setMaximumSize(lsize);
+			player[i].setFont(new Font("calibri",Font.PLAIN,30));
+			player[i].setAlignmentX(Component.CENTER_ALIGNMENT);
 
-		//"Button" 
-		readyBtn[0] = new JButton();
-		readyBtn[0].setPreferredSize(new Dimension(75, 75));
-		readyBtn[0].setBackground(Color.WHITE);
-		readyBtn[0].setBorderPainted(false);
-		readyBtn[0].setEnabled(false);
-
-		p1.add(Box.createRigidArea(new Dimension(1000,12)));
-		p1.add(player[0], BorderLayout.WEST);
-		p1.add(readyBtn[0], BorderLayout.EAST);
-
-
-		JPanel p2 = new JPanel();
-		p2.setLayout(new BorderLayout());
-		p2.setPreferredSize(maxsize);
-		p2.setBorder(BorderFactory.createMatteBorder(1, 1, 1, 1, Color.black));
-		p2.setBackground(Color.WHITE);
-
-		// Name Label
-		player[1] = new JLabel("   ");
-		player[1].setMaximumSize(lsize);
-		player[1].setFont(new Font("calibri",Font.PLAIN,30));
-		player[1].setAlignmentX(Component.CENTER_ALIGNMENT);
-
-		//"Button" 
-		readyBtn[1] = new JButton();
-		readyBtn[1].setPreferredSize(new Dimension(75, 75));
-		readyBtn[1].setBackground(Color.WHITE);
-		readyBtn[1].setBorderPainted(false);
-		readyBtn[1].setEnabled(false);
-
-		p2.add(Box.createRigidArea(new Dimension(1000,12)));
-		p2.add(player[1], BorderLayout.WEST);
-		p2.add(readyBtn[1], BorderLayout.EAST);
-
-
-		JPanel p3 = new JPanel();
-		p3.setLayout(new BorderLayout());
-		p3.setPreferredSize(maxsize);
-		p3.setBorder(BorderFactory.createMatteBorder(1, 1, 1, 1, Color.black));
-		p3.setBackground(Color.WHITE);
-
-		// Name Label
-		player[2] = new JLabel("   ");
-		player[2].setMaximumSize(lsize);
-		player[2].setFont(new Font("calibri",Font.PLAIN,30));
-		player[2].setAlignmentX(Component.CENTER_ALIGNMENT);
-
-		//"Button" 
-		readyBtn[2] = new JButton();
-		readyBtn[2].setPreferredSize(new Dimension(75, 75));
-		readyBtn[2].setBackground(Color.WHITE);
-		readyBtn[2].setBorderPainted(false);
-		readyBtn[2].setEnabled(false);
-
-		p3.add(Box.createRigidArea(new Dimension(1000,12)));
-		p3.add(player[2], BorderLayout.WEST);
-		p3.add(readyBtn[2], BorderLayout.EAST);
-
-
-		JPanel p4 = new JPanel();
-		p4.setLayout(new BorderLayout());
-		p4.setPreferredSize(maxsize);
-		p4.setBorder(BorderFactory.createMatteBorder(1, 1, 1, 1, Color.black));
-		p4.setBackground(Color.WHITE);
-
-		// Name Label
-		player[3] = new JLabel("   ");
-		player[3].setMaximumSize(lsize);
-		player[3].setFont(new Font("calibri",Font.PLAIN,30));
-		player[3].setAlignmentX(Component.CENTER_ALIGNMENT);
-
-		//"Button" 
-		readyBtn[3] = new JButton();
-		readyBtn[3].setPreferredSize(new Dimension(75, 75));
-		readyBtn[3].setBackground(Color.WHITE);
-		readyBtn[3].setBorderPainted(false);
-		readyBtn[3].setEnabled(false);
-
-		p4.add(Box.createRigidArea(new Dimension(1000,12)));
-		p4.add(player[3], BorderLayout.WEST);
-		p4.add(readyBtn[3], BorderLayout.EAST);
-
-
-		JPanel p5 = new JPanel();
-		p5.setLayout(new BorderLayout());
-		p5.setPreferredSize(maxsize);
-		p5.setBorder(BorderFactory.createMatteBorder(1, 1, 1, 1, Color.black));
-		p5.setBackground(Color.WHITE);
-
-		// Name Label
-		player[4] = new JLabel("   ");
-		player[4].setMaximumSize(lsize);
-		player[4].setFont(new Font("calibri",Font.PLAIN,30));
-		player[4].setAlignmentX(Component.CENTER_ALIGNMENT);
-
-		//"Button" 
-		readyBtn[4] = new JButton();
-		readyBtn[4].setPreferredSize(new Dimension(75, 75));
-		readyBtn[4].setBackground(Color.WHITE);
-		readyBtn[4].setBorderPainted(false);
-		readyBtn[4].setEnabled(false);
-
-		p5.add(Box.createRigidArea(new Dimension(1000,12)));
-		p5.add(player[4], BorderLayout.WEST);
-		p5.add(readyBtn[4], BorderLayout.EAST);
-
-
-		JPanel p6 = new JPanel();
-		p6.setLayout(new BorderLayout());
-		p6.setPreferredSize(maxsize);
-		p6.setBorder(BorderFactory.createMatteBorder(1, 1, 1, 1, Color.black));
-		p6.setBackground(Color.WHITE);
-
-		// Name Label
-		player[5] = new JLabel("   ");
-		player[5].setMaximumSize(lsize);
-		player[5].setFont(new Font("calibri",Font.PLAIN,30));
-		player[5].setAlignmentX(Component.CENTER_ALIGNMENT);
-
-		//"Button" 
-		readyBtn[5] = new JButton();
-		readyBtn[5].setPreferredSize(new Dimension(75, 75));
-		readyBtn[5].setBackground(Color.WHITE);
-		readyBtn[5].setBorderPainted(false);
-		readyBtn[5].setEnabled(false);
-
-		p6.add(Box.createRigidArea(new Dimension(1000,12)));
-		p6.add(player[5], BorderLayout.WEST);
-		p6.add(readyBtn[5], BorderLayout.EAST);
-
-
-		JPanel p7 = new JPanel();
-		p7.setLayout(new BorderLayout());
-		p7.setPreferredSize(maxsize);
-		p7.setBorder(BorderFactory.createMatteBorder(1, 1, 1, 1, Color.black));
-		p7.setBackground(Color.WHITE);
-
-		// Name Label
-		player[6] = new JLabel("   ");
-		player[6].setMaximumSize(lsize);
-		player[6].setFont(new Font("calibri",Font.PLAIN,30));
-		player[6].setAlignmentX(Component.CENTER_ALIGNMENT);
-
-		//"Button" 
-		readyBtn[6] = new JButton();
-		readyBtn[6].setPreferredSize(new Dimension(75, 75));
-		readyBtn[6].setBackground(Color.WHITE);
-		readyBtn[6].setBorderPainted(false);
-		readyBtn[6].setEnabled(false);
-
-		p7.add(Box.createRigidArea(new Dimension(1000,12)));
-		p7.add(player[6], BorderLayout.WEST);
-		p7.add(readyBtn[6], BorderLayout.EAST);
-
-
-		JPanel p8 = new JPanel();
-		p8.setLayout(new BorderLayout());
-		p8.setPreferredSize(maxsize);
-		p8.setBorder(BorderFactory.createMatteBorder(1, 1, 1, 1, Color.black));
-		p8.setBackground(Color.WHITE);
-
-		// Name Label
-		player[7] = new JLabel("   ");
-		player[7].setMaximumSize(lsize);
-		player[7].setFont(new Font("calibri",Font.PLAIN,30));
-		player[7].setAlignmentX(Component.CENTER_ALIGNMENT);
-
-		//"Button" 
-		readyBtn[7] = new JButton();
-		readyBtn[7].setPreferredSize(new Dimension(75, 75));
-		readyBtn[7].setBackground(Color.WHITE);
-		readyBtn[7].setBorderPainted(false);
-		readyBtn[7].setEnabled(false);
-
-		p8.add(Box.createRigidArea(new Dimension(1000,12)));
-		p8.add(player[7], BorderLayout.WEST);
-		p8.add(readyBtn[7], BorderLayout.EAST);
-
-		middle.add(p1);
-		middle.add(p2);
-		middle.add(p3);
-		middle.add(p4);
-		middle.add(p5);
-		middle.add(p6);
-		middle.add(p7);
-		middle.add(p8);
-
+			//"Button" 
+			readyBtn[i] = new JButton();
+			readyBtn[i].setPreferredSize(new Dimension(75, 75));
+			readyBtn[i].setBackground(Color.WHITE);
+			readyBtn[i].setBorderPainted(false);
+			readyBtn[i].setEnabled(false);
+			
+			lobbyPlayerPanel[i].add(Box.createRigidArea(new Dimension(1000,12)));
+			lobbyPlayerPanel[i].add(player[i], BorderLayout.WEST);
+			lobbyPlayerPanel[i].add(readyBtn[i], BorderLayout.EAST);
+			
+			middle.add(lobbyPlayerPanel[i]);
+		}
 
 		mainReadyUpLobby.add(HeadPanel, BorderLayout.NORTH);
 		mainReadyUpLobby.add(BCPanel, BorderLayout.EAST);
@@ -1319,73 +1061,67 @@ public class MainGUI extends JFrame implements ActionListener {
 		playerPanel.add(middle);
 
 		mainReadyUpLobby.add(playerPanel, BorderLayout.CENTER);
+	} // End of game lobby GUI
+	
+	public void updatePlayer(GameSlot givenSlot) {
+		gameSlot[givenSlot.getSlot()] = givenSlot;
+		int index = givenSlot.getSlot();
+
+		if (givenSlot.hasPlayer() == true){
+			gameSlot[index] = givenSlot;
+
+			player[index].setText("   "+gameSlot[index].getName());
+
+			if (gameSlot[index].isReady() == true) {			
+				readyBtn[index].setBackground(new Color(76,153,0));
+			} else {
+				readyBtn[index].setBackground(Color.RED);
+			}
+		} else {
+			player[index].setText("");
+			readyBtn[index].setBackground(Color.white);
+		}
 	}
-	/////////////////////////////////////////////// END READYUPLOBBY //////////////////////////////////////////////////////////////////
-
-	public void gameChat(){
-
-		// CHAT 
-
+	
+	public void lobbyChat() {
 		// Panels
-		chatPanel = new JPanel();
-		sendPanel = new JPanel();
-
-
-		chatPanel.setLayout(new BorderLayout());
-		chatPanel.setPreferredSize(new Dimension(0,100));
-		chatPanel.setVisible(true);
-		sendPanel.setBackground(Color.WHITE);
-		sendPanel.setLayout(new GridBagLayout());
-
-		PRight.add(chatPanel);
-		PRight.add(Box.createRigidArea(new Dimension(0,72)));
-		PRight.setBorder(BorderFactory.createEmptyBorder(0,10,0,10));
+		lobbyChatPanel = new JPanel();
+		lobbyChatPanel.setLayout(new BorderLayout());
+		lobbyChatPanel.setPreferredSize(new Dimension(200, 300));
+		lobbySendPanel = new JPanel();
+		lobbySendPanel.setBackground(Color.WHITE);
+		lobbySendPanel.setLayout(new GridBagLayout());
 
 		// Message field and send button
-		messageField = new JTextField();
-		messageField.requestFocusInWindow();
+		lobbyMessageField = new JTextField();
+		lobbyMessageField.requestFocusInWindow();
+		lobbyMessageField.setPreferredSize(new Dimension(300, 20));
 
-		gameSendButton = new JButton(" Send ");
-		gameSendButton.addActionListener(this);
+		lobbySendButton = new JButton(" Send ");
+		lobbySendButton.addActionListener(this);
 
 		// Chat area
-		chatBox = new JTextArea();
-		chatBox.setEditable(false);
-		chatBox.setFont(new Font("Serif", Font.PLAIN, 15));
-		chatBox.setLineWrap(true);
-
-		// GRIDBAG CONSTRAINTS
-		// GBC for send button
-		GridBagConstraints left = new GridBagConstraints();
-		left.anchor = GridBagConstraints.LINE_START;
-		left.fill = GridBagConstraints.HORIZONTAL;
-		left.weightx = 300.0D;
-		left.weighty = 1.0D;
-		// GBC for message field
-		GridBagConstraints right = new GridBagConstraints();
-		right.anchor = GridBagConstraints.LINE_END;
-		right.fill = GridBagConstraints.NONE;
-		right.weightx = 1.0D;
-		right.weighty = 1.0D;
+		lobbyChatBox = new JTextArea();
+		lobbyChatBox.setEditable(false);
+		lobbyChatBox.setFont(new Font("Serif", Font.PLAIN, 15));
+		lobbyChatBox.setLineWrap(true);
 
 		// adding elements
-		chatPanel.add(new JScrollPane(chatBox), BorderLayout.CENTER);
-		sendPanel.add(messageField, left);
-		sendPanel.add(gameSendButton, right);
-		chatPanel.add(BorderLayout.SOUTH, sendPanel);
+		lobbyChatPanel.add(new JScrollPane(lobbyChatBox), BorderLayout.CENTER);
+		lobbySendPanel.add(lobbyMessageField);
+		lobbySendPanel.add(lobbySendButton);
+		lobbyChatPanel.add(BorderLayout.SOUTH, lobbySendPanel);
+	} // End of lobby chat setup
 
-
-		// CHAT END
-
-	}
-
-	public void chatGameMessageReceived(String message) {
-		chatBox.append(message+"\n");
-	}
+	public void chatLobbyMessageReceived(String message) {
+		lobbyChatBox.append(message+"\n");
+	} // End of lobby chat message received
 	
+	/*********************************************************************************************/
+	/************************************** In-Game Screen ***************************************/
+	/*********************************************************************************************/
 	
 	public void runGame(){
-
 		mainGame.setLayout(new BorderLayout());	
 
 		int FontSizeOfCards = 16;
@@ -1511,7 +1247,7 @@ public class MainGUI extends JFrame implements ActionListener {
 			}
 		}
 		
-		/////////////////////////////////////////////// PANELS //////////////////////////////////////////////////////////////////
+		/** Panels of In-Game Screen **/
 
 		JPanel PAll = new JPanel();
 
@@ -1692,15 +1428,65 @@ public class MainGUI extends JFrame implements ActionListener {
 		PAll.add(PMid, BorderLayout.CENTER);
 		PMid.setBackground(Color.WHITE);
 		mainGame.add(PAll);
-
 	}
+	
+	public void gameChat(){
+		// Panels
+		chatPanel = new JPanel();
+		sendPanel = new JPanel();
+
+		chatPanel.setLayout(new BorderLayout());
+		chatPanel.setPreferredSize(new Dimension(0,100));
+		chatPanel.setVisible(true);
+		sendPanel.setBackground(Color.WHITE);
+		sendPanel.setLayout(new GridBagLayout());
+
+		PRight.add(chatPanel);
+		PRight.add(Box.createRigidArea(new Dimension(0,72)));
+		PRight.setBorder(BorderFactory.createEmptyBorder(0,10,0,10));
+
+		// Message field and send button
+		messageField = new JTextField();
+		messageField.requestFocusInWindow();
+
+		gameSendButton = new JButton(" Send ");
+		gameSendButton.addActionListener(this);
+
+		// Chat area
+		chatBox = new JTextArea();
+		chatBox.setEditable(false);
+		chatBox.setFont(new Font("Serif", Font.PLAIN, 15));
+		chatBox.setLineWrap(true);
+
+		// GRIDBAG CONSTRAINTS
+		// GBC for send button
+		GridBagConstraints left = new GridBagConstraints();
+		left.anchor = GridBagConstraints.LINE_START;
+		left.fill = GridBagConstraints.HORIZONTAL;
+		left.weightx = 300.0D;
+		left.weighty = 1.0D;
+		// GBC for message field
+		GridBagConstraints right = new GridBagConstraints();
+		right.anchor = GridBagConstraints.LINE_END;
+		right.fill = GridBagConstraints.NONE;
+		right.weightx = 1.0D;
+		right.weighty = 1.0D;
+
+		// adding elements
+		chatPanel.add(new JScrollPane(chatBox), BorderLayout.CENTER);
+		sendPanel.add(messageField, left);
+		sendPanel.add(gameSendButton, right);
+		chatPanel.add(BorderLayout.SOUTH, sendPanel);
+	} // End of in-game chat
+
+	public void chatGameMessageReceived(String message) {
+		chatBox.append(message+"\n");
+	} // End of in-game chat message received
 
 	public void createScoreBoard(){
 		int playersInGame = 0;
 		for (int i = 0; i < 8; i++) {
-			System.out.println("s�dan her");
 			if (gameSlot[i].hasPlayer()){
-				System.out.println("nemlig");
 				gameSlot[i].setInSlot(playersInGame);
 				scores[playersInGame] = new JLabel();
 				scores[playersInGame].setBackground(Color.white);
@@ -1712,203 +1498,31 @@ public class MainGUI extends JFrame implements ActionListener {
 				playersInGame++;
 			}
 		}	
-	}
-
-
-
-
-
-
-
-
-
-	public void actionPerformed(ActionEvent e){
-
-		/////////////////////////////////////////////////////////////////
-		// Quit button closes game
-		if(e.getSource() == BQuit){
-
-			dispose();
-
-		} else if (e.getSource() == BSignIn){
-			this.name = txtfld1.getText();
-			this.IP = txtfld2.getText();
-
-			System.out.println(name);
-			System.out.println(IP);
-
-			try {
-
-				Client.loginUser(IP, name);
-
-			} catch (Exception e1) {
-				txtfld2.setText("Invalid IP");
-			}
-
-			hideAll();
-			loadAvailableGames();
-			mainLobby.setVisible(true);
-			add(mainLobby);
-			mainLobby.requestFocus();
-
-		} else if(e.getSource()==LCreateGameBtn) {
-			hideAll();
-			mainCreate.setVisible(true);
-			add(mainCreate);
-			mainCreate.requestFocus();
-
-		} else if(e.getSource()==LSignOutBtn) {
-			hideAll();
-			mainLogin.setVisible(true);
-			add(mainLogin);
-			mainLogin.requestFocus();
-
-		} else if (e.getSource() == BBack) {
-			hideAll();
-			mainLobby.setVisible(true);
-			add(mainLobby);
-			mainLobby.requestFocus();
-
-		} else if (e.getSource() == BCreateGame){
-			this.gameName = txtfld8.getText();
-			this.rounds = txtfld7.getText();
-			this.time = txtfld4.getText();
-			this.password = txtfld5.getText();
-
-			hideAll();
-			mainReadyUpLobby.setVisible(true);
-			add(mainReadyUpLobby);
-			mainReadyUpLobby.requestFocus();
-
-			Client.createNewGame(gameName);
-
-
-
-		} else if (e.getSource() == LRefreshBtn) {
-			updateGameList();
-
-		} else if (e.getSource() == LJoinGameBtn) {
-
-			gameSelected = list.getSelectedIndex();
-			System.out.println("Index Selected: "+ gameSelected);
-			if (gameSelected < 0){ return; }
-			GamePreview preID = games.get(gameSelected);
-			int gameID = preID.getId();
-
-			try {
-				Client.joinGame(gameID);
-			} catch (InterruptedException e1) {
-				e1.printStackTrace();
-			}
-
-			hideAll();
-			mainReadyUpLobby.setVisible(true);
-			add(mainReadyUpLobby);
-			mainReadyUpLobby.requestFocus();
-
-		} else if(e.getSource()==BLeave){
-			hideAll();
-			mainLobby.setVisible(true);
-			add(mainLobby);
-			mainLobby.requestFocus();
-			Client.sendLeave();
-			updateGameList();
-		} else if (e.getSource() == BReady) {
-			Client.sendReady();
-		} else if ( e.getSource() == lobbySendButton ) {
-			if (lobbyMessageField.getText().length() < 1) {
-				// DO NOTHING
-			} else {
-				Client.sendLobbyChatMessage(lobbyMessageField.getText());
-				lobbyMessageField.setText("");
-			}
-			lobbyMessageField.requestFocusInWindow();
-		} else if ( e.getSource() == gameSendButton ) {
-			if (messageField.getText().length() < 1) {
-				// DO NOTHING
-			} else {
-				Client.sendGameChatMessage(messageField.getText());
-				messageField.setText("");
-			}
-			messageField.requestFocusInWindow();
-		}
-
-		for (int i = 0; i < 10; i++) {
-
-			if (e.getSource() == PlayerCards[i]) {
-				Client.pickWhiteCard(i);	
-			}
-		}
-
-		for (int i = 0; i < players; i++) {
-			System.out.println("Number of Players: "+players);
-
-			if (e.getSource() == Winner[i]) {
-				Client.pickWinnerCard(i);				
-
-			}
-		}
-	}
-
-
-	public void updatePlayer(GameSlot givenSlot) {
-		gameSlot[givenSlot.getSlot()] = givenSlot;
-		int index = givenSlot.getSlot();
-
-		if (givenSlot.hasPlayer() == true){
-			gameSlot[index] = givenSlot;
-
-			player[index].setText("   "+gameSlot[index].getName());
-
-			if (gameSlot[index].isReady() == true) {			
-				readyBtn[index].setBackground(new Color(76,153,0));
-				System.out.println("Changed to Green");
-
-			} else {
-				readyBtn[index].setBackground(Color.RED);
-				System.out.println("Changed to Red");
-
-			}
-		} else {
-			player[index].setText("");
-			readyBtn[index].setBackground(Color.white);
-			System.out.println("Changed to White");
-		}
-
-
-	}
+	} // End of create score board 
+	
+	/*********************************************************************************************/
+	/******************************** In-Game Update Interactions ********************************/
+	/*********************************************************************************************/
 
 	public void startGame(int playerNumber){
-
 		players = playerNumber;
-		System.out.println("Number of players: "+players);
-
 		
 		createScoreBoard();
 		hideAll();
 		mainGame.setVisible(true);
 		add(mainGame);
 		mainGame.requestFocus();
-
-	}
+	} // End of start game setup
 
 	public void setWhite(String text, int num){
-
-		System.out.println("Text1: "+text);
 		area[num].setText(text);
-
-	}
+	} // End of Set white card text
 
 	public void setBlack(String text){
-
-		System.out.println("Text2: "+text);
 		BlackCard.setText(text);
-
-	}
+	} // End of set black card text
 
 	public void setSelected(int num, int row, String text){
-		System.out.println("String: "+text+" and num: "+num);
-
 		if (row == 0) {
 			ChosCard1[num].setText(text);
 			
@@ -1918,7 +1532,6 @@ public class MainGUI extends JFrame implements ActionListener {
 				ChosCard1[num].setVisible(true);
 			}
 		}
-		
 		if (row == 1) {
 			ChosCard2[num].setText(text);
 			
@@ -1928,7 +1541,6 @@ public class MainGUI extends JFrame implements ActionListener {
 				ChosCard2[num].setVisible(true);
 			}
 		}
-		
 		if (row == 2) {
 			ChosCard3[num].setText(text);
 			
@@ -1938,19 +1550,17 @@ public class MainGUI extends JFrame implements ActionListener {
 				ChosCard3[num].setVisible(true);
 			}
 		}
-	}
-	
+	} // End of set card selected
 	
 	public void setScore(int updateSlot, int points){
 		String name = gameSlot[updateSlot].getName();
 		int index = gameSlot[updateSlot].getInSlot();
 		scores[index].setText(name+": "+points);
-	}
-
+	} // End of set score
 
 	public void setRound(int rnd){
 		number.setText("Round Number: "+rnd);
-	}
+	} // End of set round
 
 	public void setCzar(boolean cz){
 		if (cz) {
@@ -1962,7 +1572,7 @@ public class MainGUI extends JFrame implements ActionListener {
 			czar.setText("You are NOT Card Czar");
 			czar.setForeground(Color.BLACK);
 		}
-	}
+	} // End of set czar
 
 	public enum phases {WAIT, PICK, WAITCZAR, CZAR, WINNER}
 
@@ -1991,17 +1601,14 @@ public class MainGUI extends JFrame implements ActionListener {
 			phase.setText("null");
 			}
 		}
-	}
+	} // End of set phase
 
 	public void setTime(int t) {
-
 		timerem.setText("Time to answer: "+t);
-
-	}
+	} // End of set time before timeout
 
 
 	public void highlightWinner(int i, boolean winner){
-
 		if (winner) {
 			ChosCard1[i].setBackground(new Color(255,215,0));
 			ChosCard2[i].setBackground(new Color(255,215,0));
@@ -2011,23 +1618,140 @@ public class MainGUI extends JFrame implements ActionListener {
 			ChosCard2[i].setBackground(Color.WHITE);
 			ChosCard3[i].setBackground(Color.WHITE);
 		}
-	}
+	} // End of highlight winning player
 
 	public void czarButton(boolean show, int i){
 		Winner[i].setVisible(show);
-	}
+	} // End of show czar buttons
 	
 	public void playerButton(boolean show, int i) {
 		PlayerCards[i].setEnabled(show);
-	}
+	} // End of show player buttons
 	
 	public void hideRest (int noPlayer, boolean hide){
-		
 		ChosCard1[noPlayer].setVisible(hide);
 		ChosCard2[noPlayer].setVisible(hide);
 		ChosCard3[noPlayer].setVisible(hide);
 		Winner[noPlayer].setVisible(hide);
-		
+	} // End of hide buttons
+	
+	/*********************************************************************************************/
+	/********************************* Button Listener Actions ***********************************/
+	/*********************************************************************************************/
+
+	public void actionPerformed(ActionEvent e){
+		if(e.getSource() == BQuit){
+			/** Sign Out Button, Login Screen **/
+			dispose();
+		} else if (e.getSource() == BSignIn){
+			/** Sign In Button, Login Screen **/
+			this.name = txtfld1.getText();
+			this.IP = txtfld2.getText();
+			
+			try {
+				Client.loginUser(IP, name);
+			} catch (Exception e1) {
+				txtfld2.setText("Invalid IP");
+			}
+
+			hideAll();
+			loadAvailableGames();
+			mainLobby.setVisible(true);
+			add(mainLobby);
+			mainLobby.requestFocus();
+		} else if(e.getSource()==LCreateGameBtn) {
+			/** Create Game Button, Lounge Screen **/
+			hideAll();
+			mainCreate.setVisible(true);
+			add(mainCreate);
+			mainCreate.requestFocus();
+		} else if(e.getSource()==LSignOutBtn) {
+			/** Sign Out Button, Lounge Screen **/
+			hideAll();
+			mainLogin.setVisible(true);
+			add(mainLogin);
+			mainLogin.requestFocus();
+		} else if (e.getSource() == BBack) {
+			/** Create Game Button, Lounge Screen **/
+			hideAll();
+			mainLobby.setVisible(true);
+			add(mainLobby);
+			mainLobby.requestFocus();
+		} else if (e.getSource() == LRefreshBtn) {
+			/** Refresh Game List Button, Lounge Screen **/
+			updateGameList();
+		} else if (e.getSource() == LJoinGameBtn) {
+			/** Join Game Button, Lounge Screen **/
+			gameSelected = list.getSelectedIndex();
+			if (gameSelected < 0){ return; }
+			GamePreview preID = games.get(gameSelected);
+			int gameID = preID.getId();
+
+			try {
+				Client.joinGame(gameID);
+			} catch (InterruptedException e1) {
+				e1.printStackTrace();
+			}
+
+			hideAll();
+			mainReadyUpLobby.setVisible(true);
+			add(mainReadyUpLobby);
+			mainReadyUpLobby.requestFocus();
+		}  else if (e.getSource() == BCreateGame){
+			/** Create Game Button, Create Game Screen **/
+			this.gameName = txtfld8.getText();
+			this.rounds = txtfld7.getText();
+			this.time = txtfld4.getText();
+			this.password = txtfld5.getText();
+
+			hideAll();
+			mainReadyUpLobby.setVisible(true);
+			add(mainReadyUpLobby);
+			mainReadyUpLobby.requestFocus();
+
+			Client.createNewGame(gameName);
+		} else if(e.getSource()==BLeave){
+			/** Leave Game Button, Lobby Screen **/
+			hideAll();
+			mainLobby.setVisible(true);
+			add(mainLobby);
+			mainLobby.requestFocus();
+			Client.sendLeave();
+			updateGameList();
+		} else if (e.getSource() == BReady) {
+			/** Ready Button, Lobby Screen **/
+			Client.sendReady();
+		} else if ( e.getSource() == lobbySendButton ) {
+			/** Chat Send Button, Lobby Screen **/
+			if (lobbyMessageField.getText().length() < 1) {
+				// DO NOTHING
+			} else {
+				Client.sendLobbyChatMessage(lobbyMessageField.getText());
+				lobbyMessageField.setText("");
+			}
+			lobbyMessageField.requestFocusInWindow();
+		} else if ( e.getSource() == gameSendButton ) {
+			/** Chat Send Button, In-Game Screen **/
+			if (messageField.getText().length() < 1) {
+				// DO NOTHING
+			} else {
+				Client.sendGameChatMessage(messageField.getText());
+				messageField.setText("");
+			}
+			messageField.requestFocusInWindow();
+		}
+		for (int i = 0; i < 10; i++) {
+			if (e.getSource() == PlayerCards[i]) {
+				/** Choose White Card Button, In-Game Screen **/
+				Client.pickWhiteCard(i);	
+			}
+		}
+		for (int i = 0; i < players; i++) {
+			if (e.getSource() == Winner[i]) {
+				/** Choose Winner Button, In-Game Screen **/
+				Client.pickWinnerCard(i);				
+			}
+		}
 	}
 	
 	/*
@@ -2058,5 +1782,4 @@ public class MainGUI extends JFrame implements ActionListener {
 			add(l5);
 		}
 	}*/
-
 }
