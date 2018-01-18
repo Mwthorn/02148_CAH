@@ -95,7 +95,9 @@ public class MainGUI extends JFrame implements ActionListener {
 	private int numberOfCards = 3;
 	private JButton[] PlayerCards = new JButton[10];
 	private JButton[] Winner = new JButton[maxPlayers];
-	private JTextArea[] ChosCard1, ChosCard2, ChosCard3 = new JTextArea[maxPlayers];
+	private JTextArea[] ChosCard1 = new JTextArea[maxPlayers];
+	private JTextArea[] ChosCard2 = new JTextArea[maxPlayers];
+	private JTextArea[] ChosCard3 = new JTextArea[maxPlayers];
 	private JTextArea[] area = new JTextArea[10];
 	private JLabel label, czar, phase, number, timerem = new JLabel();
 	public boolean isCzar;
