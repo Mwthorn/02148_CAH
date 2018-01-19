@@ -105,6 +105,7 @@ public class Client {
 		Object[] info = lobby.get(new ActualField("joinedGame"), new ActualField(userID), new FormalField(Integer.class));
 		int gameSlot = (int) info[2];
 		System.out.println("Connecting to game with gameSlot: " + gameSlot);
+		main.clearLobby();
 		try {
 			listener = new RemoteSpace("tcp://" + serverIP + ":9001/listener" + gameSlot + "?keep");
 			talker = new RemoteSpace("tcp://" + serverIP + ":9001/talker" + gameSlot + "?keep");
@@ -125,6 +126,7 @@ public class Client {
 			Object[] info = lobby.get(new ActualField("joinedGame"), new ActualField(userID), new FormalField(Integer.class));
 			int gameSlot = (int) info[2];
 			System.out.println("Connecting to game with gameSlot: " + gameSlot);
+			main.clearLobby();
 			try {
 				listener = new RemoteSpace("tcp://" + serverIP + ":9001/listener" + gameSlot + "?keep");
 				talker = new RemoteSpace("tcp://" + serverIP + ":9001/talker" + gameSlot + "?keep");
