@@ -1,14 +1,12 @@
 package common.src.main.client;
 
-import common.src.main.gui.MainGUI;
-import common.src.main.server.utilities.WhiteCard;
 import org.jspace.ActualField;
 import org.jspace.FormalField;
 import org.jspace.RemoteSpace;
 
-import common.src.main.server.GameSlot;
+import common.src.main.shared.GameSlot;
 
-import static common.src.main.gui.MainGUI.phases.*;
+import static common.src.main.client.gui.MainGUI.phases.*;
 
 public class Listener implements Runnable{
 	private static RemoteSpace game;

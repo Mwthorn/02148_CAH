@@ -1,8 +1,10 @@
 package common.src.main.server;
 
 import common.src.main.server.utilities.BlackCard;
+import common.src.main.server.utilities.Player;
 import common.src.main.server.utilities.WhiteCard;
 
+import common.src.main.shared.GameSlot;
 import org.jspace.*;
 
 import java.util.*;

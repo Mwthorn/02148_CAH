@@ -1,6 +1,6 @@
-package common.src.main.server;
+package common.src.main.server.utilities;
 
-import common.src.main.server.utilities.WhiteCard;
+import common.src.main.shared.GameSlot;
 
 import java.util.ArrayList;
 

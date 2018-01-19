@@ -1,4 +1,4 @@
-package common.src.main.server.database;
+package common.src.main.server.utilities;
 import common.src.main.server.utilities.BlackCard;
 import common.src.main.server.utilities.WhiteCard;
 
@@ -24,7 +24,7 @@ public class CardDataBase{
 		String quip;
 		
 		try {
-			inputStream = new FileInputStream("TextWC.txt");
+			inputStream = new FileInputStream("TextWCPG.txt");
 			reader = new BufferedReader(new InputStreamReader(inputStream));
 
 			while( (quip = reader.readLine()) != null ){
@@ -42,7 +42,7 @@ public class CardDataBase{
 		int numOfLines, numOfBlanks, inputBlanks = 0;
 
 		try {
-			inputStream = new FileInputStream("TextBC.txt");
+			inputStream = new FileInputStream("TextBCPG.txt");
 			reader = new BufferedReader( new InputStreamReader(inputStream));
 
 			while( (numbers = reader.readLine()) != null){

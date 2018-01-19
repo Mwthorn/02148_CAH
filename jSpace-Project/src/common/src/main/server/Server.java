@@ -1,17 +1,14 @@
 package common.src.main.server;
 
-import common.src.main.client.GamePreview;
-import common.src.main.server.database.CardDataBase;
-import common.src.main.server.database.GameBase;
-import common.src.main.server.database.PlayerBase;
-import common.src.main.server.utilities.BlackCard;
-import common.src.main.server.utilities.WhiteCard;
+import common.src.main.server.utilities.Player;
+import common.src.main.shared.GamePreview;
+import common.src.main.server.utilities.CardDataBase;
+import common.src.main.server.utilities.GameBase;
+import common.src.main.server.utilities.PlayerBase;
 import org.jspace.ActualField;
 import org.jspace.FormalField;
 import org.jspace.SequentialSpace;
 import org.jspace.SpaceRepository;
-
-import java.util.ArrayList;
 
 public class Server {
     private static SequentialSpace lobby;
@@ -32,7 +29,7 @@ public class Server {
     	
     	// Setup for the lobby tuple space
     	lobby = new SequentialSpace();
-		repository.addGate("tcp://127.0.0.1:9001/?keep");
+		repository.addGate("tcp://10.16.161.67:9001/?keep");
 		// TODO: Muligvis bruge conn istedet for keep
 		repository.add("lobby", lobby);
 		System.out.println("Startup done!");

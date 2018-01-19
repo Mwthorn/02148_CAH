@@ -1,4 +1,4 @@
-package common.src.main.server;
+package common.src.main.shared;
 
 public class GameSlot {
 

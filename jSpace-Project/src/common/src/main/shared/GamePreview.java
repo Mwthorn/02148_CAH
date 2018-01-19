@@ -1,4 +1,4 @@
-package common.src.main.client;
+package common.src.main.shared;
 
 import common.src.main.server.Game;
 

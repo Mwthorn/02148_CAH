@@ -1,9 +1,6 @@
-package common.src.main.server.database;
-
-import common.src.main.server.Player;
+package common.src.main.server.utilities;
 
 import java.util.ArrayList;
-import java.util.Objects;
 import java.util.Random;
 
 public class PlayerBase {

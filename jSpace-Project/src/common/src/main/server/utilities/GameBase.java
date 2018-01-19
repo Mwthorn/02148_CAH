@@ -1,4 +1,4 @@
-package common.src.main.server.database;
+package common.src.main.server.utilities;
 
 import common.src.main.server.Game;
 

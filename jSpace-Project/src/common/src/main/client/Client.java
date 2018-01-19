@@ -1,14 +1,10 @@
 package common.src.main.client;
 
-import common.src.main.gui.MainGUI;
-import common.src.main.server.Game;
-import common.src.main.server.GameSlot;
-import common.src.main.server.Player;
-import common.src.main.server.utilities.WhiteCard;
+import common.src.main.client.gui.MainGUI;
+import common.src.main.shared.GamePreview;
 import org.jspace.*;
 
 import java.io.IOException;
-import java.net.UnknownHostException;
 import java.util.ArrayList;
 
 import javax.swing.JFrame;
