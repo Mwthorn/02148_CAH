@@ -611,8 +611,6 @@ public class MainGUI extends JFrame implements ActionListener {
 			games = Client.getGameList();
 		} catch (InterruptedException e) { e.printStackTrace(); }
 		numberOfGames = games.size();
-		
-		System.out.println(numberOfGames);
 		model.clear();
 
 		String blank = "          ";
