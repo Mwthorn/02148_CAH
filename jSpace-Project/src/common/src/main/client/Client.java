@@ -88,6 +88,7 @@ public class Client {
 			int gameSlot = (int) info[2];
 			
 			// Connects the host to the tuple space.
+			main.clearLobby();
 			System.out.println("Connecting to game with gameSlot:" + gameSlot);
 			listener = new RemoteSpace("tcp://" + serverIP + ":9001/listener" + gameSlot + "?keep");
 			talker = new RemoteSpace("tcp://" + serverIP + ":9001/talker" + gameSlot + "?keep");

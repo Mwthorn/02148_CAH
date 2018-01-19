@@ -1768,6 +1768,16 @@ public class MainGUI extends JFrame implements ActionListener {
 			}
 		}
 	}
+
+	public void clearLobby() {
+		for (int i = 0; i < maxPlayers; i++) {
+			gameSlot[i].setReady(false);
+			gameSlot[i].setInSlot(0);
+			gameSlot[i].setReady(false);
+			gameSlot[i].setInSlot(0);
+		}
+		
+	}
 	
 	/*
 	

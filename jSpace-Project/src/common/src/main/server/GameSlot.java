@@ -39,6 +39,10 @@ public class GameSlot {
     	return hasPlayer;
     }
     
+    public void setSlot(boolean choice){
+    	this.hasPlayer = choice;
+    }
+    
     public void setInSlot(int i){
     	this.inSlot = i;
     }

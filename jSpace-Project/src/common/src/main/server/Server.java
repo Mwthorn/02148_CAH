@@ -70,7 +70,7 @@ public class Server {
 					Player jPlayer = playerBase.getPlayerwithID(playerID);
 
 					Game jGame = gameBase.getGamewithID((int) tuple[3]);
-					if (jGame.getStatus() != "Game Full"){
+					if (jGame.getStatus() != "Game Full" || jGame.getStatus() != "Game Started" ){
 						int gameSlot = jGame.getGameSlot();
 						jGame.addPlayerToGame(jPlayer);
 						lobby.put("joinedGame", jPlayer.getId(), gameSlot);
