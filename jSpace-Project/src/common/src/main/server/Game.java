@@ -197,6 +197,7 @@ public class Game implements Runnable {
             System.out.print("Game: No player found with ID " + playerID + " in playerLeavesGame");
             return;
         }
+        actor.changeReady();
         int actorSlot = actor.getGameSlot().getSlot();
         if (players.size() == maxPlayers){
         	status = "Waiting for players...";

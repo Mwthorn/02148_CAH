@@ -607,15 +607,13 @@ public class MainGUI extends JFrame implements ActionListener {
 
 	// Update list of games
 	public void updateGameList(){
-		for (int i = 0; i < numberOfGames; i++) {
-			model.remove(i);
-		}
-
 		try {
 			games = Client.getGameList();
 		} catch (InterruptedException e) { e.printStackTrace(); }
-
 		numberOfGames = games.size();
+		
+		System.out.println(numberOfGames);
+		model.clear();
 
 		String blank = "          ";
 		for (int i = 0; i < numberOfGames; i++) {
